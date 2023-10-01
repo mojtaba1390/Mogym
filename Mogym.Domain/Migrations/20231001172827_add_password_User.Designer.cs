@@ -12,8 +12,8 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    [Migration("20230930162943_creat_user")]
-    partial class creat_user
+    [Migration("20231001172827_add_password_User")]
+    partial class add_password_User
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,30 +33,61 @@ namespace Mogym.Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
+                    b.Property<string>("BirthDay")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Email")
                         .HasMaxLength(100)
                         .HasColumnType("varchar");
 
-                    b.Property<int>("Gender")
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<int?>("Gender")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("InsertDate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("LastModifiedDate")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LastName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<string>("Mobile")
                         .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("Password")
                         .HasMaxLength(200)
                         .HasColumnType("varchar");
 
                     b.Property<TimeSpan>("RowVersion")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("time");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("SmsConfirmCode")
                         .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("varchar");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UniqeUserName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar");
+
+                    b.Property<string>("UserName")
                         .HasMaxLength(200)
                         .HasColumnType("varchar");
 

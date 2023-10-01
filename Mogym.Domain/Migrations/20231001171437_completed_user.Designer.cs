@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    partial class MogymContextModelSnapshot : ModelSnapshot
+    [Migration("20231001171437_completed_user")]
+    partial class completed_user
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace Mogym.Domain.Migrations
 
                     b.Property<string>("FirstName")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("varchar");
 
                     b.Property<int?>("Gender")
                         .HasColumnType("int");
@@ -55,19 +58,11 @@ namespace Mogym.Domain.Migrations
 
                     b.Property<string>("LastName")
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar");
+                        .HasColumnType("varchar");
 
                     b.Property<string>("Mobile")
                         .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("NationalCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Password")
-                        .HasMaxLength(200)
                         .HasColumnType("varchar");
 
                     b.Property<TimeSpan>("RowVersion")

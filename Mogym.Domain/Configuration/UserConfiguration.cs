@@ -15,13 +15,19 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("User");
-            builder.HasKey(o => o.Id);
 
-
-            builder.Property(x => x.FirstName).HasColumnType("varchar").HasMaxLength(100);
-            builder.Property(x => x.LastName).HasColumnType("varchar").HasMaxLength(200);
-            builder.Property(x => x.UserName).HasColumnType("varchar").HasMaxLength(200);
+            builder.Property(x => x.FirstName).HasColumnType("nvarchar").HasMaxLength(100).IsRequired(false);
+            builder.Property(x => x.LastName).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
+            builder.Property(x => x.NationalCode).HasColumnType("varchar").HasMaxLength(10).IsRequired(false);
+            builder.Property(x => x.UserName).HasColumnType("varchar").HasMaxLength(200).IsRequired(false);
+            builder.Property(x => x.Password).HasColumnType("varchar").HasMaxLength(200).IsRequired(false);
             builder.Property(x => x.Gender).HasColumnType("int");
+            builder.Property(x => x.Mobile).HasColumnType("varchar").HasMaxLength(11).IsRequired();
+            builder.Property(x => x.Status).HasColumnType("int");
+            builder.Property(x => x.UniqeUserName).HasColumnType("varchar").HasMaxLength(100).ValueGeneratedOnAdd().IsRequired();
+            builder.Property(x => x.BirthDay).HasColumnType("varchar").HasMaxLength(10).IsRequired(false);
+            builder.Property(x => x.SmsConfirmCode).HasColumnType("varchar").HasMaxLength(5).IsRequired();
+            builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
 
         }
     }

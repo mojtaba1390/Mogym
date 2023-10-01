@@ -16,4 +16,13 @@ namespace Mogym.Domain.Common
         [EnumMember]
         Mard = 2
     }
+    public enum EnumStatus
+    {
+        [EnumMember]
+        Active = 1,
+        [EnumMember]
+        NotActive = 2,
+        [EnumMember]
+        WaitingForSmsConfirm = 3
+    }
 }

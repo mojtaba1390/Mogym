@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mogym.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class creat_user : Migration
+    public partial class completed_user : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,10 +17,16 @@ namespace Mogym.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
+                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    Mobile = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    UniqeUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    BirthDay = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
+                    SmsConfirmCode = table.Column<string>(type: "varchar(5)", maxLength: 5, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RowVersion = table.Column<TimeSpan>(type: "time", nullable: false)

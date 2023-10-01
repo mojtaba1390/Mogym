@@ -14,6 +14,8 @@ builder.Services.AddDbContext<MogymContext>(x => x.UseSqlServer(connectionString
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

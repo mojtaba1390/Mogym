@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Mogym.Domain\Mogym.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Records\" />
-  </ItemGroup>
-
 </Project>
