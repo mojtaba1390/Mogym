@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.User
 {
-    public record CreateTrainerRecord
+    public record RegisterTrainerRecord
     {
         public string Mobile { get; init; }
         public string ConfirmCode { get; init; }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Domain.Entities;
 
-namespace Mogym.Application.Interfaces
+namespace Mogym.Infrastructure.Interfaces
 {
-    public interface IUserService
+    public interface IUserRepository : IRepository<User>
     {
-        bool IsExistMobile(string mobile);
     }
 }

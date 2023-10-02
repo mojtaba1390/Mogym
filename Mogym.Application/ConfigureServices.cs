@@ -6,6 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
+using Mogym.Application.Interfaces;
+using Mogym.Application.Services;
+using Mogym.Infrastructure;
+using Mogym.Application.Validation.User;
 
 namespace Mogym.Application
 {
@@ -13,13 +17,24 @@ namespace Mogym.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+
+            #region fluent validation
             services.AddControllers()
                 .AddFluentValidation(v =>
                 {
                     v.ImplicitlyValidateChildProperties = true;
                     v.ImplicitlyValidateRootCollectionElements = true;
-                    v.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+                    v.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(RegisterUserValidate)));
                 });
+            #endregion
+
+
+
+            #region Service Life Time
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserService, UserService>();
+            #endregion
+
             return services;
         }
     }
