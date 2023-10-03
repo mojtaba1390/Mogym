@@ -15,18 +15,35 @@ namespace Mogym.Application.Validation.User
         private readonly IUserService _userService;
         public RegisterUserValidate(IUserService userService)
         {
+
             _userService = userService;
             RuleFor(x => x.Mobile)
-                .NotNull().WithMessage("شماره موبایل نباید خالی باشد")
-                .NotEmpty().WithMessage("شماره موبایل نباید خالی باشد")
-                .Length(11).WithMessage("شماره موبایل نباید باید ۱۱ رقم باشد")
-                .Matches("^09\\d{9}$").WithMessage("فرمت شماره موبایل اشتباه می باشد")
-                .Must(IsExistMobile).WithMessage("این شماره موبایل قبلا ثبت شده است");
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage("شماره موبایل نباید خالی باشد")
+                .NotEmpty()
+                .WithMessage("شماره موبایل نباید خالی باشد")
+                .MinimumLength(11).MaximumLength(11)
+                .WithMessage("شماره موبایل نباید باید ۱۱ رقم باشد")
+                .Matches("^09\\d{9}$")
+                .WithMessage("فرمت شماره موبایل اشتباه می باشد")
+                .DependentRules(() =>
+                {
+                    RuleFor(x => x.Mobile)
+                        .Must(mobile=> !IsExistMobile(mobile))
+                        .WithMessage("این شماره موبایل قبلا ثبت شده است");
+                });
+
+
+
+
+
+
         }
 
-        private bool IsExistMobile(RegisterUserRecord user,string mobile)
+        private bool IsExistMobile(string mobile)
         {
-           return  _userService.IsExistMobile(user.Mobile);
+           return  _userService.IsExistMobile(mobile);
         }
     }
 

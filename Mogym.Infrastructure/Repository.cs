@@ -7,6 +7,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Mogym.Domain.Entities;
+using Mogym.Infrastructure.Interfaces.Log;
 
 namespace Mogym.Infrastructure
 {
@@ -46,7 +48,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 LogDbExceptionError(dbException);
+                 //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
             }
@@ -62,7 +64,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 LogDbExceptionError(dbException);
+                 //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
             }
@@ -98,7 +100,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 LogDbExceptionError(dbException);
+                 //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
 
@@ -117,7 +119,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 LogDbExceptionError(dbException);
+                 //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
 
@@ -167,7 +169,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 LogDbExceptionError(dbException);
+                 //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
 
@@ -185,7 +187,7 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                  LogDbExceptionError(dbException);
+                 // LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
 
@@ -195,10 +197,18 @@ namespace Mogym.Infrastructure
 
         private Task LogDbExceptionError(DbUpdateException dbException)
         {
-            foreach (var entity in dbException.Entries)
+            foreach (var entry in dbException.Entries)
             {
                 //log here
-                var message = $"error in:"+ entity.GetType().Name;
+                var message = $"error in:"+ entry.GetType().Name;
+                SeriLog serilog = new SeriLog()
+                {
+                    Exception = dbException.InnerException.Message,
+                    Message = message,
+                    Level = "Error"
+                };
+                _dbContext.Set<SeriLog>().Add(serilog);
+                _dbContext.SaveChanges();
             }
 
             return Task.CompletedTask;

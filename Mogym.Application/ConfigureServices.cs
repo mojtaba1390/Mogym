@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using Mogym.Application.Interfaces;
+using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Services;
+using Mogym.Application.Services.Log;
 using Mogym.Infrastructure;
 using Mogym.Application.Validation.User;
 
@@ -26,12 +28,14 @@ namespace Mogym.Application
                     v.ImplicitlyValidateRootCollectionElements = true;
                     v.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(RegisterUserValidate)));
                 });
+
             #endregion
 
 
 
             #region Service Life Time
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ISeriLogService, SerilogService>();
             services.AddScoped<IUserService, UserService>();
             #endregion
 

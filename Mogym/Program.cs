@@ -2,10 +2,12 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application;
 using Mogym.Domain.Context;
+using Mogym.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
 
 // Add services to the container.
