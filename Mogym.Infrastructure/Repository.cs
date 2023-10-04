@@ -20,7 +20,7 @@ namespace Mogym.Infrastructure
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
             try
             {
@@ -28,12 +28,15 @@ namespace Mogym.Infrastructure
                 await _dbContext.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 await _dbContext.Database.CommitTransactionAsync();
+                return entity;
             }
             catch (DbUpdateException dbException)
             {
                 await LogDbExceptionError(dbException);
                 await _dbContext.Database.RollbackTransactionAsync();
             }
+
+            return null;
         }
 
 
@@ -205,7 +208,8 @@ namespace Mogym.Infrastructure
                 {
                     Exception = dbException.InnerException.Message,
                     Message = message,
-                    Level = "Error"
+                    Level = "Error",
+                    MessageTemplate = message
                 };
                 _dbContext.Set<SeriLog>().Add(serilog);
                 _dbContext.SaveChanges();

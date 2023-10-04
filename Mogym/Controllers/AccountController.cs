@@ -7,17 +7,16 @@ namespace Mogym.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly ISeriLogService _logger;
         private readonly IUserService _userService;
-        private readonly ISeriLogService _seriLogService;
-        public AccountController(IUserService userService,ISeriLogService seriLogService)
+        public AccountController(IUserService userService, ISeriLogService logger)
         {
             _userService = userService;
-            _seriLogService = seriLogService;
+            _logger = logger;
         }
 
         public async Task<IActionResult> RegisterUser()
         {
-            _seriLogService.LogInformation("test serilog get");
 
             return View();
         }
@@ -26,15 +25,9 @@ namespace Mogym.Controllers
         public async Task<IActionResult> RegisterUser(RegisterUserRecord registerUser)
         {
 
-            _seriLogService.LogInformation("test serilog set");
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Json(new
-                {
-                    success = false,
-                    errors = ModelState.Keys.SelectMany(k => ModelState[k].Errors)
-                        .Select(m => m.ErrorMessage).ToArray()
-                });
+               var user=await _userService.AddAsync(registerUser);
             }
             return View();
         }

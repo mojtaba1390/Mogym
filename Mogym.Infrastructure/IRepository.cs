@@ -7,7 +7,7 @@ namespace Mogym.Infrastructure
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
         void Add(TEntity entity);
         void AddRang(IEnumerable<TEntity> entityListEnumerable);
         Task AddRangAsync(IEnumerable<TEntity> entityListEnumerable);
