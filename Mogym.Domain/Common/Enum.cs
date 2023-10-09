@@ -25,4 +25,11 @@ namespace Mogym.Domain.Common
         [EnumMember]
         WaitingForSmsConfirm = 3
     }
+    public enum EnumYesNo
+    {
+        [EnumMember]
+        Yes = 1,
+        [EnumMember]
+        No = 2
+    }
 }

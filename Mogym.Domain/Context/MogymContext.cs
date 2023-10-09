@@ -33,5 +33,10 @@ namespace Mogym.Domain.Context
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfiguration).Assembly);
         }
 
+
+        public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Accessibility> Accessibility { get; set; }
+
     }
 }

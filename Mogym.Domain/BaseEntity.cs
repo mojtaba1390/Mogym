@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Mogym.Domain
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
 
         [Key]
@@ -24,9 +24,6 @@ namespace Mogym.Domain
         public DateTime? LastModifiedDate { get; set; }
 
         [Timestamp]
-        [ConcurrencyCheck]
         public byte[] RowVersion { get; set; }
-
-        
     }
 }
