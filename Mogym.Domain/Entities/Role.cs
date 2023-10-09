@@ -14,16 +14,16 @@ namespace Mogym.Domain.Entities
         public Role()
         {
             Accessibilities = new HashSet<Accessibility>();
+            UserRoles = new HashSet<UserRole>();
+
         }
         public string EnglishName { get; set; }
         public string PersianName { get; set; }
         public EnumYesNo IsActive { get; set; }
 
-        public int UserId { get; set; }
-
-
-        public User User { get; set; }
 
         public ICollection<Accessibility> Accessibilities { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
+
     }
 }

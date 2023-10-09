@@ -23,7 +23,6 @@ namespace Mogym.Domain.Configuration
 
 
             builder.HasOne<Role>(x => x.Role).WithMany(z => z.Accessibilities).HasForeignKey(a => a.RoleId);
-            builder.HasOne<User>(x => x.User).WithMany(z => z.Accessibilities).HasForeignKey(a => a.UserId);
 
         }
     }
