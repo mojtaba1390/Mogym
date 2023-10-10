@@ -15,6 +15,9 @@ builder.Services.AddRazorPages();
 var connectionString = builder.Configuration.GetConnectionString("MogymConnection");
 builder.Services.AddDbContext<MogymContext>(x => x.UseSqlServer(connectionString));
 
+var connectionStringLog = builder.Configuration.GetConnectionString("MogymLogConnection");
+builder.Services.AddDbContext<MogymLogContext>(x => x.UseSqlServer(connectionStringLog));
+
 
 
 
