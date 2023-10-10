@@ -8,7 +8,7 @@ using Mogym.Domain.Common;
 
 namespace Mogym.Domain.Entities
 {
-    public class Accessibility:BaseEntity
+    public class Permission:BaseEntity
     {
         public string EnglishName { get; set; }
         public string PersianName { get; set; }
@@ -16,6 +16,6 @@ namespace Mogym.Domain.Entities
 
         public int RoleId { get; set; }
 
-        public Role Role { get; set; }
+        public Role Permission_Role { get; set; }
     }
 }

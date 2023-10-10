@@ -13,7 +13,7 @@ namespace Mogym.Domain.Entities
     {
         public Role()
         {
-            Accessibilities = new HashSet<Accessibility>();
+            Permissions = new HashSet<Permission>();
             UserRoles = new HashSet<UserRole>();
 
         }
@@ -22,7 +22,7 @@ namespace Mogym.Domain.Entities
         public EnumYesNo IsActive { get; set; }
 
 
-        public ICollection<Accessibility> Accessibilities { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
 
     }

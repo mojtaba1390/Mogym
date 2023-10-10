@@ -14,8 +14,8 @@ namespace Mogym.Domain.Entities
         public int RoleId { get; set; }
 
 
-        public User User { get; set; }
+        public User UserRole_User { get; set; }
 
-        public Role Role { get; set; }
+        public Role UserRole_Role { get; set; }
     }
 }

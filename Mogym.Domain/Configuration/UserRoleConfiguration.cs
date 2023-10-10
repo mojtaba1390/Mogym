@@ -16,14 +16,14 @@ namespace Mogym.Domain.Configuration
             builder.ToTable("UserRole");
 
             builder.Property(x => x.UserId).HasColumnType("int").IsRequired();
-            builder.Property(x => x.Role).HasColumnType("int").IsRequired();
+            builder.Property(x => x.RoleId).HasColumnType("int").IsRequired();
 
 
-            builder.HasOne(x => x.Role)
+            builder.HasOne(x => x.UserRole_Role)
                 .WithMany(z => z.UserRoles)
                 .HasForeignKey(a => a.RoleId);
 
-            builder.HasOne(x => x.User)
+            builder.HasOne(x => x.UserRole_User)
                 .WithMany(z => z.UserRoles)
                 .HasForeignKey(a => a.UserId);
         }

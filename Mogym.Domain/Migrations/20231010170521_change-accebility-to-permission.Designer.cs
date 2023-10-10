@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    partial class MogymContextModelSnapshot : ModelSnapshot
+    [Migration("20231010170521_change-accebility-to-permission")]
+    partial class changeaccebilitytopermission
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -262,13 +265,13 @@ namespace Mogym.Domain.Migrations
 
             modelBuilder.Entity("Mogym.Domain.Entities.Permission", b =>
                 {
-                    b.HasOne("Mogym.Domain.Entities.Role", "Permission_Role")
+                    b.HasOne("Mogym.Domain.Entities.Role", "Role")
                         .WithMany("Permissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Permission_Role");
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Mogym.Domain.Entities.UserRole", b =>

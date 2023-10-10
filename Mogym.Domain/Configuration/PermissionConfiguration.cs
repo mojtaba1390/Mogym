@@ -10,11 +10,11 @@ using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration
 {
-    public class AccessibilityConfiguration:IEntityTypeConfiguration<Accessibility>
+    public class PermissionConfiguration:IEntityTypeConfiguration<Permission>
     {
-        public void Configure(EntityTypeBuilder<Accessibility> builder)
+        public void Configure(EntityTypeBuilder<Permission> builder)
         {
-            builder.ToTable("Accessibility");
+            builder.ToTable("Permission");
 
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();
@@ -22,7 +22,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.RoleId).HasColumnType("int").IsRequired();
 
 
-            builder.HasOne<Role>(x => x.Role).WithMany(z => z.Accessibilities).HasForeignKey(a => a.RoleId);
+            builder.HasOne<Role>(x => x.Permission_Role).WithMany(z => z.Permissions).HasForeignKey(a => a.RoleId);
 
         }
     }
