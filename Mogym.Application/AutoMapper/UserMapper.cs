@@ -21,6 +21,9 @@ namespace Mogym.Application.AutoMapper
                 .ForMember(x => x.UniqeUserName, frm => frm.MapFrom(z => Guid.NewGuid()))
                 .ForMember(x => x.SmsConfirmCode, frm => frm.MapFrom(z => new Random().Next(10000, 99999)));
 
+
+
+
         }
     }
 }

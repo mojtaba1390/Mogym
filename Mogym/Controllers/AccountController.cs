@@ -24,12 +24,36 @@ namespace Mogym.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterUser(RegisterUserRecord registerUser)
         {
+            _logger.LogInformation("serilog worked");
 
-            if (ModelState.IsValid)
+            try
             {
-               var user=await _userService.AddAsync(registerUser);
+                if (ModelState.IsValid)
+                {
+                     await _userService.AddAsync(registerUser);
+
+                     var confirmRegister = new ConfirmRegisterRecord() {Mobile = registerUser.Mobile};
+                     RedirectToAction("ConfirmRegister", new { confirmRegister });
+                }
             }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+            }
+
+
             return View();
+        }
+
+        public async Task<IActionResult> ConfirmRegister(ConfirmRegisterRecord confirmRegisterRecord)
+        {
+            return View(confirmRegisterRecord);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmRegister(string mobile)
+        {
+            return View(mobile);
         }
 
     }

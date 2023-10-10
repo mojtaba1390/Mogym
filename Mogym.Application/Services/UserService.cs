@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mogym.Application.Interfaces;
@@ -31,20 +33,22 @@ namespace Mogym.Application.Services
             return _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == mobile.Trim()).Any();
         }
 
-        public async Task<User> AddAsync(RegisterUserRecord registerUser)
+        public async Task AddAsync(RegisterUserRecord registerUser)
         {
             try
             {
                 var user = _mapper.Map<User>(registerUser);
-                return await _unitOfWork.UserRepository.AddAsync(user);
+                 await _unitOfWork.UserRepository.AddAsync(user);
+
             }
             catch(Exception ex)
             {
-                var message = $"AddAsync in User Service,entity:" + registerUser;
+                var message = $"AddAsync in User Service,entity:" + JsonSerializer.Serialize(registerUser);
                 _logger.LogError(message,ex);
             }
 
-            return null;
         }
+
+
     }
 }
