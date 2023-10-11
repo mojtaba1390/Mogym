@@ -1,0 +1,117 @@
+/*#############             ABAN             ##################*/
+@font-face {
+  font-family: "aban";
+  src: url("./aban.eot"); /* IE9 Compat Modes */
+  src: url("./aban.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("./aban.otf") format("opentype"), /* Open Type Font */
+    url("./aban.svg") format("svg"), /* Legacy iOS */
+    url("./aban.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("./aban.woff") format("woff"), /* Modern Browsers */
+    url("./aban.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+/*#############             DIROZ             ##################*/
+@font-face {
+  font-family: "diroz";
+  src: url("./diroz.eot"); /* IE9 Compat Modes */
+  src: url("./diroz.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("./diroz.otf") format("opentype"), /* Open Type Font */
+    url("./diroz.svg") format("svg"), /* Legacy iOS */
+    url("./diroz.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("./diroz.woff") format("woff"), /* Modern Browsers */
+    url("./diroz.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+  font-family: diroz;
+  letter-spacing: 0 !important;
+}
+h5 , h4 , h3, li.digits, .timeliny .timeliny-timeline .timeliny-timeblock.active .timeliny-dot::before, .timeliny .timeliny-dot::before, .blog-box.blog-shadow .blog-details p, .blog-date.digits, p.itemtext.digits, span.digits , span.u-step-number, .apexcharts-xaxistooltip-text, td.digits, span.counter, input, textarea, .apexcharts-tooltip-title, span.text-muted.digits, span.mb-1, .apexcharts-tooltip-text , canvas , .apexcharts-datalabel-label , .blog-date digits , .apexcharts-legend-text , text ,text title , tspan , g , .apexcharts-xaxis-texts-g{
+  font-family: diroz !important;
+  letter-spacing: 0 !important;
+}
+h2, h2 span , h6 > .mb-0{
+  font-family: aban;
+}
+.apexcharts-legend-series, .apexcharts-tooltip-text , input , .apexcharts-legend-text , .apexcharts-menu-item{
+  direction: rtl;
+}
+.apexcharts-tooltip-marker{
+  display: none;
+}
+.more-btn .btn {
+  padding: 24px 50px 24px 65px !important;
+}
+[main-theme-layout="rtl"] .month-overview .card-header .badge{
+  margin-left: 0;
+  margin-right: 230px !important;
+}
+.welcome-popup .close{
+  right: -20px;
+}
+span.apexcharts-legend-marker {
+  margin-left: 5px !important;
+}
+.br-theme-bars-pill .br-widget a:first-child , .br-theme-bars-pill .br-widget a {
+  float: left;
+}
+.br-theme-fontawesome-stars .br-widget a , .br-theme-fontawesome-stars-o .br-widget a{
+  float: right;
+}
+label.col-md-2.control-label.sm-left-text, a.dt-button.dropdown-item.button-page-length,a.dt-button.dropdown-item , label.col-sm-3.col-form-label.text-right, label.col-sm-3.col-form-label.text-right, [main-theme-layout="rtl"] .datetime-picker .theme-form .form-group label {
+  text-align: right !important;
+}
+.flag-icons div .media-body h6, .feather-icons div .media-body h6 {
+  padding-right: 5px;
+}
+.dataTables_wrapper table.dataTable tbody td.select-checkbox:before, .dataTables_wrapper table.dataTable tbody th.select-checkbox:before,.page-wrapper .page-body-wrapper .iconsidebar-menu .iconMenu-bar li .badge,.page-wrapper .page-body-wrapper .iconsidebar-menu .iconMenu-bar li .badge{
+  left: 0 !important;
+  right: unset !important;
+}
+table.dataTable tbody td.select-checkbox:before, table.dataTable tbody th.select-checkbox:before{
+  margin-right: -6px !important;
+  margin-left: unset !important;
+}
+.dt-autofill-handle{
+  right: 881px !important;
+  left: unset !important;
+}
+.card-body.chart-block{
+  direction: ltr;
+}
+.ribbon{
+  right: 0 !important;
+  left: unset !important;
+}
+[main-theme-layout="rtl"] .ribbon-vertical-left, [main-theme-layout="rtl"] .ribbon-vertical-right {
+  left: auto !important;
+  right: 10px !important;
+}
+.landing-page .new-logo, .landing-page .advancenew-logo{
+  right: -34px !important;
+  left: unset !important;
+}
+.landing-page .tap-top{
+  left: 30px !important;
+  right: unset !important;
+}
+button.btn-block {
+  left: 141px;
+}
+.landing-page .purchasebtn-res .btn-light{
+  padding: 12px 30px 12px 30px;
+}
+button.btn.btn-light.txt-primary {
+  margin-left: -35px !important;
+}
+i.fa.fa-copy{
+  padding-left: 5px;
+}
+.was-validated .form-control:invalid, .form-control.is-invalid {
+  padding-left: calc(1.5em + .75rem);
+  background-position: left calc(.375em + .1875rem) center;
+  padding-right:4px !important;
+  background-position:4px !important;
+}

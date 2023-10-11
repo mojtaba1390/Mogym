@@ -1,0 +1,106 @@
+﻿@model Mogym.Application.Records.User.RegisterUserRecord
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Poco admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Poco admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+    <title>ورود - موجیم</title>
+    <!--font-->
+    <link rel="stylesheet" type="text/css" href="/css/fonts/fonts.css">
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome.css">
+    <!-- ico-font-->
+    <link rel="stylesheet" type="text/css" href="/css/icofont.css">
+    <!-- Themify icon-->
+    <link rel="stylesheet" type="text/css" href="/css/themify.css">
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" href="/css/flag-icon.css">
+    <!-- Feather icon-->
+    <link rel="stylesheet" type="text/css" href="/css/feather-icon.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <!-- Plugins css start-->
+    <link rel="stylesheet" type="text/css" href="/css/pe7-icon.css">
+    <!-- Plugins css Ends-->
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link id="color" rel="stylesheet" href="/css/color-1.css" media="screen">
+    <!-- Responsive css-->
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+</head>
+<body main-theme-layout="rtl">
+    <!-- Loader starts-->
+    <div class="loader-wrapper">
+        <div class="typewriter">
+            <h1>در حال بارگیری پنل مدیریت...</h1>
+        </div>
+    </div>
+    <!-- Loader ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper">
+        <div class="page-body-wrapper">
+
+            <div class="page-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form class="needs-validation" novalidate="" asp-action="Login" asp-controller="Account" method="post" >
+                                        <div class="form-row">
+                                            <div class="col-md-4 mb-3">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label>شماره موبایل </label>
+                                                <input class="form-control" asp-for="Mobile" type="number" placeholder="09*********" required="">
+                                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                                                <div class="valid-feedback"> 
+                                                    <p asp-validation-for="Mobile"></p>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="col-md-4 mb-3">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <button class="btn btn-primary" type="submit"> ارسال کد </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- latest jquery-->
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap js-->
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.js"></script>
+    <!-- feather icon js-->
+    <script src="/js/icons/feather-icon/feather.min.js"></script>
+    <script src="/js/icons/feather-icon/feather-icon.js"></script>
+    <!-- Sidebar jquery-->
+    <script src="/js/config.js"></script>
+    <!-- Plugins JS start-->
+    <script src="/js/form-validation-custom.js"></script>
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script src="/js/script.js"></script>
+    <!-- login js-->
+    <!-- Plugin used-->
+</body>
+</html>

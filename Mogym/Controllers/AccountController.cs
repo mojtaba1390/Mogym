@@ -15,14 +15,14 @@ namespace Mogym.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> RegisterUser()
+        public async Task<IActionResult> Login()
         {
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterUser(RegisterUserRecord registerUser)
+        public async Task<IActionResult> Login(RegisterUserRecord registerUser)
         {
             _logger.LogInformation("serilog worked");
 
