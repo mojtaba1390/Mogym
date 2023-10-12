@@ -30,7 +30,7 @@ namespace Mogym.Application.Services
 
         public bool IsExistMobile(string mobile)
         {
-            return _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == mobile.Trim()).Any();
+            return  _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == mobile.Trim()).Any()  ;
         }
 
         public async Task AddAsync(LoginRecord loginRecord)
@@ -56,10 +56,16 @@ namespace Mogym.Application.Services
             {
                 var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == loginRecord.Mobile.Trim()).FirstOrDefaultAsync();
                 if (entity != null)
-                    return _mapper.Map<ConfirmSmsRecord>(entity) ;
+                {
+                    entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                    _unitOfWork.UserRepository.Update(entity);
+                    return _mapper.Map<ConfirmSmsRecord>(entity);
+                }
 
                 var newUser = _mapper.Map<User>(loginRecord);
+                await _unitOfWork.UserRepository.AddAsync(newUser);
                 return _mapper.Map<ConfirmSmsRecord>(newUser);
+
 
             }
             catch (Exception ex)
@@ -69,6 +75,23 @@ namespace Mogym.Application.Services
             }
 
             return null;
+        }
+
+        public bool IsExistMobileWithConfirmSmsCode(string mobile, int confirmSmsCode)
+        {
+            try
+            {
+                return _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.SmsConfirmCode == confirmSmsCode.ToString())
+                    .Any();
+            }
+            catch (Exception ex)
+            {
+                var message = $"IsExistMobileWithConfirmSmsCode in User Service,mobile=" + mobile + ";confirmSmsCode=" +
+                              confirmSmsCode;
+                _logger.LogError(message, ex);
+            }
+
+            return false;
         }
     }
 }

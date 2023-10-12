@@ -1,0 +1,295 @@
+﻿.morethan3item {
+    border: 1px solid #959393;
+    border-top: unset;
+    border-radius: 0 0 5px 5px;
+    width: 50%;
+    margin: 6px 25% 0;
+    padding: 2px 5px;
+    display: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+    .morethan3item:hover {
+        border-color: tomato;
+    }
+
+.dateDetail {
+    position: absolute;
+    background-color: #e5e5e5e8;
+    top: 90px;
+    right: -25%;
+    width: 150%;
+    padding: 30px 10px;
+    cursor: default;
+    border-radius: 20px;
+    border: 3px solid #7c7c7c26;
+    z-index: 10;
+    display: none;
+}
+
+.calendar-table td {
+    position: relative
+}
+
+
+
+.p-month {
+    filter: blur(1px) grayscale(0.9);
+}
+
+.n-month {
+    filter: blur(1px)
+}
+
+    .n-month:hover {
+        filter: blur(0px)
+    }
+
+.p-month:hover {
+    filter: blur(0px) grayscale(0.4);
+}
+
+.calendar-body {
+    border: 3px solid #5e5e5e;
+    border-radius: 5px;
+    height: 751px;
+    position: relative;
+    overflow: scroll
+}
+
+.calendar-controler {
+    background: #f1f1f1;
+    padding: 11px 32px 24px;
+    color: #bd0000;
+    position: relative
+}
+.inputDateCalendar input.btn{
+    margin-top:25px
+}
+
+.calendar-controler p {
+    margin: 0;
+    font-size: 20px !important;
+    font-weight: 600;
+}
+
+.calendar-table {
+    width: 100%;
+}
+
+table.calendar-table td {
+    padding: 0;
+    border: 1px solid #e5e5e5;
+    width: 14.28%;
+}
+
+.calendar-date {
+    margin: 0;
+    font-size: 16px !important;
+    background-color: #80ffff;
+    padding: 11px 12px;
+    border-radius: 0 0 29px;
+    display: block;
+    width: 15%;
+    float: left;
+    height: 30px;
+    line-height: 9px;
+    border: solid #d2e0f7;
+    border-top: unset;
+    border-left: unset;
+    color: #0043bd;
+}
+
+.holiday {
+    background-color: #f7d2d5 !important;
+    border-color: #ff858f !important;
+    color: #bd0000 !important;
+}
+
+.calendar-events-list {
+    padding: 10px 0;
+}
+
+.calendar-event {
+    padding: 0px 8px;
+    opacity: 0.8;
+    display: inline-block;
+    width: 95%;
+    margin: 2px 2.5% 0 2.5%;
+    border-radius: 5px;
+    transition: all 0.1s ease-in-out;
+}
+
+    .calendar-event:not(.long-event):hover {
+        cursor: pointer;
+        filter: drop-shadow(1px 2px 3px black);
+        transition: all 0.2s ease-in-out;
+    }
+
+.long-event {
+    width: 100% !important;
+    margin: 3px 0 0 0 !important;
+    border-radius: 0px !important;
+}
+
+.long-event-first {
+    margin: 3px 2.5% 0 0 !important;
+    border-radius: 0 5px 5px 0;
+    width: 97.5%;
+}
+
+.long-event-last {
+    margin: 3px 0 0 2.5% !important;
+    border-radius: 5px 0 0 5px;
+}
+
+.calendar-cell {
+    height: 105px;
+    overflow: hidden;
+}
+
+.calendar-day {
+    padding: 0 5px !important;
+    font-size: 16px !important;
+}
+
+.bgpink {
+    background-color: pink;
+}
+
+.bgpurple {
+    background-color: purple;
+    color: white;
+}
+
+.bgyellow {
+    background-color: #ffe752;
+}
+
+.bgorange {
+    background-color: #ffbe47;
+}
+
+.bgred {
+    background-color: #ff3737;
+    color: white;
+}
+
+.bgblue {
+    background-color: #3e82ff;
+    color: white;
+}
+
+.bggreen {
+    background-color: #00833a;
+    color: white;
+}
+
+.bgnavy {
+    background-color: navy;
+    color: white;
+}
+
+
+.bgpink.long-event {
+    background-color: pink;
+    color: pink;
+}
+
+.bgpurple.long-event {
+    background-color: purple;
+    color: purple;
+}
+
+.bgyellow.long-event {
+    background-color: #ffe752;
+    color: #ffe752;
+}
+
+.bgorange.long-event {
+    background-color: #ffbe47;
+    color: #ffbe47;
+}
+
+.bgred.long-event {
+    background-color: #ff3737;
+    color: #ff3737;
+}
+
+.bgblue.long-event {
+    background-color: #3e82ff;
+    color: #3e82ff;
+}
+
+.bggreen.long-event {
+    background-color: #00833a;
+    color: #00833a;
+}
+
+.bgnavy.long-event {
+    background-color: navy;
+    color: navy;
+}
+
+
+.bgpink.long-event-last {
+    background-color: pink;
+    color: pink;
+}
+
+.bgpurple.long-event-last {
+    background-color: purple;
+    color: purple;
+}
+
+.bgyellow.long-event-last {
+    background-color: #ffe752;
+    color: #ffe752;
+}
+
+.bgorange.long-event-last {
+    background-color: #ffbe47;
+    color: #ffbe47;
+}
+
+.bgred.long-event-last {
+    background-color: #ff3737;
+    color: #ff3737;
+}
+
+.bgblue.long-event-last {
+    background-color: #3e82ff;
+    color: #3e82ff;
+}
+
+.bggreen.long-event-last {
+    background-color: #00833a;
+    color: #00833a;
+}
+
+.bgnavy.long-event-last {
+    background-color: navy;
+    color: navy;
+}
+
+@media(max-width:1366.98px) {
+    .calendar-body {
+        height: 721px;
+    }
+
+    .calendar-date {
+        width: 25%;
+    }
+}
+
+@media(max-width:1919px) and (min-width:1366px) {
+
+    .calendar-body {
+        height: 839px;
+    }
+
+    .calendar-date {
+        width: 25%;
+    }
+}

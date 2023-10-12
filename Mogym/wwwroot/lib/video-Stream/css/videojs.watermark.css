@@ -1,0 +1,12 @@
+.vjs-watermark {
+    position: absolute;
+    display: inline;
+    z-index: 2000;
+        top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+}
+
+    .vjs-watermark{
+
+    }

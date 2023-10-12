@@ -1,0 +1,54 @@
+﻿@model Mogym.Application.Records.User.ConfirmSmsRecord
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ارسال کد تايید - موجیم</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+</head>
+<body>
+    @await Html.PartialAsync("_Header")
+    <section class="gradient-form" style="background-color: #eee;">
+        <div class="h-100 login-page">
+            <div class="card rounded-3 h-100 text-black">
+                @*                <div class="video-bg">
+                <video id="video-cover" autoplay muted loop controls>
+                <source src="/video/295.mp4" type="video/mp4">
+                </video>
+                </div>*@
+                <div class="over-lay-filter"></div>
+                <div class="login-section">
+                    <div class="card-body py-xxl-4">
+                        <h4 class="my-xxl-4 my-xl-2 pb-1">ارسال کد تايید</h4>
+                    </div>
+                    <form asp-action="ConfirmSmsCode" method="post">
+                        <input type="hidden" asp-for="Mobile" value="@ViewBag.Mobile" />
+                        <p>لطفا برای ورود یا ثبت نام شماره موبایل خود را وارد کنید</p>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="ConfirmCode" type="number" class="form-control fs-13px"  required>
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+                        <div class="row login-button">
+                            <div class="text-center py-1 my-3 w-100 button">
+                                <button type="submit" class="btn btn-danger btn-block fa-lg gradient-custom-2 mb-3 p-3 border-0 w-100">ارسال تايید</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await Html.PartialAsync("_Footer")
+</body>
+</html>

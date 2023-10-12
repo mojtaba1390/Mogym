@@ -1,0 +1,98 @@
+﻿
+
+
+.adminlteCalendarRtl .card-title {
+    float: right !important
+}
+
+
+.adminlteCalendarRtl input#drop-remove {
+    -webkit-appearance: unset;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid #c3c9ce;
+    border-radius: 1px;
+    vertical-align: middle;
+    position: unset;
+    transform: unset;
+    outline: unset;
+    margin: 0 0 0 8px;
+}
+
+.adminlteCalendarRtl .table-bordered thead th {
+    padding: 0 !important;
+}
+
+.adminlteCalendarRtl .table-bordered thead, .table-bordered tfoot {
+    background: #fff;
+    /* padding: 56px; */
+}
+
+.adminlteCalendarRtl .table-bordered tbody tr:nth-of-type(even) {
+    background-color: #fff
+}
+
+.adminlteCalendarRtl .table-bordered td, .table-bordered th {
+    border: 1px solid #dee2e6 !important;
+}
+
+.adminlteCalendarRtl .adminLTEeventCard.activeSide {
+    width: 25%;
+    transition: all 0.3s linear;
+    padding: 0.75rem;
+}
+
+.adminlteCalendarRtl .adminLTEeventCard {
+    width: 0%;
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.3s linear;
+}
+
+.adminlteCalendarRtl .calendarBody {
+    width: 75%;
+}
+
+
+
+.adminlteCalendarRtl .fas.fa-square {
+    font-size: 25px !important;
+}
+
+main {
+    height: auto;
+    padding-bottom: 115px;
+}
+
+.fc-daygrid-body.fc-daygrid-body-unbalanced, table.fc-scrollgrid-sync-table {
+    width: 100% !important;
+}
+
+span.cardToggler {
+    position: absolute;
+    right: 22%;
+    top: 3%;
+    z-index: 1021;
+    rotate: 45deg;
+    transition: all 0.3s linear
+}
+
+.cardtoggleractive {
+    right: -27px !important;
+    rotate: 0deg !important;
+    transition: all 0.3s linear
+}
+
+span.cardToggler i {
+    font-size: 20px !important;
+}
+
+
+input[type="checkbox"]:after {
+    content: "";
+    width:unset ;
+    height: unset;
+    position: unset;
+  
+
+}

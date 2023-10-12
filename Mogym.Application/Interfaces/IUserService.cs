@@ -13,5 +13,6 @@ namespace Mogym.Application.Interfaces
         bool IsExistMobile(string mobile);
         Task AddAsync(LoginRecord loginRecord);
         Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord);
+        bool IsExistMobileWithConfirmSmsCode(string mobile, int confirmSmsCode);
     }
 }

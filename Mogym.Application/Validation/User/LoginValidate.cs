@@ -21,14 +21,14 @@ namespace Mogym.Application.Validation.User
                 .Cascade(CascadeMode.Stop)
                 .NotNull().WithMessage("شماره موبایل نباید خالی باشد")
                 .NotEmpty().WithMessage("شماره موبایل نباید خالی باشد")
-                .MinimumLength(11).MaximumLength(11).WithMessage("شماره موبایل نباید باید ۱۱ رقم باشد")
-                .Matches("^09\\d{9}$").WithMessage("فرمت شماره موبایل اشتباه می باشد")
-                .DependentRules(() =>
-                {
-                    RuleFor(x => x.Mobile)
-                        .Must(mobile=> !IsExistMobile(mobile))
-                        .WithMessage("این شماره موبایل قبلا ثبت شده است");
-                });
+                .Length(11).WithMessage("شماره موبایل باید ۱۱ رقم باشد")
+                .Matches("^09\\d{9}$").WithMessage("فرمت شماره موبایل اشتباه می باشد");
+            //.DependentRules(() =>
+            //{
+            //    RuleFor(x => x.Mobile)
+            //        .Must(mobile=> !IsExistMobile(mobile))
+            //        .WithMessage("این شماره موبایل قبلا ثبت شده است");
+            //});
 
 
 
@@ -37,10 +37,7 @@ namespace Mogym.Application.Validation.User
 
         }
 
-        private bool IsExistMobile(string mobile)
-        {
-           return  _userService.IsExistMobile(mobile);
-        }
+
     }
 
 

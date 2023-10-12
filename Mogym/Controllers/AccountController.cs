@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
@@ -32,7 +33,7 @@ namespace Mogym.Controllers
 
                     ArgumentNullException.ThrowIfNull(confirmSmsCode);
 
-                     RedirectToAction("ConfirmSms", new { confirmSmsCode });
+                     return RedirectToAction("ConfirmSmsCode", new { loginRecord.Mobile });
                 }
             }
             catch (Exception e)
@@ -44,16 +45,30 @@ namespace Mogym.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ConfirmSms(ConfirmSmsRecord confirmRegisterRecord)
+        public async Task<IActionResult> ConfirmSmsCode(string mobile)
         {
-            return View(confirmRegisterRecord);
+            ViewBag.Mobile = mobile;
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmRegister(string mobile)
+        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord)
         {
-            return View(mobile);
-        }
+            try
+            {
+                if (ModelState.IsValid)
+                {
 
+
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+            }
+
+            return null;
+        }
+        
     }
 }
