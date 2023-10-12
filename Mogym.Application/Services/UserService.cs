@@ -33,22 +33,42 @@ namespace Mogym.Application.Services
             return _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == mobile.Trim()).Any();
         }
 
-        public async Task AddAsync(RegisterUserRecord registerUser)
+        public async Task AddAsync(LoginRecord loginRecord)
         {
             try
             {
-                var user = _mapper.Map<User>(registerUser);
+                var user = _mapper.Map<User>(loginRecord);
                  await _unitOfWork.UserRepository.AddAsync(user);
 
             }
             catch(Exception ex)
             {
-                var message = $"AddAsync in User Service,entity:" + JsonSerializer.Serialize(registerUser);
+                var message = $"AddAsync in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
                 _logger.LogError(message,ex);
             }
 
         }
 
+        public async Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord)
+        {
+            
+            try
+            {
+                var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == loginRecord.Mobile.Trim()).FirstOrDefaultAsync();
+                if (entity != null)
+                    return _mapper.Map<ConfirmSmsRecord>(entity) ;
 
+                var newUser = _mapper.Map<User>(loginRecord);
+                return _mapper.Map<ConfirmSmsRecord>(newUser);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
+                _logger.LogError(message, ex);
+            }
+
+            return null;
+        }
     }
 }

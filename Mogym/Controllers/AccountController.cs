@@ -22,18 +22,17 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(RegisterUserRecord registerUser)
+        public async Task<IActionResult> Login(LoginRecord loginRecord)
         {
-            _logger.LogInformation("serilog worked");
-
             try
             {
                 if (ModelState.IsValid)
                 {
-                     await _userService.AddAsync(registerUser);
+                    var confirmSmsCode= await _userService.LoginAsync(loginRecord);
 
-                     var confirmRegister = new ConfirmRegisterRecord() {Mobile = registerUser.Mobile};
-                     RedirectToAction("ConfirmRegister", new { confirmRegister });
+                    ArgumentNullException.ThrowIfNull(confirmSmsCode);
+
+                     RedirectToAction("ConfirmSms", new { confirmSmsCode });
                 }
             }
             catch (Exception e)
@@ -45,7 +44,7 @@ namespace Mogym.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ConfirmRegister(ConfirmRegisterRecord confirmRegisterRecord)
+        public async Task<IActionResult> ConfirmSms(ConfirmSmsRecord confirmRegisterRecord)
         {
             return View(confirmRegisterRecord);
         }

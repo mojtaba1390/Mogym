@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.User
 {
-    public record LoginRecord
+    public record ConfirmSmsRecord
     {
         public string Mobile { get; init; }
-        //public string Password { get; init; }
-        public string CofirmCode { get; init; }
+        public int ConfirmCode { get; init; }
     }
 }

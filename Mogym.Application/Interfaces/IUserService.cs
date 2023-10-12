@@ -11,6 +11,7 @@ namespace Mogym.Application.Interfaces
     public interface IUserService
     {
         bool IsExistMobile(string mobile);
-        Task AddAsync(RegisterUserRecord registerUser);
+        Task AddAsync(LoginRecord loginRecord);
+        Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord);
     }
 }

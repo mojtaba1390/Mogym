@@ -27,7 +27,7 @@ namespace Mogym.Application
                 {
                     v.ImplicitlyValidateChildProperties = true;
                     v.ImplicitlyValidateRootCollectionElements = true;
-                    v.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(RegisterUserValidate)));
+                    v.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(LoginValidate)));
                 });
 
             #endregion
