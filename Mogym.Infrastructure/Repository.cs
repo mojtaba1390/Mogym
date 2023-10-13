@@ -29,8 +29,8 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     await _dbContext.SaveChangesAsync();
-                    await _dbContext.Database.CommitTransactionAsync();
                 }
+                await _dbContext.Database.CommitTransactionAsync();
                 return entity;
             }
             catch (DbUpdateException dbException)
@@ -52,8 +52,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                      _dbContext.SaveChanges();
-                     _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
+
             }
             catch (DbUpdateException dbException)
             {
@@ -71,8 +72,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
-                    _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
+
             }
             catch (DbUpdateException dbException)
             {
@@ -90,8 +92,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     await _dbContext.SaveChangesAsync();
-                    await _dbContext.Database.CommitTransactionAsync();
                 }
+                await _dbContext.Database.CommitTransactionAsync();
+
             }
             catch (DbUpdateException dbException)
             {
@@ -112,8 +115,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
-                    _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
+
 
             }
             catch (DbUpdateException dbException)
@@ -134,8 +138,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
-                    _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
+
 
             }
             catch (DbUpdateException dbException)
@@ -187,8 +192,9 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
-                    _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
+
 
             }
             catch (DbUpdateException dbException)
@@ -208,8 +214,8 @@ namespace Mogym.Infrastructure
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
-                    _dbContext.Database.CommitTransaction();
                 }
+                _dbContext.Database.CommitTransaction();
 
             }
             catch (DbUpdateException dbException)

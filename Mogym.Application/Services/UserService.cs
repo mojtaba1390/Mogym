@@ -26,12 +26,13 @@ namespace Mogym.Application.Services
         private readonly IRoleService _roleService;
         private readonly IUserRoleService _userRoleService;
 
-        public UserService(IUnitOfWork unitOfWork,IMapper mapper, ISeriLogService logger, IRoleService roleService)
+        public UserService(IUnitOfWork unitOfWork,IMapper mapper, ISeriLogService logger, IRoleService roleService,IUserRoleService userRoleService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _roleService = roleService;
+            _userRoleService = userRoleService;
         }
 
         public bool IsExistMobile(string mobile)
@@ -100,7 +101,7 @@ namespace Mogym.Application.Services
             return false;
         }
 
-        public async Task<UserWithRoleAndPermissionForAfterAuhenticationRecord> GetUserWithRoleAndPermission(string mobile)
+        public async Task<UserRecord> GetUserWithRoleAndPermission(string mobile)
         {
             try
             {
@@ -108,11 +109,11 @@ namespace Mogym.Application.Services
                 if (entityInWaitingForConfirmSmsCode!=null)
                     return await UpdateEntityToActiveForAuthentication(entityInWaitingForConfirmSmsCode);
 
-                var entityInActiveMode= _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.WaitingForSmsConfirm).FirstOrDefault();
+                var entityInActiveMode= _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.Active).FirstOrDefault();
                 if (entityInActiveMode != null)
                 {
                     var entity = GetEntityWithRoleAndPermission(entityInActiveMode);
-                    return _mapper.Map<UserWithRoleAndPermissionForAfterAuhenticationRecord>(entity);
+                    return _mapper.Map<UserRecord>(entity);
                 }
 
             }
@@ -125,7 +126,7 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        private async Task<UserWithRoleAndPermissionForAfterAuhenticationRecord> UpdateEntityToActiveForAuthentication(User entityInWaitingForConfirmSmsCode)
+        private async Task<UserRecord> UpdateEntityToActiveForAuthentication(User entityInWaitingForConfirmSmsCode)
         {
             try
             {
@@ -144,7 +145,7 @@ namespace Mogym.Application.Services
                 _userRoleService.Add(userRole,true);
 
                 var entity = GetEntityWithRoleAndPermission(entityInWaitingForConfirmSmsCode);
-                return   _mapper.Map<UserWithRoleAndPermissionForAfterAuhenticationRecord>(entity);
+                return   _mapper.Map<UserRecord>(entity);
 
             }
             catch (Exception ex)

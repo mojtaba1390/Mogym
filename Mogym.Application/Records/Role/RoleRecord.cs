@@ -1,4 +1,6 @@
-﻿using Mogym.Domain.Common;
+﻿using Mogym.Application.Records.Permission;
+using Mogym.Application.Records.User;
+using Mogym.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,8 @@ namespace Mogym.Application.Records.Role
         public string EnglishName { get; init; }
         public string PersianName { get; init; }
         public EnumYesNo IsActive { get; init; }
+
+        public List<PermissionRecord> Permissions { get; init; }
+
     }
 }
