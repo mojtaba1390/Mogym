@@ -1,8 +1,12 @@
 ﻿using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
+using Mogym.Domain.Entities;
 
 namespace Mogym.Controllers
 {
@@ -59,7 +63,27 @@ namespace Mogym.Controllers
                 if (ModelState.IsValid)
                 {
 
+                    var user =await  _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
 
+
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name,user.FirstName),
+                        new Claim(ClaimTypes.Surname,user.LastName),
+
+                    };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    var peraperties = new AuthenticationProperties()
+                    {
+                        IsPersistent = true
+                    };
+
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+                    return RedirectToAction("Index");
                 }
             }
             catch (Exception e)
@@ -68,6 +92,12 @@ namespace Mogym.Controllers
             }
 
             return null;
+        }
+
+
+        public async Task<IActionResult> Index()
+        {
+            return View();
         }
         
     }

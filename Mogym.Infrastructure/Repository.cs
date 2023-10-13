@@ -20,14 +20,17 @@ namespace Mogym.Infrastructure
             _dbContext = dbContext;
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity,bool withSaveChange=true)
         {
             try
             {
                 await _dbContext.Database.BeginTransactionAsync();
                 await _dbContext.AddAsync(entity);
-                await _dbContext.SaveChangesAsync();
-                await _dbContext.Database.CommitTransactionAsync();
+                if (withSaveChange)
+                {
+                    await _dbContext.SaveChangesAsync();
+                    await _dbContext.Database.CommitTransactionAsync();
+                }
                 return entity;
             }
             catch (DbUpdateException dbException)
@@ -40,14 +43,17 @@ namespace Mogym.Infrastructure
         }
 
 
-        public void Add(TEntity entity)
+        public void Add(TEntity entity, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.Add(entity);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                     _dbContext.SaveChanges();
+                     _dbContext.Database.CommitTransaction();
+                }
             }
             catch (DbUpdateException dbException)
             {
@@ -56,14 +62,17 @@ namespace Mogym.Infrastructure
                 _dbContext.Database.RollbackTransaction();
             }
         }
-        public void AddRang(IEnumerable<TEntity> entityListEnumerable)
+        public void AddRang(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.AddRange(entityListEnumerable);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                    _dbContext.SaveChanges();
+                    _dbContext.Database.CommitTransaction();
+                }
             }
             catch (DbUpdateException dbException)
             {
@@ -72,14 +81,17 @@ namespace Mogym.Infrastructure
                 _dbContext.Database.RollbackTransaction();
             }
         }
-        public async Task AddRangAsync(IEnumerable<TEntity> entityListEnumerable)
+        public async Task AddRangAsync(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
         {
             try
             {
                 await _dbContext.Database.BeginTransactionAsync();
                 await _dbContext.AddRangeAsync(entityListEnumerable);
-                await _dbContext.SaveChangesAsync();
-                await _dbContext.Database.CommitTransactionAsync();
+                if (withSaveChange)
+                {
+                    await _dbContext.SaveChangesAsync();
+                    await _dbContext.Database.CommitTransactionAsync();
+                }
             }
             catch (DbUpdateException dbException)
             {
@@ -91,14 +103,17 @@ namespace Mogym.Infrastructure
 
 
 
-        public void Delete(TEntity entity)
+        public void Delete(TEntity entity, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.Set<TEntity>().Remove(entity);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                    _dbContext.SaveChanges();
+                    _dbContext.Database.CommitTransaction();
+                }
 
             }
             catch (DbUpdateException dbException)
@@ -110,14 +125,17 @@ namespace Mogym.Infrastructure
             }
 
         }
-        public void DeleteRange(IEnumerable<TEntity> entityListEnumerable)
+        public void DeleteRange(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.Set<TEntity>().RemoveRange(entityListEnumerable);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                    _dbContext.SaveChanges();
+                    _dbContext.Database.CommitTransaction();
+                }
 
             }
             catch (DbUpdateException dbException)
@@ -160,14 +178,17 @@ namespace Mogym.Infrastructure
 
 
 
-        public void Update(TEntity entity)
+        public void Update(TEntity entity, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.Set<TEntity>().Update(entity);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                    _dbContext.SaveChanges();
+                    _dbContext.Database.CommitTransaction();
+                }
 
             }
             catch (DbUpdateException dbException)
@@ -178,14 +199,17 @@ namespace Mogym.Infrastructure
 
             }
         }
-        public void UpdateRange(IEnumerable<TEntity> entityListEnumerable)
+        public void UpdateRange(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
         {
             try
             {
                 _dbContext.Database.BeginTransaction();
                 _dbContext.Set<TEntity>().UpdateRange(entityListEnumerable);
-                _dbContext.SaveChanges();
-                _dbContext.Database.CommitTransaction();
+                if (withSaveChange)
+                {
+                    _dbContext.SaveChanges();
+                    _dbContext.Database.CommitTransaction();
+                }
 
             }
             catch (DbUpdateException dbException)

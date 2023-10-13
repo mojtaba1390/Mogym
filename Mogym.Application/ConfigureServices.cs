@@ -13,6 +13,7 @@ using Mogym.Application.Services.Log;
 using Mogym.Infrastructure;
 using Mogym.Application.Validation.User;
 using Mogym.Application.AutoMapper;
+using Mogym.Application.AutoMapper.User;
 
 namespace Mogym.Application
 {
@@ -20,7 +21,7 @@ namespace Mogym.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(UserMapper));
+            services.AddAutoMapper(typeof(LoginRecord_User));
             #region fluent validation
             services.AddControllers()
                 .AddFluentValidation(v =>
@@ -38,6 +39,8 @@ namespace Mogym.Application
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ISeriLogService, SerilogService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRoleService, UserRoleService>();
+            services.AddScoped<IRoleService, RoleService>();
             #endregion
 
             return services;

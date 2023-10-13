@@ -9,6 +9,6 @@ namespace Mogym.Application.Records.User
     public record ConfirmSmsRecord
     {
         public string Mobile { get; init; }
-        public int ConfirmCode { get; init; }
+        public string? ConfirmCode { get; init; }
     }
 }

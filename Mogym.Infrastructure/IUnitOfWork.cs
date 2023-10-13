@@ -10,6 +10,8 @@ namespace Mogym.Infrastructure
     {
         ISeriLogRepository SeriLogRepository { get; }
         IUserRepository UserRepository { get; }
+        IRoleRepository RoleRepository { get; }
+        IUserRoleRepository UserRoleRepository { get; }
         
     }
 }

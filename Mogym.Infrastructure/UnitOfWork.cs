@@ -19,11 +19,15 @@ namespace Mogym.Infrastructure
             SeriLogRepository = new SeriLogRepository();
 
             UserRepository = new UserRepository(_context);
+            RoleRepository = new RoleRepository(_context);
+            UserRoleRepository = new UserRoleRepository(_context);
         }
 
 
         public ISeriLogRepository SeriLogRepository { get; }
         public IUserRepository UserRepository { get; }
+        public IRoleRepository RoleRepository { get; }
+        public IUserRoleRepository UserRoleRepository { get; }
 
         public void Dispose()
         {

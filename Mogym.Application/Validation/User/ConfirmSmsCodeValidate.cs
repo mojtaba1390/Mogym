@@ -40,7 +40,7 @@ namespace Mogym.Application.Validation.User
 
         }
 
-        private bool IsExistMobileWithConfirmSmsCode(string mobile,int confirmSmsCode)
+        private bool IsExistMobileWithConfirmSmsCode(string mobile,string confirmSmsCode)
         {
             return _userService.IsExistMobileWithConfirmSmsCode(mobile, confirmSmsCode);
         }

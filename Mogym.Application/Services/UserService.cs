@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
+using Mogym.Domain.Common;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -21,11 +23,15 @@ namespace Mogym.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
-        public UserService(IUnitOfWork unitOfWork,IMapper mapper, ISeriLogService logger)
+        private readonly IRoleService _roleService;
+        private readonly IUserRoleService _userRoleService;
+
+        public UserService(IUnitOfWork unitOfWork,IMapper mapper, ISeriLogService logger, IRoleService roleService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _roleService = roleService;
         }
 
         public bool IsExistMobile(string mobile)
@@ -77,11 +83,11 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        public bool IsExistMobileWithConfirmSmsCode(string mobile, int confirmSmsCode)
+        public bool IsExistMobileWithConfirmSmsCode(string mobile, string confirmSmsCode)
         {
             try
             {
-                return _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.SmsConfirmCode == confirmSmsCode.ToString())
+                return _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.SmsConfirmCode == confirmSmsCode)
                     .Any();
             }
             catch (Exception ex)
@@ -92,6 +98,72 @@ namespace Mogym.Application.Services
             }
 
             return false;
+        }
+
+        public async Task<UserWithRoleAndPermissionForAfterAuhenticationRecord> GetUserWithRoleAndPermission(string mobile)
+        {
+            try
+            {
+                var entityInWaitingForConfirmSmsCode = _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status==EnumStatus.WaitingForSmsConfirm).FirstOrDefault();
+                if (entityInWaitingForConfirmSmsCode!=null)
+                    return await UpdateEntityToActiveForAuthentication(entityInWaitingForConfirmSmsCode);
+
+                var entityInActiveMode= _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.WaitingForSmsConfirm).FirstOrDefault();
+                if (entityInActiveMode != null)
+                {
+                    var entity = GetEntityWithRoleAndPermission(entityInActiveMode);
+                    return _mapper.Map<UserWithRoleAndPermissionForAfterAuhenticationRecord>(entity);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetUserWithRoleAndPermission in User Service,mobile=" + mobile ;
+                _logger.LogError(message, ex);
+            }
+
+            return null;
+        }
+
+        private async Task<UserWithRoleAndPermissionForAfterAuhenticationRecord> UpdateEntityToActiveForAuthentication(User entityInWaitingForConfirmSmsCode)
+        {
+            try
+            {
+                entityInWaitingForConfirmSmsCode.Status = EnumStatus.Active;
+                _unitOfWork.UserRepository.Update(entityInWaitingForConfirmSmsCode,false);
+
+
+                var trainerRole = _roleService.GetRoleByName("Athlete");
+
+                var userRole = new UserRole()
+                {
+                    RoleId = trainerRole.Id.Value,
+                    UserId = entityInWaitingForConfirmSmsCode.Id
+                };
+
+                _userRoleService.Add(userRole,true);
+
+                var entity = GetEntityWithRoleAndPermission(entityInWaitingForConfirmSmsCode);
+                return   _mapper.Map<UserWithRoleAndPermissionForAfterAuhenticationRecord>(entity);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"UpdateEntityToActiveForAuthentication in User Service,object=" + JsonSerializer.Serialize(entityInWaitingForConfirmSmsCode);
+                _logger.LogError(message, ex);
+            }
+
+            return null;
+        }
+
+        private User GetEntityWithRoleAndPermission(User user)
+        {
+            return _unitOfWork.UserRepository.Find(x => x.Id == user.Id)
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.UserRole_Role)
+                .ThenInclude(x => x.Permissions)
+                .AsNoTracking()
+                .First();
         }
     }
 }
