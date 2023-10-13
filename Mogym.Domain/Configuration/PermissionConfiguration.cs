@@ -19,10 +19,8 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.IsActive).HasColumnType("int").HasDefaultValue(EnumYesNo.Yes).IsRequired();
-            builder.Property(x => x.RoleId).HasColumnType("int").IsRequired();
 
 
-            builder.HasOne<Role>(x => x.Permission_Role).WithMany(z => z.Permissions).HasForeignKey(a => a.RoleId);
 
         }
     }

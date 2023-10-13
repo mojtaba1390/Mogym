@@ -10,12 +10,15 @@ namespace Mogym.Domain.Entities
 {
     public class Permission:BaseEntity
     {
+        public Permission()
+        {
+            RolePermissions = new HashSet<RolePermission>();
+        }
         public string EnglishName { get; set; }
         public string PersianName { get; set; }
         public EnumYesNo IsActive { get; set; }
 
-        public int RoleId { get; set; }
 
-        public Role Permission_Role { get; set; }
+        public ICollection<RolePermission> RolePermissions { get; set; }
     }
 }

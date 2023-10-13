@@ -13,8 +13,8 @@ namespace Mogym.Domain.Entities
     {
         public Role()
         {
-            Permissions = new HashSet<Permission>();
             UserRoles = new HashSet<UserRole>();
+            RolePermissions = new HashSet<RolePermission>();
 
         }
         public string EnglishName { get; set; }
@@ -22,8 +22,8 @@ namespace Mogym.Domain.Entities
         public EnumYesNo IsActive { get; set; }
 
 
-        public ICollection<Permission> Permissions { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<RolePermission> RolePermissions { get; set; }
 
     }
 }

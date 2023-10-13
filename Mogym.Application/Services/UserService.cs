@@ -161,7 +161,8 @@ namespace Mogym.Application.Services
             return _unitOfWork.UserRepository.Find(x => x.Id == user.Id)
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.UserRole_Role)
-                .ThenInclude(x => x.Permissions)
+                .ThenInclude(x => x.RolePermissions)
+                .ThenInclude(x=>x.RolePermission_Permission)
                 .AsNoTracking()
                 .First();
         }
