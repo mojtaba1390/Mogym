@@ -7,6 +7,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
 using Mogym.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mogym.Controllers
 {
@@ -37,7 +38,7 @@ namespace Mogym.Controllers
 
                     ArgumentNullException.ThrowIfNull(confirmSmsCode);
 
-                     return RedirectToAction("ConfirmSmsCode", new { loginRecord.Mobile });
+                     return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile });
                 }
             }
             catch (Exception e)
@@ -66,10 +67,19 @@ namespace Mogym.Controllers
                     var user =await  _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
 
 
+                    //Todo:
+                    // اینجا باید ردیس فراخوانی بشه و اطلاعات یوزر با رول و دسترسی با کلید بر اساس یونیک یوزرنیم ذخیره بشه
+                    //همینطور اینجا باید منو از دیتابیس فراخوانی بشه و اونم در ردیس فراخوانی بشه
+                    //فیلتر منو ها به صورت دیفالت بر اساس اکتیو هست و نیاز به شرط نداره، فقط تو لیست منو ها باید این شرط برداشته بشه
+                    //کلید ها برای ردیس حتما تو appsetting تو لیست rediskey تعریف بشه و از اونجا خونده بشه
+                    
+
+
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name,user.FirstName),
-                        new Claim(ClaimTypes.Surname,user.LastName),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? "")
 
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -83,7 +93,7 @@ namespace Mogym.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception e)
@@ -93,6 +103,16 @@ namespace Mogym.Controllers
 
             return null;
         }
+
+
+        [Authorize]
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync();
+
+            return View(nameof(Login));
+        }
+
 
 
         public async Task<IActionResult> Index()

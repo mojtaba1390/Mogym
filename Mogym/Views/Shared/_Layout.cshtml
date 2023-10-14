@@ -1,0 +1,385 @@
+﻿
+
+@{
+
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="fa" />
+    <title>@ViewData["Title"] - موجیم</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-5.15.4-web/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/lib/owl-carousel/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/css/sweetalert2.min.css" />
+
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/css/ionicons.min.css" />
+
+    <link rel="stylesheet" href="~/lib/DataTables-1.12.1/css/jquery.dataTables.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/DataTables-1.12.1/css/buttons.dataTables.min.css">
+
+    <!--select2-->
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" asp-append-version="true" />
+
+    <!--education calendar-->
+    <link rel="stylesheet" href="~/css/education-calendar.css" />
+    <!--datepicker-->
+    <link rel="stylesheet" href="~/lib/datePicker/css/persian-datepicker.css" />
+    <!-- custome style-->
+    <link rel="stylesheet" href="~/css/adminlte.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/overlayScrollbars/css/OverlayScrollbars.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" ?cache="p" />
+   <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+     <!-- videoStream style-->
+    <link href="~/lib/video-Stream/css/video-js.css" rel="stylesheet">
+    <link href="~/lib/video-Stream/css/videojs.watermark.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" ?cache="p" />
+    <link rel="stylesheet" href="~/css/ronixcalendar.css" asp-append-version="true" ?cache="p" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/lib/jQuery-Validation-1.19.2/jquery-validation.min.js"></script>
+</head>
+<body class="sidebar-mini layout-fixed">
+    <!-- Loding .... -->
+     <div class="preloader col-md-12 card customLoading text-center">
+        <img src="~/img/Blocks-1s-200px (3).gif" alt="" width="100" height="100" />
+       <span>لطفا منتظر بمانید...</span>
+    </div>
+    <!----->
+    <header>
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light row">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav col-6">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#">
+                        <div class="collapse-button" id="btn">
+                            <div class="bar top"></div>
+                            <div class="bar middle"></div>
+                            <div class="bar bottom"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto col-6 d-flex justify-content-end">
+                <li class="nav-item dropdown p-0">
+                </li>
+
+                <li class="mt-1 mx-3">
+@*                    <a asp-controller="Cartable" asp-action="Index" class="tooltip">
+                        @if (ViewBag.CartableCount != null )//&& ViewBag.CartableCount != 0 )
+                        {
+                            <badge class="badge bg-success-card"> @(ViewBag.CartableCount)</badge>
+                        }
+                        <i class="fa fa-newspaper fa-lg" aria-hidden="true"></i>
+                        <span class="tooltiptext tooltip-bottom">
+                            کارتابل
+                        </span>
+                    </a>*@
+                </li>
+                <li class="px-3 user-panel1 ">
+                    <div class="dropdown">
+                        <img src="/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+@*                        @user
+                        <div class="dropdown-content">
+                            <ul>
+                                @if (components != null && components.Any(c => c.Guid == "820f46b5-c472-4e95-bd0e-910447f25236"))
+                                {
+                                    <li>
+                                        <a class="text-align" asp-controller="person" asp-action="personInfo">
+                                            <i class="fas fa-user"></i>
+
+                                            <span>پروفایل</span>
+                                        </a>
+                                    </li>
+                                }
+
+                                <li>
+                                    <a class="text-align" asp-controller="account" asp-action="ChangePassword">
+                                        <i class="fas fa-key"></i>
+                                        <span> تغییر پسورد</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-bs-toggle="modal" data-bs-target="#signOut">
+                                        <i class="fa fa-power-off fa-lg" aria-hidden="true"></i>
+                                        <span> خروج </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>*@
+                    </div>
+
+                </li>
+            </ul>
+
+        </nav>
+      <!--  vaus -->
+     <!--Main Sidebar Container -->
+
+        <aside class="main-sidebar elevation-4">
+            <!-- Brand Logo -->
+            <a href="/" class="brand-link d-flex justify-content-start">
+                <img src="" loading="lazy" class="text-center margin-0 ronix-logo-header py-3 px-3 " />
+                <img src="/img/favIcon.svg" loading="lazy" width="43" class="favicon-svg" />
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2 sidebar-menu-card">
+@*                    <ul class="nav nav-pills nav-sidebar flex-column p-0 text-right" data-widget="treeview" role="menu" data-accordion="true">
+                        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                        @{
+                            var mainMenus = menus.Where(p => p.ParentId == null).OrderBy(m => m.Priority).ToList();
+                            @foreach (var itm in mainMenus)
+                            {
+                                var sub1 = menus.Where(m => m.ParentId == itm.Id).OrderBy(m => m.Priority).ToList();
+                                <li class="nav-item has-treeview  @(ViewData[$"{itm.Id}"] != null && (bool)ViewData[$"{itm.Id}"] ? "menu-open" : "")">
+                                    <a href="#" class="nav-link @(ViewData[$"{itm.Id}"] != null && (bool)ViewData[$"{itm.Id}"] ? "active" : "")">
+                                        <i class="@( $"fas {itm.Icon}")"></i>
+                                        <p>
+
+                                            @itm.Title
+                                            @if (sub1.Any())
+                                            {
+                                                <i class="right fas fa-angle-left"></i>
+                                            }
+                                            
+                                        </p>
+                                    </a>
+                                    @{
+                                        
+                                        @if (sub1.Any())
+                                        {
+                                            <ul class="nav nav-treeview" data-accordion="@sub1.Any()?">
+
+                                                @foreach (var itmSub in sub1)
+                                                {
+                                                    var Sub2 = menus.Where(m => m.ParentId == itmSub.Id).OrderBy(m => m.Priority).ToList();
+                                                    <li class="nav-item @(ViewData[$"{itmSub.Id}"] != null && (bool)ViewData[$"{itmSub.Id}"] ? "menu-open" : "")">
+                                                        <a href="@itmSub.Link" class="nav-link @(ViewData[$"{itmSub.Id}"] != null && (bool)ViewData[$"{itmSub.Id}"] ? "active" : "")">
+                                                            <i class="@( $"fas {itmSub.Icon}")"></i>
+                                                            <p>
+                                                                @itmSub.Title
+                                                                @if (Sub2.Any())
+                                                                {
+                                                                    <i class="fas fa-angle-left right"></i>
+
+                                                                }
+                                                            </p>
+                                                        </a>
+                                                        @{
+
+                                                            @if (Sub2.Any())
+                                                            {
+                                                                <ul class="nav nav-treeview" data-accordion="@Sub2.Any()">
+                                                                    @foreach (var itmSub2 in Sub2)
+                                                                    {
+                                                                        var Sub3 = menus.Where(m => m.ParentId == itmSub2.Id).OrderBy(m => m.Priority).ToList();
+                                                                        <li class="nav-item">
+                                                                            <a href="@itmSub2.Link" class="nav-link @(ViewData[$"{itmSub2.Id}"] != null && (bool)ViewData[$"{itmSub2.Id}"] ? "active" : "") ">
+                                                                                <i class="@( $"fas {itmSub2.Icon}")"></i>
+                                                                                <p>@itmSub2.Title </p>
+                                                                            </a>
+
+                                                                            @{
+                                                                                @if (Sub3.Any())
+                                                                                {
+                                                                                    <ul class="nav nav-treeview" data-accordion="@Sub3.Any()">
+                                                                                        @foreach (var itmSub3 in Sub3)
+                                                                                        {
+
+                                                                                            <li class="nav-item">
+                                                                                                <a href="@itmSub3.Link" class="nav-link @(ViewData[$"{itmSub3.Id}"] != null && (bool)ViewData[$"{itmSub3.Id}"] ? "active" : "") ">
+                                                                                                    <i class="@( $"fas {itmSub3.Icon}")"></i>
+                                                                                                    <p>@itmSub3.Title </p>
+                                                                                                </a>
+
+                                                                                            </li>
+                                                                                        }
+                                                                                    </ul>
+                                                                                }
+                                                                            }
+                                                                            
+
+                                                                        </li>
+                                                                    }
+                                                                </ul>
+                                                            }
+
+                                                        }
+
+                                                    </li>
+
+                                                }
+
+
+                                            </ul>
+                                        }
+
+                                    }
+
+                                </li>
+                            }
+
+                        }
+
+
+
+                    </ul>
+*@                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+    </header>
+    <div class="">
+        <main role="main">
+             
+            <div class="content-wrapper pb-3">
+                <div class="triangles-bg"></div>
+                <div class="breadcrumb p-0 m-0">
+@*                    <p class="my-2 px-5">
+                        @for (var index = listMenus.Count() - 1; index >= 0; index--)
+                        {
+							<a href="@listMenus[index].Link"> @($"{listMenus[index].Title}") <span>/</span>  </a>
+                        }
+                    </p>*@
+                </div>
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+    <footer class="border-top footer text-muted text-right">
+        <div class="container">
+            <div b-4x80uveols="" class="float-right d-none d-sm-inline-block">
+            </div>
+        </div>
+    </footer>
+     @if (TempData["message"] != null)
+        {
+     <div class="alert alert-success  alert-index alert-index-success  text-right col-md-4">
+        <div class="swal2-icon swal2-success swal2-icon-show" style="display: flex;">
+           <div class="swal2-success-circular-line-left" style="background-color: rgb(255, 255, 255);"></div>
+           <span class="swal2-success-line-tip"></span>
+           <span class="swal2-success-line-long"></span>
+           <div class="swal2-success-ring"></div>
+           <div class="swal2-success-fix" style="background-color: rgb(255, 255, 255);"></div>
+           <div class="swal2-success-circular-line-right" style="background-color: rgb(255, 255, 255);"></div>
+        </div>
+     <div class="alret-title">
+         @TempData["message"]
+     </div>
+     </div>
+   }
+         @if (TempData["errormessage"] != null)
+    {
+        <div class="alert alert-error  alert-index alert-index-danger text-right col-md-4">
+            <div class="swal2-icon swal2-error swal2-icon-show" style="display: flex;">
+           <div class="sa">
+                    <div class="sa-error">
+                      <div class="sa-error-x">
+                        <div class="sa-error-left"></div>
+                        <div class="sa-error-right"></div>
+                      </div>
+                      <div class="sa-error-placeholder"></div>
+                      <div class="sa-error-fix"></div>
+                    </div>
+                   </div>
+        </div>
+        <div class="alret-title">
+           @TempData["errormessage"]
+        </div>
+    </div>
+    }
+
+    <div id="sidebar-overlay"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signOut" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-b-red">
+                    <h5 class="modal-title" id="exampleModalLabel">خروج</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-right">
+                    <p>
+                        ایا مطمئنید میخواهید خارج شوید؟
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="/account/logout" class="btn bg-buttom-red">بله</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal -->
+   
+
+    <!-- datapicker-->
+    <script src="~/lib/datePicker/js/persian-date.js"></script>
+    <script src="~/lib/datePicker/js/persian-datepicker.js"></script>
+    <script src="~/js/calendar.js"></script>
+
+    <script src="~/js/number.js"></script>
+
+    <!-- dataTable-->
+    <script src="~/lib/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/DataTables-1.12.1/js/dataTables.buttons.min.js"></script>
+    <script src="~/lib/DataTables-1.12.1/js/jszip.min.js"></script>
+    <script src="~/lib/DataTables-1.12.1/js/buttons.html5.min.js"></script>
+    <!-- end dataTable-->
+    <!--select 2 -->
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <!--canvas-->
+    <script src="~/js/canvas-full.js"></script>
+    <script src="~/js/canvas.js"></script>
+    <!--alert-->
+    <script src="~/lib/sweetalert2/js/sweetalert2.all.min.js"></script>
+    <script src="~/lib/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/js/adminlte.js"></script>
+    <!-- videoStream style-->
+    <script src="~/lib/video-Stream/js/video.js"></script>
+    <script src="~/lib/video-Stream/js/videojs-contrib-hls.js"></script>
+    <script src="~/lib/video-Stream/js/videojs.watermark.js"></script>
+    
+    <script src="~/js/demo.js"></script>
+    <script src="~/js/site.js?" ></script>
+    <script>
+ 
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Styles", required: false)
+    <script>
+        window.addEventListener('load', (event) => {
+            $('.customLoading').hide();
+        });
+
+    </script>
+    
+
+
+</body>
+</html>

@@ -14,6 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="wwwroot\css\adminlte.css.map" />
     <None Include="wwwroot\css\adminlte.min.css.map" />
     <None Include="wwwroot\font\IRANSansWeb%28FaNum%29\IRANSansWeb%28FaNum%29.svg" />
