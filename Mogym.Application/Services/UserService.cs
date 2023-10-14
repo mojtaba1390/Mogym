@@ -163,7 +163,7 @@ namespace Mogym.Application.Services
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.UserRole_Role)
                 .ThenInclude(x => x.RolePermissions)
-                .ThenInclude(x=>x.RolePermission_Permission)
+                //.ThenInclude(x=>x.RolePermission_Permission)
                 .AsNoTracking()
                 .First();
         }

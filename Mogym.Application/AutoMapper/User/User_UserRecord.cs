@@ -19,7 +19,13 @@ namespace Mogym.Application.AutoMapper.User
             CreateMap<Domain.Entities.User, UserRecord>()
                 .ForMember(dest => dest.Roles,
                     opt =>
-                        opt.MapFrom(src => src.UserRoles.Select(ur => ur.UserRole_Role)));
+                        opt.MapFrom(src =>
+                            src.UserRoles.Select(ur => ur.UserRole_Role)))
+                .ForMember(x => x.Roles.Select(z => z.Permissions),
+                    frm =>
+                        frm.MapFrom(z =>
+                            z.UserRoles.SelectMany(a => a.UserRole_Role.RolePermissions)
+                                .Select(w => w.RolePermission_Permission)));
 
 
 
