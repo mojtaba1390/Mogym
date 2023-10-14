@@ -15,6 +15,7 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
             builder.ToTable("Permission");
+            builder.HasQueryFilter(x => x.IsActive == EnumYesNo.Yes);
 
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();

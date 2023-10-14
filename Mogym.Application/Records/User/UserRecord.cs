@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Application.Records.Permission;
 using Mogym.Application.Records.Role;
 
 namespace Mogym.Application.Records.User
@@ -26,6 +27,7 @@ namespace Mogym.Application.Records.User
         public string? Email { get; init; }
 
         public List<RoleRecord> Roles { get; init; }
+        public List<PermissionRecord> Permissions { get; init; }
 
     }
 

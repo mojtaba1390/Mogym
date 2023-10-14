@@ -21,11 +21,11 @@ namespace Mogym.Application.AutoMapper.User
                     opt =>
                         opt.MapFrom(src =>
                             src.UserRoles.Select(ur => ur.UserRole_Role)))
-                .ForMember(x => x.Roles.Select(z => z.Permissions),
+                .ForMember(x => x.Permissions,
                     frm =>
                         frm.MapFrom(z =>
                             z.UserRoles.SelectMany(a => a.UserRole_Role.RolePermissions)
-                                .Select(w => w.RolePermission_Permission)));
+                                .Select(w => w.RolePermission_Permission).ToList()));
 
 
 

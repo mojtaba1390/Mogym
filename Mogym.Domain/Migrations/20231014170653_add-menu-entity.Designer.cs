@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    partial class MogymContextModelSnapshot : ModelSnapshot
+    [Migration("20231014170653_add-menu-entity")]
+    partial class addmenuentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,11 +47,6 @@ namespace Mogym.Domain.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Link")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar");
 
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");

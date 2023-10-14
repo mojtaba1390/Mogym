@@ -52,6 +52,7 @@ namespace Mogym.Application.Services
             {
                 var message = $"AddAsync in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
                 _logger.LogError(message,ex);
+                throw ex;
             }
 
         }
@@ -79,6 +80,7 @@ namespace Mogym.Application.Services
             {
                 var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
                 _logger.LogError(message, ex);
+                throw ex;
             }
 
             return null;
@@ -96,6 +98,7 @@ namespace Mogym.Application.Services
                 var message = $"IsExistMobileWithConfirmSmsCode in User Service,mobile=" + mobile + ";confirmSmsCode=" +
                               confirmSmsCode;
                 _logger.LogError(message, ex);
+                throw ex;
             }
 
             return false;
@@ -121,6 +124,7 @@ namespace Mogym.Application.Services
             {
                 var message = $"GetUserWithRoleAndPermission in User Service,mobile=" + mobile ;
                 _logger.LogError(message, ex);
+                throw ex;
             }
 
             return null;
@@ -152,6 +156,7 @@ namespace Mogym.Application.Services
             {
                 var message = $"UpdateEntityToActiveForAuthentication in User Service,object=" + JsonSerializer.Serialize(entityInWaitingForConfirmSmsCode);
                 _logger.LogError(message, ex);
+                throw ex;
             }
 
             return null;
@@ -163,7 +168,7 @@ namespace Mogym.Application.Services
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.UserRole_Role)
                 .ThenInclude(x => x.RolePermissions)
-                //.ThenInclude(x=>x.RolePermission_Permission)
+                .ThenInclude(x=>x.RolePermission_Permission)
                 .AsNoTracking()
                 .First();
         }
