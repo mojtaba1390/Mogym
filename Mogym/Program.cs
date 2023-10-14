@@ -18,7 +18,11 @@ builder.Services.AddDbContext<MogymContext>(x => x.UseSqlServer(connectionString
 var connectionStringLog = builder.Configuration.GetConnectionString("MogymLogConnection");
 builder.Services.AddDbContext<MogymLogContext>(x => x.UseSqlServer(connectionStringLog));
 
-
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+    options.InstanceName = "GamesCatalog_";
+});
 
 
 var app = builder.Build();
