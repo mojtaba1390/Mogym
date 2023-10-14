@@ -41,6 +41,7 @@ namespace Mogym.Application
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IMenuService, MenuService>();
             #endregion
 
             return services;

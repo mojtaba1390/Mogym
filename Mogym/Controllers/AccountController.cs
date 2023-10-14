@@ -15,10 +15,12 @@ namespace Mogym.Controllers
     {
         private readonly ISeriLogService _logger;
         private readonly IUserService _userService;
-        public AccountController(IUserService userService, ISeriLogService logger)
+        private readonly IMenuService _menuService;
+        public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService)
         {
             _userService = userService;
             _logger = logger;
+            _menuService = menuService;
         }
 
         public async Task<IActionResult> Login()
@@ -65,7 +67,7 @@ namespace Mogym.Controllers
                 {
 
                     var user =await  _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
-
+                    var activeMenus = _menuService.GetAllActiveMenuList();
 
                     //Todo:
                     // اینجا باید ردیس فراخوانی بشه و اطلاعات یوزر با رول و دسترسی با کلید بر اساس یونیک یوزرنیم ذخیره بشه
