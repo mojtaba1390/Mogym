@@ -57,6 +57,12 @@ namespace Mogym.Application.Services
 
         }
 
+
+        /// <summary>
+        /// لاگین یوزر برای بار دوم به بعد که با تولید کد تائید اس ام اس هست 
+        /// </summary>
+        /// <param name="loginRecord"></param>
+        /// <returns>ConfirmSmsRecord</returns>
         public async Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord)
         {
             
@@ -86,6 +92,12 @@ namespace Mogym.Application.Services
             return null;
         }
 
+        /// <summary>
+        /// چک کردن موبایل و کد تائید
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="confirmSmsCode"></param>
+        /// <returns>bool</returns>
         public bool IsExistMobileWithConfirmSmsCode(string mobile, string confirmSmsCode)
         {
             try
@@ -104,6 +116,11 @@ namespace Mogym.Application.Services
             return false;
         }
 
+        /// <summary>
+        /// بر اساس وضعیت منتظر تائید اس ام اس و یا تائید اطلاعات رو برمیگردونه
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <returns>UserRecord</returns>
         public async Task<UserRecord> GetUserWithRoleAndPermission(string mobile)
         {
             try
@@ -130,6 +147,12 @@ namespace Mogym.Application.Services
             return null;
         }
 
+
+        /// <summary>
+        /// این متد برای تغییر وضعیت یوزر از منتظر تائید اس ام اس به تائید و اعطای رول ورزشکار به یوزر بعد از ثبت نام هست
+        /// </summary>
+        /// <param name="entityInWaitingForConfirmSmsCode"></param>
+        /// <returns>UserRecord</returns>
         private async Task<UserRecord> UpdateEntityToActiveForAuthentication(User entityInWaitingForConfirmSmsCode)
         {
             try
@@ -162,6 +185,11 @@ namespace Mogym.Application.Services
             return null;
         }
 
+        /// <summary>
+        /// گرفتن اطلاعات کامل یوزر شامل نقش و دسترسی بر اساس آیدی یوزر
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>User</returns>
         private User GetEntityWithRoleAndPermission(User user)
         {
             return _unitOfWork.UserRepository.Find(x => x.Id == user.Id)
