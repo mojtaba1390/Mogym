@@ -142,7 +142,7 @@ namespace Mogym.Controllers
 
 
 
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             return View();
         }
