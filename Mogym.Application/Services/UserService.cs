@@ -93,7 +93,7 @@ namespace Mogym.Application.Services
         }
 
         /// <summary>
-        /// چک کردن موبایل و کد تائید
+        /// چک کردن موبایل با کد تائید
         /// </summary>
         /// <param name="mobile"></param>
         /// <param name="confirmSmsCode"></param>

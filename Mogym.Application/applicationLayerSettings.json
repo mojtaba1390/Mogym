@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    "RedisConnection": "localhost:90"
+  },
+  "RedisKey": {
+    "UserInformation": "User_Information",
+    "UserRoles": "User_Role_Information",
+    "UserPermissions": "User_Permission_Information",
+    "MenuList": "Menu_List"
+  }
+}

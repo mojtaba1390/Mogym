@@ -8,6 +8,7 @@ using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
 using Mogym.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Mogym.Application.Interfaces.ICache;
 
 namespace Mogym.Controllers
 {
@@ -16,11 +17,16 @@ namespace Mogym.Controllers
         private readonly ISeriLogService _logger;
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
-        public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService)
+        private readonly IRedisCacheService _redisCacheService;
+        private readonly IConfiguration _configuration;
+
+        public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
         {
             _userService = userService;
             _logger = logger;
             _menuService = menuService;
+            _redisCacheService = redisCacheService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Login()
@@ -36,11 +42,11 @@ namespace Mogym.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var confirmSmsCode= await _userService.LoginAsync(loginRecord);
+                    var confirmSmsCode = await _userService.LoginAsync(loginRecord);
 
                     ArgumentNullException.ThrowIfNull(confirmSmsCode);
 
-                     return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile });
+                    return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile });
                 }
             }
             catch (Exception e)
@@ -58,6 +64,14 @@ namespace Mogym.Controllers
             return View();
         }
 
+
+
+        /// <summary>
+        /// اگه کد ارسالی و موبایل درست باشه، اطلاعات کاربر و نقش و دسترسی و منو های با وضعیت فعال گرفته میشه و در ردیس ذخیره میشه
+        /// و بعد از اون، یه سری از اطلاعات برای کوکی ذخیره میشه
+        /// </summary>
+        /// <param name="confirmRegisterRecord"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord)
         {
@@ -66,15 +80,26 @@ namespace Mogym.Controllers
                 if (ModelState.IsValid)
                 {
 
-                    var user =await  _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
+                    var user = await _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
                     var activeMenus = _menuService.GetAllActiveMenuList();
 
-                    //Todo:
-                    // اینجا باید ردیس فراخوانی بشه و اطلاعات یوزر با رول و دسترسی با کلید بر اساس یونیک یوزرنیم ذخیره بشه
-                    //همینطور اینجا باید منو از دیتابیس فراخوانی بشه و اونم در ردیس فراخوانی بشه
-                    //فیلتر منو ها به صورت دیفالت بر اساس اکتیو هست و نیاز به شرط نداره، فقط تو لیست منو ها باید این شرط برداشته بشه
-                    //کلید ها برای ردیس حتما تو appsetting تو لیست rediskey تعریف بشه و از اونجا خونده بشه
-                    
+                    var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
+                    var rolesKey = _configuration.GetSection("RedisKey").GetValue<string>("UserRoles");
+                    var permissionsKey = _configuration.GetSection("RedisKey").GetValue<string>("UserPermissions");
+                    var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
+
+
+                    #region set redis cache
+                    await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
+                        DateTime.Now.AddHours(1).Minute);
+                    await _redisCacheService.Set(rolesKey, user.Roles, DateTime.Now.AddDays(1).Minute,
+                         DateTime.Now.AddHours(1).Minute);
+                    await _redisCacheService.Set(permissionsKey, user.Permissions, DateTime.Now.AddDays(1).Minute,
+                         DateTime.Now.AddHours(1).Minute);
+                    await _redisCacheService.Set(activeMenusKey, activeMenus, DateTime.Now.AddDays(1).Minute,
+                         DateTime.Now.AddHours(1).Minute);
+                    #endregion
+
 
 
                     var claims = new List<Claim>()
@@ -121,6 +146,6 @@ namespace Mogym.Controllers
         {
             return View();
         }
-        
+
     }
 }
