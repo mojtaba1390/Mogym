@@ -14,6 +14,8 @@ using Mogym.Infrastructure;
 using Mogym.Application.Validation.User;
 using Mogym.Application.AutoMapper;
 using Mogym.Application.AutoMapper.User;
+using Mogym.Application.Interfaces.ICache;
+using Mogym.Application.Services.Cache;
 
 namespace Mogym.Application
 {
@@ -42,6 +44,7 @@ namespace Mogym.Application
             services.AddScoped<IUserRoleService, UserRoleService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IRedisCacheService, RedisCacheService>();
             #endregion
 
             return services;

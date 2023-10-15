@@ -81,13 +81,16 @@ namespace Mogym.Controllers
                 {
 
                     var user = await _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
-                    var activeMenus = _menuService.GetAllActiveMenuList();
+                    var activeMenus =await _menuService.GetAllActiveMenuList();
 
                     var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
                     var rolesKey = _configuration.GetSection("RedisKey").GetValue<string>("UserRoles");
                     var permissionsKey = _configuration.GetSection("RedisKey").GetValue<string>("UserPermissions");
                     var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
 
+
+
+                    //TODO: اینجا باید اول کلید های مربوطه تو ردیس پاک بشه بعد ست بشه
 
                     #region set redis cache
                     await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
@@ -105,7 +108,7 @@ namespace Mogym.Controllers
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim(ClaimTypes.Name, user.UserName ??""),
                         new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? "")
 
                     };
@@ -128,7 +131,7 @@ namespace Mogym.Controllers
                 ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
             }
 
-            return null;
+            return RedirectToAction(nameof(ConfirmSmsCode),new{ confirmRegisterRecord .Mobile});
         }
 
 
@@ -142,7 +145,7 @@ namespace Mogym.Controllers
 
 
 
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
