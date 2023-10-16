@@ -11,7 +11,9 @@
 @inject IUserService _userService;
 @inject IMenuService _menuService;
 @{
-    var isRedisConnected = ConnectionMultiplexer.Connect(_configuration.GetConnectionString("RedisConnection") ?? string.Empty).IsConnected;
+
+
+    var isRedisConnected = (await ConnectionMultiplexer.ConnectAsync(_configuration.GetConnectionString("RedisConnection"))).IsConnected;
 
     List<MenuRecord> menus = new List<MenuRecord>();
     UserRecord user;
