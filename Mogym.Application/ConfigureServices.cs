@@ -24,6 +24,8 @@ namespace Mogym.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(LoginRecord_User));
+
+
             #region fluent validation
             services.AddControllers()
                 .AddFluentValidation(v =>

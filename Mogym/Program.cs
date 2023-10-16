@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
         options.SlidingExpiration = true;
-        options.AccessDeniedPath = "/Forbidden/";
+        options.AccessDeniedPath = "/Account/Login/";
     });
 
 var app = builder.Build();
