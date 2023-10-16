@@ -36,6 +36,8 @@ namespace Mogym.Application.Services.Cache
 
         public async Task<T?> Set<T>(string key, T value)
         {
+            await Reset(key);
+
             var options = new DistributedCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(180),
@@ -52,6 +54,8 @@ namespace Mogym.Application.Services.Cache
 
         public async Task<T?> Set<T>(string key, T value, int absoluteExpirationMinutes)
         {
+            await Reset(key);
+
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
@@ -75,6 +79,8 @@ namespace Mogym.Application.Services.Cache
 
         public async Task<T?> Set<T>(string key, T value, int absoluteExpirationMinutes, int slidingExpirationMinutes)
         {
+            await Reset(key);
+
             var options = new DistributedCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(absoluteExpirationMinutes),
@@ -87,6 +93,12 @@ namespace Mogym.Application.Services.Cache
             await _cache.SetAsync(key, newDataToCache, options);
 
             return default;
+        }
+
+
+        public async Task Reset(string key)
+        {
+            await _cache.RemoveAsync(key);
         }
     }
 }

@@ -9,6 +9,7 @@ using Mogym.Application.Records.User;
 using Mogym.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Mogym.Application.Interfaces.ICache;
+using StackExchange.Redis;
 
 namespace Mogym.Controllers
 {
@@ -19,7 +20,7 @@ namespace Mogym.Controllers
         private readonly IMenuService _menuService;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IConfiguration _configuration;
-
+        private readonly bool isRedisConnected = true;
         public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
         {
             _userService = userService;
@@ -27,6 +28,7 @@ namespace Mogym.Controllers
             _menuService = menuService;
             _redisCacheService = redisCacheService;
             _configuration = configuration;
+            isRedisConnected = ConnectionMultiplexer.Connect(_configuration.GetConnectionString("RedisConnection") ?? string.Empty).IsConnected;
         }
 
         public async Task<IActionResult> Login()
@@ -84,8 +86,6 @@ namespace Mogym.Controllers
                     var activeMenus =await _menuService.GetAllActiveMenuList();
 
                     var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
-                    var rolesKey = _configuration.GetSection("RedisKey").GetValue<string>("UserRoles");
-                    var permissionsKey = _configuration.GetSection("RedisKey").GetValue<string>("UserPermissions");
                     var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
 
 
@@ -93,23 +93,24 @@ namespace Mogym.Controllers
                     //TODO: اینجا باید اول کلید های مربوطه تو ردیس پاک بشه بعد ست بشه
 
                     #region set redis cache
-                    await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
-                        DateTime.Now.AddHours(1).Minute);
-                    await _redisCacheService.Set(rolesKey, user.Roles, DateTime.Now.AddDays(1).Minute,
-                         DateTime.Now.AddHours(1).Minute);
-                    await _redisCacheService.Set(permissionsKey, user.Permissions, DateTime.Now.AddDays(1).Minute,
-                         DateTime.Now.AddHours(1).Minute);
-                    await _redisCacheService.Set(activeMenusKey, activeMenus, DateTime.Now.AddDays(1).Minute,
-                         DateTime.Now.AddHours(1).Minute);
-                    #endregion
 
+                    if (isRedisConnected)
+                    {
+                        await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
+                            DateTime.Now.AddHours(1).Minute);
+                        await _redisCacheService.Set(activeMenusKey, activeMenus, DateTime.Now.AddDays(1).Minute,
+                            DateTime.Now.AddHours(1).Minute);
+                    }
+
+                    #endregion
 
 
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.UserName ??""),
-                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? "")
+                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+                        new Claim(ClaimTypes.MobilePhone, user.Mobile)
 
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

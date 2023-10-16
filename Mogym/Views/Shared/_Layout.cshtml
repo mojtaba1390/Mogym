@@ -1,23 +1,42 @@
-﻿@using Mogym.Application.Interfaces.ICache
+﻿@using System.Security.Claims
+@using Mogym.Application.Interfaces
+@using Mogym.Application.Interfaces.ICache
 @using Mogym.Application.Records.Menu
 @using Mogym.Application.Records.Permission
 @using Mogym.Application.Records.Role
 @using Mogym.Application.Records.User
+@using StackExchange.Redis
 @inject IRedisCacheService _redisCacheService;
 @inject IConfiguration _configuration;
+@inject IUserService _userService;
+@inject IMenuService _menuService;
 @{
-    var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
-    var rolesKey = _configuration.GetSection("RedisKey").GetValue<string>("UserRoles");
-    var permissionsKey = _configuration.GetSection("RedisKey").GetValue<string>("UserPermissions");
-    var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
+    var isRedisConnected = ConnectionMultiplexer.Connect(_configuration.GetConnectionString("RedisConnection") ?? string.Empty).IsConnected;
 
-    var user = await _redisCacheService.Get<UserRecord>(userInfoKey);
-    var roles = await _redisCacheService.Get<IEnumerable<RoleRecord>>(rolesKey);
-    var permissions = await _redisCacheService.Get<IEnumerable<PermissionRecord>>(permissionsKey);
-    var activeMenus = await _redisCacheService.Get<List<MenuRecord>>(activeMenusKey);
-    //TODO:اینجا اگه ردیس قطع باشه باید از دیتابیس گت کنه
+    List<MenuRecord> menus = new List<MenuRecord>();
+    UserRecord user;
+    List<MenuRecord> activeMenus;
+    if (isRedisConnected)
+    {
+        var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
+        var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
+
+         user = await _redisCacheService.Get<UserRecord>(userInfoKey);
+         activeMenus = await _redisCacheService.Get<List<MenuRecord>>(activeMenusKey);
+        menus = activeMenus;
+    }
+    else
+    {
+        var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
+         user =await _userService.GetUserWithRoleAndPermission(mobile);
+         activeMenus = await _menuService.GetAllActiveMenuList();
+        menus = activeMenus;
+    }
+
+
     //TODO:اینجا باید لیستی از منو ها گرفته بشه که در دسترسی وجد دارد
-    var menus = activeMenus;
+
+
 }
 
 
