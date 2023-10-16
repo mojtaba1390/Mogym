@@ -27,9 +27,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-        options.SlidingExpiration = true;
         options.AccessDeniedPath = "/Account/Login/";
+        options.LoginPath = "/Account/Login"; 
+
     });
 
 var app = builder.Build();
@@ -47,9 +47,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Account}/{action=Index}/{id?}");
 
 app.Run();

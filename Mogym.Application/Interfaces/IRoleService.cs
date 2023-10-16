@@ -10,5 +10,7 @@ namespace Mogym.Application.Interfaces
     public interface IRoleService
     {
         RoleRecord GetRoleByName(string roleName);
+        Task<List<RoleRecord>> GetAllRecord();
+        Task ChangeStatus(int id);
     }
 }

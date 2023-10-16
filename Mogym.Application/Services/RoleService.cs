@@ -8,6 +8,7 @@ using AutoMapper;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Role;
+using Mogym.Domain.Common;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -35,9 +36,47 @@ namespace Mogym.Application.Services
             {
                 var message = $"GetRoleByName in Role Service,roleName=" + roleName;
                 _logger.LogError(message, ex);
+                throw ex;
             }
 
             return null;
+        }
+
+        public async Task<List<RoleRecord>> GetAllRecord()
+        {
+            try
+            {
+                var roles = _unitOfWork.RoleRepository.GetAll();
+                return _mapper.Map<List<RoleRecord>>(roles);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetAllRecord in Role Service";
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+
+
+
+        public async Task ChangeStatus(int id)
+        {
+            try
+            {
+                var entity = await _unitOfWork.RoleRepository.GetByIdAsync(id);
+                if (entity != null)
+                {
+                    entity.IsActive = entity.IsActive == EnumYesNo.No ? EnumYesNo.Yes : EnumYesNo.No;
+                    _unitOfWork.RoleRepository.Update(entity, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                var message = $"ChangeStatus in Role Service,id=" + id;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
         }
     }
 }

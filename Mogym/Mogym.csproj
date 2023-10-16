@@ -4048,4 +4048,8 @@
     <TypeScriptCompile Include="wwwroot\plugins\fullcalendar\main.d.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Permission\" />
+  </ItemGroup>
+
 </Project>

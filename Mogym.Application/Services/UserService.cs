@@ -71,7 +71,9 @@ namespace Mogym.Application.Services
                 var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == loginRecord.Mobile.Trim()).FirstOrDefaultAsync();
                 if (entity != null)
                 {
-                    entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                    //TODO:خط زیر از کامنت در بیاد
+                    //entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                    entity.SmsConfirmCode = "12345";
                     _unitOfWork.UserRepository.Update(entity);
                     return _mapper.Map<ConfirmSmsRecord>(entity);
                 }

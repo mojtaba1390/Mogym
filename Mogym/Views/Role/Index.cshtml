@@ -1,0 +1,47 @@
+﻿@using Mogym.Domain.Common
+@model List<Mogym.Application.Records.Role.RoleRecord>
+
+@{
+    ViewData["Title"] = "داشبورد";
+    Layout = "_Layout";
+}
+
+@{
+    string[] color = new String[] { "bg-c-puple", "bg-c-green", "bg-c-pink", "bg-c-yellow" };
+}
+
+<div class="l-main page-home" data-has-custom-functions="true">
+    <div class="dashboard-index">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row py-1 d-flex justify-content-center personal-needs">
+                    @{
+                        foreach (var role in Model)
+                        {
+                            int index = new Random().Next(0, 3);
+                            <div class="col py-2 my-1 mx-2">
+                                <div class="card-stats my-profile">
+                                    <div class="card-icon @color[index]">
+                                        <img src="~/img/user.png" width="60" />
+                                    </div>
+                                    <div class="title">
+                                        <p>@role.PersianName</p>
+
+                                        <span class="badge bg-secondary badge bg-secondary p-2 mb-3 mx-3">@(role.IsActive == EnumYesNo.Yes ? "فعال" : "غیر فعال")</span>
+
+                                    </div>
+                                </div>
+
+                                <a asp-controller="Role" asp-action="ChangeStatus" asp-route-id="@role.Id" class="small-box-footer bg-c-puple d-block p-2 text-center">تغییر وضعیت نقش<i class="fas px-2 fa-arrow-circle-right"></i></a>
+
+                            </div>
+
+                        }
+                    }
+
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
