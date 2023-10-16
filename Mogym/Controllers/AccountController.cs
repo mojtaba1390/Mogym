@@ -20,7 +20,6 @@ namespace Mogym.Controllers
         private readonly IMenuService _menuService;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IConfiguration _configuration;
-        private readonly bool isRedisConnected = true;
         public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
         {
             _userService = userService;
@@ -28,7 +27,6 @@ namespace Mogym.Controllers
             _menuService = menuService;
             _redisCacheService = redisCacheService;
             _configuration = configuration;
-            isRedisConnected = ConnectionMultiplexer.Connect(_configuration.GetConnectionString("RedisConnection") ?? string.Empty).IsConnected;
         }
 
         public async Task<IActionResult> Login()
@@ -93,7 +91,7 @@ namespace Mogym.Controllers
                     //TODO: اینجا باید اول کلید های مربوطه تو ردیس پاک بشه بعد ست بشه
 
                     #region set redis cache
-
+                    var isRedisConnected = ConnectionMultiplexer.Connect(_configuration.GetConnectionString("RedisConnection") ?? string.Empty).IsConnected;
                     if (isRedisConnected)
                     {
                         await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
