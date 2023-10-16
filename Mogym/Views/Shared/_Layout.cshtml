@@ -13,7 +13,7 @@
 @{
 
 
-    var isRedisConnected = (await ConnectionMultiplexer.ConnectAsync(_configuration.GetConnectionString("RedisConnection"))).IsConnected;
+    var isRedisConnected = (await ConnectionMultiplexer.ConnectAsync(_configuration.GetConnectionString("RedisConnection") ?? String.Empty)).IsConnected;
 
     List<MenuRecord> menus = new List<MenuRecord>();
     UserRecord user;
