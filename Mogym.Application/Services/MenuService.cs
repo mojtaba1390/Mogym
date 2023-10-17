@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Menu;
 using Mogym.Application.Records.Permission;
+using Mogym.Common;
+using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -49,6 +53,45 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"GetAllPermissionListForCreateMenuParent in Menu Service";
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<MenuRecord> GetMenuByEnglishName(string englishName)
+        {
+            try
+            {
+                var menu = await _unitOfWork.MenuRepository.Find(x => x.EnglishName.Trim() == englishName.Trim())
+                    .FirstOrDefaultAsync();
+                if (menu is not null)
+                    return  _mapper.Map<MenuRecord>(menu);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetMenuByEnglishName in Menu Service,name="+englishName;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+
+            return null;
+        }
+
+        public async Task AddMenu(CreateMenuRecord model)
+        {
+            try
+            {
+                Menu menu = new Menu()
+                {
+                    EnglishName = model.EnglishName.Trim(),
+                    PersianName = model.PersianName.Trim(),
+                    IsActive = model.IsActive != null ? model.IsActive.Value : EnumYesNo.Yes,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"AddMenu in Menu Service,obj=" + JsonSerializer.Serialize(model);
                 _logger.LogError(message, ex);
                 throw ex;
             }

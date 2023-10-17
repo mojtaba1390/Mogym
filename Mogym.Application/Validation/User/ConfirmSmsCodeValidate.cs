@@ -15,7 +15,12 @@ namespace Mogym.Application.Validation.User
 
         public ConfirmSmsCodeValidate(IUserService userService)
         {
+            #region Dependency
+
             _userService = userService;
+
+
+            #endregion
 
 
             RuleFor(x => x.ConfirmCode)

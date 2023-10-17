@@ -15,8 +15,14 @@ namespace Mogym.Application.Validation.User
         private readonly IUserService _userService;
         public LoginValidate(IUserService userService)
         {
+            #region Dependency
 
             _userService = userService;
+
+
+            #endregion
+
+
             RuleFor(x => x.Mobile)
                 .Cascade(CascadeMode.Stop)
                 .NotNull().WithMessage("شماره موبایل نباید خالی باشد")

@@ -29,7 +29,20 @@ namespace Mogym.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateMenuRecord model)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _menuService.AddMenu(model);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+
+            }
             return View();
+
         }
 
 

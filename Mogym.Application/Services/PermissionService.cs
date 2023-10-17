@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Records.Permission;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -20,6 +22,26 @@ namespace Mogym.Application.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public async Task<PermissionRecord> GetPermissionByEnglishName(string englishName)
+        {
+            try
+            {
+                var permission = await _unitOfWork.PermissionRepository
+                    .Find(x => x.EnglishName.Trim() == englishName.Trim()).FirstOrDefaultAsync();
+                if(permission is not null)
+                    return _mapper.Map<PermissionRecord>(permission);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetPermissionByEnglishName in Permission Service,name=" + englishName;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+
+            return null;
         }
     }
 }
