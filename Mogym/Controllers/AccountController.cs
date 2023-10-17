@@ -15,15 +15,13 @@ namespace Mogym.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ISeriLogService _logger;
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IConfiguration _configuration;
-        public AccountController(IUserService userService, ISeriLogService logger, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
+        public AccountController(IUserService userService, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
         {
             _userService = userService;
-            _logger = logger;
             _menuService = menuService;
             _redisCacheService = redisCacheService;
             _configuration = configuration;
