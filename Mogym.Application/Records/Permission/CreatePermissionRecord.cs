@@ -12,6 +12,8 @@ namespace Mogym.Application.Records.Permission
         public string? EnglishName { get; init; }
         public string? PersianName { get; init; }
         public EnumYesNo? IsActive { get; init; }
-        public EnumYesNo? IsCreateMenu { get; init; }
+        public int? ParentId { get; init; }
+
+        public List<PermissionRecord> Permissions { get; init; }
     }
 }

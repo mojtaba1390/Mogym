@@ -43,5 +43,22 @@ namespace Mogym.Application.Services
 
             return null;
         }
+
+        public async Task<List<PermissionRecord>> GetAll()
+        {
+            try
+            {
+                var permissions = _unitOfWork.PermissionRepository.GetAll();
+                return _mapper.Map<List<PermissionRecord>>(permissions);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetAll in Permission Service" ;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+
+            return null;
+        }
     }
 }

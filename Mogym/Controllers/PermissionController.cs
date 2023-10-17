@@ -1,12 +1,22 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Records.Permission;
+using System.ComponentModel;
+using Mogym.Application.Interfaces;
 
 namespace Mogym.Controllers
 {
     [Authorize]
+    [DisplayName("دسترسی")]
     public class PermissionController : Controller
     {
+        private readonly IPermissionService _permissionService;
+        public PermissionController(IPermissionService permissionService)
+        {
+            _permissionService = permissionService;
+        }
+
+
         public IActionResult Index()
         {
             return View();
@@ -16,7 +26,9 @@ namespace Mogym.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View();
+            var permissions =await _permissionService.GetAll();
+            var createPermissionRecord = new CreatePermissionRecord() {Permissions = permissions};
+            return View(createPermissionRecord);
         }
 
         [HttpPost]

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
+using System.ComponentModel;
 
 namespace Mogym.Controllers
 {
     [Authorize]
+    [DisplayName("نقش")]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

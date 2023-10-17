@@ -10,5 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface IPermissionService
     {
         Task<PermissionRecord> GetPermissionByEnglishName(string englishName);
+        Task<List<PermissionRecord>> GetAll();
     }
 }

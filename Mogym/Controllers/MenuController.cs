@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Menu;
 using Mogym.Application.Records.Permission;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Mogym.Controllers
 {
     [Authorize]
+    [DisplayName("منو")]
     public class MenuController : Controller
     {
         private readonly IMenuService _menuService;
@@ -23,6 +26,36 @@ namespace Mogym.Controllers
 
         public async Task<IActionResult> Create()
         {
+            var menus =await _menuService.GetAllActiveMenuList();
+            ViewData["ParentId"] = new SelectList(menus, "Id", "PersianName");
+
+
+            Assembly asm = Assembly.GetExecutingAssembly();
+            var controllerlist = asm.GetTypes()
+                .Where(type => typeof(Controller).IsAssignableFrom(type))
+                .Select(type => type.GetTypeInfo())
+                .Select(x => new ControllerAndActionRecord
+                {
+                    Controller = ("/" + x.Name.ToLower()).Replace("controller", ""),
+                    ControllerDisplayName = x.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
+                }).Where(x => x.ControllerDisplayName != null).ToList();
+
+
+            var controlleractionlist = asm.GetTypes()
+                .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
+                .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
+                .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
+                .Select(x => new ControllerAndActionRecord
+                {
+                    Controller = ("/") + x.DeclaringType.Name.ToLower().Replace("controller", "") + "/" + x.Name.ToLower(),
+                    ControllerDisplayName = x.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
+                }).ToList().Where(x => x.ControllerDisplayName != null).ToList();
+
+            controllerlist.AddRange(controlleractionlist);
+
+            ViewData["LinkId"] = new SelectList(controllerlist, "Controller", "ControllerDisplayName");
+
+
             return View();
         }
 

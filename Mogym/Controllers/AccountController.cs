@@ -10,9 +10,11 @@ using Mogym.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Mogym.Application.Interfaces.ICache;
 using StackExchange.Redis;
+using System.ComponentModel;
 
 namespace Mogym.Controllers
 {
+    [DisplayName("اکانت")]
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
