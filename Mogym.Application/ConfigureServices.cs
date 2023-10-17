@@ -47,6 +47,7 @@ namespace Mogym.Application
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IRedisCacheService, RedisCacheService>();
+            services.AddScoped<IPermissionService, PermissionService>();
             #endregion
 
             return services;

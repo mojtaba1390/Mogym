@@ -37,7 +37,6 @@
     <None Include="wwwroot\img\gridComponent\grid-icon-delete-row.svg" />
     <None Include="wwwroot\img\gridComponent\grid-icon-operation-row.svg" />
     <None Include="wwwroot\img\Ronix-log-mobile.svg" />
-    <None Include="wwwroot\js\academy.js" />
     <None Include="wwwroot\js\adminlte.js" />
     <None Include="wwwroot\js\adminlte.js.map" />
     <None Include="wwwroot\js\adminlte.min.js" />
@@ -45,65 +44,13 @@
     <None Include="wwwroot\js\calendar.js" />
     <None Include="wwwroot\js\canvas-full.js" />
     <None Include="wwwroot\js\canvas.js" />
-    <None Include="wwwroot\js\cartable\detail.js" />
     <None Include="wwwroot\js\dashboard.js" />
     <None Include="wwwroot\js\dataTables.bootstrap4.js" />
     <None Include="wwwroot\js\dataTables.bootstrap4.min.js" />
     <None Include="wwwroot\js\demo.js" />
-    <None Include="wwwroot\js\evaluation\createEvaluation.js" />
-    <None Include="wwwroot\js\evaluation\updateEvaluation.js" />
-    <None Include="wwwroot\js\layout\calenderevents.js" />
     <None Include="wwwroot\js\number.js" />
     <None Include="wwwroot\js\person.js" />
-    <None Include="wwwroot\js\person\certificate.js" />
-    <None Include="wwwroot\js\person\experince.js" />
-    <None Include="wwwroot\js\person\foreignLanguage.js" />
-    <None Include="wwwroot\js\person\personcreate.js" />
-    <None Include="wwwroot\js\person\persondegree.js" />
-    <None Include="wwwroot\js\person\personInfo.js" />
-    <None Include="wwwroot\js\person\personprofile.js" />
-    <None Include="wwwroot\js\person\personupdate.js" />
-    <None Include="wwwroot\js\person\skill.js" />
-    <None Include="wwwroot\js\question\myQuestion.js" />
-    <None Include="wwwroot\js\recruitTraining.js" />
-    <None Include="wwwroot\js\report\certificate.js" />
-    <None Include="wwwroot\js\report\certificateAdmin.js" />
-    <None Include="wwwroot\js\report\reportAcdemyAndTeacherEvaluation.js" />
-    <None Include="wwwroot\js\report\reportEvent.js" />
-    <None Include="wwwroot\js\report\reportLevel1.js" />
-    <None Include="wwwroot\js\report\reportLevel2OponionStudent.js" />
-    <None Include="wwwroot\js\report\reportLevel2Supervisor.js" />
-    <None Include="wwwroot\js\report\reportLevel3.js" />
-    <None Include="wwwroot\js\report\reportPresenceAndAbsence.js" />
-    <None Include="wwwroot\js\report\reportTrainingCourseExam.js" />
     <None Include="wwwroot\js\site.js" />
-    <None Include="wwwroot\js\trainingClass\attendanceList.js" />
-    <None Include="wwwroot\js\trainingClass\classdatetime.js" />
-    <None Include="wwwroot\js\trainingClass\classequipment.js" />
-    <None Include="wwwroot\js\trainingClass\classevaluation.js" />
-    <None Include="wwwroot\js\trainingClass\editSummaryClass.js" />
-    <None Include="wwwroot\js\trainingClass\myClass.js" />
-    <None Include="wwwroot\js\trainingClass\trainingClass.js" />
-    <None Include="wwwroot\js\trainingClass\trainingClassCreate.js" />
-    <None Include="wwwroot\js\trainingClass\trainingClassUpdate.js" />
-    <None Include="wwwroot\js\trainingClass\VideoSession.js" />
-    <None Include="wwwroot\js\trainingCourse.js" />
-    <None Include="wwwroot\js\trainingCourseExam\myTrainingCourseExam.js" />
-    <None Include="wwwroot\js\trainingCourseExam\trainingCourseExamCreate.js" />
-    <None Include="wwwroot\js\trainingCourseExam\trainingCourseExamUpdate.js" />
-    <None Include="wwwroot\js\trainingCourseQuestion.js" />
-    <None Include="wwwroot\js\trainingEmployment\createTrainingEmployment.js" />
-    <None Include="wwwroot\js\trainingEmployment\DetailsTrrainingEmployment.js" />
-    <None Include="wwwroot\js\trainingEmployment\index.js" />
-    <None Include="wwwroot\js\trainingEmployment\updateTrainingEmployment.js" />
-    <None Include="wwwroot\js\trainingNeed.js" />
-    <None Include="wwwroot\js\trainingNeedAssessmentRequest\trainingNeedAssessmentRequestCreate.js" />
-    <None Include="wwwroot\js\trainingNeedAssessmentRequest\trainingNeedAssessmentRequestUpdate.js" />
-    <None Include="wwwroot\js\trainingplan\canceltrainingplan.js" />
-    <None Include="wwwroot\js\trainingplan\createTrainingPlan.js" />
-    <None Include="wwwroot\js\trainingplan\deletetrainingplan.js" />
-    <None Include="wwwroot\js\trainingplan\index.js" />
-    <None Include="wwwroot\js\trainingplan\updatetrainingplan.js" />
     <None Include="wwwroot\lib\adminlteCalendar\dist\js\adminlte.min.js" />
     <None Include="wwwroot\lib\adminlteCalendar\dist\js\demo.js" />
     <None Include="wwwroot\lib\adminlteCalendar\plugins\bootstrap\js\bootstrap.bundle.min.js" />
@@ -4054,7 +4001,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Menu\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Permission\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Menu\Index.cshtml" />
   </ItemGroup>
 
 </Project>

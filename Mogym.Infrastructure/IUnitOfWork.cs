@@ -13,6 +13,7 @@ namespace Mogym.Infrastructure
         IRoleRepository RoleRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
         IMenuRepository MenuRepository { get; }
+        IPermissionRepository PermissionRepository { get; }
         
     }
 }

@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mogym.Infrastructure", "Mog
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mogym.Domain", "Mogym.Domain\Mogym.Domain.csproj", "{888B0A64-945A-495D-824C-D4E75F2E628E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogym.Common", "Mogym.Common\Mogym.Common.csproj", "{65C79993-02AE-43DC-A4E3-4678329C4602}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mogym.Common", "Mogym.Common\Mogym.Common.csproj", "{65C79993-02AE-43DC-A4E3-4678329C4602}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,12 @@
+﻿@model List<Mogym.Application.Records.Permission.PermissionRecord>
+@{
+    List<SelectListItem> options = new List<SelectListItem>();
+    options.Add(new SelectListItem(){Value = null,Text = "دسترسی را انتخاب کنید"});
+    foreach (var permission in Model)
+    {
+        options.Add(new SelectListItem() { Value = permission.Id.ToString(), Text = permission.PersianName });
+    }
+}
+
+<label class="pt-1">دسترسی ها</label>
+<select name="ParentId" asp-items="@options" class="js-example-disabled-results form-control"></select>

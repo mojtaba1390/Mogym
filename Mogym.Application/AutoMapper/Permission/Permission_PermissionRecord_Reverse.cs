@@ -17,6 +17,7 @@ namespace Mogym.Application.AutoMapper.Permission
                 .ForMember(x => x.EnglishName, frm => frm.MapFrom(z => z.EnglishName))
                 .ForMember(x => x.PersianName, frm => frm.MapFrom(z => z.PersianName))
                 .ReverseMap();
+
         }
     }
 }

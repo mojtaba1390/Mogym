@@ -22,6 +22,7 @@ namespace Mogym.Infrastructure
             RoleRepository = new RoleRepository(_context);
             UserRoleRepository = new UserRoleRepository(_context);
             MenuRepository = new MenuRepository(_context);
+            PermissionRepository = new PermissionRepository(_context);
         }
 
 
@@ -30,6 +31,7 @@ namespace Mogym.Infrastructure
         public IRoleRepository RoleRepository { get; }
         public IUserRoleRepository UserRoleRepository { get; }
         public IMenuRepository MenuRepository { get; }
+        public IPermissionRepository PermissionRepository { get; }
 
         public void Dispose()
         {
