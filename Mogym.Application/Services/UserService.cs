@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
-using Mogym.Domain.Common;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 

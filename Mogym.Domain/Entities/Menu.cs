@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mogym.Domain.Common;
+using Mogym.Common;
 
 namespace Mogym.Domain.Entities
 {
@@ -17,6 +17,9 @@ namespace Mogym.Domain.Entities
         public string PersianName { get; set; }
         public string Link { get; set; }
         public EnumYesNo IsActive { get; set; }
+        public EnumYesNo? HasParentInPermission { get; set; }
+
+
 
         public int? ParentId { get; set; }
 

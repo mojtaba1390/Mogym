@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mogym.Domain.Common;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration
@@ -20,10 +20,10 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(150).IsRequired();
             builder.Property(x => x.IsActive).HasColumnType("int").HasDefaultValue(EnumYesNo.Yes).IsRequired();
-            builder.Property(x => x.IsCreateMenu).HasColumnType("int").IsRequired(false);
 
 
-
+            builder.HasOne<Permission>(x => x.Permission_Permission).WithMany(z => z.Permissions).HasForeignKey(a => a.ParentId)
+                .IsRequired(false);
         }
     }
 }

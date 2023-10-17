@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mogym.Common\Mogym.Common.csproj" />
     <ProjectReference Include="..\Mogym.Domain\Mogym.Domain.csproj" />
   </ItemGroup>
 

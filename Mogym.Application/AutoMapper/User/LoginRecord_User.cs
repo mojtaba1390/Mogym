@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Mogym.Application.Records.User;
-using Mogym.Domain.Common;
+using Mogym.Common;
 
 namespace Mogym.Application.AutoMapper.User
 {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mogym.Domain.Common;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration
@@ -16,12 +16,13 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<Menu> builder)
         {
             builder.ToTable("Menu");
-            builder.HasQueryFilter(x => x.IsActive == EnumYesNo.Yes);
+            //builder.HasQueryFilter(x => x.IsActive == EnumYesNo.Yes);
 
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(50).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(50).IsRequired();
             builder.Property(x => x.Link).HasColumnType("nvarchar").HasMaxLength(50).IsRequired();
             builder.Property(x => x.IsActive).HasColumnType("int").IsRequired();
+            builder.Property(x => x.HasParentInPermission).HasColumnType("int").IsRequired(false);
 
 
             builder.HasOne<Menu>(x => x.Menu_Menu).WithMany(z => z.Menus).HasForeignKey(a => a.ParentId)

@@ -8,7 +8,7 @@ using AutoMapper;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Role;
-using Mogym.Domain.Common;
+using Mogym.Common;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services

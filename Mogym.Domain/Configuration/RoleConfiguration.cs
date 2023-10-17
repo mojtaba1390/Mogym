@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mogym.Domain.Common;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration

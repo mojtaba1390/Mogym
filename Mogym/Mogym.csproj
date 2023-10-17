@@ -3952,6 +3952,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mogym.Application\Mogym.Application.csproj" />
+    <ProjectReference Include="..\Mogym.Common\Mogym.Common.csproj" />
     <ProjectReference Include="..\Mogym.Domain\Mogym.Domain.csproj" />
   </ItemGroup>
 
@@ -4049,7 +4050,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Permission\" />
+    <UpToDateCheckInput Remove="Views\Permission\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Permission\Create.cshtml" />
   </ItemGroup>
 
 </Project>
