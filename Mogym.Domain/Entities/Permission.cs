@@ -18,6 +18,8 @@ namespace Mogym.Domain.Entities
         public string PersianName { get; set; }
         public EnumYesNo IsActive { get; set; }
 
+        public EnumYesNo? IsCreateMenu { get; set; }
+
 
         public ICollection<RolePermission> RolePermissions { get; set; }
     }
