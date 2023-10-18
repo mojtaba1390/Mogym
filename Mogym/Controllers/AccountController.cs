@@ -148,6 +148,11 @@ namespace Mogym.Controllers
         {
             return View();
         }
+        public async Task<IActionResult> RegisterTrainer()
+        {
+            return View("UnderConstruction");
+
+        }
 
     }
 }
