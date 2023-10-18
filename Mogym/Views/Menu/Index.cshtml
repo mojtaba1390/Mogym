@@ -1,6 +1,96 @@
-﻿@{
+﻿@model List<Mogym.Application.Records.Menu.MenuRecord>
+
+@{
     ViewBag.Title = "منو ها";
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+                <div class="col-12">
+
+                    <div class="">
+
+                        <!-- /.card-header -->
+                        <div class="card-body mb-50">
+                            <a asp-action="create" class="btn btn-success-card px-5 mb-4">ایجاد</a>
+                            <table id="example" class="table table-bordered table-striped w-100">
+                                <thead>
+                                    <tr>
+                                        <th> عنوان</th>
+                                        <th>والد</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var itm in Model)
+                                    {
+                                        <tr>
+                                            <td>@itm.PersianName</td>
+
+                                        <td>@(itm.ParentMenu is not null ? itm.ParentMenu.PersianName : "")</td>
+                                            <td>
+                                                <a asp-action="Edit" asp-route-id="@itm.Id" class="edit px-2 tooltip"><i class="far fa-2xl fa-edit"></i> <span class="tooltiptext tooltip-top">ویرایش</span></a>
+                                                <a asp-action="Delete" asp-route-id="@itm.Id" class="remove tooltip"><i class="far fa-2xl fa-trash-alt"></i> <span class="tooltiptext tooltip-top">حذف</span></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th> عنوان</th>
+                                        <th>والد</th>
+                                        <th>عملیات</th>
+                                    </tr>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- Main content -->
+<!-- /.content -->
+@section Scripts{
+    <script>
+        $(function () {
+            $("#example").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                ],
+                "pageLength": 20,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+    </script>
+}

@@ -12,7 +12,8 @@ namespace Mogym.Application.AutoMapper.Menu
     {
         public Menu_MenuRecord()
         {
-            CreateMap<Domain.Entities.Menu, MenuRecord>();
+            CreateMap<Domain.Entities.Menu, MenuRecord>()
+                .ForMember(x => x.ParentMenu, frm => frm.MapFrom(z => z.Menu_Menu));
         }
     }
 }

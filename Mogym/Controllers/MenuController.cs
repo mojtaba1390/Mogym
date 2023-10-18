@@ -18,9 +18,21 @@ namespace Mogym.Controllers
         {
             _menuService= menuService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            try
+            {
+                var menus = await _menuService.GetAllWithRelated();
+                return View(menus);
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+
+            }
+
+            return null;
         }
 
         [DisplayName("ایجاد منو جدید")]
@@ -100,6 +112,15 @@ namespace Mogym.Controllers
         }
 
 
+        
+        public async Task<IActionResult> Edit(int id)
+        {
+            return View("UnderConstruction");
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View("UnderConstruction");
+        }
 
     }
 }

@@ -16,5 +16,7 @@ namespace Mogym.Application.Records.Menu
         public EnumYesNo IsActive { get; init; }
 
         public int? ParentId { get; init; }
+
+        public MenuRecord ParentMenu { get; init;}
     }
 }

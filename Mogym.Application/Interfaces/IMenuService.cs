@@ -14,5 +14,6 @@ namespace Mogym.Application.Interfaces
         Task<List<PermissionRecord>> GetAllPermissionListForCreateMenuParent();
         Task<MenuRecord> GetMenuByEnglishName(string englishName);
         Task AddMenu(CreateMenuRecord model);
+        Task<List<MenuRecord>> GetAllWithRelated();
     }
 }

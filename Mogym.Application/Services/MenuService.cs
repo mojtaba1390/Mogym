@@ -77,6 +77,12 @@ namespace Mogym.Application.Services
             return null;
         }
 
+
+        /// <summary>
+        /// در زمان ثبت منو، به ازای هر منو به طور خودکار دسترسی هم ثبت میشه
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task AddMenu(CreateMenuRecord model)
         {
             try
@@ -92,6 +98,23 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"AddMenu in Menu Service,obj=" + JsonSerializer.Serialize(model);
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        //TODO Vital:لیست با سرچ و ریلیتد به صورت جنریک در اولویت همه ی کارهاس
+        public async Task<List<MenuRecord>> GetAllWithRelated()
+        {
+            try
+            {
+                var menus = _unitOfWork.MenuRepository.GetAll().Include(x=>x.Menu_Menu);
+                return _mapper.Map<List<MenuRecord>>(menus);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetAllWithRelated in Menu Service";
                 _logger.LogError(message, ex);
                 throw ex;
             }
