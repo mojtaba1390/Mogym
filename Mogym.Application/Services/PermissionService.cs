@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Permission;
+using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -59,6 +61,21 @@ namespace Mogym.Application.Services
             }
 
             return null;
+        }
+
+        public async Task<PermissionRecord> AddAsync(Permission permission, bool saveChanges)
+        {
+            try
+            {
+                 var entiry= _unitOfWork.PermissionRepository.AddAsync(permission, saveChanges);
+                 return _mapper.Map<PermissionRecord>(entiry);
+            }
+            catch (Exception ex)
+            {
+                var message = $"AddAsync in Permission Service,obj=" + JsonSerializer.Serialize(permission);
+                _logger.LogError(message, ex);
+                throw ex;
+            }
         }
     }
 }

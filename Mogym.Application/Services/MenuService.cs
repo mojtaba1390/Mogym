@@ -81,12 +81,12 @@ namespace Mogym.Application.Services
         {
             try
             {
-                Menu menu = new Menu()
-                {
-                    EnglishName = model.EnglishName.Trim(),
-                    PersianName = model.PersianName.Trim(),
-                    IsActive = model.IsActive != null ? model.IsActive.Value : EnumYesNo.Yes,
-                };
+                var menu = _mapper.Map<Menu>(model);
+
+                await _unitOfWork.MenuRepository.AddAsync(menu, false);
+
+                var permission = _mapper.Map<Permission>(model);
+                await _permissionService.AddAsync(permission, true);
 
             }
             catch (Exception ex)

@@ -43,17 +43,17 @@ namespace Mogym.Application.Validation.Menu
         {
             var permission = _permissionService.GetPermissionByEnglishName(englishName).Result;
             if (permission is not null)
-                return true;
-            return false;
+                return false;
+            return true;
         }
 
         private bool IsMenuNameExist(string englishName)
         {
             var menu=  _menuService.GetMenuByEnglishName(englishName).Result;
             if(menu is not null)
-                return true;
+                return false;
 
-            return false;
+            return true;
         }
     }
 }

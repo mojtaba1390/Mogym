@@ -23,7 +23,7 @@ namespace Mogym.Controllers
             return View();
         }
 
-
+        [DisplayName("ایجاد منو جدید")]
         public async Task<IActionResult> Create()
         {
             var menus =await _menuService.GetAllActiveMenuList();
@@ -42,7 +42,7 @@ namespace Mogym.Controllers
 
 
             var controlleractionlist = asm.GetTypes()
-                .Where(type => typeof(ControllerBase).IsAssignableFrom(type))
+                .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
                 .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
                 .Select(x => new ControllerAndActionRecord
@@ -74,7 +74,7 @@ namespace Mogym.Controllers
                 ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
 
             }
-            return View();
+            return View(model);
 
         }
 

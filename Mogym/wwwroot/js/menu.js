@@ -21,11 +21,9 @@
         }
     });
 
-    $("#isactive").on('change', function () {
-        var isActiveValue = $("#isactive").val();
-        debugger;
+    $("#hasParentInPermission").on('change', function () {
+        var isActiveValue = $("#hasParentInPermission").val();
         if (isActiveValue == 1) {
-            debugger;
             $.ajax({
                 url: "/Menu/GetAllPermissionListForCreateMenuParent",
                 dataType: 'html',

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Common;
 
 namespace Mogym.Application.Records.Permission
 {
@@ -11,5 +12,6 @@ namespace Mogym.Application.Records.Permission
         public int Id { get; init; }
         public string? EnglishName { get; init; }
         public string? PersianName { get; init; }
+        public EnumYesNo? IsActive { get; init; }
     }
 }

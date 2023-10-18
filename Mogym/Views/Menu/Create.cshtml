@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group  row">
                             <label class="pt-1" for="min-time"> لینک</label>
-                            <select class="js-example-disabled-results form-control form-select col-md-6" asp-for="LinkId"
+                            <select class="js-example-disabled-results form-control form-select col-md-6" asp-for="Link"
                                     asp-items="ViewBag.LinkId">
                                 <option value="@null">انتخاب کنید</option>
                             </select>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="pt-1" >آیا منو در دسترسی ها والد دارد؟</label>
-                            <select class="js-example-disabled-results form-control" asp-for="IsActive" id="isactive" >
+                            <select class="js-example-disabled-results form-control" asp-for="HasParentInPermission" id="hasParentInPermission">
                                 <option value="@null">بله/خیر</option>
                                 @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
                                 {

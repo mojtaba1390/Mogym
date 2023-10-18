@@ -9,14 +9,16 @@ using Mogym.Application.Records.Role;
 
 namespace Mogym.Application.AutoMapper.Permission
 {
-    public class Permission_PermissionRecord_Reverse:Profile
+    public class PermissionRecord_Permission : Profile
     {
-        public Permission_PermissionRecord_Reverse()
+        public PermissionRecord_Permission()
         {
             CreateMap<Domain.Entities.Permission, PermissionRecord>()
                 .ForMember(x => x.EnglishName, frm => frm.MapFrom(z => z.EnglishName))
                 .ForMember(x => x.PersianName, frm => frm.MapFrom(z => z.PersianName))
-                .ReverseMap();
+                .ForMember(x => x.IsActive, frm => frm.MapFrom(z => z.IsActive))
+                .ForMember(x => x.Id, frm => frm.MapFrom(z => z.Id));
+
 
         }
     }

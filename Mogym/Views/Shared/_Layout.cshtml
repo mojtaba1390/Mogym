@@ -212,7 +212,7 @@
                                                 {
                                                     var Sub2 = menus.Where(m => m.ParentId == itmSub.Id).ToList();
                                                     <li class="nav-item ">
-                                                        <a href="@(itm.Link+itmSub.Link)" class="nav-link ">
+                                                        <a href="@itmSub.Link" class="nav-link ">
                                                             <i class="@( $"fas")"></i>
                                                             <p>
                                                                 @itmSub.PersianName
@@ -232,7 +232,7 @@
                                                                     {
                                                                         var Sub3 = menus.Where(m => m.ParentId == itmSub2.Id).ToList();
                                                                         <li class="nav-item">
-                                                                            <a href="@(itm.Link+itmSub.Link+itmSub2.Link)" class="nav-link  ">
+                                                                            <a href="@itmSub2.Link" class="nav-link  ">
                                                                                 <i class="@( $"fas ")"></i>
                                                                                 <p>@itmSub2.PersianName </p>
                                                                             </a>
@@ -245,7 +245,7 @@
                                                                                         {
 
                                                                                             <li class="nav-item">
-                                                                                                <a href="@(itm.Link+itmSub.Link+itmSub2.Link+itmSub3.Link)" class="nav-link ">
+                                                                                                <a href="@itmSub3.Link" class="nav-link ">
                                                                                                     <i class="@( $"fas")"></i>
                                                                                                     <p>@itmSub3.PersianName </p>
                                                                                                 </a>
