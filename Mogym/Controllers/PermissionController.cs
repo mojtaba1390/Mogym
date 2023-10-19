@@ -25,21 +25,9 @@ namespace Mogym.Controllers
                 List<TreeViewNodeRecord> nodes = new List<TreeViewNodeRecord>();
 
                 var permissions = await _permissionService.GetAll();
-                var parents = permissions.Where(x => x.ParentId is null);
-                var childs= permissions.Where(x => x.ParentId is not null);
-                foreach (var parent in parents)
-                {
-                    nodes.Add(new TreeViewNodeRecord { Id = parent.Id.ToString(), Parent = "#", Text = parent.PersianName });
 
-                }
-                foreach (var child in childs)
-                {
-                    nodes.Add(new TreeViewNodeRecord { Id = child.Id.ToString(), Parent = child.ParentName, Text = child.PersianName });
 
-                }
-
-                ViewBag.Json = JsonConvert.SerializeObject(nodes);
-
+                return View(permissions);
 
 
             }
@@ -79,6 +67,13 @@ namespace Mogym.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult SubmitForm(List<PermissionRecord> selectedNodes)
+        {
+            // Process the selected nodes
+            // ...
 
+            return RedirectToAction("Index");
+        }
     }
 }

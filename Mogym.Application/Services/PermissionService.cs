@@ -50,7 +50,7 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var permissions = _unitOfWork.PermissionRepository.GetAll().Include(x=>x.Permission_Permission);
+                var permissions = _unitOfWork.PermissionRepository.GetAll().Include(x=>x.Permissions);
                 return _mapper.Map<List<PermissionRecord>>(permissions);
             }
             catch (Exception ex)

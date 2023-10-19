@@ -29,6 +29,9 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.SmsConfirmCode).HasColumnType("varchar").HasMaxLength(5).IsRequired();
             builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
 
+
+            builder.HasOne(u => u.UserProfile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.Id);
+
         }
     }
 }

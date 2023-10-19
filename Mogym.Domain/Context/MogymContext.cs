@@ -40,6 +40,7 @@ namespace Mogym.Domain.Context
         public DbSet<UserRole> UserRole { get; set; }
         public DbSet<RolePermission> RolePermission { get; set; }
         public DbSet<Menu> Menu { get; set; }
+        public DbSet<UserProfile> UserProfile { get; set; }
 
     }
 }

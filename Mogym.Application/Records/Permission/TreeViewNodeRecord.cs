@@ -9,7 +9,9 @@ namespace Mogym.Application.Records.Permission
     public record TreeViewNodeRecord
     {
         public string Id { get; init; }
-        public string Parent { get; init; }
         public string Text { get; init; }
+
+        public List<TreeViewNodeRecord> Children { get; set; }
+
     }
 }

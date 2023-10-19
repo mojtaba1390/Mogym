@@ -1,32 +1,49 @@
-﻿@{
+﻿@model List<Mogym.Application.Records.Permission.PermissionRecord>
+
+@{
     ViewBag.Title = "دسترسی ها";
     Layout = "_Layout";
-
-    var t = ViewBag.Json;
 }
 
 
 
+<form asp-action="SubmitForm" method="post">
+    <ul class="list-group">
+        @foreach (var node in Model)
+        {
+            <li class="list-group-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="selectedNodes" value="@node.Id" id="@($"node-{node.Id}")">
+                    <label class="form-check-label" style="margin-left: 90%">@node.PersianName</label>
+                </div>
+                @if (node.Childrens.Any())
+                {
+                    foreach (var child in node.Childrens)
+                    {
+                        <ul class="list-group mt-2">
+                            <input class="form-check-input" type="checkbox" name="selectedNodes" value="@child.Id">
+                            <label class="form-check-label" style="margin-left: 90%">@child.PersianName</label>
+                        </ul>
+                    }
 
-    <div id="jstree">
+                }
+            </li>
+        }
+    </ul>
+    
+    <div class="card-footer">
+        <div class="form-group row">
+            <div class="form-actions-buttons col-md-6">
+                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+            </div>
+        </div>
     </div>
-    <form method="post" asp-controller="Permission" asp-action="Index">
-        <input type="hidden" name="selectedItems" id="selectedItems" />
-        <input type="submit" value="Submit" />
-    </form>
-
-@section Styles
-{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-  
-}
+</form>
 
 
-@section Scripts
-{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-    <script src="~/js/permission.js"> </script>
-}
+
+
 
 
 

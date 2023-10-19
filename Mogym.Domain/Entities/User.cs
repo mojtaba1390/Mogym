@@ -29,7 +29,7 @@ namespace Mogym.Domain.Entities
         public string? Email { get; set; }
 
 
-
+        public UserProfile UserProfile { get; set; }
         #region Collections
         public ICollection<UserRole> UserRoles { get; set; }
         #endregion

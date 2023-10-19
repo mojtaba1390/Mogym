@@ -17,10 +17,7 @@ namespace Mogym.Application.AutoMapper.Permission
             CreateMap<Domain.Entities.Permission, PermissionRecord>()
                 .ForMember(x => x.EnglishName, frm => frm.MapFrom(z => z.EnglishName))
                 .ForMember(x => x.PersianName, frm => frm.MapFrom(z => z.PersianName))
-                .ForMember(x => x.ParentId, frm => frm.MapFrom(z => z.ParentId))
-                .ForMember(x => x.ParentName,
-                    frm => frm.MapFrom(
-                        z =>(z.Permission_Permission != null ? z.Permission_Permission.PersianName : "")));
+                .ForMember(x => x.Childrens, frm => frm.MapFrom(z => z.Permissions));
 
         }
     }

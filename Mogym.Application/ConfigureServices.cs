@@ -41,13 +41,13 @@ namespace Mogym.Application
 
             #region Service Life Time
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<ISeriLogService, SerilogService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRoleService, UserRoleService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IRedisCacheService, RedisCacheService>();
-            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddTransient<ISeriLogService, SerilogService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRoleService, UserRoleService>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IMenuService, MenuService>();
+            services.AddTransient<IRedisCacheService, RedisCacheService>();
+            services.AddTransient<IPermissionService, PermissionService>();
             #endregion
 
             return services;
