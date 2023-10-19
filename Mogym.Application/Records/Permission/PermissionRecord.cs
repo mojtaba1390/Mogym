@@ -13,5 +13,8 @@ namespace Mogym.Application.Records.Permission
         public string? EnglishName { get; init; }
         public string? PersianName { get; init; }
         public EnumYesNo? IsActive { get; init; }
+        public int? ParentId { get; set; }
+        public string? ParentName { get; set;}
+
     }
 }

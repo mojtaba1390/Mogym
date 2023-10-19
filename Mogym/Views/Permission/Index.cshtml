@@ -1,6 +1,32 @@
 ﻿@{
     ViewBag.Title = "دسترسی ها";
     Layout = "_Layout";
+
+    var t = ViewBag.Json;
 }
 
-<h2>title</h2>
+
+
+
+    <div id="jstree">
+    </div>
+    <form method="post" asp-controller="Permission" asp-action="Index">
+        <input type="hidden" name="selectedItems" id="selectedItems" />
+        <input type="submit" value="Submit" />
+    </form>
+
+@section Styles
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+  
+}
+
+
+@section Scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <script src="~/js/permission.js"> </script>
+}
+
+
+
