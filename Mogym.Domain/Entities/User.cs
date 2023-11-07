@@ -31,7 +31,7 @@ namespace Mogym.Domain.Entities
         public string? Email { get; set; }
 
 
-        public UserProfile UserProfile { get; set; }
+        public TrainerProfile TrainerProfile { get; set; }
         #region Collections
         public ICollection<UserRole> UserRoles { get; set; }
 

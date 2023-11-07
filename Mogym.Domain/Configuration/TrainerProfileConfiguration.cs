@@ -9,11 +9,11 @@ using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration
 {
-    public class UserProfileConfiguration:IEntityTypeConfiguration<UserProfile>
+    public class TrainerProfileConfiguration:IEntityTypeConfiguration<TrainerProfile>
     {
-        public void Configure(EntityTypeBuilder<UserProfile> builder)
+        public void Configure(EntityTypeBuilder<TrainerProfile> builder)
         {
-            builder.ToTable("UserProfile");
+            builder.ToTable("TrainerProfile");
             builder.Property(x => x.Biography).HasColumnType("nvarchar(1000)").IsRequired(false);
         }
     }

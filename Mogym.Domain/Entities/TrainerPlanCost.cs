@@ -13,9 +13,9 @@ namespace Mogym.Domain.Entities
         public double? OriginalCost { get; set; }
         public double? SaleCost { get; set; }
 
-        public int UserProfileId { get; set; }
+        public int TrainerProfileId { get; set; }
 
 
-        public UserProfile TrainerPlanCost_UserProfile { get; set; }
+        public TrainerProfile TrainerPlanCost_TrainerProfile { get; set; }
     }
 }

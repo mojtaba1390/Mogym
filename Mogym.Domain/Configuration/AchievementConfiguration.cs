@@ -10,17 +10,17 @@ using Mogym.Domain.Entities;
 
 namespace Mogym.Domain.Configuration
 {
-    public class AchievementConfiguration:IEntityTypeConfiguration<Achievement>
+    public class AchievementConfiguration:IEntityTypeConfiguration<TrainerAchievement>
     {
-        public void Configure(EntityTypeBuilder<Achievement> builder)
+        public void Configure(EntityTypeBuilder<TrainerAchievement> builder)
         {
-            builder.ToTable("Achievement");
+            builder.ToTable("TrainerAchievement");
             builder.Property(x => x.Title).HasColumnType("nvarchar(100)").IsRequired();
             builder.Property(x => x.Date).HasColumnType("int").IsRequired(false);
 
-            builder.HasOne<UserProfile>(x => x.Achievement_UserProfile)
-                .WithMany(z => z.Achievements)
-                .HasForeignKey(a => a.UserProfileId)
+            builder.HasOne<TrainerProfile>(x => x.TrainerAchievement_TrainerProfile)
+                .WithMany(z => z.TrainerAchievements)
+                .HasForeignKey(a => a.TrainerProfileId)
                 .IsRequired();
         }
     }

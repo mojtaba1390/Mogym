@@ -12,8 +12,8 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    [Migration("20231017103346_change-menu-and-permission")]
-    partial class changemenuandpermission
+    [Migration("20231107115614_addmissing")]
+    partial class addmissing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -239,6 +239,111 @@ namespace Mogym.Domain.Migrations
                     b.ToTable("SeriLog", (string)null);
                 });
 
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerAchievement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("Date")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("TrainerProfileId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerProfileId");
+
+                    b.ToTable("TrainerAchievement", (string)null);
+                });
+
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerPlanCost", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("OriginalCost")
+                        .HasColumnType("float");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<double?>("SaleCost")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TrainerPlan")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainerProfileId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerProfileId");
+
+                    b.ToTable("TrainerPlanCost", (string)null);
+                });
+
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Biography")
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TrainerProfile", (string)null);
+                });
+
             modelBuilder.Entity("Mogym.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -388,6 +493,39 @@ namespace Mogym.Domain.Migrations
                     b.Navigation("RolePermission_Role");
                 });
 
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerAchievement", b =>
+                {
+                    b.HasOne("Mogym.Domain.Entities.TrainerProfile", "TrainerAchievement_TrainerProfile")
+                        .WithMany("TrainerAchievements")
+                        .HasForeignKey("TrainerProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrainerAchievement_TrainerProfile");
+                });
+
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerPlanCost", b =>
+                {
+                    b.HasOne("Mogym.Domain.Entities.TrainerProfile", "TrainerPlanCost_TrainerProfile")
+                        .WithMany("TrainerPlanCosts")
+                        .HasForeignKey("TrainerProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrainerPlanCost_TrainerProfile");
+                });
+
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerProfile", b =>
+                {
+                    b.HasOne("Mogym.Domain.Entities.User", "User")
+                        .WithOne("TrainerProfile")
+                        .HasForeignKey("Mogym.Domain.Entities.TrainerProfile", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Mogym.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Mogym.Domain.Entities.Role", "UserRole_Role")
@@ -426,8 +564,18 @@ namespace Mogym.Domain.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerProfile", b =>
+                {
+                    b.Navigation("TrainerAchievements");
+
+                    b.Navigation("TrainerPlanCosts");
+                });
+
             modelBuilder.Entity("Mogym.Domain.Entities.User", b =>
                 {
+                    b.Navigation("TrainerProfile")
+                        .IsRequired();
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Mogym.Domain.Entities
 {
-    public class UserProfile:BaseEntity
+    public class TrainerProfile:BaseEntity
     {
-        public UserProfile()
+        public TrainerProfile()
         {
             TrainerPlanCosts = new HashSet<TrainerPlanCost>();
-            Achievements = new HashSet<Achievement>();
+            TrainerAchievements = new HashSet<TrainerAchievement>();
         }
 
         public string? Biography { get; set; }
@@ -28,7 +28,7 @@ namespace Mogym.Domain.Entities
 
 
         public ICollection<TrainerPlanCost> TrainerPlanCosts { get; set; }
-        public ICollection<Achievement> Achievements { get; set; }
+        public ICollection<TrainerAchievement> TrainerAchievements { get; set; }
 
 
     }

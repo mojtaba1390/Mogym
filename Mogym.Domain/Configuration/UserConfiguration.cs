@@ -30,7 +30,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
 
 
-            builder.HasOne(u => u.UserProfile).WithOne(p => p.User).HasForeignKey<UserProfile>(p => p.Id);
+            builder.HasOne(u => u.TrainerProfile).WithOne(p => p.User).HasForeignKey<TrainerProfile>(p => p.Id);
 
         }
     }

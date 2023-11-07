@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Mogym.Domain.Entities
 {
-    public class Achievement:BaseEntity
+    public class TrainerAchievement:BaseEntity
     {
         public string Title { get; set; }
         public int? Date { get; set; }
 
-        public int UserProfileId { get; set; }
+        public int TrainerProfileId { get; set; }
 
-        public UserProfile Achievement_UserProfile { get; set; }
+        public TrainerProfile TrainerAchievement_TrainerProfile { get; set; }
     }
 }

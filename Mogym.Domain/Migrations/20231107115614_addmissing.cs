@@ -6,41 +6,56 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mogym.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class addachivmenttrainerplanCost : Migration
+    public partial class addmissing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Description",
-                table: "UserProfile");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Biography",
-                table: "UserProfile",
-                type: "nvarchar(1000)",
-                nullable: true);
 
             migrationBuilder.CreateTable(
-                name: "Achievement",
+                name: "TrainerProfile",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Date = table.Column<int>(type: "int", nullable: true),
-                    UserProfileId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(1000)", nullable: true),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Achievement", x => x.Id);
+                    table.PrimaryKey("PK_TrainerProfile", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Achievement_UserProfile_UserProfileId",
-                        column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        name: "FK_TrainerProfile_User_Id",
+                        column: x => x.Id,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+
+
+            migrationBuilder.CreateTable(
+                name: "TrainerAchievement",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Date = table.Column<int>(type: "int", nullable: true),
+                    TrainerProfileId = table.Column<int>(type: "int", nullable: false),
+                    InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainerAchievement", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainerAchievement_TrainerProfile_TrainerProfileId",
+                        column: x => x.TrainerProfileId,
+                        principalTable: "TrainerProfile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -54,7 +69,7 @@ namespace Mogym.Domain.Migrations
                     TrainerPlan = table.Column<int>(type: "int", nullable: false),
                     OriginalCost = table.Column<double>(type: "float", nullable: true),
                     SaleCost = table.Column<double>(type: "float", nullable: true),
-                    UserProfileId = table.Column<int>(type: "int", nullable: false),
+                    TrainerProfileId = table.Column<int>(type: "int", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
@@ -63,42 +78,38 @@ namespace Mogym.Domain.Migrations
                 {
                     table.PrimaryKey("PK_TrainerPlanCost", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TrainerPlanCost_UserProfile_UserProfileId",
-                        column: x => x.UserProfileId,
-                        principalTable: "UserProfile",
+                        name: "FK_TrainerPlanCost_TrainerProfile_TrainerProfileId",
+                        column: x => x.TrainerProfileId,
+                        principalTable: "TrainerProfile",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Achievement_UserProfileId",
-                table: "Achievement",
-                column: "UserProfileId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_TrainerPlanCost_UserProfileId",
-                table: "TrainerPlanCost",
-                column: "UserProfileId");
+
+
+
+
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
+
+
             migrationBuilder.DropTable(
-                name: "Achievement");
+                name: "TrainerAchievement");
 
             migrationBuilder.DropTable(
                 name: "TrainerPlanCost");
 
-            migrationBuilder.DropColumn(
-                name: "Biography",
-                table: "UserProfile");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "UserProfile",
-                type: "nvarchar(2000)",
-                nullable: true);
+
+
+            migrationBuilder.DropTable(
+                name: "TrainerProfile");
         }
     }
 }

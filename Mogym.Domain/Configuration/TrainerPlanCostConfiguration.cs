@@ -18,9 +18,9 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.OriginalCost).HasColumnType("float").IsRequired(false);
             builder.Property(x => x.SaleCost).HasColumnType("float").IsRequired(false);
 
-            builder.HasOne<UserProfile>(x => x.TrainerPlanCost_UserProfile)
+            builder.HasOne<TrainerProfile>(x => x.TrainerPlanCost_TrainerProfile)
                 .WithMany(z => z.TrainerPlanCosts)
-                .HasForeignKey(a => a.UserProfileId)
+                .HasForeignKey(a => a.TrainerProfileId)
                 .IsRequired();
         }
     }
