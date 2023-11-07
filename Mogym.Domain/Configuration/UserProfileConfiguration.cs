@@ -14,7 +14,7 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
             builder.ToTable("UserProfile");
-            builder.Property(x => x.Description).HasColumnType("nvarchar(2000)").IsRequired(false);
+            builder.Property(x => x.Biography).HasColumnType("nvarchar(1000)").IsRequired(false);
         }
     }
 }

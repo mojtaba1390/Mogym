@@ -21,7 +21,6 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.IsActive).HasColumnType("int").HasDefaultValue(EnumYesNo.Yes).IsRequired();
 
 
-
         }
     }
 }

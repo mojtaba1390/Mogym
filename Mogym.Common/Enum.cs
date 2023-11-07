@@ -38,4 +38,16 @@ namespace Mogym.Common
         [Description("خیر")]
         No = 2
     }
+    public enum EnumTrainerPlan
+    {
+        [EnumMember]
+        [Description("برنامه حرکات تمرینی")]
+        Workout = 1,
+        [EnumMember]
+        [Description("برنامه رژیم غذایی")]
+        Diet = 2,
+        [EnumMember]
+        [Description("برنامه حرکات تمرینی و رژیم غذایی")]
+        WorkoutAndDiet = 3
+    }
 }

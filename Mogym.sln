@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mogym.Domain", "Mogym.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mogym.Common", "Mogym.Common\Mogym.Common.csproj", "{65C79993-02AE-43DC-A4E3-4678329C4602}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mogym.Api", "Mogym.Api\Mogym.Api.csproj", "{842E8589-9691-465C-9FF4-F57FECA06AC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{65C79993-02AE-43DC-A4E3-4678329C4602}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C79993-02AE-43DC-A4E3-4678329C4602}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65C79993-02AE-43DC-A4E3-4678329C4602}.Release|Any CPU.Build.0 = Release|Any CPU
+		{842E8589-9691-465C-9FF4-F57FECA06AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{842E8589-9691-465C-9FF4-F57FECA06AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{842E8589-9691-465C-9FF4-F57FECA06AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{842E8589-9691-465C-9FF4-F57FECA06AC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
