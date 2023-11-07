@@ -15,5 +15,6 @@ namespace Mogym.Application.Interfaces
         Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord);
         bool IsExistMobileWithConfirmSmsCode(string mobile, string confirmSmsCode);
         Task<UserRecord> GetUserWithRoleAndPermission(string mobile);
+        Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
     }
 }
