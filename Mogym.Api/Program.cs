@@ -19,7 +19,7 @@ builder.Services.AddInfrastructure();
 
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+
 var connectionString = builder.Configuration.GetConnectionString("MogymConnection");
 builder.Services.AddDbContext<MogymContext>(x => x.UseSqlServer(connectionString));
 
