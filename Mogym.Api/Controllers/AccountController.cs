@@ -45,7 +45,7 @@ namespace Mogym.Api.Controllers
                     return Ok(loginRecord.Mobile);
                 }
 
-                return BadRequest();
+                return BadRequest(Helper.GetModelSateErroMessage(ModelState));
             }
             catch (Exception e)
             {
@@ -124,7 +124,7 @@ namespace Mogym.Api.Controllers
                     return Ok();//TODO:چی پاس بدم؟!
                 }
 
-                return BadRequest();
+                return BadRequest(Helper.GetModelSateErroMessage(ModelState));
             }
             catch (Exception e)
             {
@@ -154,7 +154,7 @@ namespace Mogym.Api.Controllers
                     return Ok(signUpTrainerRecord.Mobile);
                 }
 
-                return BadRequest();
+                return BadRequest(Helper.GetModelSateErroMessage(ModelState));
             }
             catch (Exception e)
             {
