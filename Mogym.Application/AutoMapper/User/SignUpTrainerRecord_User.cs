@@ -15,6 +15,8 @@ namespace Mogym.Application.AutoMapper.User
         {
             CreateMap<SignUpTrainerRecord, Domain.Entities.User>()
                 .ForMember(x => x.Mobile, frm => frm.MapFrom(z => z.Mobile))
+                .ForMember(x => x.NationalCode, frm => frm.MapFrom(z => z.NationalCode))
+                .ForMember(x => x.BirthDay, frm => frm.MapFrom(z => z.BirthDay))
                 .ForMember(x => x.Status, frm => frm.MapFrom(z => EnumStatus.WaitingForSmsConfirm))
                 .ForMember(x => x.UniqeUserName, frm => frm.MapFrom(z => Guid.NewGuid()))
                 .ForMember(x => x.SmsConfirmCode, frm => frm.MapFrom(z => new Random().Next(10000, 99999)));

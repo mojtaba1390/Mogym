@@ -163,9 +163,12 @@ namespace Mogym.Application.Services
                     return _mapper.Map<ConfirmSmsRecord>(entity);
                 }
 
-                var newUser = _mapper.Map<User>(signUpTrainerRecord);
-                await _unitOfWork.UserRepository.AddAsync(newUser);
-                return _mapper.Map<ConfirmSmsRecord>(newUser);
+                var trainer = _mapper.Map<User>(signUpTrainerRecord);
+                await _unitOfWork.UserRepository.AddAsync(trainer, false);
+
+
+
+                return _mapper.Map<ConfirmSmsRecord>(trainer);
 
 
             }
