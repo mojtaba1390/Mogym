@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.AutoMapper.UserRole
 {
-    internal class User_UserRoleRecord
+    internal class User_CreateTrainerUserRoleRecord
     {
     }
 }

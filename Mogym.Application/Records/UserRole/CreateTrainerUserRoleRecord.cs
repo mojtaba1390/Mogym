@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.UserRole
 {
-    internal class CreateUserRoleRecord
+    public class CreateTrainerUserRoleRecord
     {
     }
 }
