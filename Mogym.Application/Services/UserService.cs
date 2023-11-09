@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
+using Mogym.Application.Records.UserRole;
 using Mogym.Common;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
@@ -51,7 +52,7 @@ namespace Mogym.Application.Services
             catch(Exception ex)
             {
                 var message = $"AddAsync in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
-                _logger.LogError(message,ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
 
@@ -79,7 +80,13 @@ namespace Mogym.Application.Services
                 }
 
                 var newUser = _mapper.Map<User>(loginRecord);
+                var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(newUser);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                newUser.UserRoles.Add(userRole);
                 await _unitOfWork.UserRepository.AddAsync(newUser);
+
+
                 return _mapper.Map<ConfirmSmsRecord>(newUser);
 
 
@@ -87,7 +94,7 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
-                _logger.LogError(message, ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
 
@@ -111,7 +118,7 @@ namespace Mogym.Application.Services
             {
                 var message = $"IsExistMobileWithConfirmSmsCode in User Service,mobile=" + mobile + ";confirmSmsCode=" +
                               confirmSmsCode;
-                _logger.LogError(message, ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
 
@@ -142,7 +149,7 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"GetUserWithRoleAndPermission in User Service,mobile=" + mobile ;
-                _logger.LogError(message, ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
 
@@ -153,29 +160,22 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == signUpTrainerRecord.Mobile.Trim()).FirstOrDefaultAsync();
-                if (entity != null)
-                {
-                    //TODO:خط زیر از کامنت در بیاد
-                    //entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
-                    entity.SmsConfirmCode = "12345";
-                    _unitOfWork.UserRepository.Update(entity);
-                    return _mapper.Map<ConfirmSmsRecord>(entity);
-                }
+                var newTrainer = _mapper.Map<User>(signUpTrainerRecord);
+                var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(newTrainer);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
 
-                var trainer = _mapper.Map<User>(signUpTrainerRecord);
-                await _unitOfWork.UserRepository.AddAsync(trainer, false);
+                newTrainer.UserRoles.Add(userRole);
+                await _unitOfWork.UserRepository.AddAsync(newTrainer);
 
 
-
-                return _mapper.Map<ConfirmSmsRecord>(trainer);
+                return _mapper.Map<ConfirmSmsRecord>(newTrainer);
 
 
             }
             catch (Exception ex)
             {
                 var message = $"SignUpTrainer in User Service,entity:" + JsonSerializer.Serialize(signUpTrainerRecord);
-                _logger.LogError(message, ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
         }
@@ -211,7 +211,7 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"UpdateEntityToActiveForAuthentication in User Service,object=" + JsonSerializer.Serialize(entityInWaitingForConfirmSmsCode);
-                _logger.LogError(message, ex);
+                _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
 

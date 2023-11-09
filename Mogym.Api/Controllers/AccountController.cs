@@ -32,9 +32,8 @@ namespace Mogym.Api.Controllers
         }
 
 
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login(LoginRecord loginRecord)
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginRecord loginRecord)
         {
             try
             {
@@ -62,9 +61,8 @@ namespace Mogym.Api.Controllers
         /// </summary>
         /// <param name="confirmRegisterRecord"></param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("ConfirmCode")]
-        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord)
+        [HttpPost("ConfirmCode")]
+        public async Task<IActionResult> ConfirmSmsCode([FromBody] ConfirmSmsRecord confirmRegisterRecord)
         {
             try
             {
@@ -135,6 +133,7 @@ namespace Mogym.Api.Controllers
 
 
         [Authorize]
+        [HttpGet("LogOut")]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync();
@@ -142,8 +141,8 @@ namespace Mogym.Api.Controllers
             return Ok();
         }
 
-        [Route("SignUpTrainer")]
-        public async Task<IActionResult> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord )
+        [HttpPost("SignUpTrainer")]
+        public async Task<IActionResult> SignUpTrainer([FromBody] SignUpTrainerRecord signUpTrainerRecord )
         {
             try
             {

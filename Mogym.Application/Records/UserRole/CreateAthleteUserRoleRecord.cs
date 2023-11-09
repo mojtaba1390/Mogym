@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.UserRole
 {
-    public record CreateTrainerUserRoleRecord
+    public record CreateAthleteUserRoleRecord
     {
         public int UserId { get; init; }
-        public int RoleId { get; init; } = 3;//role id trainer
+        public int RoleId { get; init; } = 4;//role id athlete
     }
 }

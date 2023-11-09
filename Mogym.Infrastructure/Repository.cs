@@ -35,8 +35,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                await LogDbExceptionError(dbException);
                 await _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
             }
 
             return null;
@@ -58,9 +58,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
             }
         }
         public void AddRang(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
@@ -78,9 +77,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
             }
         }
         public async Task AddRangAsync(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
@@ -98,9 +96,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                await LogDbExceptionError(dbException);
-
                 await _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
             }
         }
 
@@ -122,9 +119,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
 
             }
 
@@ -145,9 +141,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
 
             }
 
@@ -199,9 +194,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
 
             }
         }
@@ -220,9 +214,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 // LogDbExceptionError(dbException);
-
-                _dbContext.Database.RollbackTransaction();
+                 _dbContext.Database.RollbackTransactionAsync();
+                throw dbException;
 
             }
         }
