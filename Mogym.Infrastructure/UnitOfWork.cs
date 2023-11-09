@@ -16,7 +16,6 @@ namespace Mogym.Infrastructure
         public UnitOfWork(MogymContext context)
         {
             _context = context;
-            SeriLogRepository = new SeriLogRepository();
 
             UserRepository = new UserRepository(_context);
             RoleRepository = new RoleRepository(_context);
@@ -26,7 +25,6 @@ namespace Mogym.Infrastructure
         }
 
 
-        public ISeriLogRepository SeriLogRepository { get; }
         public IUserRepository UserRepository { get; }
         public IRoleRepository RoleRepository { get; }
         public IUserRoleRepository UserRoleRepository { get; }

@@ -7,16 +7,17 @@ using Mogym.Application.Interfaces.ILog;
 using Mogym.Domain.Context;
 using Mogym.Domain.Entities.Log;
 using Mogym.Infrastructure;
+using Mogym.Infrastructure.Interfaces.ILog;
 
 namespace Mogym.Application.Services.Log
 {
     public class UserLoggingService:IUserLoggingService
     {
-        protected readonly MogymLogContext _context;
+        protected readonly IUserLoggingRepository _userLoggingRepository;
 
-        public UserLoggingService(MogymLogContext context)
+        public UserLoggingService(IUserLoggingRepository userLoggingRepository)
         {
-            _context = context;
+            _userLoggingRepository=userLoggingRepository;
         }
         public async Task Save(string permalink, string ip)
         {
@@ -25,7 +26,7 @@ namespace Mogym.Application.Services.Log
                 Ip = ip,
                 Permalink = permalink
             };
-           await _context.UserLogging.AddAsync(userLogging);
+           await _userLoggingRepository.Save(userLogging);
         }
     }
 }

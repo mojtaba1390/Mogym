@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations.MogymLog
 {
     [DbContext(typeof(MogymLogContext))]
-    partial class MogymLogContextModelSnapshot : ModelSnapshot
+    [Migration("20231109060920_add-userlogging")]
+    partial class adduserlogging
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,6 +79,10 @@ namespace Mogym.Domain.Migrations.MogymLog
 
                     b.Property<string>("Permalink")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

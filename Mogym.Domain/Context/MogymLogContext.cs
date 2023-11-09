@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Mogym.Domain.Entities;
+using Mogym.Domain.Entities.Log;
 
 namespace Mogym.Domain.Context
 {
@@ -29,5 +29,6 @@ namespace Mogym.Domain.Context
 
 
         public DbSet<SeriLog> SeriLog { get; set; }
+        public DbSet<UserLogging> UserLogging { get; set; }
     }
 }

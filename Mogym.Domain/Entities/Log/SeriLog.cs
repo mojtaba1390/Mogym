@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mogym.Domain.Entities
+namespace Mogym.Domain.Entities.Log
 {
     public class SeriLog
     {

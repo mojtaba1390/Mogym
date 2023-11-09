@@ -8,7 +8,6 @@ namespace Mogym.Infrastructure
 {
     public interface IUnitOfWork:IDisposable
     {
-        ISeriLogRepository SeriLogRepository { get; }
         IUserRepository UserRepository { get; }
         IRoleRepository RoleRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }

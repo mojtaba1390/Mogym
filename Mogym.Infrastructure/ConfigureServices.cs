@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Infrastructure.Interfaces.ILog;
 using Mogym.Infrastructure.Interfaces.Log;
+using Mogym.Infrastructure.Repositories.Log;
 
 namespace Mogym.Infrastructure
 {
@@ -15,6 +17,12 @@ namespace Mogym.Infrastructure
 
 
             services.AddLogging();
+
+
+            services.AddTransient<IUserLoggingRepository, UserLoggingRepository>();
+            services.AddTransient<ISeriLogRepository, SeriLogRepository>();
+
+
 
             return services;
         }

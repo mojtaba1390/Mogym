@@ -41,8 +41,9 @@ namespace Mogym.Application
 
             #region Service Life Time
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ISeriLogService, SerilogService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddScoped<ISeriLogService, SeriLogService>();
+            services.AddScoped<IUserLoggingService, UserLoggingService>();
             services.AddTransient<IUserRoleService, UserRoleService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IMenuService, MenuService>();

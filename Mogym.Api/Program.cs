@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Mogym.Api.Middlewares;
 using Mogym.Application;
+using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Services.Log;
 using Mogym.Common;
 using Mogym.Domain.Context;
+using Mogym.Domain.Entities.Log;
 using Mogym.Infrastructure;
 using Swashbuckle.AspNetCore.Filters;
 
@@ -71,6 +75,12 @@ builder.Services.AddSwaggerGen(option =>
 
 var app = builder.Build();
 
+// Middelware
+app.UseMiddleware<LoggingMiddleware>();
+
+
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -78,6 +88,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("v1/swagger.json", "V1"));
 }
+
+
 
 app.UseHttpsRedirection();
 

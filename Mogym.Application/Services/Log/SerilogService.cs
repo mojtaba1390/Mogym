@@ -4,32 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Interfaces.ILog;
-using Mogym.Infrastructure;
 using Mogym.Infrastructure.Interfaces.Log;
 
 namespace Mogym.Application.Services.Log
 {
-    public class SerilogService:ISeriLogService
+    public class SeriLogService:ISeriLogService
     {
-        private IUnitOfWork _unitOfWork;
-        public SerilogService(IUnitOfWork unitOfWork)
+        private readonly ISeriLogRepository _seriLogRepository;
+        public SeriLogService(ISeriLogRepository seriLogRepository)
         {
-            _unitOfWork = unitOfWork;
+            _seriLogRepository = seriLogRepository;
         }
-
         public void LogInformation(string message)
         {
-            _unitOfWork.SeriLogRepository.LogInformation(message);
+            _seriLogRepository.LogInformation(message);
         }
 
         public void LogWarning(string message)
         {
-            _unitOfWork.SeriLogRepository.LogWarning(message);
+            _seriLogRepository.LogWarning(message);
         }
 
         public void LogError(string message, Exception exception)
         {
-            _unitOfWork.SeriLogRepository.LogError(message,exception);
+            _seriLogRepository.LogError(message, exception);
         }
     }
 }

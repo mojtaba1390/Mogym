@@ -7,8 +7,8 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using Mogym.Domain.Entities;
 using Mogym.Infrastructure.Interfaces.Log;
+using Mogym.Domain.Entities.Log;
 
 namespace Mogym.Infrastructure
 {
@@ -35,8 +35,8 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
+                await LogDbExceptionError(dbException);
                 await _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
             }
 
             return null;
@@ -58,8 +58,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 //LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
             }
         }
         public void AddRang(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
@@ -77,8 +78,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 //LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
             }
         }
         public async Task AddRangAsync(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
@@ -96,8 +98,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
+                await LogDbExceptionError(dbException);
+
                 await _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
             }
         }
 
@@ -119,8 +122,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 //LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
 
             }
 
@@ -141,8 +145,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 //LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
 
             }
 
@@ -194,8 +199,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 //LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
 
             }
         }
@@ -214,8 +220,9 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 _dbContext.Database.RollbackTransactionAsync();
-                throw dbException;
+                 // LogDbExceptionError(dbException);
+
+                _dbContext.Database.RollbackTransaction();
 
             }
         }
