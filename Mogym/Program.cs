@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Mogym.Application;
 using Mogym.Domain.Context;
 using Mogym.Infrastructure;
+using Mogym.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 var app = builder.Build();
-
+// Middelware
+app.UseMiddleware<LoggingMiddleware>();
 
 
 // Configure the HTTP request pipeline.
@@ -58,7 +60,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "profile",
     pattern: "{username}",
-    defaults: new { controller = "Profile", action = "ProfileInfo" }
+    defaults: new { controller = "Profile", action = "Index" }
 );
 
 app.Run();

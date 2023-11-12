@@ -8,7 +8,7 @@ using Mogym.Application.Records.UserRole;
 
 namespace Mogym.Application.AutoMapper.UserRole
 {
-    public class User_UserRoleRecord:Profile
+    public class User_UserRoleRecord:global::AutoMapper.Profile
     {
         public User_UserRoleRecord()
         {

@@ -9,7 +9,7 @@ using Mogym.Common;
 
 namespace Mogym.Application.AutoMapper.Permission
 {
-    public class CreateMenuRecord_Permission:Profile
+    public class CreateMenuRecord_Permission:global::AutoMapper.Profile
     {
         public CreateMenuRecord_Permission()
         {

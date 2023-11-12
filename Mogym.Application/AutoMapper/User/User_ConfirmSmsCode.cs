@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Mogym.Application.AutoMapper.User
 {
-    public class User_ConfirmSmsCode : Profile
+    public class User_ConfirmSmsCode : global::AutoMapper.Profile
     {
         public User_ConfirmSmsCode()
         {

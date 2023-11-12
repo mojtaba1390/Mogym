@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Security.Claims;
 
-namespace Mogym.Api
+namespace Mogym
 {
     public static class Helper
     {
@@ -11,7 +11,6 @@ namespace Mogym.Api
                 .SelectMany(x => x.Errors)
                 .Select(x => x.ErrorMessage));
         }
-
         public static int GetUser(this IHttpContextAccessor httpContextAccessor)
         {
             var user = httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -20,6 +19,10 @@ namespace Mogym.Api
         public static string GetUserFullName(this IHttpContextAccessor httpContextAccessor)
         {
             return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.GivenName)?.Value ?? "";
+        }
+        public static string GetUserName(this IHttpContextAccessor httpContextAccessor)
+        {
+            return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? "";
         }
     }
 }

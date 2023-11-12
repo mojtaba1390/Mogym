@@ -8,7 +8,7 @@ using Mogym.Application.Records.Role;
 
 namespace Mogym.Application.AutoMapper.Role
 {
-    public class Role_RoleRecord_Reverse:Profile
+    public class Role_RoleRecord_Reverse:global::AutoMapper.Profile
     {
         public Role_RoleRecord_Reverse()
         {

@@ -10,7 +10,7 @@ using Mogym.Application.Records.Role;
 
 namespace Mogym.Application.AutoMapper.Permission
 {
-    public class Permission_PermissionRecord:Profile
+    public class Permission_PermissionRecord:global::AutoMapper.Profile
     {
         public Permission_PermissionRecord()
         {

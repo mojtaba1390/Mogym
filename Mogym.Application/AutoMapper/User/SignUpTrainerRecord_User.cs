@@ -9,7 +9,7 @@ using Mogym.Common;
 
 namespace Mogym.Application.AutoMapper.User
 {
-    public class SignUpTrainerRecord_User:Profile
+    public class SignUpTrainerRecord_User:global::AutoMapper.Profile
     {
         public SignUpTrainerRecord_User()
         {

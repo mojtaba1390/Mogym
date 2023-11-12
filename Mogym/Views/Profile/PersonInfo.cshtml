@@ -1,0 +1,100 @@
+﻿@model Mogym.Application.Records.Profile.TrainerProfileRecord
+@{
+    ViewData["Title"] = "پروفایل -اطلاعات شخصی";
+    var hashedVersion = Guid.NewGuid();
+}
+<section class="content card-custome">
+    <form asp-controller="Profile" asp-action="PersonInfo" method="post" class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">پروفایل</h3>
+                    </div>
+
+                    <div class="card-body py-5">
+                        <div class="col-auto col-md-12 mt-5" id="tab-profile">
+                            <ul class="nav bg-ligth">
+                                <li class="nav-item">
+                                    <a class="nav-link link-secondary active" id="personal-tab" asp-controller="Profile" asp-action="PersonInfo">اطلاعات شخصی</a>
+                                </li>
+                                <li class="nav-item">
+                                    @*                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="TrainerAchievement">سوابق </a>
+*@                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="PersonInfo">سوابق </a>
+                                </li>
+                                <li class="nav-item">
+                                    @*                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="TrainerPlanCost">هزینه</a>
+                                    *@                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="PersonInfo">هزینه</a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content mt-5" id="tabContent">
+                                <div class="tab-pane fade show active pt-5" id="personal-information" role="tabpanel" aria-labelledby="personal-tab">
+                                    <div class="row">
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-name">نام</label>
+                                            <input class="form-control" asp-for="FirstName" readonly required />
+                                        </div>
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-lastName">نام خانوادگی</label>
+                                            <input class="form-control" asp-for="LastName" readonly required />
+                                        </div>
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-code">نام کاربری</label>
+                                            <input type="number" class="form-control" asp-for="UserName" readonly required />
+                                        </div>
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-birthday">تاریخ تولد</label>
+                                            <input class="form-control txtDateOfBirth" asp-for="BirthDay" disabled readonly />
+                                        </div>
+
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-mobile">شماره همراه</label>
+                                            <input type="number" class="form-control" asp-for="Mobile" readonly required />
+                                            <span class="text-danger" asp-validation-for="Mobile"></span>
+                                        </div>
+                                        <div class=" form-group col-md-6">
+                                            <label class="pt-1" for="profile-address">بیوگرافی</label>
+                                            <textarea class="form-control" rows="1" asp-for="Biography"></textarea>
+                                            <span class="text-danger" asp-validation-for="Biography"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.card-body -->
+
+                    </div>
+                    <!-- /.card -->
+                    <div class="card-footer">
+                        <div class=" form-group col-md-12">
+                            <div class="col-md-9">
+                                @{
+                                    var message = (string?)TempData["message"];
+                                }
+                                @*                                    <p class=" @(message==MessageForm.CreatedFail? "text-danger":"text-green") text-right mt-2 font-weight-bold"> @message </p>
+*@                                </div>
+                            <div class="form-actions-buttons col-md-3 d-flex justify-content-end">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</section>
+
+<script>
+    $(document).ready(function () {
+        initCalendar("BirthDay");
+    });
+</script>

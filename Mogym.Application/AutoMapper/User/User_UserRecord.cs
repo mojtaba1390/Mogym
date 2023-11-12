@@ -11,7 +11,7 @@ using Mogym.Domain.Entities;
 
 namespace Mogym.Application.AutoMapper.User
 {
-    public class User_UserRecord:Profile
+    public class User_UserRecord:global::AutoMapper.Profile
     {
         public User_UserRecord()
         {

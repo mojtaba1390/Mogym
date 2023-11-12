@@ -8,7 +8,7 @@ using Mogym.Application.Records.Menu;
 
 namespace Mogym.Application.AutoMapper.Menu
 {
-    public class Menu_MenuRecord:Profile
+    public class Menu_MenuRecord:global::AutoMapper.Profile
     {
         public Menu_MenuRecord()
         {
