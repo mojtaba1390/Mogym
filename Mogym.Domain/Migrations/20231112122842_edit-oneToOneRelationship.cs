@@ -6,19 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mogym.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class addmissing : Migration
+    public partial class editoneToOneRelationship : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
 
+
+
+
+
+
+
+
+
+
             migrationBuilder.CreateTable(
                 name: "TrainerProfile",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Biography = table.Column<string>(type: "nvarchar(1000)", nullable: true),
+                    ProfilePic = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     InsertDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
@@ -27,11 +39,10 @@ namespace Mogym.Domain.Migrations
                 {
                     table.PrimaryKey("PK_TrainerProfile", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TrainerProfile_User_Id",
-                        column: x => x.Id,
+                        name: "FK_TrainerProfile_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
 
@@ -89,15 +100,35 @@ namespace Mogym.Domain.Migrations
 
 
 
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainerAchievement_TrainerProfileId",
+                table: "TrainerAchievement",
+                column: "TrainerProfileId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainerPlanCost_TrainerProfileId",
+                table: "TrainerPlanCost",
+                column: "TrainerProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainerProfile_UserId",
+                table: "TrainerProfile",
+                column: "UserId",
+                unique: true);
 
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Menu");
 
+            migrationBuilder.DropTable(
+                name: "RolePermission");
 
+            migrationBuilder.DropTable(
+                name: "SeriLog");
 
             migrationBuilder.DropTable(
                 name: "TrainerAchievement");
@@ -105,11 +136,23 @@ namespace Mogym.Domain.Migrations
             migrationBuilder.DropTable(
                 name: "TrainerPlanCost");
 
+            migrationBuilder.DropTable(
+                name: "UserLogging");
 
+            migrationBuilder.DropTable(
+                name: "UserRole");
 
+            migrationBuilder.DropTable(
+                name: "Permission");
 
             migrationBuilder.DropTable(
                 name: "TrainerProfile");
+
+            migrationBuilder.DropTable(
+                name: "Role");
+
+            migrationBuilder.DropTable(
+                name: "User");
         }
     }
 }

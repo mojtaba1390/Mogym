@@ -46,5 +46,20 @@ namespace Mogym.Application.Services
 
             return null;
         }
+
+        public void Update(TrainerProfile trainerInfo)
+        {
+            try
+            {
+                _unitOfWork.TrainerProfileRepository.Update(trainerInfo,false);
+                _unitOfWork.UserRepository.Update(trainerInfo.User);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Update in TrainerProfile Service";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

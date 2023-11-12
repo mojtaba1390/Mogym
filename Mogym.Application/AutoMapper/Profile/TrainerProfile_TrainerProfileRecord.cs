@@ -21,7 +21,8 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.Mobile, z => z.MapFrom(a => a.User.Mobile))
                 .ForMember(x => x.BirthDay, z => z.MapFrom(a => a.User.BirthDay))
                 .ForMember(x => x.Email, z => z.MapFrom(a => a.User.Email))
-                .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography));
+                .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
+                .ForMember(x => x.UserId, z => z.MapFrom(a => a.UserId));
         }
     }
 }

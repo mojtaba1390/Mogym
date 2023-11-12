@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,8 +16,10 @@ namespace Mogym.Application.Records.Profile
         public string Mobile { get; init; }
         public string? BirthDay { get; init; }
         public string? Email { get; init; }
-
         public string? Biography { get; set; }
+        public int UserId { get; set; }
+        public IFormFile? ProfilePic { get; set; }
+
 
     }
 }

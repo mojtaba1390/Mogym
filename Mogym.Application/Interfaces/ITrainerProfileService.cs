@@ -10,5 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface ITrainerProfileService
     {
         Task<TrainerProfile?> GetByUserName(string username);
+        void Update(TrainerProfile trainerInfo);
     }
 }

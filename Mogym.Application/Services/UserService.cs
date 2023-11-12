@@ -165,11 +165,15 @@ namespace Mogym.Application.Services
                 var userRole = _mapper.Map<UserRole>(userRoleRecord);
 
                 newTrainer.UserRoles.Add(userRole);
-                /////
-                newTrainer.TrainerProfile = new TrainerProfile();
-                /////
+
                 await _unitOfWork.UserRepository.AddAsync(newTrainer);
 
+
+                /////
+                var trainerProfile = new TrainerProfile();
+                trainerProfile.UserId = newTrainer.Id;
+                /////
+                await _unitOfWork.TrainerProfileRepository.AddAsync(trainerProfile);
 
                 return _mapper.Map<ConfirmSmsRecord>(newTrainer);
 

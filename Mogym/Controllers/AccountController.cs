@@ -32,7 +32,7 @@ namespace Mogym.Controllers
         public async Task<IActionResult> Login()
         {
 
-            return View();
+            return PartialView();
         }
 
         [HttpPost]

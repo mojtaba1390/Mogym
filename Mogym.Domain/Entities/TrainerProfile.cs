@@ -16,12 +16,13 @@ namespace Mogym.Domain.Entities
 
         public string? Biography { get; set; }
 
+        public string? ProfilePic { get; set; }
 
 
 
 
 
-
+        public int UserId { get; set; } 
 
         //relations
         public User User { get; set; }

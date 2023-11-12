@@ -15,11 +15,14 @@ namespace Mogym.Controllers
         private readonly IMapper _mapper;
         private readonly ITrainerProfileService _trainerProfileService;
         private readonly IHttpContextAccessor _accessor;
-        public ProfileController(ITrainerProfileService trainerProfileService, IHttpContextAccessor accessor,IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public ProfileController(ITrainerProfileService trainerProfileService, IHttpContextAccessor accessor,IMapper mapper,IWebHostEnvironment webHostEnvironment)
         {
             _trainerProfileService = trainerProfileService;
             _accessor = accessor;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index(string username)
         {
@@ -41,6 +44,33 @@ namespace Mogym.Controllers
 
             var personInfo = _mapper.Map<TrainerProfileRecord>(trainerProfile);
             return View(personInfo);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PersonInfo(TrainerProfileRecord trainerProfileRecord)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                var trainerInfo = _mapper.Map<TrainerProfile>(trainerProfileRecord);
+
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", trainerInfo.ProfilePic);
+                using (FileStream stream = new FileStream(path, FileMode.Create))
+                {
+                    await trainerProfileRecord.ProfilePic.CopyToAsync(stream);
+                    stream.Close();
+                }
+
+                _trainerProfileService.Update(trainerInfo);
+
+            }
+
+
+            return RedirectToAction("Index", "Account");
         }
 
 

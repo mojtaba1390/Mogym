@@ -35,7 +35,6 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                await LogDbExceptionError(dbException);
                 await _dbContext.Database.RollbackTransactionAsync();
             }
 
@@ -98,7 +97,6 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                await LogDbExceptionError(dbException);
 
                 await _dbContext.Database.RollbackTransactionAsync();
             }

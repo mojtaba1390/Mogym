@@ -2,9 +2,13 @@
 @{
     ViewData["Title"] = "پروفایل -اطلاعات شخصی";
     var hashedVersion = Guid.NewGuid();
+    Layout = "_Layout";
+
 }
 <section class="content card-custome">
-    <form asp-controller="Profile" asp-action="PersonInfo" method="post" class="container-fluid">
+    <form asp-controller="Profile" asp-action="PersonInfo" method="post" class="container-fluid" id="profile-tab" enctype="multipart/form-data">
+        <input asp-for="Id" hidden/>
+        <input asp-for="UserId" hidden />
         <div class="row">
 
             <div class="col-md-12">
@@ -22,11 +26,11 @@
                                 </li>
                                 <li class="nav-item">
                                     @*                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="TrainerAchievement">سوابق </a>
-*@                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="PersonInfo">سوابق </a>
+                                    *@ <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="PersonInfo">سوابق </a>
                                 </li>
                                 <li class="nav-item">
                                     @*                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="TrainerPlanCost">هزینه</a>
-                                    *@                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="PersonInfo">هزینه</a>
+                                    *@ <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="PersonInfo">هزینه</a>
                                 </li>
 
                             </ul>
@@ -35,29 +39,48 @@
                                     <div class="row">
                                         <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-name">نام</label>
-                                            <input class="form-control" asp-for="FirstName" readonly required />
+                                            <input class="form-control" asp-for="FirstName" required/>
+                                            <span class="text-danger" asp-validation-for="FirstName"></span>
+
                                         </div>
                                         <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-lastName">نام خانوادگی</label>
-                                            <input class="form-control" asp-for="LastName" readonly required />
+                                            <input class="form-control" asp-for="LastName" required/>
+                                            <span class="text-danger" asp-validation-for="LastName"></span>
+
                                         </div>
                                         <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-code">نام کاربری</label>
-                                            <input type="number" class="form-control" asp-for="UserName" readonly required />
+                                            <input type="number" class="form-control" asp-for="UserName" required/>
+                                            <span class="text-danger" asp-validation-for="UserName"></span>
+
                                         </div>
                                         <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-birthday">تاریخ تولد</label>
-                                            <input class="form-control txtDateOfBirth" asp-for="BirthDay" disabled readonly />
+                                            <input class="form-control txtBirthDay" asp-for="BirthDay"/>
+                                            <input class="form-control" type="hidden" asp-for="BirthDay"/>
+                                            <span class="text-danger" asp-validation-for="BirthDay"></span>
+
                                         </div>
 
                                         <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-mobile">شماره همراه</label>
-                                            <input type="number" class="form-control" asp-for="Mobile" readonly required />
+                                            <input type="number" class="form-control" asp-for="Mobile" required readonly/>
                                             <span class="text-danger" asp-validation-for="Mobile"></span>
+                                        </div>
+                                        <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-profilepic">تصویر پروفایل</label>
+                                            <div id="chooseFile">
+                                                <input type="file" name="profilePic" accept="image/*"/>
+                                            </div>
+                                        </div>
+                                        <div class=" form-group col-md-3">
+                                        </div>
+                                        <div class=" form-group col-md-3">
                                         </div>
                                         <div class=" form-group col-md-6">
                                             <label class="pt-1" for="profile-address">بیوگرافی</label>
-                                            <textarea class="form-control" rows="1" asp-for="Biography"></textarea>
+                                            <textarea class="form-control" rows="5" asp-for="Biography"></textarea>
                                             <span class="text-danger" asp-validation-for="Biography"></span>
                                         </div>
 
@@ -77,9 +100,10 @@
                                     var message = (string?)TempData["message"];
                                 }
                                 @*                                    <p class=" @(message==MessageForm.CreatedFail? "text-danger":"text-green") text-right mt-2 font-weight-bold"> @message </p>
-*@                                </div>
+                                *@
+                            </div>
                             <div class="form-actions-buttons col-md-3 d-flex justify-content-end">
-                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                                <input type="submit" value="ثبت" class="btn btn-success-card"/>
 
                             </div>
                         </div>
@@ -93,8 +117,54 @@
     </form>
 </section>
 
-<script>
-    $(document).ready(function () {
-        initCalendar("BirthDay");
-    });
-</script>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            initCalendar("BirthDay");
+
+
+            $("#profile-tab").validate({
+                rules: {
+                    FirstName: {
+                        required: true,
+                        maxlength: 64
+                    },
+                    LastName: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    UserName: {
+                        required: true,
+                        maxlength: 50
+                    },
+                    Biography: {
+                        required: true,
+                        maxlength: 300
+                    }
+                },
+                messages: {
+                    FirstName: {
+                        required: "پر کردن نام الزامی است",
+                        maxlength: "نام بیشتر از 64 کارکتر میباشد.",
+                    },
+                    LastName: {
+                        required: "پر کردن نام خانوادگی الزامی است",
+                        maxlength: "نام خانوادگی بیشتر از 100 کارکتر میباشد.",
+                    },
+                    UserName: {
+                        required: "پر کردن نام کاربری الزامی است",
+                        maxlength: "نام کاربری بیشتر از 50 کارکتر میباشد.",
+                    },
+                    Biography: {
+                        required: "پر کردن بیوگرافی الزامی است",
+                        maxlength: "بیوگرافی بیشتر از 300 کارکتر میباشد.",
+                    }
+
+                }
+            })
+
+        })
+    </script>
+}
