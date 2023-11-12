@@ -91,14 +91,14 @@ namespace Mogym.Controllers
                     //TODO: اینجا باید اول کلید های مربوطه تو ردیس پاک بشه بعد ست بشه
 
                     #region set redis cache
-                    var isRedisConnected = (await ConnectionMultiplexer.ConnectAsync(_configuration.GetConnectionString("RedisConnection") ?? string.Empty)).IsConnected; 
-                    if (isRedisConnected)
-                    {
-                        await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
-                            DateTime.Now.AddHours(1).Minute);
-                        await _redisCacheService.Set(activeMenusKey, activeMenus, DateTime.Now.AddDays(1).Minute,
-                            DateTime.Now.AddHours(1).Minute);
-                    }
+                    //var isRedisConnected = (await ConnectionMultiplexer.ConnectAsync(_configuration.GetConnectionString("RedisConnection") ?? string.Empty)).IsConnected; 
+                    //if (isRedisConnected)
+                    //{
+                    //    await _redisCacheService.Set(userInfoKey, user, DateTime.Now.AddDays(1).Minute,
+                    //        DateTime.Now.AddHours(1).Minute);
+                    //    await _redisCacheService.Set(activeMenusKey, activeMenus, DateTime.Now.AddDays(1).Minute,
+                    //        DateTime.Now.AddHours(1).Minute);
+                    //}
 
                     #endregion
 

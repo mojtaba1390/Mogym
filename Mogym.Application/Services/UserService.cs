@@ -165,6 +165,9 @@ namespace Mogym.Application.Services
                 var userRole = _mapper.Map<UserRole>(userRoleRecord);
 
                 newTrainer.UserRoles.Add(userRole);
+                /////
+                newTrainer.TrainerProfile = new TrainerProfile();
+                /////
                 await _unitOfWork.UserRepository.AddAsync(newTrainer);
 
 
