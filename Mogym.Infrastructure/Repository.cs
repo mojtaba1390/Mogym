@@ -186,6 +186,7 @@ namespace Mogym.Infrastructure
             try
             {
                 _dbContext.Database.BeginTransaction();
+                _dbContext.Set<TEntity>().Attach(entity);
                 _dbContext.Entry(entity).State=EntityState.Modified;
                 if (withSaveChange)
                 {
@@ -200,6 +201,29 @@ namespace Mogym.Infrastructure
                  //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
+
+            }
+        }
+        public async Task UpdateAsync(TEntity entity, bool withSaveChange = true)
+        {
+            try
+            {
+                await _dbContext.Database.BeginTransactionAsync();
+                _dbContext.Set<TEntity>().Attach(entity);
+                _dbContext.Entry(entity).State=EntityState.Modified;
+                if (withSaveChange)
+                {
+                    await _dbContext.SaveChangesAsync();
+                }
+                await _dbContext.Database.CommitTransactionAsync();
+
+
+            }
+            catch (DbUpdateException dbException)
+            {
+                //LogDbExceptionError(dbException);
+
+                await _dbContext.Database.RollbackTransactionAsync();
 
             }
         }

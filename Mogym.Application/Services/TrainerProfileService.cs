@@ -62,7 +62,7 @@ namespace Mogym.Application.Services
                 trainerInfo.User = null;
                 trainerInfo.TrainerAchievements = null;
                 trainerInfo.TrainerPlanCosts = null;
-                _unitOfWork.TrainerProfileRepository.Update(trainerInfo);
+               await _unitOfWork.TrainerProfileRepository.UpdateAsync(trainerInfo);
                 _unitOfWork.UserRepository.Update(user);
             }
             catch (Exception ex)
