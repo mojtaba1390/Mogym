@@ -28,6 +28,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.BirthDay).HasColumnType("varchar").HasMaxLength(10).IsRequired(false);
             builder.Property(x => x.SmsConfirmCode).HasColumnType("varchar").HasMaxLength(5).IsRequired();
             builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
+            builder.Property(x => x.RowVersion).IsRowVersion().IsConcurrencyToken().ValueGeneratedOnAddOrUpdate();
 
 
             builder.HasOne<TrainerProfile>(u => u.TrainerProfile)

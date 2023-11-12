@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Records.Profile;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -31,6 +32,7 @@ namespace Mogym.Application.Services
             {
                 return await _unitOfWork.TrainerProfileRepository
                     .Find(x => x.User.UserName == username.Trim() && x.User.UserRoles.Any(z => z.RoleId == 3))
+                    .AsNoTracking()
                     .Include(x => x.User)
                     .ThenInclude(x=>x.UserRoles)
                     .FirstOrDefaultAsync();
@@ -47,12 +49,21 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        public void Update(TrainerProfile trainerInfo)
+        public async Task Update(TrainerProfileRecord trainerInfoRecord)
         {
             try
             {
-                _unitOfWork.TrainerProfileRepository.Update(trainerInfo,false);
-                _unitOfWork.UserRepository.Update(trainerInfo.User);
+                var trainerProfileOld =  _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == trainerInfoRecord.Id)
+                    .Include(x => x.User)
+                    .FirstOrDefault();
+
+                var trainerInfo = _mapper.Map(trainerInfoRecord,trainerProfileOld);
+                var user = trainerInfo.User;
+                trainerInfo.User = null;
+                trainerInfo.TrainerAchievements = null;
+                trainerInfo.TrainerPlanCosts = null;
+                _unitOfWork.TrainerProfileRepository.Update(trainerInfo);
+                _unitOfWork.UserRepository.Update(user);
             }
             catch (Exception ex)
             {

@@ -24,6 +24,7 @@ namespace Mogym.Domain
         public DateTime? LastModifiedDate { get; set; }
 
         [Timestamp]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public byte[] RowVersion { get; set; }
     }
 }

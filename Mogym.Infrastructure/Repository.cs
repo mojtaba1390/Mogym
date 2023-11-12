@@ -186,7 +186,7 @@ namespace Mogym.Infrastructure
             try
             {
                 _dbContext.Database.BeginTransaction();
-                _dbContext.Set<TEntity>().Update(entity);
+                _dbContext.Entry(entity).State=EntityState.Modified;
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();

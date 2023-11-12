@@ -56,16 +56,15 @@ namespace Mogym.Controllers
             if (ModelState.IsValid)
             {
 
-                var trainerInfo = _mapper.Map<TrainerProfile>(trainerProfileRecord);
 
-                var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", trainerInfo.ProfilePic);
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", trainerProfileRecord.ProfilePic.FileName);
                 using (FileStream stream = new FileStream(path, FileMode.Create))
                 {
                     await trainerProfileRecord.ProfilePic.CopyToAsync(stream);
                     stream.Close();
                 }
 
-                _trainerProfileService.Update(trainerInfo);
+                _trainerProfileService.Update(trainerProfileRecord);
 
             }
 
