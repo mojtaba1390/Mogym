@@ -53,17 +53,15 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var trainerProfileOld =  _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == trainerInfoRecord.Id)
+                var trainerProfileOld = _unitOfWork.TrainerProfileRepository.Find(x => x.Id == trainerInfoRecord.Id)
                     .Include(x => x.User)
                     .FirstOrDefault();
 
-                var trainerInfo = _mapper.Map(trainerInfoRecord,trainerProfileOld);
-                var user = trainerInfo.User;
-                trainerInfo.User = null;
-                trainerInfo.TrainerAchievements = null;
-                trainerInfo.TrainerPlanCosts = null;
-               await _unitOfWork.TrainerProfileRepository.UpdateAsync(trainerInfo);
-                _unitOfWork.UserRepository.Update(user);
+                var trainerInfo = _mapper.Map(trainerInfoRecord, trainerProfileOld);
+                var user = _mapper.Map(trainerInfoRecord, trainerProfileOld.User);
+
+                 _unitOfWork.TrainerProfileRepository.Update(trainerInfo,false);
+                 _unitOfWork.UserRepository.Update(user);
             }
             catch (Exception ex)
             {

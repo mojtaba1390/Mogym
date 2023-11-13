@@ -15,8 +15,6 @@ namespace Mogym.Domain.Configuration
         {
             builder.ToTable("TrainerProfile");
             builder.Property(x => x.Biography).HasColumnType("nvarchar(1000)").IsRequired(false);
-            builder.Property(x => x.ProfilePic).HasColumnType("nvarchar(100)").IsRequired(false);
-            builder.Property(x => x.RowVersion).IsRowVersion().IsConcurrencyToken().ValueGeneratedOnAddOrUpdate();
 
 
 

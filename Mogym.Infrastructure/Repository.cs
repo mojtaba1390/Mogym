@@ -186,8 +186,7 @@ namespace Mogym.Infrastructure
             try
             {
                 _dbContext.Database.BeginTransaction();
-                _dbContext.Set<TEntity>().Attach(entity);
-                _dbContext.Entry(entity).State=EntityState.Modified;
+                _dbContext.Set<TEntity>().Update(entity);
                 if (withSaveChange)
                 {
                     _dbContext.SaveChanges();
@@ -198,7 +197,38 @@ namespace Mogym.Infrastructure
             }
             catch (DbUpdateException dbException)
             {
-                 //LogDbExceptionError(dbException);
+                foreach (var entry in dbException.Entries)
+                {
+                    if (entry.Entity is TEntity)
+                    {
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        foreach (var property in proposedValues.Properties)
+                        {
+                            var proposedValue = proposedValues[property];
+                            var databaseValue = databaseValues[property];
+
+                            // TODO: decide which value should be written to database
+                            // proposedValues[property] = <value to be saved>;
+                        }
+
+                        // Refresh original values to bypass next concurrency check
+                        entry.OriginalValues.SetValues(databaseValues);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(
+                            "Don't know how to handle concurrency conflicts for "
+                            + entry.Metadata.Name);
+                    }
+                }
+
+
+
+
+
+                //LogDbExceptionError(dbException);
 
                 _dbContext.Database.RollbackTransaction();
 
@@ -209,8 +239,8 @@ namespace Mogym.Infrastructure
             try
             {
                 await _dbContext.Database.BeginTransactionAsync();
-                _dbContext.Set<TEntity>().Attach(entity);
-                _dbContext.Entry(entity).State=EntityState.Modified;
+                _dbContext.Entry(entity).State = EntityState.Modified;
+
                 if (withSaveChange)
                 {
                     await _dbContext.SaveChangesAsync();

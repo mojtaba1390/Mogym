@@ -29,6 +29,7 @@ namespace Mogym.Domain.Entities
         public string SmsConfirmCode { get; set; }
 
         public string? Email { get; set; }
+        public string? ProfilePic { get; set; }
 
 
         public TrainerProfile TrainerProfile { get; set; }

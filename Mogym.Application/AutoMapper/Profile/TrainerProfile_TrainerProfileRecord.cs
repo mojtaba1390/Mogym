@@ -14,7 +14,7 @@ namespace Mogym.Application.AutoMapper.Profile
         public TrainerProfile_TrainerProfileRecord()
         {
             CreateMap<TrainerProfile, TrainerProfileRecord>()
-                .ForMember(x => x.Id, z => z.MapFrom(a => a.User.Id))
+                .ForMember(x => x.Id, z => z.MapFrom(a => a.Id))
                 .ForMember(x => x.UserName, z => z.MapFrom(a => a.User.UserName))
                 .ForMember(x => x.FirstName, z => z.MapFrom(a => a.User.FirstName))
                 .ForMember(x => x.LastName, z => z.MapFrom(a => a.User.LastName))
@@ -22,7 +22,8 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.BirthDay, z => z.MapFrom(a => a.User.BirthDay))
                 .ForMember(x => x.Email, z => z.MapFrom(a => a.User.Email))
                 .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
-                .ForMember(x => x.UserId, z => z.MapFrom(a => a.UserId));
+                .ForMember(x => x.UserId, z => z.MapFrom(a => a.User.Id))
+                .ForMember(x => x.ProfilePic, z => z.Ignore());
         }
     }
 }

@@ -20,11 +20,9 @@ namespace Mogym.Domain
 
         public DateTime InsertDate { get; set; } = DateTime.Now;
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? LastModifiedDate { get; set; }
+        public DateTime? LastModifiedDate { get; set; } = DateTime.Now;
 
         [Timestamp]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public byte[] RowVersion { get; set; }
     }
 }
