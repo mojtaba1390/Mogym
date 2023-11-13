@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.TrainerAchievement;
 using Mogym.Application.Services;
 
 namespace Mogym.Controllers
 {
+    [Authorize]
     public class TrainerAchievementController : Controller
     {
         private readonly ITrainerAchievementService _trainerAchievementService;

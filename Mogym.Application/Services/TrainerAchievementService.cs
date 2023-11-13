@@ -18,14 +18,12 @@ namespace Mogym.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
-        private readonly ITrainerProfileService _trainerProfileService;
 
-        public TrainerAchievementService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger, ITrainerProfileService trainerProfileService)
+        public TrainerAchievementService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
-            _trainerProfileService = trainerProfileService;
         }
         public async Task<List<TrainerAchievementRecord>> GetListByTrainerProfileId(int trainerProfileId)
         {

@@ -70,5 +70,11 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<TrainerProfileRecord> GetEntityByUserId(int userId)
+        {
+            var trainerProfile = await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
+            return  _mapper.Map<TrainerProfileRecord>(trainerProfile);
+        }
     }
 }
