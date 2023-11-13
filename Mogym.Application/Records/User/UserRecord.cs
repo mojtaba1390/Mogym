@@ -25,6 +25,7 @@ namespace Mogym.Application.Records.User
         public string SmsConfirmCode { get; init; }
 
         public string? Email { get; init; }
+        public string? ProfilePic { get; set; }
 
         public List<RoleRecord> Roles { get; init; }
         public List<PermissionRecord> Permissions { get; init; }

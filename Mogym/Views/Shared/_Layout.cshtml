@@ -134,8 +134,24 @@
                 </li>
                 <li class="px-3 user-panel1 ">
                     <div class="dropdown">
-                        <img src="/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
-                        @user.Mobile
+                        @{
+                            if (!string.IsNullOrWhiteSpace(user.ProfilePic))
+                            {
+                                <img src="/ProfilePic/@user.ProfilePic" class="img-circle elevation-2" alt="User Image">
+                            }
+                            else
+                            {
+                                <img src="/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(user.UserName))
+                            {
+                                @user.UserName;
+                            }
+                                    else
+                                @user.Mobile
+
+                        }
                         <div class="dropdown-content">
                             <ul>
 
