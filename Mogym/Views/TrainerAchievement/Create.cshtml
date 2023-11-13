@@ -1,0 +1,83 @@
+﻿@model Mogym.Application.Records.TrainerAchievement.CreateTrainerAchievementRecord
+
+
+@{
+    ViewBag.Title = "ایجاد سابقه";
+    Layout = "_Layout";
+}
+
+<section class="content card-custome">
+    <form asp-action="create" method="post" class="container-fluid" id="achievement-create">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">تعریف سابقه</h3>
+                    </div>
+                    <div class="card-body py-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="pt-1" for="Course"> عنوان </label>
+                                    <input class="form-control" id="Title" required asp-for="Title" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="pt-1" for="Course"> سال </label>
+                                    <input type="number" class="form-control" id="Date" required asp-for="Date" />
+                                    <span asp-validation-for="Date" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <p class="text-red text-right mt-2 font-weight-bold">@TempData["errormessage"]</p>
+                            </div>
+                            <div class="form-actions-buttons col-md-6">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+    </form>
+</section>
+
+<script>
+    $("#form-tms").validate({
+        rules: {
+            Title: {
+                required: true,
+                maxlength: 100
+            }
+        },
+        messages: {
+            Title: {
+                required: "پر کردن عنوان الزامی است",
+                maxlength: "عنوان بیشتر از 100 کارکتر میباشد.",
+            }
+        }
+    })
+</script>

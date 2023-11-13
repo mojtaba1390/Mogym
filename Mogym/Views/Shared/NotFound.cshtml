@@ -57,12 +57,14 @@
 		
                     <div class="contant_box_404">
                         <h3 class="h2">
-                           صفحه مورد نظر یافت نشد 
+                            <div class="col-md-6">
+                                @TempData["errormessage"]
+                            </div>
                         </h3>
 		
                         @*<p>the page you are looking for not avaible!</p>*@
 		
-                        <a href="" class="link_404">Go to Home</a>
+                        <a asp-action="Index" asp-controller="Account" class="link_404">بازگشت</a>
                     </div>
                 </div>
             </div>

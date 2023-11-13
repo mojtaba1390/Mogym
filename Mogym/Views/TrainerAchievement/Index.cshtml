@@ -1,0 +1,134 @@
+﻿@model List<Mogym.Application.Records.TrainerAchievement.TrainerAchievementRecord>
+
+@{
+    ViewBag.Title = "سوابق";
+    Layout = "_Layout";
+}
+
+
+<section class="content card-custome">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">سوابق</h3>
+                    </div>
+
+                    <div class="card-body py-5">
+                        <div class="col-auto col-md-12 mt-5" id="tab-profile">
+                            <ul class="nav bg-ligth">
+                                <li class="nav-item">
+                                    <a class="nav-link link-secondary " id="personal-tab" asp-controller="Profile" asp-action="PersonInfo">اطلاعات شخصی</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link link-secondary active" id="trainerAchievement-tab" asp-controller="TrainerAchievement" asp-action="Index">سوابق </a>
+                                </li>
+                                <li class="nav-item">
+                                    @*                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="TrainerPlanCost">هزینه</a>
+                                    *@ <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="PersonInfo">هزینه</a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content mt-5" id="tabContent">
+                                <div class="tab-pane fade show active pt-5" id="personal-information" role="tabpanel" aria-labelledby="personal-tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="">
+
+                                                <!-- /.card-header -->
+                                                <div class="card-body training-course-class-index mb-50">
+                                                    <a asp-action="Create" asp-controller="TrainerAchievement" class="btn btn-success-card px-5 mb-4">ایجاد</a>
+                                                    <table id="achivment" class="table table-bordered table-striped w-100">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>عنوان</th>
+                                                                <th>سال</th>
+                                                                <th>عملیات</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (Model.Any())
+                                                            {
+                                                                @foreach (var itm in Model)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@itm.Title</td>
+                                                                        <td>@itm.Date</td>
+                                                                        <td class="operation-icon">
+                                                                        <a asp-action="Delete" asp-controller="TrainerAchievement" asp-route-id="@itm.Id" class="show px-2 tooltip"><i class="far fa-2xl fa-trash-alt"></i> <span class="tooltiptext tooltip-top">مشاهده</span></a>
+                                                                            @*<a  asp-action="AllClass" asp-route-classId="@itm.Id" class="show px-2 tooltip"><i class="far fa-2xl fa-eye"></i> <span class="tooltiptext tooltip-top">مشاهده</span></a>
+
+                                                                <a asp-action="Edit" asp-route-id="@itm.Id" class="edit px-2 tooltip"><i class="far fa-2xl fa-edit"></i> <span class="tooltiptext tooltip-top">ویرایش</span></a>*@
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                        @*                                <tfoot>
+                                                        <tr>
+                                                        <th>عنوان</th>
+                                                        <th>نوع کلاس</th>
+                                                        <th>برنامه آموزشی</th>
+                                                        <th>عملیات</th>
+                                                        </tr>
+
+                                                        </tfoot>*@
+                                                    </table>
+                                                </div>
+                                                <!-- /.card-body -->
+                                            </div>
+                                            <!-- /.card -->
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- /.card-body -->
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+</section>
+
+
+<script>
+    $(function () {
+        $("#achivment").DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+            ],
+            "pageLength": 25,
+            "ordering": false,
+            language: {
+                processing: "لطفا صبر کنید ...",
+                search: "جستجو ",
+                lengthMenu: "نمایش _MENU_ آیتم",
+                info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                infoPostFix: "",
+                loadingRecords: "لطفا صبر کنید ...",
+                zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                paginate: {
+                    first: "اولین",
+                    previous: "قبلی",
+                    next: "بعدی",
+                    last: "آخرین"
+                },
+                aria: {
+                    sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                    sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                }
+            }
+        });
+    });
+</script>

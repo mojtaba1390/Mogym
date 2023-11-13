@@ -1,7 +1,6 @@
 ﻿@model Mogym.Application.Records.Profile.TrainerProfileRecord
 @{
     ViewData["Title"] = "پروفایل -اطلاعات شخصی";
-    var hashedVersion = Guid.NewGuid();
     Layout = "_Layout";
 
 }
@@ -25,8 +24,7 @@
                                     <a class="nav-link link-secondary active" id="personal-tab" asp-controller="Profile" asp-action="PersonInfo">اطلاعات شخصی</a>
                                 </li>
                                 <li class="nav-item">
-                                    @*                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="TrainerAchievement">سوابق </a>
-                                    *@ <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="Profile" asp-action="PersonInfo">سوابق </a>
+                                    <a class="nav-link link-secondary" id="trainerAchievement-tab" asp-controller="TrainerAchievement" asp-action="Index" asp-route-trainerProfileId="@Model.Id">سوابق </a>
                                 </li>
                                 <li class="nav-item">
                                     @*                                    <a class="nav-link link-secondary" id="trainerPlanCost-tab" asp-controller="Profile" asp-action="TrainerPlanCost">هزینه</a>

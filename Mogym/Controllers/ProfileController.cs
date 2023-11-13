@@ -28,7 +28,7 @@ namespace Mogym.Controllers
         {
             var profile = await _trainerProfileService.GetByUserName(username);
 
-            return View();
+            return View(profile);
         }
 
 
@@ -67,7 +67,7 @@ namespace Mogym.Controllers
                 }
 
 
-                _trainerProfileService.Update(trainerProfileRecord);
+                await _trainerProfileService.Update(trainerProfileRecord);
 
             }
 

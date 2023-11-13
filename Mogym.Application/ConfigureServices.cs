@@ -50,6 +50,7 @@ namespace Mogym.Application
             services.AddTransient<IRedisCacheService, RedisCacheService>();
             services.AddTransient<IPermissionService, PermissionService>();
             services.AddTransient<ITrainerProfileService, TrainerProfileService>();
+            services.AddTransient<ITrainerAchievementService, TrainerAchievementService>();
             #endregion
 
             return services;
