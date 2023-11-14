@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Mogym.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoMapper;
 using Mogym.Application.Records.Profile;
-using Mogym.Domain.Entities;
 
 namespace Mogym.Application.AutoMapper.Profile
 {
@@ -14,16 +13,14 @@ namespace Mogym.Application.AutoMapper.Profile
         public TrainerProfile_TrainerProfileRecord()
         {
             CreateMap<TrainerProfile, TrainerProfileRecord>()
-                .ForMember(x => x.Id, z => z.MapFrom(a => a.Id))
-                .ForMember(x => x.UserName, z => z.MapFrom(a => a.User.UserName))
+                .ForMember(x => x.TrainerId, z => z.MapFrom(a => a.Id))
+                .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
                 .ForMember(x => x.FirstName, z => z.MapFrom(a => a.User.FirstName))
                 .ForMember(x => x.LastName, z => z.MapFrom(a => a.User.LastName))
-                .ForMember(x => x.Mobile, z => z.MapFrom(a => a.User.Mobile))
-                .ForMember(x => x.BirthDay, z => z.MapFrom(a => a.User.BirthDay))
-                .ForMember(x => x.Email, z => z.MapFrom(a => a.User.Email))
-                .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
-                .ForMember(x => x.UserId, z => z.MapFrom(a => a.User.Id))
-                .ForMember(x => x.ProfilePic, z => z.Ignore());
+                .ForMember(x => x.UserName, z => z.MapFrom(a => a.User.UserName))
+                .ForMember(x => x.ProfilePic, z => z.MapFrom(a => a.User.ProfilePic))
+                .ForMember(x => x.TrainerPlanCostRecords, z => z.MapFrom(a => a.TrainerPlanCosts))
+                .ForMember(x => x.TrainerAchievementRecords, z => z.MapFrom(a => a.TrainerAchievements));
         }
     }
 }

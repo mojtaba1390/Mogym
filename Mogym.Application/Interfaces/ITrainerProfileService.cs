@@ -10,9 +10,11 @@ namespace Mogym.Application.Interfaces
 {
     public interface ITrainerProfileService
     {
-        Task<TrainerProfile?> GetByUserName(string username);
-        Task Update(TrainerProfileRecord trainerInfo);
-        Task<TrainerProfileRecord> GetEntityByUserId(int userId);
+        Task<TrainerProfileRecord?> GetByUserName(string username);
+        Task<CreateTrainerProfileRecord> GetByUserId(int userId);
+
+		Task Update(CreateTrainerProfileRecord trainerInfo);
+        Task<CreateTrainerProfileRecord> GetEntityByUserId(int userId);
         bool IsAnyUserNameExist(string? username);
     }
 }

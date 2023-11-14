@@ -7,11 +7,11 @@ using Mogym.Application.Records.Profile;
 
 namespace Mogym.Application.AutoMapper.User
 {
-    public class TrainerProfileRecord_User:global::AutoMapper.Profile
+    public class CreateTrainerProfileRecord_User:global::AutoMapper.Profile
     {
-        public TrainerProfileRecord_User()
+        public CreateTrainerProfileRecord_User()
         {
-            CreateMap<TrainerProfileRecord, Domain.Entities.User>()
+            CreateMap<CreateTrainerProfileRecord, Domain.Entities.User>()
                 .ForMember(x => x.BirthDay, z => z.MapFrom(a => a.BirthDay))
                 .ForMember(x => x.FirstName, z => z.MapFrom(a => a.FirstName))
                 .ForMember(x => x.LastName, z => z.MapFrom(a => a.LastName))

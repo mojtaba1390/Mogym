@@ -9,11 +9,11 @@ using Mogym.Domain.Entities;
 
 namespace Mogym.Application.AutoMapper.Profile
 {
-    public  class TrainerProfileRecord_TrainerProfile:global::AutoMapper.Profile
+    public class CreateTrainerProfileRecord_TrainerProfile:global::AutoMapper.Profile
     {
-        public TrainerProfileRecord_TrainerProfile()
+        public CreateTrainerProfileRecord_TrainerProfile()
         {
-            CreateMap<TrainerProfileRecord, TrainerProfile>()
+            CreateMap<CreateTrainerProfileRecord, TrainerProfile>()
 
                 .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
                 .ForMember(x => x.Id, z => z.MapFrom(a => a.Id))

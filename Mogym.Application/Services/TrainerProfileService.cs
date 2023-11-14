@@ -26,17 +26,19 @@ namespace Mogym.Application.Services
             _logger = logger;
         }
 
-        public async Task<TrainerProfile?> GetByUserName(string username)
+        public async Task<TrainerProfileRecord?> GetByUserName(string username)
         {
             try
             {
-                return await _unitOfWork.TrainerProfileRepository
+                var trainer= await _unitOfWork.TrainerProfileRepository
                     .Find(x => x.User.UserName == username.Trim() && x.User.UserRoles.Any(z => z.RoleId == 3))
                     .AsNoTracking()
                     .Include(x => x.User)
-                    .ThenInclude(x=>x.UserRoles)
+                    .Include(x=>x.TrainerAchievements)
+                    .Include(x=>x.TrainerPlanCosts)
                     .FirstOrDefaultAsync();
-
+                if(trainer is not null)
+                    return _mapper.Map<TrainerProfileRecord?>(trainer);
 
             }
             catch (Exception ex)
@@ -49,7 +51,34 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        public async Task Update(TrainerProfileRecord trainerInfoRecord)
+
+
+        public async Task<CreateTrainerProfileRecord> GetByUserId(int userId)
+        {
+	        try
+	        {
+		        var trainer= await _unitOfWork.TrainerProfileRepository
+			        .Find(x => x.User.Id == userId && x.User.UserRoles.Any(z => z.RoleId == 3))
+			        .AsNoTracking()
+			        .Include(x => x.User)
+			        .ThenInclude(x => x.UserRoles)
+			        .FirstOrDefaultAsync();
+
+		        return _mapper.Map<CreateTrainerProfileRecord>(trainer);
+	        }
+	        catch (Exception ex)
+	        {
+		        var message = $"GetByUserId in TrainerProfile Service";
+		        _logger.LogError(message, ex.InnerException);
+		        throw ex;
+	        }
+
+	        return null;
+        }
+
+
+
+		public async Task Update(CreateTrainerProfileRecord trainerInfoRecord)
         {
             try
             {
@@ -71,10 +100,10 @@ namespace Mogym.Application.Services
             }
         }
 
-        public async Task<TrainerProfileRecord> GetEntityByUserId(int userId)
+        public async Task<CreateTrainerProfileRecord> GetEntityByUserId(int userId)
         {
             var trainerProfile = await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
-            return  _mapper.Map<TrainerProfileRecord>(trainerProfile);
+            return  _mapper.Map<CreateTrainerProfileRecord>(trainerProfile);
         }
 
         public bool IsAnyUserNameExist(string? username)

@@ -10,13 +10,13 @@ using Mogym.Application.Records.Profile;
 
 namespace Mogym.Application.Validation.TrainerProfile
 {
-    public class TrainerProfileRecordValidate:AbstractValidator<TrainerProfileRecord>
+    public class CreateTrainerProfileRecordValidate:AbstractValidator<CreateTrainerProfileRecord>
     {
         private readonly IHttpContextAccessor _accessor;
         private readonly ITrainerProfileService _trainerProfileService;
 
 
-        public TrainerProfileRecordValidate(IHttpContextAccessor accessor,ITrainerProfileService trainerProfileService)
+        public CreateTrainerProfileRecordValidate(IHttpContextAccessor accessor,ITrainerProfileService trainerProfileService)
         {
 
             #region Dependency

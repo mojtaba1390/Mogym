@@ -26,9 +26,21 @@ namespace Mogym.Controllers
         }
         public async Task<IActionResult> Index(string username)
         {
-            var profile = await _trainerProfileService.GetByUserName(username);
 
-            return View(profile);
+            if (!username.Equals("favicon.ico"))
+            {
+                var profile = await _trainerProfileService.GetByUserName(username);
+                if (profile is null)
+                {
+                    TempData["errormessage"] = "صفحه مورد نظر پیدا نشد";
+
+                    return View("NotFound");
+                }
+                return View(profile);
+            }
+
+
+            return View("NotFound");
         }
 
 
@@ -36,13 +48,13 @@ namespace Mogym.Controllers
         [Authorize]
         public async Task<IActionResult> PersonInfo()
         {
-            var username = _accessor.GetUserName();
-            var trainerProfile = await _trainerProfileService.GetByUserName(username);
+            var userId = _accessor.GetUser();
+            var trainerProfile = await _trainerProfileService.GetByUserId(userId);
             if (trainerProfile is null)
                 return View("NotFound");
 
 
-            var personInfo = _mapper.Map<TrainerProfileRecord>(trainerProfile);
+            var personInfo = _mapper.Map<CreateTrainerProfileRecord>(trainerProfile);
             return View(personInfo);
         }
 
@@ -50,24 +62,24 @@ namespace Mogym.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PersonInfo(TrainerProfileRecord trainerProfileRecord)
+        public async Task<IActionResult> PersonInfo(CreateTrainerProfileRecord CreateTrainerProfileRecord)
         {
 
             if (ModelState.IsValid)
             {
 
-                if (trainerProfileRecord.ProfilePic is not null)
+                if (CreateTrainerProfileRecord.ProfilePic is not null)
                 {
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", trainerProfileRecord.ProfilePic.FileName);
+                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", CreateTrainerProfileRecord.ProfilePic.FileName);
                     using (FileStream stream = new FileStream(path, FileMode.Create))
                     {
-                        await trainerProfileRecord.ProfilePic.CopyToAsync(stream);
+                        await CreateTrainerProfileRecord.ProfilePic.CopyToAsync(stream);
                         stream.Close();
                     }
                 }
 
 
-                await _trainerProfileService.Update(trainerProfileRecord);
+                await _trainerProfileService.Update(CreateTrainerProfileRecord);
 
             }
 
