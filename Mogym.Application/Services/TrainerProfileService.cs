@@ -76,5 +76,13 @@ namespace Mogym.Application.Services
             var trainerProfile = await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
             return  _mapper.Map<TrainerProfileRecord>(trainerProfile);
         }
+
+        public bool IsAnyUserNameExist(string? username)
+        {
+            return _unitOfWork.TrainerProfileRepository.Find(x => x.User.UserName == username.Trim())
+                .AsNoTracking()
+                .Include(x => x.User)
+                .Any();
+        }
     }
 }
