@@ -21,22 +21,28 @@ namespace Mogym.Controllers
         private readonly IMenuService _menuService;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IConfiguration _configuration;
-        public AccountController(IUserService userService, IMenuService menuService, IRedisCacheService redisCacheService, IConfiguration configuration)
+        private readonly IHttpContextAccessor _accessor;
+        public AccountController(IUserService userService,
+            IMenuService menuService, 
+            IRedisCacheService redisCacheService,
+            IConfiguration configuration, IHttpContextAccessor accessor)
         {
             _userService = userService;
             _menuService = menuService;
             _redisCacheService = redisCacheService;
             _configuration = configuration;
+            _accessor = accessor;
         }
 
         public async Task<IActionResult> Login()
         {
-
+            var returnUrl = _accessor.HttpContext.Request.QueryString.ToUriComponent();
+            ViewData["ReturnUrl"] = returnUrl;
             return PartialView();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRecord loginRecord)
+        public async Task<IActionResult> Login(LoginRecord loginRecord,string ReturnUrl)
         {
             try
             {

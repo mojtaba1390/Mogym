@@ -50,4 +50,33 @@ namespace Mogym.Common
         [Description("برنامه حرکات تمرینی و رژیم غذایی")]
         WorkoutAndDiet = 3
     }
+    public enum EnumDailyAvtivity
+    {
+        [EnumMember]
+        [Description("بی تحرک(دائما نشسته)")]
+        None = 1,
+        [EnumMember]
+        [Description("متوسط(فعالیت سبک مثل راه رفتن)")]
+        Moderate = 2,
+        [EnumMember]
+        [Description("زیاد(کار سنگین و فعالیت زیاد)")]
+        Active = 3
+    }
+    public enum EnumSessionsInWeek
+    {
+        [EnumMember]
+        One = 1,
+        [EnumMember]
+        Two = 2,
+        [EnumMember]
+        Three = 3,
+        [EnumMember]
+        Four = 4,
+        [EnumMember]
+        Five = 5,
+        [EnumMember]
+        Six = 6,
+        [EnumMember]
+        Seven = 7
+    }
 }
