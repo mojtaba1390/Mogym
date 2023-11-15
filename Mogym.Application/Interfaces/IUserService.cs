@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Mogym.Application.Records.User;
 using Mogym.Domain.Entities;
 
@@ -16,5 +17,6 @@ namespace Mogym.Application.Interfaces
         bool IsExistMobileWithConfirmSmsCode(string mobile, string confirmSmsCode);
         Task<UserRecord> GetUserWithRoleAndPermission(string mobile);
         Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
+        User? GetCurrentUserRols();
     }
 }

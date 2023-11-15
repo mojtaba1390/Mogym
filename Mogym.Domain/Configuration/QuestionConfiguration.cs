@@ -31,6 +31,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.Medicine).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
             builder.Property(x => x.Treated).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
             builder.Property(x => x.Injury).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
+            builder.Property(x => x.OutOfGymActivity).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
             builder.Property(x => x.HeartDisease).HasColumnType("int");
             builder.Property(x => x.DiabetesAsthmaHypoglycemia).HasColumnType("int");
             builder.Property(x => x.Smoke).HasColumnType("int");

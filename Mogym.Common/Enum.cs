@@ -65,18 +65,42 @@ namespace Mogym.Common
     public enum EnumSessionsInWeek
     {
         [EnumMember]
+        [Description("یک")]
         One = 1,
         [EnumMember]
+        [Description("دو")]
         Two = 2,
         [EnumMember]
+        [Description("سه")]
         Three = 3,
         [EnumMember]
+        [Description("چهار")]
         Four = 4,
         [EnumMember]
+        [Description("پنج")]
         Five = 5,
         [EnumMember]
+        [Description("شش")]
         Six = 6,
         [EnumMember]
+        [Description("هفت")]
         Seven = 7
+    }
+
+
+    public enum EnumPlanStatus
+    {
+        [EnumMember]
+        [Description("ثبت شده")]
+        Registered = 1,
+        [EnumMember]
+        [Description("پرداخت شده")]
+        Paid = 2,
+        [EnumMember]
+        [Description("تائید مربی")]
+        TrainerApprovment = 3,
+        [EnumMember]
+        [Description("ارسال شده")]
+        Sent =4
     }
 }

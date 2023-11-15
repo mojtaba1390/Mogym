@@ -9,6 +9,11 @@ namespace Mogym.Domain.Entities
 {
     public class Question:BaseEntity
     {
+
+        public Question()
+        {
+            Plans = new HashSet<Plan>();
+        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public EnumGender Gender { get; set; }
@@ -38,5 +43,9 @@ namespace Mogym.Domain.Entities
         public string? RightPic { get; set; }
 
         public EnumTrainerPlan TrainerPlan { get; set; }
+
+
+
+        public ICollection<Plan> Plans { get; set; }
     }
 }

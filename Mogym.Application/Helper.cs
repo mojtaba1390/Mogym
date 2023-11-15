@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
-using Mogym.Application.Interfaces;
-using Mogym.Domain.Entities;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Mogym
+namespace Mogym.Application
 {
     public static class Helper
     {
@@ -29,15 +33,6 @@ namespace Mogym
         public static string GetCurrentUserMobile(this IHttpContextAccessor httpContextAccessor)
         {
             return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.MobilePhone)?.Value ?? "";
-        }
-        public static List<Role> GetCurrentUserRole(IServiceProvider sp)
-        {
-            using (var scope = sp.CreateScope())
-            {
-                var userService = scope.ServiceProvider.GetRequiredService<IUserService>();
-                var user = userService.GetCurrentUserRols();
-                return user.UserRoles.Select(x => x.UserRole_Role).ToList();
-            }
         }
     }
 }

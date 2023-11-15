@@ -13,6 +13,7 @@ namespace Mogym.Domain.Entities
         public User()
         {
             UserRoles = new HashSet<UserRole>();
+            Plans = new HashSet<Plan>();
 
 
         }
@@ -35,6 +36,7 @@ namespace Mogym.Domain.Entities
         public TrainerProfile TrainerProfile { get; set; }
         #region Collections
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Plan> Plans { get; set; }
 
 
         #endregion

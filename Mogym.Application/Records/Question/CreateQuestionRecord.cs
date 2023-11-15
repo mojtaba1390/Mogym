@@ -39,12 +39,12 @@ namespace Mogym.Application.Records.Question
         public IFormFile? LeftPic { get; init; }
         public IFormFile? RightPic { get; init; }
 
-        public List<TrainerPlanCostRecord> TrainerPlanCosts { get; init; }
+        public List<TrainerPlanCostRecord>? TrainerPlanCosts { get; init; }
 
 
         public int TrainerPlanId { get; init; }
 
-        public string TrainerFullName { get; init; }
+        public string? TrainerFullName { get; init; }
         public int TrainerId { get; init; }
     }
 }

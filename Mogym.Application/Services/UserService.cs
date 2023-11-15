@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -26,14 +27,21 @@ namespace Mogym.Application.Services
         private readonly ISeriLogService _logger;
         private readonly IRoleService _roleService;
         private readonly IUserRoleService _userRoleService;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UserService(IUnitOfWork unitOfWork,IMapper mapper, ISeriLogService logger, IRoleService roleService,IUserRoleService userRoleService)
+        public UserService(IUnitOfWork unitOfWork,
+            IMapper mapper,
+            ISeriLogService logger,
+            IRoleService roleService,
+            IUserRoleService userRoleService,
+            IHttpContextAccessor accessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _roleService = roleService;
             _userRoleService = userRoleService;
+            _accessor = accessor;
         }
 
         public bool IsExistMobile(string mobile)
@@ -185,6 +193,15 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
+        }
+
+        public User? GetCurrentUserRols()
+        {
+            var userId = _accessor.GetUser();
+            return _unitOfWork.UserRepository.Find(x => x.Id == userId)
+                .AsNoTracking()
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.UserRole_Role).FirstOrDefault();
         }
 
 

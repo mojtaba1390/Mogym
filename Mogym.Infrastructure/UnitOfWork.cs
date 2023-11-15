@@ -26,6 +26,7 @@ namespace Mogym.Infrastructure
             TrainerAchievementRepository = new TrainerAchievementRepository(_context);
             TrainerPlanCostRepository = new TrainerPlanCostRepository(_context);
             QuestionRepository = new QuestionRepository(_context);
+            PlanRepository = new PlanRepository(_context);
         }
 
 
@@ -38,6 +39,7 @@ namespace Mogym.Infrastructure
         public ITrainerAchievementRepository TrainerAchievementRepository { get; }
         public ITrainerPlanCostRepository TrainerPlanCostRepository { get; }
         public IQuestionRepository QuestionRepository { get; }
+        public IPlanRepository PlanRepository { get; }
 
         public void Dispose()
         {
