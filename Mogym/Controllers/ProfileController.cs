@@ -29,6 +29,7 @@ namespace Mogym.Controllers
 
             if (!username.Equals("favicon.ico"))
             {
+
                 var profile = await _trainerProfileService.GetByUserName(username);
                 if (profile is null)
                 {

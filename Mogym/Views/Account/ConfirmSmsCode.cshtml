@@ -28,7 +28,7 @@
                     <div class="card-body py-xxl-4">
                         <h4 class="my-xxl-4 my-xl-2 pb-1">ارسال کد تايید</h4>
                     </div>
-                    <form asp-action="ConfirmSmsCode" method="post">
+                    <form asp-action="ConfirmSmsCode" asp-route-returnurl="@ViewData["returnUrl"]" method="post">
                         <input type="hidden" asp-for="Mobile" value="@ViewBag.Mobile" />
                         <p>لطفا برای ورود یا ثبت نام شماره موبایل خود را وارد کنید</p>
 

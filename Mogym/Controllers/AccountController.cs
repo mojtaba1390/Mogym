@@ -36,13 +36,13 @@ namespace Mogym.Controllers
 
         public async Task<IActionResult> Login()
         {
-            var returnUrl = _accessor.HttpContext.Request.QueryString.ToUriComponent();
-            ViewData["ReturnUrl"] = returnUrl;
+            string returnUrl = HttpContext.Request.Query["returnUrl"];
+            ViewData["returnUrl"] = returnUrl;
             return PartialView();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRecord loginRecord,string ReturnUrl)
+        public async Task<IActionResult> Login(LoginRecord loginRecord)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace Mogym.Controllers
 
                     ArgumentNullException.ThrowIfNull(confirmSmsCode);
 
-                    return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile });
+                    return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile,loginRecord.ReturnUrl });
                 }
             }
             catch (Exception e)
@@ -64,9 +64,10 @@ namespace Mogym.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ConfirmSmsCode(string mobile)
+        public async Task<IActionResult> ConfirmSmsCode(string mobile,string returnUrl)
         {
             ViewBag.Mobile = mobile;
+            ViewData["returnUrl"] = returnUrl;
             return View();
         }
 
@@ -79,7 +80,7 @@ namespace Mogym.Controllers
         /// <param name="confirmRegisterRecord"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord)
+        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord, string returnurl)
         {
             try
             {
@@ -125,8 +126,12 @@ namespace Mogym.Controllers
                         IsPersistent = true
                     };
 
-
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+
+                    if (!string.IsNullOrWhiteSpace(returnurl) && Url.IsLocalUrl(returnurl))
+                        return Redirect(returnurl);
+
 
                     return RedirectToAction(nameof(Index));
                 }

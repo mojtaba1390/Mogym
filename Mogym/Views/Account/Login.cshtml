@@ -28,8 +28,10 @@
                     <div class="card-body py-xxl-4">
                         <h4 class="my-xxl-4 my-xl-2 pb-1">ورود و ثبت نام</h4>
                     </div>
-                    <form asp-action="Login" method="post">
-                        <input type="hidden" name="ReturnUrl" id="ReturnUrl" />
+                    
+
+                    <form asp-action="Login"  method="post">
+                        <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
                         <p>لطفا برای ورود یا ثبت نام شماره موبایل خود را وارد کنید</p>
 
                         <div class="form-floating mb-4">

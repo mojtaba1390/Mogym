@@ -11,5 +11,6 @@ namespace Mogym.Application.Records.User
         public string Mobile { get; init; }
         //public string Password { get; init; }
         public string? CofirmCode { get; init; }
+        public string? ReturnUrl { get; init; }
     }
 }
