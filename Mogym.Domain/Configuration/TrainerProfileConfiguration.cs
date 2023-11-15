@@ -15,7 +15,7 @@ namespace Mogym.Domain.Configuration
         {
             builder.ToTable("TrainerProfile");
             builder.Property(x => x.Biography).HasColumnType("nvarchar(1000)").IsRequired(false);
-            builder.Property(x => x.CartNumber).HasColumnType("char(19)").IsRequired();
+            builder.Property(x => x.CartNumber).HasColumnType("char(19)").IsRequired(false);
             builder.Property(x => x.CartOwnerName).HasColumnType("nvarchar(200)").IsRequired();
 
 
