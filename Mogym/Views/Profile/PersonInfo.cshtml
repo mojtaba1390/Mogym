@@ -66,6 +66,17 @@
                                             <span class="text-danger" asp-validation-for="Mobile"></span>
                                         </div>
                                         <div class=" form-group col-md-3">
+                                            <label class="pt-1" for="profile-mobile">شماره کارت</label>
+                                            <input class="form-control" asp-for="CartNumber" id="CartNumber" required maxlength="19"/>
+                                            <span class="text-danger" asp-validation-for="CartNumber"></span>
+                                        </div>
+                                        <div class=" form-group col-md-3" >
+                                            <label class="pt-1" for="profile-mobile">نام دارنده کارت</label>
+                                            <input class="form-control" asp-for="CartOwner" />
+                                            <span class="text-danger" >در صورت خالی بودن،نام خودتان ثبت می شود</span>
+                                            <span class="text-danger" asp-validation-for="CartOwner"></span>
+                                        </div>
+                                        <div class=" form-group col-md-3">
                                             <label class="pt-1" for="profile-profilepic">تصویر پروفایل</label>
                                             <div id="chooseFile">
                                                 <input type="file" name="profilePic" accept="image/*"/>
@@ -139,6 +150,10 @@
                     Biography: {
                         required: true,
                         maxlength: 300
+                    },
+                    CartNumber: {
+                        required: true,
+                        maxlength: 19
                     }
                 },
                 messages: {
@@ -157,10 +172,23 @@
                     Biography: {
                         required: "پر کردن بیوگرافی الزامی است",
                         maxlength: "بیوگرافی بیشتر از 300 کارکتر میباشد.",
+                    },
+                    CartNumber: {
+                        required: "پر کردن شماره کارت الزامی است"
                     }
 
                 }
             })
+
+
+            $("#CartNumber").keyup(function () {
+                var cartNumber = $("#CartNumber").val();
+                var len=cartNumber.length;
+                if(len==4 || len==9 || len==14)
+                    cartNumber=cartNumber+'-';
+
+                $("#CartNumber").val(cartNumber);
+            });
 
         })
     </script>

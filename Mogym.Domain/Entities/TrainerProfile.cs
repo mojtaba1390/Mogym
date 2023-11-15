@@ -17,7 +17,8 @@ namespace Mogym.Domain.Entities
 
         public string? Biography { get; set; }
 
-
+        public string? CartNumber { get; set; }
+        public string? CartOwnerName { get; set; }
 
 
 

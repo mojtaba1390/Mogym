@@ -19,6 +19,8 @@ namespace Mogym.Application.Records.Profile
         public string? Biography { get; set; }
         public int UserId { get; set; }
         public IFormFile? ProfilePic { get; set; }
+        public string? CartNumber { get; set; }
+        public string? CartOwner { get; set; }
 
 
     }
