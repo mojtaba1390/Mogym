@@ -43,6 +43,7 @@ namespace Mogym.Domain.Context
         public DbSet<TrainerProfile> TrainerProfile { get; set; }
         public DbSet<TrainerPlanCost> TrainerPlanCost { get; set; }
         public DbSet<TrainerAchievement> TrainerAchievement { get; set; }
+        public DbSet<Question> Question { get; set; }
 
     }
 }

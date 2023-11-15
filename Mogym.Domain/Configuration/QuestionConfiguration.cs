@@ -36,6 +36,11 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.Smoke).HasColumnType("int");
             builder.Property(x => x.SessionsInWeek).HasColumnType("int");
             builder.Property(x => x.Expection).HasColumnType("nvarchar").HasMaxLength(200).IsRequired(false);
+            builder.Property(x => x.FrontPic).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
+            builder.Property(x => x.BackPic).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
+            builder.Property(x => x.LeftPic).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
+            builder.Property(x => x.RightPic).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
+            builder.Property(x => x.TrainerPlan).HasColumnType("int");
 
         }
     }

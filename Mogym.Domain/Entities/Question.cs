@@ -32,5 +32,11 @@ namespace Mogym.Domain.Entities
         public EnumYesNo? Smoke { get; set; }
         public EnumSessionsInWeek? SessionsInWeek { get; set; }
         public string? Expection { get; set; }
+        public string? FrontPic { get; set; }
+        public string? BackPic { get; set; }
+        public string? LeftPic { get; set; }
+        public string? RightPic { get; set; }
+
+        public EnumTrainerPlan TrainerPlan { get; set; }
     }
 }

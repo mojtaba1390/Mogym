@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Profile;
+using Mogym.Application.Records.Question;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -112,6 +113,33 @@ namespace Mogym.Application.Services
                 .AsNoTracking()
                 .Include(x => x.User)
                 .Any();
+        }
+
+        public async Task<TrainerProfileRecord?> GetById(int trainerId)
+        {
+            var trainer= await _unitOfWork.TrainerProfileRepository.Find(x => x.Id == trainerId)
+                .AsNoTracking()
+                .Include(x => x.User)
+                .FirstOrDefaultAsync();
+            if (trainer is not null)
+                return _mapper.Map<TrainerProfileRecord>(trainer);
+
+            return null;
+
+
+        }
+
+        public async Task<CreateQuestionRecord?> GetTrainerForCreateQuestion(int trainerId)
+        {
+            var trainer = await _unitOfWork.TrainerProfileRepository.Find(x => x.Id == trainerId)
+                .AsNoTracking()
+                .Include(x => x.User)
+                .Include(x=>x.TrainerPlanCosts)
+                .FirstOrDefaultAsync();
+            if (trainer is not null)
+                return _mapper.Map<CreateQuestionRecord>(trainer);
+
+            return null;
         }
     }
 }

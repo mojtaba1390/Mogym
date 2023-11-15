@@ -16,6 +16,7 @@ namespace Mogym.Infrastructure
         ITrainerProfileRepository TrainerProfileRepository { get; }
         ITrainerAchievementRepository TrainerAchievementRepository { get; }
         ITrainerPlanCostRepository TrainerPlanCostRepository { get; }
+        IQuestionRepository QuestionRepository { get; }
         
     }
 }

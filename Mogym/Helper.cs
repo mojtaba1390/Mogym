@@ -24,5 +24,9 @@ namespace Mogym
         {
             return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? "";
         }
+        public static string GetCurrentUserMobile(this IHttpContextAccessor httpContextAccessor)
+        {
+            return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.MobilePhone)?.Value ?? "";
+        }
     }
 }

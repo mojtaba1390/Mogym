@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations
 {
     [DbContext(typeof(MogymContext))]
-    partial class MogymContextModelSnapshot : ModelSnapshot
+    [Migration("20231115064644_add-pic-url-question")]
+    partial class addpicurlquestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -281,9 +284,6 @@ namespace Mogym.Domain.Migrations
 
                     b.Property<double?>("Thigh")
                         .HasColumnType("float");
-
-                    b.Property<int>("TrainerPlan")
-                        .HasColumnType("int");
 
                     b.Property<string>("Treated")
                         .HasMaxLength(200)
