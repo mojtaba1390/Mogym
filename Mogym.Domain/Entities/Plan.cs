@@ -13,6 +13,7 @@ namespace Mogym.Domain.Entities
         public int UserId { get; set; }
         public int AnserQuestionId { get; set; }
         public EnumPlanStatus PlanStatus { get; set; }
+        public string? PaidPicture { get; set; }
 
 
         public TrainerProfile TrainerProfile_Plan { get; set; }

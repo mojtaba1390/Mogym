@@ -16,6 +16,7 @@ namespace Mogym.Domain.Configuration
             builder.ToTable("Plan");
 
             builder.Property(x => x.PlanStatus).HasColumnType("int").IsRequired();
+            builder.Property(x => x.PaidPicture).HasColumnType("nvarchar(50)").IsRequired(false);
 
 
             builder.HasOne<TrainerProfile>(x => x.TrainerProfile_Plan)

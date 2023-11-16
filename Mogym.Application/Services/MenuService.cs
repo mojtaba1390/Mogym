@@ -89,10 +89,10 @@ namespace Mogym.Application.Services
             {
                 var menu = _mapper.Map<Menu>(model);
 
-                await _unitOfWork.MenuRepository.AddAsync(menu, false);
+                await _unitOfWork.MenuRepository.AddAsync(menu );
 
                 var permission = _mapper.Map<Permission>(model);
-                await _permissionService.AddAsync(permission, true);
+                await _permissionService.AddAsync(permission,true);
 
             }
             catch (Exception ex)
