@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Plan;
+using Mogym.Application.Records.Question;
 using Mogym.Common;
 using Mogym.Infrastructure;
 
@@ -60,11 +61,40 @@ namespace Mogym.Application.Services
                 plan.PlanStatus = EnumPlanStatus.Paid;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                var message = $"UpdatePaidPicture in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
             }
+        }
+
+        public async Task<bool> IsThisPlanIdForThisCurrentUser(int planId)
+        {
+            var userId= _accessor.GetUser();
+            return await _unitOfWork.PlanRepository.Find(x => x.UserId == userId && planId == planId).AnyAsync();
+        }
+
+        public async Task<QuestionRecord> GetAnswerQuestionWithPlanId(int planId)
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var answerQuestion = await _unitOfWork.PlanRepository.Find(x => x.UserId == userId && planId == planId)
+                    .AsNoTracking()
+                    .Include(x => x.AnsweQuestion_Plan)
+                    .Select(x => x.AnsweQuestion_Plan)
+                    .FirstOrDefaultAsync();
+                return _mapper.Map<QuestionRecord>(answerQuestion);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetAnswerQuestionWithPlanId in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+
+            return null;
         }
     }
 }

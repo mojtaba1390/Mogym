@@ -42,14 +42,11 @@
                                             @{
                                                 if (itm.PlanStatus == EnumPlanStatus.Registered)
                                                 {
-                                                    <input class="btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" value="ثبت تصویر پرداختی" onclick="setplanId('@itm.Id')" />
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
                                                 }
                                             }
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
 
-                                            <a asp-action="ViewAQ" asp-route-id="@itm.Id" class="pdf tooltip px-2">
-                                                <i class="far fa-2xl fa fa-address-book"></i>
-                                                <span class="tooltiptext tooltip-top">مشاهده پرسشنامه</span>
-                                            </a>
 
                                         </td>
                                     </tr>
@@ -136,6 +133,22 @@
     </div>
 </div>
 
+<div class="modal fade" id="viewAQ" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">پرسشنامه پاسخ داده شده</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-viewAQ">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -145,6 +158,18 @@
 <!-- /.content -->
 @section Scripts{
     <script>
+
+        function viewAQ(planId) {
+            $.ajax({
+                url: "/Plan/GetPlanAnswerQuestion?planId=" + planId,
+                dataType: 'html',
+                success: function (data) {
+                    $('#modal-viewAQ').html(data);
+                }
+            });
+        }
+
+
         function setplanId(planId) {
             $("#planId").val(planId);
         }

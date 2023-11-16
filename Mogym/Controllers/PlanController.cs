@@ -75,9 +75,25 @@ namespace Mogym.Controllers
         }
 
 
-        public async Task<IActionResult> ViewAQ(int id)
+        public async Task<IActionResult> GetPlanAnswerQuestion(int planId)
         {
-            return PartialView();
+            try
+            {
+                var answerQuestion = await _planService.GetAnswerQuestionWithPlanId(planId);
+                if (answerQuestion is not null)
+                {
+                    return PartialView("_ViewAQ", answerQuestion);
+
+                }
+                TempData["errormessage"] = "برنامه ی انتخاب شده مربوط به شما نمی باشد";
+                return RedirectToAction(nameof(MyPlan));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
 
         }
 
