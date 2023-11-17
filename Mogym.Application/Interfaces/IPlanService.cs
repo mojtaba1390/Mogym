@@ -14,5 +14,6 @@ namespace Mogym.Application.Interfaces
         Task UpdatePaidPicture(int planId,string paidPictureFileName);
         Task<bool> IsThisPlanIdForThisCurrentUser(int planId);
         Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId);
+        Task<List<PaidPlanRecorrd>?> GetPaidPlans();
     }
 }

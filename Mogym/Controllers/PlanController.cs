@@ -97,5 +97,22 @@ namespace Mogym.Controllers
 
         }
 
+
+        public async Task<IActionResult> PaidPlan()
+        {
+            try
+            {
+                var planRecords = await _planService.GetPaidPlans();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
@@ -19,12 +20,14 @@ namespace Mogym.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
+        private readonly IHttpContextAccessor _accessor;
 
-        public TrainerProfileService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger)
+        public TrainerProfileService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _accessor = accessor;
         }
 
         public async Task<TrainerProfileRecord?> GetByUserName(string username)
@@ -140,6 +143,12 @@ namespace Mogym.Application.Services
                 return _mapper.Map<CreateQuestionRecord>(trainer);
 
             return null;
+        }
+
+        public async Task<TrainerProfile?> GetCurrentUserTrainer()
+        {
+            var userId = _accessor.GetUser();
+            return await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
         }
     }
 }

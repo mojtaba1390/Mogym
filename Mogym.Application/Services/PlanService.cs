@@ -21,13 +21,15 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
+        private readonly ITrainerProfileService _trainerProfileService;
 
-        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor)
+        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor,ITrainerProfileService trainerProfileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _accessor = accessor;
+            _trainerProfileService = trainerProfileService;
         }
 
         public async Task<List<PlanRecord>?> GetMyPlans()
@@ -80,7 +82,7 @@ namespace Mogym.Application.Services
             try
             {
                 var userId = _accessor.GetUser();
-                var answerQuestion = await _unitOfWork.PlanRepository.Find(x => x.UserId == userId && planId == planId)
+                var answerQuestion = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
                     .AsNoTracking()
                     .Include(x => x.AnsweQuestion_Plan)
                     .Select(x => x.AnsweQuestion_Plan)
@@ -95,6 +97,27 @@ namespace Mogym.Application.Services
             }
 
             return null;
+        }
+
+        public async Task<List<PaidPlanRecorrd>?> GetPaidPlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.TrainerId == trainer.Id && x.PlanStatus==EnumPlanStatus.Paid)
+                    .AsNoTracking()
+                    .Include(x => x.User_Plan)
+                    .ToListAsync();
+                return _mapper.Map<List<PaidPlanRecorrd>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetPaidPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
         }
     }
 }

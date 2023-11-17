@@ -1,8 +1,8 @@
 ﻿@using Mogym.Common
-@model List<Mogym.Application.Records.Plan.PlanRecord>
+@model List<Mogym.Application.Records.Plan.PaidPlanRecorrd>
 @{
     Layout = "_Layout";
-    ViewData["title"] = "برنامه های من";
+    ViewData["title"] = "برنامه های پرداخت شده";
 }
 
 
@@ -15,12 +15,13 @@
                 <div class="">
                     <div class="card-body mb-50">
 
-                        <table id="myplan" class="table table-bordered" style="width:100%">
+                        <table id="paidPlan" class="table table-bordered" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>نام مربی</th>
+                                    <th>نام ورزشکار</th>
                                     <th>تاریخ ثبت </th>
                                     <th>وضعیت</th>
+                                    <th>تصویر رسید</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
@@ -29,17 +30,15 @@
                                 {
                                     <tr>
 
-                                        <td>@itm.TrainerName</td>
+                                        <td>@itm.AthletName</td>
                                         <td>@itm.InsertDate.GetPersianDateDetail()</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
+                                        <td>
+                                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#ShowPaidPicture" onclick="paidPicture('@itm.PaidPicture')">نمایش</button>
+
+                                        </td>
 
                                         <td>
-                                            @{
-                                                if (itm.PlanStatus == EnumPlanStatus.Registered)
-                                                {
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
-                                                }
-                                            }
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
 
 
@@ -47,14 +46,6 @@
                                     </tr>
                                 }
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>نام مربی</th>
-                                    <th>تاریخ ثبت </th>
-                                    <th>وضعیت</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </tfoot>
                         </table>
 
                     </div>
@@ -78,52 +69,20 @@
     </div>
 </section>
 
-
-<div class="modal fade" id="AddPaidPictureModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ShowPaidPicture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">بارگزاری تصویر پرداخت</h5>
+                <h5 class="modal-title" id="exampleModalLabel">تصویر پرداخت</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modal-body">
-                <form asp-action="AddPaidPicture" asp-controller="Plan" enctype="multipart/form-data" id="AddPaidPicture">
-                    <input hidden name="planId" value="" id="planId" />
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body row py-5">
-                                <fieldset class="row p-3 mb-5">
-                                    <legend class="float-none w-auto"> تصویر پرداخت</legend>
-
-                                    <div class="form-group col-md-3">
-                                        <label class="pt-1" for="paidPicture">تصویر رسید پرداختی</label>
-                                        <div>
-                                            <input type="file" name="PaidPicture" accept="image/*" />
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <div class="card-footer">
-                                <div class="form-group row">
-                                    <div class="form-actions-buttons col-md-12">
-                                        <input type="submit" value="ثبت" class="btn bg-buttom-yellow" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-
-
-
+            <div class="modal-body" id="modal-paidPicture">
 
             </div>
-            @* <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
-            <button type="submit" name="action" value="draft" class="btn btn-success-card">ثبت</button>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
 
-            </div>*@
+            </div>
         </div>
     </div>
 </div>
@@ -147,10 +106,6 @@
 
 
 
-
-
-<!-- Main content -->
-<!-- /.content -->
 @section Scripts{
     <script>
 
@@ -165,15 +120,18 @@
         }
 
 
-        function setplanId(planId) {
-            $("#planId").val(planId);
+        function paidPicture(pic) {
+            var html = '<img src="/PaidPic/' + pic + '"  style="width:150px;height:250px;">';
+            $('#modal-paidPicture').html(html);
+            
         }
 
 
-        $(function () {
+
+        (function () {
 
 
-            $("#myplan").DataTable({
+            $("#paidPlan").DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                 ],

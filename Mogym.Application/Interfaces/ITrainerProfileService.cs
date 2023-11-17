@@ -19,5 +19,6 @@ namespace Mogym.Application.Interfaces
         bool IsAnyUserNameExist(string? username);
         Task<TrainerProfileRecord?> GetById(int trainerId);
         Task<CreateQuestionRecord?> GetTrainerForCreateQuestion(int trainerId);
+        Task<TrainerProfile?> GetCurrentUserTrainer();
     }
 }

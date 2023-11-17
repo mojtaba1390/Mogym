@@ -80,7 +80,7 @@ namespace Mogym.Controllers
         /// <param name="confirmRegisterRecord"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord, string returnurl)
+        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord, string? returnurl)
         {
             try
             {

@@ -39,5 +39,14 @@ namespace Mogym
                 return user.UserRoles.Select(x => x.UserRole_Role).ToList();
             }
         }
+        public static int? GetCurrentUserTrainerId(IServiceProvider sp)
+        {
+            using (var scope = sp.CreateScope())
+            {
+                var trainerProfileService = scope.ServiceProvider.GetRequiredService<ITrainerProfileService>();
+                var trainer= trainerProfileService.GetCurrentUserTrainer();
+                return trainer != null ? trainer.Id : null;
+            }
+        }
     }
 }

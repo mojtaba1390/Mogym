@@ -15,4 +15,5 @@ namespace Mogym.Application.Records.Plan
         public DateTime InsertDate { get; init; }
 
     }
+
 }
