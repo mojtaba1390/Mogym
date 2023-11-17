@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
@@ -115,6 +116,44 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"GetPaidPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public async Task ApprovePlan(int planId)
+        {
+            try
+            {
+                var plan = _unitOfWork.PlanRepository.GetById(planId);
+                plan.PlanStatus = EnumPlanStatus.TrainerApprovment;
+                await _unitOfWork.PlanRepository.UpdateAsync(plan);
+            }
+            catch (Exception ex)
+            {
+                var message = $"ApprovePlan in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<ApprovePlanRecord>?> GetApprovePlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.TrainerId == trainer.Id && x.PlanStatus == EnumPlanStatus.TrainerApprovment)
+                    .AsNoTracking()
+                    .Include(x => x.User_Plan)
+                    .ToListAsync();
+                return _mapper.Map<List<ApprovePlanRecord>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetApprovePlans in PlanService";
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }

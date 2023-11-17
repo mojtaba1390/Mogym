@@ -5,7 +5,18 @@
     ViewData["title"] = "برنامه های پرداخت شده";
 }
 
-
+<style>
+    a.btn {
+        border-radius: .25rem; 
+        border: 1px solid transparent;
+        padding: .5rem 1rem;
+        color: #fff;
+        
+    }
+    a.btn:hover {
+         border-radius: .25rem;
+    }
+</style>
 
 <section class="content">
     <div class="container-fluid">
@@ -40,6 +51,7 @@
 
                                         <td>
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
+                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="ApprovePlan">تائید برنامه</a>
 
 
                                         </td>
@@ -121,7 +133,7 @@
 
 
         function paidPicture(pic) {
-            var html = '<img src="/PaidPic/' + pic + '"  style="width:150px;height:250px;">';
+            var html = '<img src="/PaidPic/' + pic + '" >';
             $('#modal-paidPicture').html(html);
             
         }

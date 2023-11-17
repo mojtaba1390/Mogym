@@ -15,5 +15,7 @@ namespace Mogym.Application.Interfaces
         Task<bool> IsThisPlanIdForThisCurrentUser(int planId);
         Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId);
         Task<List<PaidPlanRecorrd>?> GetPaidPlans();
+        Task ApprovePlan(int planId);
+        Task<List<ApprovePlanRecord>?> GetApprovePlans();
     }
 }
