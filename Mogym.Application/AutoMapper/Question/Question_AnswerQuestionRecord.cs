@@ -13,25 +13,25 @@ namespace Mogym.Application.AutoMapper.Question
         public Question_AnswerQuestionRecord()
         {
             CreateMap<Domain.Entities.Question, AnswerQuestionRecord>()
-                .ForMember(x => x.Gender, z => z.MapFrom(a => ((EnumGender)a.Gender).GetEnumDescription()))
+                .ForMember(x => x.Gender, z => z.MapFrom(a => a.Gender.GetEnumDescription()))
                 .ForMember(x => x.DailyAvtivity,
-                    z => z.MapFrom(a => a.DailyAvtivity != null ? ((EnumDailyAvtivity)a.DailyAvtivity).GetEnumDescription() : string.Empty))
+                    z => z.MapFrom(a => a.DailyAvtivity != 0 ? a.DailyAvtivity.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.NightWork,
-                    z => z.MapFrom(a => a.NightWork != null ? ((EnumYesNo)a.NightWork).GetEnumDescription() : string.Empty))
+                    z => z.MapFrom(a => a.NightWork != 0 ? a.NightWork.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.HeartDisease,
-                    z => z.MapFrom(a => a.HeartDisease != null ? ((EnumYesNo)a.HeartDisease).GetEnumDescription() : string.Empty))
+                    z => z.MapFrom(a => a.HeartDisease != 0 ? a.HeartDisease.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.DiabetesAsthmaHypoglycemia,
                     z => z.MapFrom(a =>
-                        a.DiabetesAsthmaHypoglycemia != null
-                            ? ((EnumYesNo)a.DiabetesAsthmaHypoglycemia).GetEnumDescription()
+                        a.DiabetesAsthmaHypoglycemia != 0
+                            ? a.DiabetesAsthmaHypoglycemia.GetEnumDescription()
                             : string.Empty))
                 .ForMember(x => x.Smoke,
-                    z => z.MapFrom(a => a.Smoke != null ? ((EnumYesNo)a.Smoke).GetEnumDescription() : string.Empty))
+                    z => z.MapFrom(a => a.Smoke != 0 ? a.Smoke.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.SessionsInWeek,
                     z => z.MapFrom(a =>
-                        a.SessionsInWeek != null ? ((EnumSessionsInWeek)a.SessionsInWeek).GetEnumDescription() : string.Empty))
+                        a.SessionsInWeek != 0 ? a.SessionsInWeek.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.TrainerPlan,
-                    z => z.MapFrom(a => a.TrainerPlan != null ? ((EnumTrainerPlan)a.TrainerPlan).GetEnumDescription() : string.Empty));
+                    z => z.MapFrom(a => a.TrainerPlan != 0 ? a.TrainerPlan.GetEnumDescription() : string.Empty));
         }
     }
 }

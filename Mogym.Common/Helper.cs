@@ -13,6 +13,10 @@ namespace Mogym.Common
     public static class Helper
     {
 
+        public static T ToEnum<T>(this string value)
+        {
+            return (T)Enum.Parse(typeof(T), value, true);
+        }
 
         public static string GetEnumDescription(this Enum value)
         {

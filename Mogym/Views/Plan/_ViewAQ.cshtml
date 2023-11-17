@@ -1,6 +1,6 @@
 ﻿@using Mogym
 @using Mogym.Common
-@model Mogym.Application.Records.Question.QuestionRecord
+@model Mogym.Application.Records.Question.AnswerQuestionRecord
 @inject IHttpContextAccessor _accessor;
 
 <section class="content card-custome">
@@ -13,7 +13,7 @@
                     <fieldset class="row p-3 mb-5">
                         <legend class="float-none w-auto"> نوع برنامه </legend>
                         <div class="form-group col-md-4">
-                            <input class="form-control" asp-for="TrainerPlan.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="TrainerPlan" readonly />
                         </div>
                     </fieldset>
 
@@ -36,7 +36,7 @@
 
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">جنسیت</label>
-                            <input class="form-control" asp-for="Gender.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="Gender" readonly />
 
                         </div>
 
@@ -83,22 +83,22 @@
                         <legend class="float-none w-auto"> اطلاعات حرکتی</legend>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">میزان فعالیت روزانه</label>
-                            <input class="form-control" asp-for="DailyAvtivity.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="DailyAvtivity" readonly />
 
                         </div>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">آیا شغل شما در عصر و شب می باشد؟</label>
-                            <input class="form-control" asp-for="NightWork.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="NightWork" readonly />
 
                         </div>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">تعداد جلسات تمرین در هفته</label>
-                            <input class="form-control" asp-for="SessionsInWeek.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="SessionsInWeek" readonly />
 
                         </div>
                         <div class="form-group col-md-6">
                             <label class="pt-1" for="Gender">در صورتی که خارج از باشگاه فعالیت ورزشی دارید،نام ببرید</label>
-                            <input class="form-control" asp-for="OutOfGymActivity" />
+                            <input class="form-control" asp-for="OutOfGymActivity" readonly />
                         </div>
 
                     </fieldset>
@@ -106,17 +106,17 @@
                         <legend class="float-none w-auto"> اطلاعات بیماری</legend>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">آیا بیماری قلبی دارید؟</label>
-                            <input class="form-control" asp-for="HeartDisease.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="HeartDisease" readonly />
 
                         </div>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">آیا دیابت،آسم و یا قند خون دارید؟</label>
-                            <input class="form-control" asp-for="DiabetesAsthmaHypoglycemia.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="DiabetesAsthmaHypoglycemia" readonly />
 
                         </div>
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">آیا سیگاری می باشد؟</label>
-                            <input class="form-control" asp-for="Smoke.GetEnumDescription()" readonly />
+                            <input class="form-control" asp-for="Smoke" readonly />
 
                         </div>
 

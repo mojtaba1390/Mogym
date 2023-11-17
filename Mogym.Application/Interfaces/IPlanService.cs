@@ -13,6 +13,6 @@ namespace Mogym.Application.Interfaces
         Task<List<PlanRecord>?> GetMyPlans();
         Task UpdatePaidPicture(int planId,string paidPictureFileName);
         Task<bool> IsThisPlanIdForThisCurrentUser(int planId);
-        Task<QuestionRecord> GetAnswerQuestionWithPlanId(int planId);
+        Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId);
     }
 }

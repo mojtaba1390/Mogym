@@ -75,7 +75,7 @@ namespace Mogym.Application.Services
             return await _unitOfWork.PlanRepository.Find(x => x.UserId == userId && planId == planId).AnyAsync();
         }
 
-        public async Task<QuestionRecord> GetAnswerQuestionWithPlanId(int planId)
+        public async Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Mogym.Application.Services
                     .Include(x => x.AnsweQuestion_Plan)
                     .Select(x => x.AnsweQuestion_Plan)
                     .FirstOrDefaultAsync();
-                return _mapper.Map<QuestionRecord>(answerQuestion);
+                return _mapper.Map<AnswerQuestionRecord>(answerQuestion);
             }
             catch (Exception ex)
             {

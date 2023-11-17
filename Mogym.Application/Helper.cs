@@ -11,6 +11,8 @@ namespace Mogym.Application
 {
     public static class Helper
     {
+
+
         public static string GetModelSateErroMessage(this ModelStateDictionary modelState)
         {
             return string.Join("; ", modelState.Values
