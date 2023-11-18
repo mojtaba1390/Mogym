@@ -1,0 +1,191 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["title"] = "جزئیات برنامه";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">جزئیات برنامه</h3>
+                </div>
+                <div class="card-body mb-50">
+
+                    <div class="add-row-table pt-5">
+                        <h4 class="py-2 text-right px-2 w-100">تمرین</h4>
+                        <table class="table attr-training-request col-12">
+                            <thead>
+                                <tr>
+                                    <th>عنوان مهارت</th>
+                                    <th>موسسه</th>
+                                    <th>تاریخ برگزاری</th>
+                                    <th>وضعیت گواهی</th>
+                                    <th>مدت زمان دوره</th>
+                                    <th>سطح تسلط </th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            @*                                        <tbody id="certificate">
+
+                            @if (Model.courseCertificatePersonDTOs != null)
+                            {
+                            @for (var index = 0; index < Model.courseCertificatePersonDTOs.Count(); index++)
+                            {
+                            <tr class="attr attr-person form-group" id="@($"certificate{Model}")">
+                            <td>
+                            <input class="form-control" asp-for="courseCertificatePersonDTOs[index].Title" />
+                            <span asp-validation-for="courseCertificatePersonDTOs[index].Title" class="text-danger"></span>
+                            </td>
+                            <td>
+                            <input class="form-control" asp-for="courseCertificatePersonDTOs[index].AcademyName" />
+                            <span asp-validation-for="courseCertificatePersonDTOs[index].AcademyName" class="text-danger"></span>
+                            </td>
+                            <td width="10%">
+                            <input class="@($"txtcourseCertificatePersonDTOs_{index}__ExecutionTime form-control")" asp-for="courseCertificatePersonDTOs[index].ExecutionTime" readonly />
+                            <input type="hidden" class="form-control" asp-for="courseCertificatePersonDTOs[index].ExecutionTime" />
+                            <span asp-validation-for="courseCertificatePersonDTOs[index].ExecutionTime" class="text-danger"></span>
+                            </td>
+                            <td width="10%">
+                            <div class="form-group">
+                            <select class="form-select form-control" asp-for="courseCertificatePersonDTOs[index].HasCertificate"
+                            aria-label="Default select exampleFormControlSelect1">
+                            <option value="@(null)">انتخاب کنید</option>
+                            <option value="@(true)">دارم</option>
+                            <option value="@(false)">ندارم</option>
+                            </select>
+                            </div>
+                            </td>
+                            <td width="10%">
+                            <input type="number" class="form-control" asp-for="courseCertificatePersonDTOs[index].CourseDuration" />
+                            </td>
+                            <td width="10%">
+                            <div class="form-group">
+                            <select class="form-select form-control" aria-label="Default select exampleFormControlSelect1"
+                            asp-for="courseCertificatePersonDTOs[index].MasteryLevel">
+                            <option value="@(null)">انتخاب کنید</option>
+                            @foreach (MasteryLevel itm in Enum.GetValues(typeof(MasteryLevel)))
+                            {
+                            <option value="@((short)itm)">@itm.GetEnumDescription()</option>
+                            }
+                            </select>
+                            </div>
+                            </td>
+                            <td width="10%">
+                            <button class="btn remove mx-5 text-danger tooltip" type="button"
+                            onclick="removeRow(`@($"certificate{Model}")`, `@($"courseCertificatePersonDTOs_{index}__Id")`)">
+                            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
+                            </button>
+                            <button class="btn btn-large add text-success tooltip" type="button" onclick="AddCertificate()"><i class="fas fa-plus"></i><span class="tooltiptext tooltip-top">اضافه کردن</span></button>
+                            </td>
+                            </tr>
+                            }
+
+                            }
+
+
+
+                            </tbody>
+                            *@
+                        </table>
+
+                    </div>
+                    <div class="add-row-table pt-5">
+                        <h4 class="py-2 text-right px-2 w-100">رژیم غذایی</h4>
+                        <table class="table attr-training-request col-12">
+                            <thead>
+                                <tr>
+                                    <th>نام دوره</th>
+                                    <th>تاریخ برگزاری</th>
+                                    <th> نوع آزمون</th>
+                                    <th>نمره</th>
+                                </tr>
+                            </thead>
+                            @*                                                <tbody id="certificate">
+                            @{
+                            if (RonixTrainingCourseDtos.Any())
+                            {
+
+                            for (int i = 0; i < RonixTrainingCourseDtos.Count(); i++)
+                            {
+                            <tr class="attr attr-person form-group" id="">
+                            <td>
+                            <input class="form-control" type="text" readonly value="@RonixTrainingCourseDtos[i].Title" />
+                            </td>
+                            <td width="10%">
+                            <input class="form-control" readonly value="@RonixTrainingCourseDtos[i].PlanDate" />
+
+                            </td>
+                            <td width="10%">
+
+                            <input class="form-control" readonly value="@RonixTrainingCourseDtos[i].ExamType" />
+
+                            </td>
+                            <td width="9%">
+                            <input type="number" class="form-control" readonly value="@RonixTrainingCourseDtos[i].Mark" />
+                            </td>
+                            </tr>
+                            }
+                            }
+                            }
+                            </tbody>
+                            *@
+                        </table>
+                    </div>
+                    <div class="add-row-table pt-5">
+                        <h4 class="py-2 text-right px-2 w-100">مکمل</h4>
+                        <table class="table attr-training-request col-12">
+                            <thead>
+                                <tr>
+                                    <th>نام دوره</th>
+                                    <th>تاریخ برگزاری</th>
+                                    <th> نوع آزمون</th>
+                                    <th>نمره</th>
+                                </tr>
+                            </thead>
+                            @*                                                <tbody id="certificate">
+                            @{
+                            if (RonixTrainingCourseDtos.Any())
+                            {
+
+                            for (int i = 0; i < RonixTrainingCourseDtos.Count(); i++)
+                            {
+                            <tr class="attr attr-person form-group" id="">
+                            <td>
+                            <input class="form-control" type="text" readonly value="@RonixTrainingCourseDtos[i].Title" />
+                            </td>
+                            <td width="10%">
+                            <input class="form-control" readonly value="@RonixTrainingCourseDtos[i].PlanDate" />
+
+                            </td>
+                            <td width="10%">
+
+                            <input class="form-control" readonly value="@RonixTrainingCourseDtos[i].ExamType" />
+
+                            </td>
+                            <td width="9%">
+                            <input type="number" class="form-control" readonly value="@RonixTrainingCourseDtos[i].Mark" />
+                            </td>
+                            </tr>
+                            }
+                            }
+                            }
+                            </tbody>
+                            *@
+                        </table>
+                    </div>
+
+
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+                <!-- /.card-footer-->
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

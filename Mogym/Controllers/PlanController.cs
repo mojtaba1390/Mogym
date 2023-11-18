@@ -145,5 +145,11 @@ namespace Mogym.Controllers
 
         }
 
+
+        public async Task<IActionResult> PlanDetails(int planId)
+        {
+            return View();
+        }
+
     }
 }
