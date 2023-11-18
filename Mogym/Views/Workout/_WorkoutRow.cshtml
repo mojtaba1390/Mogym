@@ -1,0 +1,22 @@
+﻿@model int
+
+
+
+<tr class="attr attr-person form-group">
+    <input hidden name="@($"WorkoutRecords[{Model}].Id")" value="@Model" />
+
+    <td>
+        <input class="form-control" name="@($"WorkoutRecords[{Model}].Title")" />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"WorkoutRecords[{Model}].Title")" data-valmsg-replace="true"></span>
+    </td>
+    <td class="d-flex border-0">
+        <div class="form-group" style="margin: 0px 25px 0px 54px">
+            <button class="btn btn-large add text-success tooltip" type="button">
+                <i class="fas fa-plus"></i>
+                <span class="tooltiptext tooltip-top">ثبت</span>
+
+            </button>
+        </div>
+
+    </td>
+</tr>

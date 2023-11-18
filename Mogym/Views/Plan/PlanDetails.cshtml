@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Mogym.Application.Records.Plan.PlanDetailsRecord
+@{
     Layout = "_Layout";
     ViewData["title"] = "جزئیات برنامه";
 }
@@ -15,81 +16,55 @@
 
                     <div class="add-row-table pt-5">
                         <h4 class="py-2 text-right px-2 w-100">تمرین</h4>
-                        <table class="table attr-training-request col-12">
-                            <thead>
-                                <tr>
-                                    <th>عنوان مهارت</th>
-                                    <th>موسسه</th>
-                                    <th>تاریخ برگزاری</th>
-                                    <th>وضعیت گواهی</th>
-                                    <th>مدت زمان دوره</th>
-                                    <th>سطح تسلط </th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            @*                                        <tbody id="certificate">
+                        <form asp-controller="Workout" asp-action="AddWorkout" id="workoutForm">
 
-                            @if (Model.courseCertificatePersonDTOs != null)
-                            {
-                            @for (var index = 0; index < Model.courseCertificatePersonDTOs.Count(); index++)
-                            {
-                            <tr class="attr attr-person form-group" id="@($"certificate{Model}")">
-                            <td>
-                            <input class="form-control" asp-for="courseCertificatePersonDTOs[index].Title" />
-                            <span asp-validation-for="courseCertificatePersonDTOs[index].Title" class="text-danger"></span>
-                            </td>
-                            <td>
-                            <input class="form-control" asp-for="courseCertificatePersonDTOs[index].AcademyName" />
-                            <span asp-validation-for="courseCertificatePersonDTOs[index].AcademyName" class="text-danger"></span>
-                            </td>
-                            <td width="10%">
-                            <input class="@($"txtcourseCertificatePersonDTOs_{index}__ExecutionTime form-control")" asp-for="courseCertificatePersonDTOs[index].ExecutionTime" readonly />
-                            <input type="hidden" class="form-control" asp-for="courseCertificatePersonDTOs[index].ExecutionTime" />
-                            <span asp-validation-for="courseCertificatePersonDTOs[index].ExecutionTime" class="text-danger"></span>
-                            </td>
-                            <td width="10%">
-                            <div class="form-group">
-                            <select class="form-select form-control" asp-for="courseCertificatePersonDTOs[index].HasCertificate"
-                            aria-label="Default select exampleFormControlSelect1">
-                            <option value="@(null)">انتخاب کنید</option>
-                            <option value="@(true)">دارم</option>
-                            <option value="@(false)">ندارم</option>
-                            </select>
-                            </div>
-                            </td>
-                            <td width="10%">
-                            <input type="number" class="form-control" asp-for="courseCertificatePersonDTOs[index].CourseDuration" />
-                            </td>
-                            <td width="10%">
-                            <div class="form-group">
-                            <select class="form-select form-control" aria-label="Default select exampleFormControlSelect1"
-                            asp-for="courseCertificatePersonDTOs[index].MasteryLevel">
-                            <option value="@(null)">انتخاب کنید</option>
-                            @foreach (MasteryLevel itm in Enum.GetValues(typeof(MasteryLevel)))
-                            {
-                            <option value="@((short)itm)">@itm.GetEnumDescription()</option>
-                            }
-                            </select>
-                            </div>
-                            </td>
-                            <td width="10%">
-                            <button class="btn remove mx-5 text-danger tooltip" type="button"
-                            onclick="removeRow(`@($"certificate{Model}")`, `@($"courseCertificatePersonDTOs_{index}__Id")`)">
-                            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
-                            </button>
-                            <button class="btn btn-large add text-success tooltip" type="button" onclick="AddCertificate()"><i class="fas fa-plus"></i><span class="tooltiptext tooltip-top">اضافه کردن</span></button>
-                            </td>
-                            </tr>
-                            }
+                            <table class="table attr-training-request col-12">
+                                <thead>
+                                    <tr>
+                                        <th>عنوان تمرین</th>
+                                        <th>عملیات</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="approverRowsContainer" id="workoutBody">
 
-                            }
+                                    @if (Model.WorkoutRecords != null)
+                                    {
+                                        @for (var index = 0; index < Model.WorkoutRecords.Count(); index++)
+                                        {
+                                            <tr class="attr attr-person form-group">
+                                                <input hidden name="@Model.WorkoutRecords[index].PlanId" value="@Model.PlanId"/>
+
+                                                <td>
+                                                    <input class="form-control" asp-for="@Model.WorkoutRecords[index].Title"/>
+                                                    <span asp-validation-for="@Model.WorkoutRecords[index].Title" class="text-danger"></span>
+                                                </td>
+                                                <td class="d-flex border-0">
+                                                    @{
+
+                                                        if (index == Model.WorkoutRecords.Count - 1)
+                                                        {
+                                                            <div class="form-group" style="margin: 0px 25px 0px 54px">
+                                                                <button class="btn btn-large add text-success tooltip" type="button">
+                                                                    <i class="fas fa-plus"></i>
+                                                                    <span class="tooltiptext tooltip-top">ثبت</span>
+
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
 
 
 
-                            </tbody>
-                            *@
-                        </table>
+                                </tbody>
 
+                            </table>
+                        </form>
                     </div>
                     <div class="add-row-table pt-5">
                         <h4 class="py-2 text-right px-2 w-100">رژیم غذایی</h4>
@@ -189,3 +164,11 @@
 
 
 </section>
+<input type="hidden" id="workoutConts" value="@((Model != null && Model.WorkoutRecords != null)? Model.WorkoutRecords.Count():0 )" />
+
+
+
+@section Scripts{
+    <script src="~/js/plan.js"></script>
+}
+
