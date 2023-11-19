@@ -5,17 +5,14 @@
     }
 
 
-    var workoutConts = $("#workoutConts").val();
-    if (workoutConts ==0) {
-        addWorkoutRow();
-    }
+    addWorkoutRow();
 
     function addWorkoutRow() {
         workoutConts = $("#workoutConts").val();
         $.ajax({
             type: "POST",
             url: "/Workout/AddWorkoutRow",
-            data: { "planId": '@Model.PlanId' },
+            data: { "counter": workoutConts, "planId": $("#planId").val() },
             success: function (response) {
                 $("#workoutBody").append(response);
             },

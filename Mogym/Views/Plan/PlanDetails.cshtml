@@ -4,6 +4,8 @@
     ViewData["title"] = "جزئیات برنامه";
 }
 
+<input hidden id="planId" value="@Model.PlanId" />
+
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -32,10 +34,10 @@
                                         @for (var index = 0; index < Model.WorkoutRecords.Count(); index++)
                                         {
                                             <tr class="attr attr-person form-group">
-                                                <input hidden name="@Model.WorkoutRecords[index].PlanId" value="@Model.PlanId"/>
-
+                                                <input type="hidden" asp-for="@Model.WorkoutRecords[index].PlanId" />
+                                                <input type="hidden" asp-for="@Model.WorkoutRecords[index].Id" />
                                                 <td>
-                                                    <input class="form-control" asp-for="@Model.WorkoutRecords[index].Title"/>
+                                                    <input class="form-control" asp-for="@Model.WorkoutRecords[index].Title" />
                                                     <span asp-validation-for="@Model.WorkoutRecords[index].Title" class="text-danger"></span>
                                                 </td>
                                                 <td class="d-flex border-0">
@@ -52,7 +54,7 @@
                                                             </div>
                                                         }
                                                     }
-                                                    }
+
                                                 </td>
                                             </tr>
                                         }

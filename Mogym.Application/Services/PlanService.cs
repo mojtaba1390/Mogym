@@ -158,5 +158,24 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<PlanDetailsRecord> GetPlanDetails(int planId)
+        {
+            try
+            {
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.Id == planId)
+                    .AsNoTracking()
+                    .Include(x => x.Workouts)
+                    .FirstOrDefaultAsync();
+                return _mapper.Map<PlanDetailsRecord>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetPlanDetails in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

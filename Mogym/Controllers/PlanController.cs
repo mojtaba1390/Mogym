@@ -148,7 +148,17 @@ namespace Mogym.Controllers
 
         public async Task<IActionResult> PlanDetails(int planId)
         {
-            return View();
+            try
+            {
+                var planDetails = await _planService.GetPlanDetails(planId);
+                return View(planDetails);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
         }
 
     }

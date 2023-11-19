@@ -54,6 +54,7 @@ namespace Mogym.Application
             services.AddTransient<ITrainerPlanCostService, TrainerPlanCostService>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IPlanService, PlanService>();
+            services.AddTransient<IWorkoutService, WorkoutService>();
             #endregion
 
             return services;

@@ -17,5 +17,6 @@ namespace Mogym.Application.Interfaces
         Task<List<PaidPlanRecorrd>?> GetPaidPlans();
         Task ApprovePlan(int planId);
         Task<List<ApprovePlanRecord>?> GetApprovePlans();
+        Task<PlanDetailsRecord> GetPlanDetails(int planId);
     }
 }
