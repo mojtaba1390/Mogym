@@ -17,11 +17,12 @@ namespace Mogym.Controllers
             return View();
         }
 
-        public async Task<IActionResult> AddWorkout(List<WorkoutRecord> workoutRecords)
+        public async Task<IActionResult> AddWorkout(List<WorkoutRecord> workoutRecords) 
         {
             try
             {
                 await _workoutService.AddOrUpdate(workoutRecords);
+                return RedirectToAction("PlanDetails", "Plan", new { planId = workoutRecords.FirstOrDefault().PlanId });
             }
             catch (Exception ex)
             {
