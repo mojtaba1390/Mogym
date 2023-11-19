@@ -14,7 +14,7 @@ namespace Mogym.Domain.Entities
             Exercises = new HashSet<Exercise>();
         }
 
-
+        public int WorkoutId { get; set; }
         public int? SuperSetId { get; set; }
 
 
@@ -23,6 +23,7 @@ namespace Mogym.Domain.Entities
         public ExerciseVideo ExerciseVideo { get; set; }
 
         public Exercise Exercise_Exercise { get; set; }
+        public Workout Exercise_Workout { get; set; }
 
 
 

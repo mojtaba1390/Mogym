@@ -19,6 +19,11 @@ namespace Mogym.Domain.Configuration
                 .WithMany(x => x.Exercises)
                 .HasForeignKey(x => x.SuperSetId)
                 .IsRequired(false);
+
+            builder.HasOne<Workout>(x => x.Exercise_Workout)
+                .WithMany(x => x.Exercises)
+                .HasForeignKey(x => x.WorkoutId)
+                .IsRequired();
         }
     }
 }
