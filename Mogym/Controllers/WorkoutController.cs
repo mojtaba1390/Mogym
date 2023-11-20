@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Workout;
 
 namespace Mogym.Controllers
 {
+    [Authorize]
     public class WorkoutController : Controller
     {
         private readonly IWorkoutService _workoutService;

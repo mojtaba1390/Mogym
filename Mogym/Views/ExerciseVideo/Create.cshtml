@@ -1,0 +1,52 @@
+﻿@using Mogym.Common
+@model Mogym.Application.Records.ExerciseVideo.CreateExerciseVideoRecord
+
+@{
+    ViewBag.Title = "ایجاد ویدئو جدید";
+    Layout = "_Layout";
+}
+
+<section class="content">
+    <form asp-action="Create" method="post" class="container-fluid" id="form-create-exerciseVideo" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">ایجاد ویدئو جدید</h3>
+                    </div>
+                    <div class="card-body py-5">
+                        <div class="form-group row">
+                            <label class="pt-1">عنوان</label>
+                            <input class="form-control" asp-for="Title" />
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+                        <div class=" form-group col-md-3">
+                            <label class="pt-1" for="profile-profilepic">ویدئو</label>
+                            <div id="chooseFile">
+                                <input type="file" name="pxerciseVideo" accept="video/mp4,video/x-m4v,video/*" />
+                            </div>
+                        </div>
+                        <div class=" form-group col-md-6">
+                            <label class="pt-1" for="profile-address">توضیحات</label>
+                            <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                            <span class="text-danger" asp-validation-for="Description"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="form-actions-buttons col-md-6">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</section>

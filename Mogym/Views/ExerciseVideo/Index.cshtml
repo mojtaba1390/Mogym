@@ -1,5 +1,79 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Mogym.Application.Records.ExerciseVideo.ExerciseVideoRecord>
 @{
+    ViewBag.Title = "ویدئوهای تمرینات";
+    Layout = "_Layout";
 }
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card-body mb-50">
+                    <a asp-action="Create" class="btn btn-success-card px-5 mb-4">ایجاد</a>
+
+                    <table id="paidPlan" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>نام حرکت</th>
+                                <th>توضیحات </th>
+                                <th>نام ویدئو</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itm in Model)
+                            {
+                                <tr>
+
+                                    <td>@itm.Title</td>
+                                    <td>@itm.Description</td>
+                                    <td>@itm.FileName</td>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoModal" onclick="viewVideo('@itm.Id')">مشاهده ویدئو</button>
+                                        @*                                        <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="ApprovePlan">تائید برنامه</a>
+                                    *@
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                            <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
+                        </div>
+                        <div class="form-actions-buttons col-md-12">
+                            <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="ViewVideoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">پرسشنامه ویدئو</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-viewAQ">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
