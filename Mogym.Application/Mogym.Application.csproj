@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Records\ExerciseVideo\" />
     <Folder Include="Validation\Question\" />
   </ItemGroup>
 

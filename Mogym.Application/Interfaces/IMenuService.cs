@@ -13,7 +13,7 @@ namespace Mogym.Application.Interfaces
         Task<List<MenuRecord>> GetAllActiveMenuList();
         Task<List<PermissionRecord>> GetAllPermissionListForCreateMenuParent();
         Task<MenuRecord> GetMenuByEnglishName(string englishName);
-        Task AddMenu(CreateMenuRecord model);
+        void AddMenu(CreateMenuRecord model);
         Task<List<MenuRecord>> GetAllWithRelated();
     }
 }

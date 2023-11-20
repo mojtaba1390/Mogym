@@ -53,7 +53,16 @@ namespace Mogym.Controllers
 
         public async Task<IActionResult> WorkoutDetail(int id)
         {
-            return RedirectToAction();
+            try
+            {
+                var workoutDetails = await _workoutService.GetWorkoutDetails(id);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
         }
     }
 }

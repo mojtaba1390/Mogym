@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Mogym.Infrastructure.Interfaces;
 using Mogym.Infrastructure.Interfaces.Log;
+using Mogym.Infrastructure.Repositories;
 
 namespace Mogym.Infrastructure
 {
@@ -19,6 +20,8 @@ namespace Mogym.Infrastructure
         IQuestionRepository QuestionRepository { get; }
         IPlanRepository PlanRepository { get; }
         IWorkoutRepository WorkoutRepository { get; }
+        IExerciseRepository ExerciseRepository { get; }
+        IExerciseVideoRepository ExerciseVideoRepository { get; }
         
     }
 }

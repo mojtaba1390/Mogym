@@ -72,7 +72,7 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateMenuRecord model)
+        public  IActionResult Create(CreateMenuRecord model)
         {
             try
             {

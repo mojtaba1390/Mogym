@@ -13,7 +13,7 @@ namespace Mogym.Application.Records.Menu
         public string? PersianName { get; init; }
         public EnumYesNo? IsActive { get; init; }
         public int? ParentId { get; init; }
-        public string Link { get; init; }
+        public string? Link { get; init; }
         public EnumYesNo? HasParentInPermission { get; set; }
         public int? PermissionParentId { get; set; }
 

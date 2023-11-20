@@ -4,7 +4,22 @@
     ViewData["title"] = "جزئیات برنامه";
 }
 
+<style>
+    a.btn {
+        border-radius: .25rem;
+        border: 1px solid transparent;
+        padding: .5rem 1rem;
+        color: #fff;
+    }
 
+    a:link {
+        color: #fff !important
+    }
+
+    a.btn:hover {
+        border-radius: .25rem;
+    }
+</style>
 
 <input hidden id="planId" value="@Model.PlanId" />
 
@@ -45,9 +60,8 @@
                                                 <td class="d-flex border-0">
                                                     @{
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-info" type="button" onclick="addWorkoutRow()">
-                                                                جزئیات تمرین
-                                                            </button>
+                                                            <a class="btn btn-info" asp-route-planId="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout" >جزئیات برنامه</a>
+
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
                                                             <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">

@@ -15,7 +15,7 @@ namespace Mogym.Domain.Entities
         }
         public string EnglishName { get; set; }
         public string PersianName { get; set; }
-        public string Link { get; set; }
+        public string? Link { get; set; }
         public EnumYesNo IsActive { get; set; }
         public EnumYesNo? HasParentInPermission { get; set; }
 

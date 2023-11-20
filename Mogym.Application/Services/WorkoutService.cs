@@ -8,6 +8,7 @@ using Mogym.Application.Records.Workout;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Records.Exercise;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 using Newtonsoft.Json;
@@ -45,6 +46,11 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
+        }
+
+        public Task<ExerciseRecord> GetWorkoutDetails(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

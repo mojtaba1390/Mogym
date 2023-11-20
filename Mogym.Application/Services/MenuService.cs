@@ -83,16 +83,16 @@ namespace Mogym.Application.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task AddMenu(CreateMenuRecord model)
+        public void AddMenu(CreateMenuRecord model)
         {
             try
             {
                 var menu = _mapper.Map<Menu>(model);
 
-                await _unitOfWork.MenuRepository.AddAsync(menu );
+                 _unitOfWork.MenuRepository.Add(menu );
 
                 var permission = _mapper.Map<Permission>(model);
-                await _permissionService.AddAsync(permission,true);
+                _unitOfWork.PermissionRepository.Add(permission);
 
             }
             catch (Exception ex)

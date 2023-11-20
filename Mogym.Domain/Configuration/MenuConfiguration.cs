@@ -20,7 +20,7 @@ namespace Mogym.Domain.Configuration
 
             builder.Property(x => x.EnglishName).HasColumnType("varchar").HasMaxLength(50).IsRequired();
             builder.Property(x => x.PersianName).HasColumnType("nvarchar").HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Link).HasColumnType("nvarchar").HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Link).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
             builder.Property(x => x.IsActive).HasColumnType("int").IsRequired();
             builder.Property(x => x.HasParentInPermission).HasColumnType("int").IsRequired(false);
 
