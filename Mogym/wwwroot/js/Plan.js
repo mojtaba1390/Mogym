@@ -31,6 +31,26 @@ function addWorkoutRow() {
 }
 
 
+function editWorkout(index, workoutId) {
+    var title = $("#WorkoutRecords_" + index + "__Title").val();
+    $.ajax({
+        type: "POST",
+        url: "/Workout/Edit",
+        data: { "id": workoutId, "title": title },
+        success: function (response) {
+            window.location.reload();
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
+
+
 $(function () {
 
     $('#workoutForm').on('submit', function () {

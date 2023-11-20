@@ -17,6 +17,7 @@ namespace Mogym.Controllers
             return View();
         }
 
+        //TODO : اگه وقت شد این قسمت دو تا مورد رو از هم جدا کنم. چون ویرایش با اجکس داره انجام میشه،میشه اد هم همین کارو کرد
         public async Task<IActionResult> AddWorkout(List<WorkoutRecord> workoutRecords) 
         {
             try
@@ -37,6 +38,22 @@ namespace Mogym.Controllers
         public async Task<IActionResult> AddWorkoutRow(int counter, int planId)
         {
             return PartialView("_WorkoutRow",new Tuple<int,int>(counter,planId));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, string title)
+        {
+            return RedirectToAction();
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            return RedirectToAction();
+        }
+
+        public async Task<IActionResult> WorkoutDetail(int id)
+        {
+            return RedirectToAction();
         }
     }
 }

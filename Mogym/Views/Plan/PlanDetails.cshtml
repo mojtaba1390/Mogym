@@ -4,6 +4,8 @@
     ViewData["title"] = "جزئیات برنامه";
 }
 
+
+
 <input hidden id="planId" value="@Model.PlanId" />
 
 <section class="content">
@@ -42,21 +44,24 @@
                                                 </td>
                                                 <td class="d-flex border-0">
                                                     @{
-                                                        <div class="form-group" style="margin: 0px 13px">
-                                                            <input type="submit" value="ثبت تغییرات" class="btn btn-success-card dirty">
-                                                        </div>
-                                                        <div class="form-group" style="margin: 0px 25px 0px -32px">
-
-                                                            <button class="btn mx-5 text-danger tooltip" type="button" onclick="removePlanRow('@Model.WorkoutRecords[index].Id')">
-                                                                <i class="fas fa-times"></i>
-                                                                <span class="tooltiptext tooltip-top">حذف کردن</span>
+                                                        <div class="form-group" style="margin: 0px 10px">
+                                                            <button class="btn btn-info" type="button" onclick="addWorkoutRow()">
+                                                                جزئیات تمرین
                                                             </button>
-
                                                         </div>
-
+                                                        <div class="form-group" style="margin: 0px 10px">
+                                                            <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
+                                                                ویرایش عنوان تمرین
+                                                            </button>
+                                                        </div>
+                                                        <div class="form-group" style="margin: 0px 10px">
+                                                            <button class="btn btn-danger" type="button" onclick="addWorkoutRow()">
+                                                                حذف
+                                                            </button>
+                                                        </div>
                                                         if (index == Model.WorkoutRecords.Count - 1)
                                                         {
-                                                            <div class="form-group" style="margin: 0px 25px 0px 105px">
+                                                            <div class="form-group" style="margin: 0px 10px">
 
                                                                 <button class="btn btn-large add text-success tooltip" type="button" onclick="addWorkoutRow()">
                                                                     <i class="fas fa-plus"></i>
