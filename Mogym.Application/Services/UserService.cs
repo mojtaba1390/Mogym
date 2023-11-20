@@ -142,11 +142,11 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var entityInWaitingForConfirmSmsCode = _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status==EnumStatus.WaitingForSmsConfirm).FirstOrDefault();
+                var entityInWaitingForConfirmSmsCode = await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status==EnumStatus.WaitingForSmsConfirm).FirstOrDefaultAsync();
                 if (entityInWaitingForConfirmSmsCode!=null)
                     return await UpdateEntityToActiveForAuthentication(entityInWaitingForConfirmSmsCode);
 
-                var entityInActiveMode= _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.Active).FirstOrDefault();
+                var entityInActiveMode= await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.Active).FirstOrDefaultAsync();
                 if (entityInActiveMode != null)
                 {
                     var entity = GetEntityWithRoleAndPermission(entityInActiveMode);
