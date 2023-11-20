@@ -42,13 +42,26 @@
                                                 </td>
                                                 <td class="d-flex border-0">
                                                     @{
+                                                        <div class="form-group" style="margin: 0px 13px">
+                                                            <input type="submit" value="ثبت تغییرات" class="btn btn-success-card dirty">
+                                                        </div>
+                                                        <div class="form-group" style="margin: 0px 25px 0px -32px">
+
+                                                            <button class="btn mx-5 text-danger tooltip" type="button" onclick="removePlanRow('@Model.WorkoutRecords[index].Id')">
+                                                                <i class="fas fa-times"></i>
+                                                                <span class="tooltiptext tooltip-top">حذف کردن</span>
+                                                            </button>
+
+                                                        </div>
 
                                                         if (index == Model.WorkoutRecords.Count - 1)
                                                         {
-                                                            <div class="form-group" style="margin: 0px 25px 0px 54px">
-                                                                <button class="btn btn-large add text-success tooltip" type="button">
+                                                            <div class="form-group" style="margin: 0px 25px 0px 105px">
+
+                                                                <button class="btn btn-large add text-success tooltip" type="button" onclick="addWorkoutRow()">
                                                                     <i class="fas fa-plus"></i>
-                                                                    <span class="tooltiptext tooltip-top">ثبت</span>
+
+                                                                    <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
 
                                                                 </button>
                                                             </div>

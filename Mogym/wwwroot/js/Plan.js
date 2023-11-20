@@ -4,35 +4,34 @@
         $("#planId").val(planId);
     }
 
+    workoutConts = $("#workoutConts").val();
+    if (workoutConts == 0)
+        addWorkoutRow();
 
-    addWorkoutRow();
 
-    function addWorkoutRow() {
-        workoutConts = $("#workoutConts").val();
-        $.ajax({
-            type: "POST",
-            url: "/Workout/AddWorkoutRow",
-            data: { "counter": workoutConts, "planId": $("#planId").val() },
-            success: function (response) {
-                $("#workoutBody").append(response);
-            },
-            failure: function (response) {
-                alert(response.responseText);
-            },
-            error: function (response) {
-                alert(response.responseText);
-            }
-        });
-    }
 
 })
 
-
+function addWorkoutRow() {
+    workoutConts = $("#workoutConts").val();
+    $.ajax({
+        type: "POST",
+        url: "/Workout/AddWorkoutRow",
+        data: { "counter": workoutConts, "planId": $("#planId").val() },
+        success: function (response) {
+            $("#workoutBody").append(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
 
 
 $(function () {
-
-
 
     $('#workoutForm').on('submit', function () {
 
