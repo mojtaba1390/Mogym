@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Exercise;
+using Mogym.Application.Records.ExerciseVideo;
 
 namespace Mogym.Application.AutoMapper.ExerciseVideo
 {
@@ -11,7 +12,7 @@ namespace Mogym.Application.AutoMapper.ExerciseVideo
     {
         public ExerciseVideo_ExerciseVideoRecord()
         {
-            CreateMap<Domain.Entities.ExerciseVideo, ExerciseRecord>().ReverseMap();
+            CreateMap<Domain.Entities.ExerciseVideo, ExerciseVideoRecord>().ReverseMap();
         }
     }
 }
