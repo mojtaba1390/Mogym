@@ -32,7 +32,7 @@ namespace Mogym.Controllers
             return PartialView("_ExerciseRow", new Tuple<int, int>(counter, workoutId));
         }
 
-        public async Task<IActionResult> AddWorkout(List<WorkoutExerciseRecord> workoutExerciseRecords)
+        public async Task<IActionResult> AddExercise(List<WorkoutExerciseRecord> workoutExerciseRecords)
         {
             try
             {
