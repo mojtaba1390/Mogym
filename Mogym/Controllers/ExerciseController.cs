@@ -10,10 +10,12 @@ namespace Mogym.Controllers
 
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseVideoService _exerciseVideoService;
-        public ExerciseController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService)
+        private readonly IExerciseservice _exerciseservice;
+        public ExerciseController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService,IExerciseservice exerciseservice)
         {
             _workoutService = workoutService;
             _exerciseVideoService = exerciseVideoService;
+            _exerciseservice = exerciseservice;
         }
         public IActionResult Index()
         {
@@ -32,11 +34,15 @@ namespace Mogym.Controllers
             return PartialView("_ExerciseRow", new Tuple<int, int>(counter, workoutId));
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddExercise(List<WorkoutExerciseRecord> workoutExerciseRecords)
         {
             try
             {
-                return Index();
+                await _exerciseservice.AddAndUpdateExercises(workoutExerciseRecords);
+
+                return RedirectToAction("WorkoutDetail", "Workout",
+                    new { id = workoutExerciseRecords.FirstOrDefault().WorkoutId});
             }
             catch (Exception ex)
             {

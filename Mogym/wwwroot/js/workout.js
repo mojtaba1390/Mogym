@@ -4,7 +4,7 @@
     //    theme: "classic"
     //});
 
-    exerciseCnt = $("#exerciseCounts").val();
+    var exerciseCnt = $("#exerciseCounts").val();
     if (exerciseCnt == 0)
         addExerciseRow();
 
@@ -13,7 +13,7 @@
 })
 
 function addExerciseRow() {
-    exerciseCnt = $("#exerciseCounts").val();
+    var exerciseCnt = $("#exerciseCounts").val();
     $.ajax({
         type: "POST",
         url: "/Exercise/AddExerciseRow",
@@ -30,7 +30,15 @@ function addExerciseRow() {
     });
 }
 
-
+function viewVideoDetails(videoId) {
+    $.ajax({
+        url: "/ExerciseVideo/GetVideoDetails?videoId=" + videoId,
+        dataType: 'html',
+        success: function (data) {
+            $('#modal-viewDetails').html(data);
+        }
+    });
+}
 
 
 

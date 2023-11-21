@@ -1,8 +1,8 @@
 ﻿@model Mogym.Application.Records.ExerciseVideo.ExerciseVideoRecord
-<section class="content card-custome">
-    <div class="row col-md-9 col-9">
+<section class="col-md-12">
+    <div class="col-md-12">
 
-        <div class="col-md-9 col-9">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-success-card">
                     <h3 class="card-title">جزئیات حرکت  </h3>
@@ -23,10 +23,10 @@
                                 <source src="@($"/ExerciseVideo/{Model.FileName}")">
                             </video>
                         </div>
-                        <div class="col-md-3 m-3">
+                        <div class="col-md-5 m-3">
                             <div class="row col-md-12 col-12">
 
-                            <textarea rows="10" readonly="">@Html.Raw(Model.Description)</textarea>
+                            <textarea rows="12" readonly="">@Html.Raw(Model.Description)</textarea>
                             </div>
                         </div>
 

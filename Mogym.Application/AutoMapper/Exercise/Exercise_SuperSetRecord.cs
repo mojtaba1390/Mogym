@@ -11,7 +11,9 @@ namespace Mogym.Application.AutoMapper.Exercise
     {
         public Exercise_SuperSetRecord()
         {
-            CreateMap<Domain.Entities.Exercise, SuperSetRecord>();
+            CreateMap<Domain.Entities.Exercise, SuperSetRecord>()
+                .ForMember(x=>x.Id,z=>z.MapFrom(a=>a.Id))
+                .ForMember(x=>x.Title,z=>z.MapFrom(a=>a.ExerciseVideo.Title));
         }
     }
 }

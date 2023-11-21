@@ -73,6 +73,7 @@ namespace Mogym.Application.Services
             {
                 return await _unitOfWork.ExerciseRepository
                     .Find(x => x.WorkoutId == id && x.SuperSetId == null)
+                    .Include(x=>x.ExerciseVideo)
                     .ProjectTo<SuperSetRecord>(_mapper.ConfigurationProvider).ToListAsync();
             }
             catch (Exception ex)

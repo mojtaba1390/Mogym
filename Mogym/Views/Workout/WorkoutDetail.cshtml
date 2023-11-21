@@ -37,7 +37,8 @@
                                             @for (var index = 0; index < Model.Count; index++)
                                             {
                                                 <tr class="attr form-group">
-
+                                                    <input type="hidden" asp-for="@Model[index].WorkoutId" />
+                                                    <input type="hidden" asp-for="@Model[index].Id" />
                                                     <td>
                                                         <div class="form-group">
                                                             <select class="js-select-example form-select form-control" asp-for="@Model[index].ExerciseVideoId"
@@ -51,13 +52,41 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
-                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.SuperSets">
+                                                            aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x=>x.Value!=Model[index].Id.ToString())">
                                                             </select>
                                                             <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
+                                                    <td class="d-flex border-0">
+                                                        @{
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
+                                                            </div>
+                                                            //<div class="form-group" style="margin: 0px 10px">
+                                                            //    <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
+                                                            //        ویرایش عنوان تمرین
+                                                            //    </button>
+                                                            //</div>
+                                                            //<div class="form-group" style="margin: 0px 10px">
+                                                            //    <button class="btn btn-danger" type="button" onclick="addWorkoutRow()">
+                                                            //        حذف
+                                                            //    </button>
+                                                            //</div>
+                                                            if (index == Model.Count - 1)
+                                                            {
+                                                                <div class="form-group" style="margin: 0px 10px">
+
+                                                                    <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseRow()">
+                                                                        <i class="fas fa-plus"></i>
+
+                                                                        <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+
+                                                                    </button>
+                                                                </div>
+                                                            }
+                                                        }
+                                                        
+                                                        
 
                                                     </td>
 
@@ -116,4 +145,6 @@
 
 @section Scripts{
     <script src="~/js/workout.js"></script>
+    
+
 }

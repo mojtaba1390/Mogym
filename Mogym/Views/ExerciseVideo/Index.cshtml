@@ -18,7 +18,6 @@
                             <tr>
                                 <th>نام حرکت</th>
                                 <th>جزئیات حرکت</th>
-                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,9 +28,6 @@
                                     <td>@itm.Title</td>
                                     <td>
                                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@itm.Id')">مشاهده</button>
-                                    </td>
-                                    <td>
-
                                     </td>
                                 </tr>
                             }
@@ -80,7 +76,7 @@
     <script>
         function viewVideoDetails(videoId) {
             $.ajax({
-                url: "/ExerciseVideo/GetVideoDetails?videoId=" + videoId",
+                url: "/ExerciseVideo/GetVideoDetails?videoId=" + videoId,
                 dataType: 'html',
                 success: function (data) {
                     $('#modal-viewDetails').html(data);
