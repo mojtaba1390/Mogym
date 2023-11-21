@@ -10,9 +10,11 @@ namespace Mogym.Controllers
     public class WorkoutController : Controller
     {
         private readonly IWorkoutService _workoutService;
-        public WorkoutController(IWorkoutService workoutService)
+        private readonly IExerciseVideoService _exerciseVideoService;
+        public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService)
         {
-            _workoutService= workoutService;
+            _workoutService = workoutService;
+            _exerciseVideoService = exerciseVideoService;
         }
         public IActionResult Index()
         {
@@ -58,6 +60,15 @@ namespace Mogym.Controllers
             try
             {
                 var workoutDetails = await _workoutService.GetWorkoutDetails(id);
+                var superSets = await _workoutService.GetSuperSetExercises(id);
+                var exerciseVideos = await _exerciseVideoService.GetAllExerciseVideo();
+
+                ViewData["ExersiceVideo"] = new SelectList(exerciseVideos, "Id", "Title");
+                ViewData["SuperSets"] = new SelectList(superSets, "Id", "Title");
+
+                ViewBag.WorkoutId=id;
+
+                return View(workoutDetails);
             }
             catch (Exception e)
             {

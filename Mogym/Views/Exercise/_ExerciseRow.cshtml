@@ -1,0 +1,35 @@
+﻿@model Tuple<int,int>
+
+
+<tr class="attr form-group">
+    <input type="hidden" name="@($"[{Model.Item1}].WorkoutId")" value="@Model.Item2" />
+
+    <td>
+        <div class="form-group">
+            <select class="js-select-example form-select form-control" name="@($"[{Model.Item1}].ExerciseVideoId")"
+                    aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.ExersiceVideo">
+                <option value="@null"> انتخاب کنید</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].ExerciseVideoId")" data-valmsg-replace="true"></span>
+        </div>
+    </td>
+
+    <td>
+        <div class="form-group">
+            <select class="js-select-example form-select form-control" name="@($"[{Model.Item1}].SuperSetId")"
+                    aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.SuperSets">
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].SuperSetId")" data-valmsg-replace="true"></span>
+        </div>
+    </td>
+    <td>
+        <input type="submit" value="ثبت" class="btn btn-success-card dirty">
+
+    </td>
+
+</tr>
+
+<script>
+    $('.js-select-example').select2();
+
+</script>

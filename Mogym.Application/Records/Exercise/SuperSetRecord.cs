@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.Exercise
 {
-    public record ExerciseRecord
+    public record SuperSetRecord
     {
-        public int? Id { get; set; }
+        public int? Id { get; init; }
+        public string? Title { get; init; }
 
     }
 }

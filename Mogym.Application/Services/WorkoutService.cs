@@ -6,9 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Workout;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Exercise;
+using Mogym.Application.Records.ExerciseVideo;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 using Newtonsoft.Json;
@@ -48,9 +51,36 @@ namespace Mogym.Application.Services
             }
         }
 
-        public Task<ExerciseRecord> GetWorkoutDetails(int id)
+        public async Task<List<WorkoutExerciseRecord>> GetWorkoutDetails(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _unitOfWork.ExerciseRepository.Find(x => x.WorkoutId == id)
+                    .ProjectTo<WorkoutExerciseRecord>(_mapper.ConfigurationProvider).ToListAsync();
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetWorkoutDetails in WorkoutService,id=" + id;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<SuperSetRecord>> GetSuperSetExercises(int id)
+        {
+            try
+            {
+                return await _unitOfWork.ExerciseRepository
+                    .Find(x => x.WorkoutId == id && x.SuperSetId == null)
+                    .ProjectTo<SuperSetRecord>(_mapper.ConfigurationProvider).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetWorkoutDetails in WorkoutService,id=" + id;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
         }
     }
 }
