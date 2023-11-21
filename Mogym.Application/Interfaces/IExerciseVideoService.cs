@@ -11,5 +11,6 @@ namespace Mogym.Application.Interfaces
     {
         Task<List<ExerciseVideoRecord>> GetAllExerciseVideo();
         Task AddAsync(CreateExerciseVideoRecord createExerciseVideoRecord);
+        Task<ExerciseVideoRecord> GetEntityByIdAsync(int videoId);
     }
 }

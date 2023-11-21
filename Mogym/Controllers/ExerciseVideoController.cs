@@ -18,8 +18,8 @@ namespace Mogym.Controllers
 
         public ExerciseVideoController(IExerciseVideoService exerciseVideoService, IWebHostEnvironment webHostEnvironment)
         {
-            _exerciseVideoService=  exerciseVideoService;
-            _webHostEnvironment= webHostEnvironment;
+            _exerciseVideoService = exerciseVideoService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -61,6 +61,16 @@ namespace Mogym.Controllers
 
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public async Task<IActionResult> GetVideoDetails(int videoId)
+        {
+
+            var record = await _exerciseVideoService.GetEntityByIdAsync(videoId);
+                return PartialView("_ExerciseDetails", record);
+
+
         }
 
     }

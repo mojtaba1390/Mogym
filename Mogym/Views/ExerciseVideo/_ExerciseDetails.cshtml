@@ -1,0 +1,42 @@
+﻿@model Mogym.Application.Records.ExerciseVideo.ExerciseVideoRecord
+<section class="content card-custome">
+    <div class="row col-md-9 col-9">
+
+        <div class="col-md-9 col-9">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">جزئیات حرکت  </h3>
+                </div>
+                <p class="title-video-session">@Model.Title</p>
+                <div class="card-body py-5 d-flex">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <video id="@Model.FileName"
+                                   muted
+                                   loop
+                                   autoplay
+                                   controls
+                                   preload="auto"
+                                   poster=""
+                                   data-setup="{}"
+                                   class="video-js vjs-default-skin">
+                                <source src="@($"/ExerciseVideo/{Model.FileName}")">
+                            </video>
+                        </div>
+                        <div class="col-md-3 m-3">
+                            <div class="row col-md-12 col-12">
+
+                            <textarea rows="10" readonly="">@Html.Raw(Model.Description)</textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>

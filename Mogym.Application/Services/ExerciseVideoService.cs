@@ -8,6 +8,7 @@ using Mogym.Application.Records.ExerciseVideo;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
@@ -58,6 +59,21 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"AddAsync in ExerciseVideoService";
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<ExerciseVideoRecord> GetEntityByIdAsync(int videoId)
+        {
+            try
+            {
+                var exerciseVideo =await _unitOfWork.ExerciseVideoRepository.Find(x=>x.Id==videoId).FirstOrDefaultAsync();
+                 return _mapper.Map<ExerciseVideoRecord>(exerciseVideo);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetEntityByIdAsync in ExerciseVideoService,id="+videoId;
                 _logger.LogError(message, ex);
                 throw ex;
             }

@@ -50,6 +50,8 @@
                                            placeholder="09*********" required="required"
                                            oninvalid="setCustomValidity('شماره موبایل خود را وارد کنید')" onkeyup="setCustomValidity('')">
                                     <div class="help-block with-errors"></div>
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+
                                 </div>
                             </div>
                             <div class="row">

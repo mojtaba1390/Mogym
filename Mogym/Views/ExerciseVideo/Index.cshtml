@@ -17,8 +17,7 @@
                         <thead>
                             <tr>
                                 <th>نام حرکت</th>
-                                <th>توضیحات </th>
-                                <th>نام ویدئو</th>
+                                <th>جزئیات حرکت</th>
                                 <th>عملیات</th>
                             </tr>
                         </thead>
@@ -28,12 +27,10 @@
                                 <tr>
 
                                     <td>@itm.Title</td>
-                                    <td>@itm.Description</td>
-                                    <td>@itm.FileName</td>
                                     <td>
-                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoModal" onclick="viewVideo('@itm.Id')">مشاهده ویدئو</button>
-                                        @*                                        <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="ApprovePlan">تائید برنامه</a>
-                                    *@
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@itm.Id')">مشاهده</button>
+                                    </td>
+                                    <td>
 
                                     </td>
                                 </tr>
@@ -62,14 +59,13 @@
 </section>
 
 
-<div class="modal fade" id="ViewVideoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ViewVideoDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">پرسشنامه ویدئو</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="modal-viewAQ">
+            <div class="modal-body" id="modal-viewDetails">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
@@ -77,3 +73,19 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts
+{
+    <script>
+        function viewVideoDetails(videoId) {
+            $.ajax({
+                url: "/ExerciseVideo/GetVideoDetails?videoId=" + videoId",
+                dataType: 'html',
+                success: function (data) {
+                    $('#modal-viewDetails').html(data);
+                }
+            });
+        }
+    </script>
+}

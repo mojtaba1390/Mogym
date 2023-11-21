@@ -49,6 +49,8 @@
                                     <input asp-for="ConfirmCode" type="number" class="input input__icon form-control" required
                                            oninvalid="setCustomValidity('کد پیامک شده را وارد کنید')" onkeyup="setCustomValidity('')" >
                                     <div class="help-block with-errors"></div>
+                                    <span asp-validation-for="ConfirmCode" class="text-danger"></span>
+
                                 </div>
                             </div>
                             <div class="row">
