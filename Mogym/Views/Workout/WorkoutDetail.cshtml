@@ -52,7 +52,8 @@
                                                     <td>
                                                         <div class="form-group">
                                                             <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
-                                                            aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x=>x.Value!=Model[index].Id.ToString())">
+                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
+                                                                <option value="@null"> انتخاب کنید</option>
                                                             </select>
                                                             <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
                                                         </div>
@@ -62,16 +63,19 @@
                                                             <div class="form-group" style="margin: 0px 10px">
                                                                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
                                                             </div>
-                                                            //<div class="form-group" style="margin: 0px 10px">
-                                                            //    <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
-                                                            //        ویرایش عنوان تمرین
-                                                            //    </button>
-                                                            //</div>
-                                                            //<div class="form-group" style="margin: 0px 10px">
-                                                            //    <button class="btn btn-danger" type="button" onclick="addWorkoutRow()">
-                                                            //        حذف
-                                                            //    </button>
-                                                            //</div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    ویرایش تمرین این سطر
+                                                                </button>
+                                                            </div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
+                                                            </div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id')">
+                                                                    حذف
+                                                                </button>
+                                                            </div>
                                                             if (index == Model.Count - 1)
                                                             {
                                                                 <div class="form-group" style="margin: 0px 10px">
@@ -85,8 +89,6 @@
                                                                 </div>
                                                             }
                                                         }
-                                                        
-                                                        
 
                                                     </td>
 

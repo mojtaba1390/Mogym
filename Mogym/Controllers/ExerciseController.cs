@@ -51,5 +51,20 @@ namespace Mogym.Controllers
             return View("NotFound");
 
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _exerciseservice.Delete(id);
+
+            }
+            catch (Exception ex)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+            return View("NotFound");
+
+        }
     }
 }

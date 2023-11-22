@@ -10,5 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface IExerciseservice
     {
         Task AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords);
+        Task Delete(int id);
     }
 }

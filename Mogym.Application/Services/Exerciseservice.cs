@@ -20,17 +20,14 @@ namespace Mogym.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
-        private readonly IHttpContextAccessor _accessor;
 
         public Exerciseservice(IUnitOfWork unitOfWork,
             IMapper mapper,
-            ISeriLogService logger,
-            IHttpContextAccessor accessor)
+            ISeriLogService logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
-            _accessor = accessor;
         }
 
         public async Task AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords)
@@ -52,7 +49,23 @@ namespace Mogym.Application.Services
             }
             catch (Exception ex)
             {
-                var message = $"AddAndUpdateExercises in ExerciseVideoService,obj=" + JsonConvert.SerializeObject(workoutExerciseRecords);
+                var message = $"AddAndUpdateExercises in ExerciseService,obj=" + JsonConvert.SerializeObject(workoutExerciseRecords);
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task Delete(int id)
+        {
+            try
+            {
+                var entity = await _unitOfWork.ExerciseRepository.GetByIdAsync(id);
+                 _unitOfWork.ExerciseRepository.Delete(entity);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"Delete in ExerciseService,id=" + id;
                 _logger.LogError(message, ex);
                 throw ex;
             }

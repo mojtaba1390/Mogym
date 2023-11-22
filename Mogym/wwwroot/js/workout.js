@@ -12,6 +12,22 @@
 
 })
 
+function deleteExercise(id) {
+    $.ajax({
+        type: "POST",
+        url: "/Exercise/Delete",
+        data: { "id": id },
+        success: function (response) {
+            window.location.reload();
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
 function addExerciseRow() {
     var exerciseCnt = $("#exerciseCounts").val();
     $.ajax({
