@@ -13,7 +13,7 @@ namespace Mogym.Application.AutoMapper.Exercise
         {
             CreateMap<Domain.Entities.Exercise, SuperSetRecord>()
                 .ForMember(x=>x.Id,z=>z.MapFrom(a=>a.Id))
-                .ForMember(x=>x.Title,z=>z.MapFrom(a=>a.ExerciseVideo.Title));
+                .ForMember(x=>x.Title,z=>z.MapFrom(a=>a.ExerciseVideo_Exercise.Title));
         }
     }
 }

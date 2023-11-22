@@ -19,11 +19,6 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.FileName).HasColumnType("nvarchar(100)").IsRequired(false);
 
 
-            builder.HasOne<Exercise>(u => u.Exercise)
-                .WithOne(p => p.ExerciseVideo)
-                .HasForeignKey<Exercise>(p => p.ExerciseVideoId)
-                .IsRequired(false);
-
         }
     }
 }

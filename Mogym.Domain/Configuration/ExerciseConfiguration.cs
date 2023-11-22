@@ -24,6 +24,11 @@ namespace Mogym.Domain.Configuration
                 .WithMany(x => x.Exercises)
                 .HasForeignKey(x => x.WorkoutId)
                 .IsRequired();
+
+            builder.HasOne<ExerciseVideo>(x=>x.ExerciseVideo_Exercise)
+                .WithMany(x=>x.Exercises)
+                .HasForeignKey(x=>x.ExerciseVideoId)
+                .IsRequired();
         }
     }
 }

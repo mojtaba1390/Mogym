@@ -20,7 +20,7 @@ namespace Mogym.Domain.Entities
 
         public int ExerciseVideoId { get; set; }
 
-        public ExerciseVideo ExerciseVideo { get; set; }
+        public ExerciseVideo ExerciseVideo_Exercise { get; set; }
 
         public Exercise Exercise_Exercise { get; set; }
         public Workout Exercise_Workout { get; set; }
