@@ -56,6 +56,54 @@ function viewVideoDetails(videoId) {
     });
 }
 
+function addUpdateExerciseSets(exerciseId) {
+    $.ajax({
+        url: "/ExerciseSet/ExerciseSetDetail?exerciseId=" + exerciseId,
+        dataType: 'html',
+        success: function (data) {
+            $('#modal-viewAddUpdateExerciseSets').html(data);
+        }
+    });
+}
+
+
+function addExerciseSetRow(row) {
+    $.ajax({
+        type: "POST",
+        url: "/ExerciseSet/AddExerciseSetRow",
+        data: { "counter": row, "exerciseId": $("#exerciseId").val() },
+        success: function (response) {
+            $("#exerciseSetBody").append(response);
+            if ($('#exerciseSetBody tr.attr').length < 2) {
+                $('#exerciseSetBody .attr .remove').hide();
+            }
+            else {
+                $('#exerciseSetBody .attr .remove').show();
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
+
+function removeRow(id, idInput) {
+    let p = $("#" + id).parent().attr('id')
+    $("#" + idInput).val(-1);
+    $("#" + id).remove();
+    let lengthp = $('#' + p + ' ' + 'tr.attr').length;
+    if (lengthp < 2) {
+        $('#' + p + ' ' + 'tr.attr').find('.remove').hide();
+    } else {
+        $('#' + p + ' ' + 'tr.attr').find('.remove').show();
+    }
+
+}
+
 
 
 $(function () {

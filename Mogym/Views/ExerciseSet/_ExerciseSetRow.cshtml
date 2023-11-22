@@ -1,0 +1,39 @@
+﻿@model Tuple<int,int>
+
+
+<tr class="attr form-group" id="@($"set{Model.Item1}")">
+    <input type="hidden" name="@($"[{Model.Item1}].Id")" id="@($"z{Model.Item1}__Id")"  value="@Model.Item1" />
+    <input type="hidden" name="@($"[{Model.Item1}].ExerciseId")" value="@Model.Item2" />
+
+    <td width="20%">
+        <input class="form-control" name="@($"[{Model.Item1}].Weight")" id="@($"z{Model.Item1}__Weight")" type="number" />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].Weight")" data-valmsg-replace="true"></span>
+    </td>
+    <td width="20%">
+        <input class="form-control" name="@($"[{Model.Item1}].Count")" id="@($"z{Model.Item1}__Count")" type="number" />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].Count")" data-valmsg-replace="true"></span>
+    </td>
+    <td width="40%">
+        <div class="d-flex">
+            <input class="form-control" name="@($"[{Model.Item1}].Minute")" type="number" placeholder="دقیقه" />
+            <span> <img class="dots-date" src="/img/dot.png" /> </span>
+            <input class="form-control" name="@($"[{Model.Item1}].Second")" type="number" placeholder="ثانیه" />
+            <span class="text-danger"></span>
+        </div>
+    </td>
+
+    <td width="40%">
+        <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseSetRow(`@($"{Model.Item1 + 1}")`)">
+            <i class="fas fa-plus"></i>
+            <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+        </button>
+        <button class="btn remove mx-5 text-danger tooltip" type="button"
+                onclick="removeRow(`@($"set{Model.Item1}")`, `@($"z{Model.Item1}__Id")`)">
+            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
+        </button>
+
+
+
+    </td>
+
+</tr>

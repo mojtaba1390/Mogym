@@ -1,0 +1,111 @@
+﻿@model List<Mogym.Application.Records.ExerciseSet.ExerciseSetRecord>
+
+
+<input hidden id="exerciseId" value="@ViewBag.ExerciseId" />
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">ست های تمرین</h3>
+                </div>
+                <form asp-controller="ExerciseSet" asp-action="AddExerciseSet" id="exerciseSetForm">
+                    <div class="card-body py-5">
+                        <div class="mb-1">
+                            <div id="attributes-recruit-training" class="add-row-table pt-3">
+
+
+                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                    <thead>
+                                        <tr>
+                                            <th>وزن</th>
+                                            <th>تعداد</th>
+                                            <th>زمان</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="approverRowsContainer" id="exerciseSetBody">
+                                        @if (Model is not null)
+                                        {
+                                            @for (var index = 0; index < Model.Count; index++)
+                                            {
+                                                <tr class="attr form-group" id="@($"set{index}")">
+                                                    <input type="hidden" asp-for="@Model[index].ExerciseId" />
+                                                    <input type="hidden" asp-for="@Model[index].Id" />
+                                                    <td width="20%">
+                                                        <input class="form-control" asp-for="@Model[index].Weight" type="number" />
+                                                        <span asp-validation-for="@Model[index].Weight" class="text-danger"></span>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <input class="form-control" asp-for="@Model[index].Count" type="number" />
+                                                        <span asp-validation-for="@Model[index].Count" class="text-danger"></span>
+                                                    </td>
+                                                    <td width="40%">
+                                                        <div class="d-flex">
+                                                            <input class="form-control" asp-for="@Model[index].Minute" type="number" placeholder="دقیقه" />
+                                                            <span> <img class="dots-date" src="/img/dot.png" /> </span>
+                                                            <input class="form-control" asp-for="@Model[index].Second" type="number" placeholder="ثانیه" />
+                                                            <span class="text-danger"></span>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td width="40%">
+                                                        @if (index == Model.Count - 1)
+                                                        {
+                                                            <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseSetRow(`@($"{index + 1}")`)">
+                                                                <i class="fas fa-plus"></i>
+                                                                <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+                                                            </button>
+                                                        }
+                                                        <button class="btn remove mx-5 text-danger tooltip" type="button"
+                                                                onclick="removeRow(`@($"set{index}")`, `@($"z{index}__Id")`)">
+                                                            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
+                                                        </button>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col-md-9">
+                            </div>
+                            <div class="form-actions-buttons col-md-3">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<input type="hidden" id="setCounts" value="@(Model != null ? Model.Count():0 )" />
+
+<script>
+    var setCount = $("#setCounts").val();
+
+    if (setCount == 0)
+        addExerciseSetRow(0);
+
+
+</script>
