@@ -20,5 +20,6 @@ namespace Mogym.Infrastructure
         void Update(TEntity entity, bool withSaveChange = true);
         void UpdateRange(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true);
         Task UpdateAsync(TEntity entity, bool withSaveChange = true);
+        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate);
     }
 }

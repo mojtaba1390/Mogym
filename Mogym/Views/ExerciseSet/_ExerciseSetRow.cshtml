@@ -2,7 +2,7 @@
 
 
 <tr class="attr form-group" id="@($"set{Model.Item1}")">
-    <input type="hidden" name="@($"[{Model.Item1}].Id")" id="@($"z{Model.Item1}__Id")"  value="@Model.Item1" />
+    <input type="hidden" name="@($"[{Model.Item1}].Id")" id="@($"z{Model.Item1}__Id")"  value="0" />
     <input type="hidden" name="@($"[{Model.Item1}].ExerciseId")" value="@Model.Item2" />
 
     <td width="20%">
@@ -15,9 +15,9 @@
     </td>
     <td width="40%">
         <div class="d-flex">
-            <input class="form-control" name="@($"[{Model.Item1}].Minute")" type="number" placeholder="دقیقه" />
-            <span> <img class="dots-date" src="/img/dot.png" /> </span>
             <input class="form-control" name="@($"[{Model.Item1}].Second")" type="number" placeholder="ثانیه" />
+            <span> <img class="dots-date" src="/img/dot.png"/> </span>
+            <input class="form-control" name="@($"[{Model.Item1}].Minute")" type="number" placeholder="دقیقه"/>
             <span class="text-danger"></span>
         </div>
     </td>

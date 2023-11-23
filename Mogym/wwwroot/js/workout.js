@@ -92,15 +92,17 @@ function addExerciseSetRow(row) {
 
 
 function removeRow(id, idInput) {
-    let p = $("#" + id).parent().attr('id')
-    $("#" + idInput).val(-1);
-    $("#" + id).remove();
-    let lengthp = $('#' + p + ' ' + 'tr.attr').length;
-    if (lengthp < 2) {
-        $('#' + p + ' ' + 'tr.attr').find('.remove').hide();
-    } else {
-        $('#' + p + ' ' + 'tr.attr').find('.remove').show();
-    }
+    //let p = $("#" + id).parent().attr('id')
+    $('#' + id + ' input#' + idInput).val(-1)
+
+    //$("#" + idInput).val(-1);
+    $("#" + id).hide();
+    //let lengthp = $('#' + p + ' ' + 'tr.attr').length;
+    //if (lengthp < 2) {
+    //    $('#' + p + ' ' + 'tr.attr').hide();
+    //} else {
+    //    $('#' + p + ' ' + 'tr.attr').show();
+    //}
 
 }
 

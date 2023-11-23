@@ -127,6 +127,8 @@ namespace Mogym.Infrastructure
             }
 
         }
+
+
         public void DeleteRange(IEnumerable<TEntity> entityListEnumerable, bool withSaveChange = true)
         {
             try
@@ -160,6 +162,10 @@ namespace Mogym.Infrastructure
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _dbContext.Set<TEntity>().Where(predicate).AsNoTracking().AsQueryable();
+        }
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dbContext.Set<TEntity>().Where(predicate).AsQueryable();
         }
 
 

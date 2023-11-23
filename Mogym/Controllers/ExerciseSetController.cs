@@ -44,11 +44,11 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddExerciseSet(List<ExerciseSetRecord> exerciseSetRecords)
+        public IActionResult AddExerciseSet(List<ExerciseSetRecord> exerciseSetRecords)
         {
             try
             {
-                return Index();
+                 _exerciseSetService.AddOrUpdateSets(exerciseSetRecords);
             }
             catch (Exception e)
             {

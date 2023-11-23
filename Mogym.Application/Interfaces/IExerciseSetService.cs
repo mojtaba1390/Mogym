@@ -10,5 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface IExerciseSetService
     {
         Task<List<ExerciseSetRecord>> GetExerciseSetDetail(int exerciseId);
+        void AddOrUpdateSets(List<ExerciseSetRecord> exerciseSetRecords);
     }
 }
