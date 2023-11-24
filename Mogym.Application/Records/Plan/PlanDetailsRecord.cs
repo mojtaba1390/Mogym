@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Application.Records.Meal;
 using Mogym.Application.Records.Workout;
 
 namespace Mogym.Application.Records.Plan
@@ -12,5 +13,6 @@ namespace Mogym.Application.Records.Plan
         public int PlanId { get; init; }
 
         public List<WorkoutRecord> WorkoutRecords { get; init; }
+        public List<MealRecord> MealRecords { get; init; }
     }
 }

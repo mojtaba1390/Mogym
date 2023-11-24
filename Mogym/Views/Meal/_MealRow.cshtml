@@ -1,0 +1,24 @@
+﻿@model Tuple<int,int>
+
+
+
+<tr class="attr attr-person form-group">
+    <input type="hidden" name="@($"WorkoutRecords[{Model.Item1}].PlanId")" value="@Model.Item2" />
+
+    <td>
+        <input class="form-control" name="@($"WorkoutRecords[{Model.Item1}].Title")" placeholder="مثلا تمرین روز اول" />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"WorkoutRecords[{Model.Item1}].Title")" data-valmsg-replace="true"></span>
+    </td>
+    <td class="d-flex border-0">
+        <div class="form-group" style="margin: 0px 25px 0px 54px">
+            <input type="submit" value="ثبت" class="btn btn-success-card dirty">
+
+            @*<button class="btn btn-large add text-success tooltip" type="submit">
+            <i class="fas fa-plus"></i>
+            <span class="tooltiptext tooltip-top">ثبت</span>
+
+            </button>*@
+        </div>
+
+    </td>
+</tr>

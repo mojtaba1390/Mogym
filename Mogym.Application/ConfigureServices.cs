@@ -58,6 +58,7 @@ namespace Mogym.Application
             services.AddTransient<IExerciseservice, Exerciseservice>();
             services.AddTransient<IExerciseVideoService, ExerciseVideoService>();
             services.AddTransient<IExerciseSetService, ExerciseSetService>();
+            services.AddTransient<IMealService, MealService>();
             #endregion
 
             return services;
