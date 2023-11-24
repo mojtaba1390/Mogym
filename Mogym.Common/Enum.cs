@@ -103,4 +103,16 @@ namespace Mogym.Common
         [Description("ارسال شده")]
         Sent =4
     }
+    public enum EnumSize
+    {
+        [EnumMember]
+        [Description("کوچک")]
+        Small = 1,
+        [EnumMember]
+        [Description("متوسط")]
+        Medium = 2,
+        [EnumMember]
+        [Description("بزرگ")]
+        Big = 3
+    }
 }

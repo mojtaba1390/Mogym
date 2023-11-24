@@ -46,6 +46,9 @@ namespace Mogym.Domain.Context
         public DbSet<Question> Question { get; set; }
         public DbSet<Plan> Plan { get; set; }
         public DbSet<Workout> Workout { get; set; }
+        public DbSet<Meal> Meal { get; set; }
+        public DbSet<Ingredient> Ingredient { get; set; }
+        public DbSet<MealIngridient> MealIngridient { get; set; }
 
     }
 }

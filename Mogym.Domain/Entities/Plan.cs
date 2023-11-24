@@ -12,6 +12,7 @@ namespace Mogym.Domain.Entities
         public Plan()
         {
             Workouts = new HashSet<Workout>();
+            Meals = new HashSet<Meal>();
         }
         public int TrainerId { get; set; }
         public int UserId { get; set; }
@@ -28,5 +29,6 @@ namespace Mogym.Domain.Entities
 
 
         public ICollection<Workout> Workouts { get; set; }
+        public ICollection<Meal> Meals { get; set; }
     }
 }

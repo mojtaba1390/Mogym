@@ -45,9 +45,10 @@
                                                     </td>
                                                     <td width="40%">
                                                         <div class="d-flex">
-                                                            <input class="form-control" asp-for="@Model[index].Minute" type="number" placeholder="دقیقه" />
-                                                            <span> <img class="dots-date" src="/img/dot.png" /> </span>
                                                             <input class="form-control" asp-for="@Model[index].Second" type="number" placeholder="ثانیه" />
+                                                            <span> <img class="dots-date" src="/img/dot.png" style="transform: rotate(90deg);"/> </span>
+                                                            <input class="form-control" asp-for="@Model[index].Minute" type="number" placeholder="دقیقه"/>
+
                                                             <span class="text-danger"></span>
                                                         </div>
                                                     </td>
