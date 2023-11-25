@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 
 namespace Mogym.Application.Services
 {
-    public class WorkoutService: IWorkoutService
+    public class WorkoutService : IWorkoutService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -36,16 +36,16 @@ namespace Mogym.Application.Services
             try
             {
                 var workouts = _mapper.Map<List<Workout>>(workoutRecords);
-                var addWorkouts = workouts.Where(x => x.Id==0);
-                var updateWorkouts = workouts.Where(x => x.Id!=0);
+                var addWorkouts = workouts.Where(x => x.Id == 0);
+                var updateWorkouts = workouts.Where(x => x.Id != 0);
                 if (addWorkouts.Any())
-                   await _unitOfWork.WorkoutRepository.AddRangAsync(addWorkouts);
+                    await _unitOfWork.WorkoutRepository.AddRangAsync(addWorkouts);
                 if (updateWorkouts.Any())
-                     _unitOfWork.WorkoutRepository.UpdateRange(updateWorkouts);
+                    _unitOfWork.WorkoutRepository.UpdateRange(updateWorkouts);
             }
             catch (Exception ex)
             {
-                var message = $"AddOrUpdate in WorkoutService,obj="+JsonConvert.SerializeObject(workoutRecords);
+                var message = $"AddOrUpdate in WorkoutService,obj=" + JsonConvert.SerializeObject(workoutRecords);
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
@@ -73,12 +73,28 @@ namespace Mogym.Application.Services
             {
                 return await _unitOfWork.ExerciseRepository
                     .Find(x => x.WorkoutId == id && x.SuperSetId == null)
-                    .Include(x=>x.ExerciseVideo_Exercise)
+                    .Include(x => x.ExerciseVideo_Exercise)
                     .ProjectTo<SuperSetRecord>(_mapper.ConfigurationProvider).ToListAsync();
             }
             catch (Exception ex)
             {
                 var message = $"GetWorkoutDetails in WorkoutService,id=" + id;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task Edit(int id, string title)
+        {
+            try
+            {
+                var entity = await _unitOfWork.WorkoutRepository.GetByIdAsync(id);
+                entity.Title = title;
+                await _unitOfWork.WorkoutRepository.UpdateAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Edit in WorkoutService,id=" + id;
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }

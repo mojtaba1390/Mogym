@@ -48,7 +48,15 @@ namespace Mogym.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, string title)
         {
-            return RedirectToAction();
+            try
+            {
+                await _workoutService.Edit(id,title);
+            }
+            catch (Exception ex)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+            return View("NotFound");
         }
         public async Task<IActionResult> Delete(int id)
         {

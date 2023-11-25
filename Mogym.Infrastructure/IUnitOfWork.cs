@@ -24,6 +24,7 @@ namespace Mogym.Infrastructure
         IExerciseVideoRepository ExerciseVideoRepository { get; }
         IExerciseSetRepository ExerciseSetRepository { get; }
         IMealRepository MealRepository { get; }
+        IIngridientRepository IngridientRepository { get; }
         
     }
 }

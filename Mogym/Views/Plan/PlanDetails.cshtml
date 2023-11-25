@@ -102,65 +102,68 @@
                     </div>
                     <div class="add-row-table pt-5">
                         <h4 class="py-2 text-right px-2 w-100">رژیم غذایی</h4>
+                        <form asp-controller="Meal" asp-action="AddMeal" id="dietForm">
+
                         <table class="table attr-training-request col-12">
                             <thead>
-                                <tr>
-                                    <th>عنوان وعده</th>
-                                    <th>عملیات</th>
-                                </tr>
+                            <tr>
+                                <th>عنوان وعده</th>
+                                <th>عملیات</th>
+                            </tr>
                             </thead>
                             <tbody class="approverRowsContainer" id="dietBody">
 
-                                @if (Model.MealRecords != null)
+                            @if (Model.MealRecords != null)
+                            {
+                                @for (var index = 0; index < Model.MealRecords.Count(); index++)
                                 {
-                                    @for (var index = 0; index < Model.MealRecords.Count(); index++)
-                                    {
-                                        <tr class="attr attr-person form-group">
-                                            <input type="hidden" asp-for="@Model.MealRecords[index].PlanId" />
-                                            <input type="hidden" asp-for="@Model.MealRecords[index].Id" />
-                                            <td>
-                                                <input class="form-control" asp-for="@Model.MealRecords[index].Title" />
-                                                <span asp-validation-for="@Model.MealRecords[index].Title" class="text-danger"></span>
-                                            </td>
-                                            <td class="d-flex border-0">
-                                                @{
-                                                    <div class="form-group" style="margin: 0px 10px">
-                                                        @*<a class="btn btn-info" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>*@
+                                    <tr class="attr attr-person form-group">
+                                        <input type="hidden" asp-for="@Model.MealRecords[index].PlanId" />
+                                        <input type="hidden" asp-for="@Model.MealRecords[index].Id" />
+                                        <td>
+                                            <input class="form-control" asp-for="@Model.MealRecords[index].Title" />
+                                            <span asp-validation-for="@Model.MealRecords[index].Title" class="text-danger"></span>
+                                        </td>
+                                        <td class="d-flex border-0">
+                                            @{
+                                                <div class="form-group" style="margin: 0px 10px">
+                                                    @*<a class="btn btn-info" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>*@
 
-                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin: 0px 10px">
+                                                    <button class="btn btn-primary" type="button" onclick="editMeal('@index','@Model.MealRecords[index].Id')">
+                                                        ویرایش عنوان وعده
+                                                    </button>
+                                                </div>
+                                                <div class="form-group" style="margin: 0px 10px">
+                                                    <button class="btn btn-danger" type="button" onclick="addMealRow()">
+                                                        حذف
+                                                    </button>
+                                                </div>
+                                                if (index == Model.MealRecords.Count - 1)
+                                                {
                                                     <div class="form-group" style="margin: 0px 10px">
-                                                        <button class="btn btn-primary" type="button" onclick="editMeal('@index','@Model.MealRecords[index].Id')">
-                                                            ویرایش عنوان وعده
+
+                                                        <button class="btn btn-large add text-success tooltip" type="button" onclick="addMealRow()">
+                                                            <i class="fas fa-plus"></i>
+
+                                                            <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+
                                                         </button>
                                                     </div>
-                                                    <div class="form-group" style="margin: 0px 10px">
-                                                        <button class="btn btn-danger" type="button" onclick="addMealRow()">
-                                                            حذف
-                                                        </button>
-                                                    </div>
-                                                    if (index == Model.MealRecords.Count - 1)
-                                                    {
-                                                        <div class="form-group" style="margin: 0px 10px">
-
-                                                            <button class="btn btn-large add text-success tooltip" type="button" onclick="addMealRow()">
-                                                                <i class="fas fa-plus"></i>
-
-                                                                <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                            </button>
-                                                        </div>
-                                                    }
                                                 }
+                                            }
 
-                                            </td>
-                                        </tr>
-                                    }
-
+                                        </td>
+                                    </tr>
                                 }
+
+                            }
 
                             </tbody>
 
                         </table>
+                        </form>
                     </div>
                     <div class="add-row-table pt-5">
                         <h4 class="py-2 text-right px-2 w-100">مکمل</h4>
@@ -219,7 +222,7 @@
 
 </section>
 <input type="hidden" id="workoutConts" value="@((Model != null && Model.WorkoutRecords != null)? Model.WorkoutRecords.Count():0 )" />
-<input type="hidden" id="mealConts" value="@((Model != null && Model.MealRecords != null)? Model.MealRecords.Count():0 )" />
+<input type="hidden" id="mealCount" value="@((Model != null && Model.MealRecords != null)? Model.MealRecords.Count():0 )" />
 
 
 

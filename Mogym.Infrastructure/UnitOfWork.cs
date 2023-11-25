@@ -32,6 +32,7 @@ namespace Mogym.Infrastructure
             ExerciseVideoRepository = new ExerciseVideoRepository(_context);
             ExerciseSetRepository = new ExerciseSetRepository(_context);
             MealRepository = new MealRepository(_context);
+            IngridientRepository = new IngredientRepository(_context);
         }
 
 
@@ -50,6 +51,7 @@ namespace Mogym.Infrastructure
         public IExerciseVideoRepository ExerciseVideoRepository { get; }
         public IExerciseSetRepository ExerciseSetRepository { get; }
         public IMealRepository MealRepository { get; }
+        public IIngridientRepository IngridientRepository { get; }
 
         public void Dispose()
         {
