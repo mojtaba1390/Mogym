@@ -1,0 +1,41 @@
+﻿@using Mogym.Common
+@model Mogym.Application.Records.Suppliment.SupplimentRecord
+
+@{
+    ViewBag.Title = "ایجاد مکمل جدید";
+    Layout = "_Layout";
+}
+
+<section class="content">
+    <form asp-action="Create" method="post" class="container-fluid" id="form-create-suppliment">
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">ایجاد مکمل جدید</h3>
+                    </div>
+                    <div class="card-body py-5">
+                        <div class="form-group row">
+                            <label class="pt-1">عنوان</label>
+                            <input class="form-control" asp-for="Title" />
+                            <span class="text-danger" asp-validation-for="Title"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="form-actions-buttons col-md-6">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</section>

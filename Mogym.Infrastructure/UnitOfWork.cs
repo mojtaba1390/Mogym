@@ -34,6 +34,8 @@ namespace Mogym.Infrastructure
             MealRepository = new MealRepository(_context);
             IngridientRepository = new IngredientRepository(_context);
             MealIngridientRepository = new MealIngridientRepository(_context);
+            SupplimentRepository = new SupplimentRepository(_context);
+            SupplimentPlanRepository = new SupplimentPlanRepository(_context);
         }
 
 
@@ -54,6 +56,8 @@ namespace Mogym.Infrastructure
         public IMealRepository MealRepository { get; }
         public IIngridientRepository IngridientRepository { get; }
         public IMealIngridientRepository MealIngridientRepository { get; }
+        public ISupplimentRepository SupplimentRepository { get; }
+        public ISupplimentPlanRepository SupplimentPlanRepository { get; }
 
         public void Dispose()
         {
