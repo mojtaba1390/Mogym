@@ -67,8 +67,21 @@ namespace Mogym.Application.Services
 
                 if (newSets.Count>0)
                     _unitOfWork.ExerciseSetRepository.AddRang(newSets);
-                if(updatedSets.Count>0)
-                    _unitOfWork.ExerciseSetRepository.UpdateRange(updatedSets);
+
+
+                if (updatedSets.Count > 0)
+                {
+                    if (updatedSets.Count > 0)
+                    {
+                        List<ExerciseSet> updateList = new List<ExerciseSet>();
+                        foreach (var item in updatedSets)
+                        {
+                            var entity = _unitOfWork.ExerciseSetRepository.Where(x => x.Id == item.Id).First();
+                            updateList.Add(entity);
+                        }
+                        _unitOfWork.ExerciseSetRepository.UpdateRange(updatedSets);
+                    }
+                }
                 if (deletedSets.Count > 0)
                 {
                     List<ExerciseSet> deleteList=new List<ExerciseSet>();

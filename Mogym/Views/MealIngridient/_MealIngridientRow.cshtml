@@ -1,0 +1,57 @@
+﻿@using Mogym.Common
+@model Tuple<int,int>
+
+
+<tr class="attr form-group" id="@($"ingridient{Model.Item1}")">
+    <input type="hidden" name="@($"[{Model.Item1}].Id")" id="@($"z{Model.Item1}__Id")" value="0" />
+    <input type="hidden" name="@($"[{Model.Item1}].MealId")" value="@Model.Item2" />
+    
+    <td width="20%">
+        <select class="js-select-example form-select form-control" name="@($"[{Model.Item1}].IngridientId")" id="@($"z{Model.Item1}__IngridientId")"
+                aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.Ingridients">
+            <option value="@null"> انتخاب کنید</option>
+        </select>
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].IngridientId")" data-valmsg-replace="true"></span>
+    </td>
+
+
+    <td width="20%">
+        <input class="form-control" name="@($"[{Model.Item1}].Count")" id="@($"z{Model.Item1}__Count")"  />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].Count")" data-valmsg-replace="true"></span>
+    </td>
+    <td width="20%">
+        <select class="js-select-example form-select form-control" name="@($"[{Model.Item1}].Size")"
+                aria-label="Default select exampleFormControlSelect1">
+            <option value="-1"> اندازه را انتخاب کنید </option>
+            @foreach (EnumSize itm in Enum.GetValues(typeof(EnumSize)))
+            {
+                <option value="@((short)itm)">@itm.GetEnumDescription()</option>
+            }
+        </select>
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].Size")" data-valmsg-replace="true"></span>
+    </td>
+    <td width="20%">
+        <input class="form-control" name="@($"[{Model.Item1}].Amount")" id="@($"z{Model.Item1}__Amount")" />
+        <span class="field-validation-valid" data-valmsg-for="" name="@($"[{Model.Item1}].Amount")" data-valmsg-replace="true"></span>
+    </td>
+
+    <td width="20%">
+        <button class="btn btn-large tooltip" type="button" onclick="addMealIngridientRow(`@($"{Model.Item1 + 1}")`)">
+            <i class="fas fa-plus"></i>
+            <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+        </button>
+@*        <button class="btn remove mx-5 text-danger tooltip" type="button"
+                onclick="removeRow(`@($"ingridient{Model.Item1}")`, `@($"z{Model.Item1}__Id")`)">
+            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
+        </button>*@
+
+
+
+    </td>
+
+</tr>
+
+<script>
+    $('.js-select-example').select2();
+
+</script>

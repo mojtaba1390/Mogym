@@ -85,7 +85,54 @@ function editMeal(index, mealId) {
     });
 }
 
+function ingridientDetails(mealId) {
+    $.ajax({
+        url: "/MealIngridient/GetMealIngridient?mealId=" + mealId,
+        dataType: 'html',
+        success: function (data) {
+            $('#modal-ingridientDetails').html(data);
+        }
+    });
+}
 
+
+function addMealIngridientRow(row) {
+    $.ajax({
+        type: "POST",
+        url: "/MealIngridient/AddMealIngridientRow",
+        data: { "counter": row, "mealId": $("#mealId").val() },
+        success: function (response) {
+            $("#mealIngridientBody").append(response);
+            if ($('#mealIngridientBody tr.attr').length < 2) {
+                $('#mealIngridientBody .attr .remove').hide();
+            }
+            else {
+                $('#mealIngridientBody .attr .remove').show();
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
+function removeRow(id, idInput) {
+    //let p = $("#" + id).parent().attr('id')
+    $('#' + id + ' input#' + idInput).val(-1)
+
+    //$("#" + idInput).val(-1);
+    $("#" + id).hide();
+    //let lengthp = $('#' + p + ' ' + 'tr.attr').length;
+    //if (lengthp < 2) {
+    //    $('#' + p + ' ' + 'tr.attr').hide();
+    //} else {
+    //    $('#' + p + ' ' + 'tr.attr').show();
+    //}
+
+}
 
 $(function () {
 

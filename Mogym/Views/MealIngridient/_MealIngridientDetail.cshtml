@@ -1,0 +1,125 @@
+﻿@using Mogym.Common
+@model List<Mogym.Application.Records.MealIngridient.MealIngridientRecord>
+
+
+<input hidden id="mealId" value="@ViewBag.MealId" />
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">ست های تمرین</h3>
+                </div>
+                <form asp-controller="MealIngridient" asp-action="AddMealIngridients" id="mealIngridientForm">
+                    <div class="card-body py-5">
+                        <div class="mb-1">
+                            <div id="attributes-recruit-training" class="add-row-table pt-3">
+
+
+                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                    <thead>
+                                        <tr>
+                                            <th>نام ماده غذایی</th>
+                                            <th>تعداد</th>
+                                            <th>اندازه</th>
+                                            <th>مقدار(گرم)</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="approverRowsContainer" id="mealIngridientBody">
+                                        @if (Model is not null)
+                                        {
+                                            @for (var index = 0; index < Model.Count; index++)
+                                            {
+                                                <tr class="attr form-group" id="@($"ingridient{index}")">
+                                                    <input type="hidden" asp-for="@Model[index].MealId" />
+                                                    <input type="hidden" asp-for="@Model[index].Id" />
+
+                                                    <td width="20%">
+                                                        <select class="js-select-example form-select form-control" asp-for="@Model[index].IngridientId"
+                                                                aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.Ingridients">
+                                                            <option value="@null"> انتخاب کنید</option>
+                                                        </select>
+                                                        <span class="text-danger d-flex" asp-validation-for="@Model[index].IngridientId"></span>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <input class="form-control" asp-for="@Model[index].Count"  />
+                                                        <span asp-validation-for="@Model[index].Count" class="text-danger"></span>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <select class="form-select" style="width: 100%" asp-for="@Model[index].Size">
+                                                            <option value="-1"> اندازه را انتخاب کنید </option>
+                                                            @foreach (EnumSize itm in Enum.GetValues(typeof(EnumSize)))
+                                                            {
+                                                                <option value="@((short)itm)">@itm.GetEnumDescription()</option>
+                                                            }
+                                                        </select>
+                                                    </td>
+                                                    <td width="20%">
+                                                        <div class="d-flex">
+                                                            <input class="form-control" asp-for="@Model[index].Amount" />
+                                                            <span asp-validation-for="@Model[index].Amount" class="text-danger"></span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td width="20%">
+
+                                                            <button class="btn btn-large add text-success tooltip" type="button" onclick="addMealIngridientRow(`@($"{index + 1}")`)">
+                                                                <i class="fas fa-plus"></i>
+                                                                <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+                                                            </button>
+                                                        
+                                                        <button class="btn remove mx-5 text-danger tooltip" type="button"
+                                                                onclick="removeRow(`@($"ingridient{index}")`, `@($"z{index}__Id")`)">
+                                                            <i class="fas fa-times"></i> <span class="tooltiptext tooltip-top">حذف کردن</span>
+                                                        </button>
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col-md-9">
+                            </div>
+                            <div class="form-actions-buttons col-md-3">
+                                <input type="submit" value="ثبت" class="btn btn-success-card" />
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<input type="hidden" id="ingridientCounts" value="@(Model != null ? Model.Count():0 )" />
+
+<script src="~/js/Plan.js"></script>
+
+<script>
+
+    var ingridientCount = $("#ingridientCounts").val();
+
+    if (ingridientCount == 0)
+        addMealIngridientRow(0);
+
+
+</script>
