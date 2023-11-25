@@ -168,6 +168,7 @@ namespace Mogym.Application.Services
                     .AsNoTracking()
                     .Include(x => x.Workouts)
                     .Include(x=>x.Meals)
+                    .Include(x=>x.SupplimentPlans)
                     .FirstOrDefaultAsync();
                 return _mapper.Map<PlanDetailsRecord>(plans);
             }

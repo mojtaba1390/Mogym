@@ -1,14 +1,18 @@
 ﻿$(document).ready(function () {
 
 
-    workoutConts = $("#workoutConts").val();
-    mealCnt = $("#mealCount").val();
+    var workoutConts = $("#workoutConts").val();
+    var mealCnt = $("#mealCount").val();
+    var supplimentPlanCount = $("#supplimentPlanCount").val();
 
     if (workoutConts == 0)
         addWorkoutRow();
 
     if (mealCnt == 0)
         addMealRow();
+
+    if (supplimentPlanCount == 0)
+        addSupplimentPlanRow(0);
 
 
 
@@ -39,6 +43,23 @@ function addMealRow() {
         data: { "counter": mealCnt, "planId": $("#planId").val() },
         success: function (response) {
             $("#dietBody").append(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
+function addSupplimentPlanRow(row) {
+    $.ajax({
+        type: "POST",
+        url: "/SupplimentPlan/AddSupplimentPlanRow",
+        data: { "counter": row, "planId": $("#planId").val() },
+        success: function (response) {
+            $("#supplimentBody").append(response);
         },
         failure: function (response) {
             alert(response.responseText);
