@@ -115,4 +115,16 @@ namespace Mogym.Common
         [Description("بزرگ")]
         Big = 3
     }
+    public enum EnumScale
+    {
+        [EnumMember]
+        [Description("عدد")]
+        Count = 1,
+        [EnumMember]
+        [Description("گرم")]
+        Gram = 2,
+        [EnumMember]
+        [Description("اسکوپ")]
+        Scope = 3
+    }
 }
