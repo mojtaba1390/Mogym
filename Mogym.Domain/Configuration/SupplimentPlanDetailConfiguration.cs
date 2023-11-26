@@ -17,7 +17,15 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.Amount).HasColumnType("float").IsRequired();
             builder.Property(x=>x.Scale).HasColumnType("int").IsRequired();
 
+            builder.HasOne<Suppliment>(x => x.Suppliment_SupplimentPlanDetail)
+                .WithMany(x => x.SupplimentPlanDetails)
+                .HasForeignKey(x => x.SupplimentId)
+                .IsRequired();
 
+            builder.HasOne<SupplimentPlan>(x => x.SupplimentPlan_SupplimentPlanDetail)
+                .WithMany(x => x.SupplimentPlanDetails)
+                .HasForeignKey(x => x.SupplimentPlanId)
+                .IsRequired();
 
         }
     }
