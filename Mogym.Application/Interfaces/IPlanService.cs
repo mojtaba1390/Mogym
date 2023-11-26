@@ -18,5 +18,6 @@ namespace Mogym.Application.Interfaces
         Task ApprovePlan(int planId);
         Task<List<ApprovePlanRecord>?> GetApprovePlans();
         Task<PlanDetailsRecord> GetPlanDetails(int planId);
+        Task AddDescription(int planId, string description);
     }
 }

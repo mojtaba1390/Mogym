@@ -161,5 +161,21 @@ namespace Mogym.Controllers
             return View("NotFound");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddDescription(int planId,string description)
+        {
+            try
+            {
+                 await _planService.AddDescription(planId,description);
+                
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
     }
 }

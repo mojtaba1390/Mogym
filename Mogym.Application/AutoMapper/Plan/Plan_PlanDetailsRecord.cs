@@ -13,6 +13,7 @@ namespace Mogym.Application.AutoMapper.Plan
         {
             CreateMap<Domain.Entities.Plan, PlanDetailsRecord>()
                 .ForMember(x => x.PlanId, z => z.MapFrom(a => a.Id))
+                .ForMember(x=>x.Description,z=>z.MapFrom(a=>a.Description))
                 .ForMember(x => x.WorkoutRecords, z => z.MapFrom(a => a.Workouts))
                 .ForMember(x => x.MealRecords, z => z.MapFrom(a => a.Meals))
                 .ForMember(x => x.SupplimentPlanRecords, z => z.MapFrom(a => a.SupplimentPlans));

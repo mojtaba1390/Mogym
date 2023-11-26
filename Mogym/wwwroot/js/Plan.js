@@ -190,6 +190,26 @@ function removeRow(id, idInput) {
 
 }
 
+
+function addDescription() {
+    var planId = $("#planId").val();
+    var desc = $("#Description").val();
+    $.ajax({
+        type: "POST",
+        url: "/Plan/AddDescription",
+        data: { "planId": planId, "description": desc },
+        success: function (response) {
+            window.location.reload();
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
 $(function () {
 
     $('#workoutForm').on('submit', function () {

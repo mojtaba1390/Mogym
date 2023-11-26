@@ -179,5 +179,12 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task AddDescription(int planId, string description)
+        {
+            var plan = await _unitOfWork.PlanRepository.GetByIdAsync(planId);
+            plan.Description = description;
+            await _unitOfWork.PlanRepository.UpdateAsync(plan);
+        }
     }
 }
