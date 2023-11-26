@@ -13,7 +13,12 @@ namespace Mogym.Domain.Configuration
     {
         public void Configure(EntityTypeBuilder<SupplimentPlanDetail> builder)
         {
-            throw new NotImplementedException();
+            builder.ToTable("SupplimentPlanDetail");
+            builder.Property(x => x.Amount).HasColumnType("float").IsRequired();
+            builder.Property(x=>x.Scale).HasColumnType("int").IsRequired();
+
+
+
         }
     }
 }
