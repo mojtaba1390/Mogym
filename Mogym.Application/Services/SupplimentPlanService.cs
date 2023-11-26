@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mogym.Application.AutoMapper.SupplimentPlan;
 using Mogym.Application.Records.MealIngridient;
 using Mogym.Domain.Entities;
 using Newtonsoft.Json;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Infrastructure;
+using Mogym.Application.Records.SupplimentPlan;
 
 namespace Mogym.Application.Services
 {
@@ -30,7 +31,7 @@ namespace Mogym.Application.Services
         }
 
 
-        public  void AddOrUpdate(List<SupplimentPlanRecord> supplimentPlanRecords)
+        public  async Task AddOrUpdate(List<SupplimentPlanRecord> supplimentPlanRecords)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace Mogym.Application.Services
                 var supplimentPlans = _mapper.Map<List<SupplimentPlan>>(supplimentPlanRecords);
 
 
-                var supplimentPlansInserted = _unitOfWork.SupplimentPlanRepository.Find(x => x.PlanId == planId).ToList();
+                var supplimentPlansInserted = await _unitOfWork.SupplimentPlanRepository.Find(x => x.PlanId == planId).ToListAsync();
 
                 var newSupplimentPlanss = supplimentPlans.Where(x => x.Id == 0).ToList();
                 var updatedSupplimentPlans = supplimentPlans.Where(x => x.Id > 0).ToList();
@@ -54,7 +55,7 @@ namespace Mogym.Application.Services
                     List<SupplimentPlan> updateList = new List<SupplimentPlan>();
                     foreach (var item in updatedSupplimentPlans)
                     {
-                        var entity = _unitOfWork.SupplimentPlanRepository.Where(x => x.Id == item.Id).First();
+                        var entity = await _unitOfWork.SupplimentPlanRepository.Where(x => x.Id == item.Id).FirstAsync();
                         updateList.Add(entity);
                     }
                     _unitOfWork.SupplimentPlanRepository.UpdateRange(updateList);
@@ -65,7 +66,7 @@ namespace Mogym.Application.Services
                     List<SupplimentPlan> deleteList = new List<SupplimentPlan>();
                     foreach (var item in deletedsSupplimentPlans)
                     {
-                        var entity = _unitOfWork.SupplimentPlanRepository.Where(x => x.Id == item.Id).First();
+                        var entity =await _unitOfWork.SupplimentPlanRepository.Where(x => x.Id == item.Id).FirstAsync();
                         deleteList.Add(entity);
                     }
                     _unitOfWork.SupplimentPlanRepository.DeleteRange(deleteList);

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mogym.Application.AutoMapper.SupplimentPlan;
 using Mogym.Application.Records.Meal;
+using Mogym.Application.Records.SupplimentPlan;
 using Mogym.Application.Records.Workout;
 using Mogym.Domain.Entities;
 
@@ -17,6 +17,6 @@ namespace Mogym.Application.Records.Plan
 
         public List<WorkoutRecord> WorkoutRecords { get; init; }
         public List<MealRecord> MealRecords { get; init; }
-        public List<SupplimentPlanRecord> SupplimentPlans { get; init; }
+        public List<SupplimentPlanRecord> SupplimentPlanRecords { get; init; }
     }
 }

@@ -13,7 +13,7 @@ namespace Mogym.Domain.Entities
         {
             SupplimentPlanDetails = new HashSet<SupplimentPlanDetail>();
         }
-        public string Description { get; set; }
+        public string Title { get; set; }
 
         public int PlanId { get; set; }
 

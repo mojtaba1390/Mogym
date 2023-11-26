@@ -63,6 +63,7 @@ namespace Mogym.Application
             services.AddTransient<IMealIngridientService, MealIngridientService>();
             services.AddTransient<ISupplimentService, SupplimentService>();
             services.AddTransient<ISupplimentPlanService, SupplimentPlanService>();
+            services.AddTransient<ISupplimentPlanDetailService, SupplimentPlanDetailService>();
             #endregion
 
             return services;

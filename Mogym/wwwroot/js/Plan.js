@@ -12,7 +12,7 @@
         addMealRow();
 
     if (supplimentPlanCount == 0)
-        addSupplimentPlanRow(0);
+        addSupplimentPlanRow();
 
 
 
@@ -53,13 +53,15 @@ function addMealRow() {
     });
 }
 
-function addSupplimentPlanRow(row) {
+function addSupplimentPlanRow() {
+    var supplimentPlanCount = $("#supplimentPlanCount").val();
+
     $.ajax({
         type: "POST",
         url: "/SupplimentPlan/AddSupplimentPlanRow",
-        data: { "counter": row, "planId": $("#planId").val() },
+        data: { "counter": supplimentPlanCount, "planId": $("#planId").val() },
         success: function (response) {
-            $("#supplimentBody").append(response);
+            $("#supplimentPlanBody").append(response);
         },
         failure: function (response) {
             alert(response.responseText);
@@ -106,12 +108,23 @@ function editMeal(index, mealId) {
     });
 }
 
+
+
 function ingridientDetails(mealId) {
     $.ajax({
         url: "/MealIngridient/GetMealIngridient?mealId=" + mealId,
         dataType: 'html',
         success: function (data) {
             $('#modal-ingridientDetails').html(data);
+        }
+    });
+}
+function supplimentDetails(supplimentPlanId) {
+    $.ajax({
+        url: "/SupplimentPlanDetail/GetSupplimentPlanDetail?supplimentPlanId=" + supplimentPlanId,
+        dataType: 'html',
+        success: function (data) {
+            $('#modal-supplimentDetails').html(data);
         }
     });
 }
@@ -129,6 +142,28 @@ function addMealIngridientRow(row) {
             }
             else {
                 $('#mealIngridientBody .attr .remove').show();
+            }
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+function addSupplimentPlanDetailRow(row) {
+    $.ajax({
+        type: "POST",
+        url: "/SupplimentPlanDetail/AddSupplimentPlanDetailRow",
+        data: { "counter": row, "supplimentPlanId": $("#supplimentPlanId").val() },
+        success: function (response) {
+            $("#supplimentPlanDetailBody").append(response);
+            if ($('#supplimentPlanDetailBody tr.attr').length < 2) {
+                $('#supplimentPlanDetailBody .attr .remove').hide();
+            }
+            else {
+                $('#supplimentPlanDetailBody .attr .remove').show();
             }
         },
         failure: function (response) {

@@ -28,6 +28,7 @@ namespace Mogym.Infrastructure
         IMealIngridientRepository MealIngridientRepository { get; }
         ISupplimentRepository SupplimentRepository { get; }
         ISupplimentPlanRepository SupplimentPlanRepository { get; }
+        ISupplimentPlanDetailRepository SupplimentPlanDetailRepository { get; }
         
     }
 }

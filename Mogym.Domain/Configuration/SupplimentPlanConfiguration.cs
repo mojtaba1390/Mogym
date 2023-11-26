@@ -14,7 +14,7 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<SupplimentPlan> builder)
         {
             builder.ToTable("SupplimentPlan");
-            builder.Property(x=>x.Description).HasColumnType("nvarchar(100)").IsRequired();
+            builder.Property(x=>x.Title).HasColumnType("nvarchar(100)").IsRequired();
 
 
             builder.HasOne<Plan>(x => x.Plan_SupplimentPlan)

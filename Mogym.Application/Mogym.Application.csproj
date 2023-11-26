@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Records\SupplimentPlan\" />
     <Folder Include="Validation\Question\" />
   </ItemGroup>
 
