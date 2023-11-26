@@ -9,14 +9,17 @@ namespace Mogym.Domain.Entities
 {
     public class SupplimentPlan:BaseEntity
     {
-        public int SupplimentId { get; set; }
-
-        public double Amount { get; set; }
-        public EnumScale Scale { get; set; }
+        public SupplimentPlan()
+        {
+            SupplimentPlanDetails = new HashSet<SupplimentPlanDetail>();
+        }
+        public string Description { get; set; }
 
         public int PlanId { get; set; }
 
-        public Suppliment Suppliment_SupplimentPlan { get; set; }
         public Plan Plan_SupplimentPlan { get; set; }
+
+
+        public ICollection<SupplimentPlanDetail> SupplimentPlanDetails { get; set;}
     }
 }

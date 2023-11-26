@@ -10,13 +10,13 @@ namespace Mogym.Domain.Entities
     {
         public Suppliment()
         {
-            SupplimentPlans = new HashSet<SupplimentPlan>();
+            SupplimentPlanDetails = new HashSet<SupplimentPlanDetail>();
         }
         public string Title { get; set; }
 
 
 
 
-        public ICollection<SupplimentPlan> SupplimentPlans { get; set; }
+        public ICollection<SupplimentPlanDetail> SupplimentPlanDetails { get; set; }
     }
 }

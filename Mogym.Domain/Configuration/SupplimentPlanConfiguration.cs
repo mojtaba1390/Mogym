@@ -14,14 +14,8 @@ namespace Mogym.Domain.Configuration
         public void Configure(EntityTypeBuilder<SupplimentPlan> builder)
         {
             builder.ToTable("SupplimentPlan");
-            builder.Property(x=>x.Amount).HasColumnType("float").IsRequired();
-            builder.Property(x => x.Scale).HasColumnType("int").IsRequired();
+            builder.Property(x=>x.Description).HasColumnType("nvarchar(100)").IsRequired();
 
-
-            builder.HasOne<Suppliment>(x => x.Suppliment_SupplimentPlan)
-                .WithMany(x => x.SupplimentPlans)
-                .HasForeignKey(x => x.SupplimentId)
-                .IsRequired();
 
             builder.HasOne<Plan>(x => x.Plan_SupplimentPlan)
                 .WithMany(x => x.SupplimentPlans)
