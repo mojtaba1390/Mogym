@@ -98,5 +98,22 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<bool> IsAnySupplimentDetailExistBySupplimentPlanId(int id)
+        {
+            try
+            {
+                return await _unitOfWork.SupplimentPlanDetailRepository.Find(x => x.SupplimentPlanId == id).AnyAsync();
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"IsAnySupplimentDetailExistBySupplimentPlanId in SupplimentPlanDetailService,id=" + id;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+
     }
 }

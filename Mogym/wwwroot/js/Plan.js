@@ -210,6 +210,24 @@ function addDescription() {
     });
 }
 
+
+function deleteWorkout(id) {
+    $.ajax({
+        type: "POST",
+        url: "/Workout/Delete",
+        data: { "id": id },
+        success: function (response) {
+            $('#modal-deleteRow').html(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+
 $(function () {
 
     $('#workoutForm').on('submit', function () {

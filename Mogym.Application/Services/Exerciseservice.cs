@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Records.Workout;
 using Mogym.Application.Records.ExerciseVideo;
 using Mogym.Domain.Entities;
@@ -66,6 +67,21 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"Delete in ExerciseService,id=" + id;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        public async Task<bool> IsAnyExcerciseExistByWorkoutId(int id)
+        {
+            try
+            {
+                return await _unitOfWork.ExerciseRepository.Find(x => x.WorkoutId == id).AnyAsync();
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"IsAnyExcerciseExistByWorkoutId in ExerciseService,id=" + id;
                 _logger.LogError(message, ex);
                 throw ex;
             }

@@ -62,13 +62,25 @@ namespace Mogym.Application.Services
             }
             catch (Exception ex)
             {
-                var message = $"Edit in WorkoutService,id=" + id;
+                var message = $"Edit in MealService,id=" + id;
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
         }
 
-
-
+        public async Task Delete(int deleteId)
+        {
+            try
+            {
+                var entity = await _unitOfWork.MealRepository.GetByIdAsync(deleteId);
+                _unitOfWork.MealRepository.Delete(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Delete in MealService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

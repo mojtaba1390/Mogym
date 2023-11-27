@@ -11,5 +11,6 @@ namespace Mogym.Application.Interfaces
     {
         Task<List<MealIngridientRecord>> GetMealIngridients(int mealId);
         void AddOrUpdateSets(List<MealIngridientRecord> mealIngridientRecords);
+        Task<bool> IsAnyIngridientExistByMealId(int id);
     }
 }

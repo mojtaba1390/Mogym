@@ -11,5 +11,6 @@ namespace Mogym.Application.Interfaces
     {
         Task AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords);
         Task Delete(int id);
+        Task<bool> IsAnyExcerciseExistByWorkoutId(int id);
     }
 }

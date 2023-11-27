@@ -99,5 +99,20 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task Delete(int deleteId)
+        {
+            try
+            {
+                var entity = await _unitOfWork.WorkoutRepository.GetByIdAsync(deleteId);
+                 _unitOfWork.WorkoutRepository.Delete(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Delete in WorkoutService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

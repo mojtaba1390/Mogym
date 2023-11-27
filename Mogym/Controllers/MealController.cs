@@ -11,9 +11,11 @@ namespace Mogym.Controllers
     public class MealController : Controller
     {
         private readonly IMealService _mealService;
-        public MealController(IMealService mealService)
+        private readonly IMealIngridientService _mealIngridientService;
+        public MealController(IMealService mealService, IMealIngridientService mealIngridientService)
         {
-            _mealService=mealService;
+            _mealService = mealService;
+            _mealIngridientService = mealIngridientService;
         }
 
 
@@ -56,6 +58,40 @@ namespace Mogym.Controllers
             catch (Exception ex)
             {
                 TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+            return View("NotFound");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+
+                bool isAnyIngridientExist = await _mealIngridientService.IsAnyIngridientExistByMealId(id);
+                return PartialView("_DeleteConfirmation", new Tuple<bool, int, string>(isAnyIngridientExist, id, "Meal"));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(int deleteId)
+        {
+            try
+            {
+
+                await _mealService.Delete(deleteId);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
             }
             return View("NotFound");
         }

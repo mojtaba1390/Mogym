@@ -84,5 +84,20 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task Delete(int deleteId)
+        {
+            try
+            {
+                var entity = await _unitOfWork.SupplimentPlanRepository.GetByIdAsync(deleteId);
+                _unitOfWork.SupplimentPlanRepository.Delete(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Delete in SupplimentPlanService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

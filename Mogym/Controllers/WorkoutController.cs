@@ -11,10 +11,12 @@ namespace Mogym.Controllers
     {
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseVideoService _exerciseVideoService;
-        public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService)
+        private readonly IExerciseservice _exerciseservice;
+        public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService,IExerciseservice exerciseservice)
         {
             _workoutService = workoutService;
             _exerciseVideoService = exerciseVideoService;
+            _exerciseservice = exerciseservice;
         }
         public IActionResult Index()
         {
@@ -58,10 +60,7 @@ namespace Mogym.Controllers
             }
             return View("NotFound");
         }
-        public async Task<IActionResult> Delete(int id)
-        {
-            return RedirectToAction();
-        }
+
 
         public async Task<IActionResult> WorkoutDetail(int id)
         {
@@ -77,6 +76,40 @@ namespace Mogym.Controllers
                 ViewBag.WorkoutId=id;
 
                 return View(workoutDetails);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+
+                bool isAnyExerciseExist = await _exerciseservice.IsAnyExcerciseExistByWorkoutId(id);
+                return PartialView("_DeleteConfirmation",new Tuple<bool, int, string>(isAnyExerciseExist,id,"Workout"));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmation(int deleteId)
+        {
+            try
+            {
+
+                 await _workoutService.Delete(deleteId);
             }
             catch (Exception e)
             {

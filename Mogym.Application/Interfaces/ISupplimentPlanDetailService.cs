@@ -12,5 +12,6 @@ namespace Mogym.Application.Interfaces
     {
         Task<List<SupplimentPlanDetailRecord>> GetSupplimentPlanDetail(int supplimentPlanId);
         void AddOrUpdateSets(List<SupplimentPlanDetailRecord> supplimentPlanDetailRecords);
+        Task<bool> IsAnySupplimentDetailExistBySupplimentPlanId(int id);
     }
 }

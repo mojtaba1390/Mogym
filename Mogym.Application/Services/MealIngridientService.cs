@@ -101,5 +101,20 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<bool> IsAnyIngridientExistByMealId(int id)
+        {
+            try
+            {
+                return await _unitOfWork.MealIngridientRepository.Find(x => x.MealId == id).AnyAsync();
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"IsAnyIngridientExistByMealId in MealIngridientService,id=" + id;
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
     }
 }

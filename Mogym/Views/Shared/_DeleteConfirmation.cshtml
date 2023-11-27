@@ -1,0 +1,29 @@
+﻿@model Tuple<bool,int,string>
+
+
+<form asp-controller="@Model.Item3" asp-action="DeleteConfirmation" onsubmit="window.location.reload();">
+    <input hidden id="deleteId" name="deleteId" value="@Model.Item2" />
+    <div class="card-body py-5">
+        <div class="mb-1">
+            @if (Model.Item1)
+            {
+                <p style="color:red">رکورد انتخابی دارای جزئیات می باشد و در صورت حذف، تمامی اطلاعات مربوط به آن حذف خواهد شد.آیا ادامه می دهید؟</p>
+            }
+            else
+            {
+                <p style="color:red">آیا از حذف این رکورد اطمینان دارید؟</p>
+            }
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <div class="form-group row">
+            <div class="col-md-9">
+            </div>
+            <div class="form-actions-buttons col-md-3">
+                <input type="submit" value="تائید حذف" class="btn btn-success-card"/>
+            </div>
+        </div>
+    </div>
+
+</form>

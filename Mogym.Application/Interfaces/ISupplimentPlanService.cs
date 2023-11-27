@@ -10,5 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface ISupplimentPlanService
     {
         Task AddOrUpdate(List<SupplimentPlanRecord> supplimentPlanRecords);
+        Task Delete(int deleteId);
     }
 }
