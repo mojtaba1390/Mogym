@@ -2,7 +2,6 @@
 
 @{
     Layout = "_Layout";
-    ViewData["title"] = "برنامه های پرداخت شده";
 }
 
 
@@ -17,84 +16,125 @@
                 <div class="card-body py-5">
                     <div class="mb-1">
                         <div id="attributes-recruit-training" class="add-row-table pt-3">
-                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
-                                    <thead>
-                                        <tr>
-                                            <th>نام حرکت</th>
-                                            <th>حرکت سوپر ست</th>
-                                            <th>عملیات</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="approverRowsContainer" id="exerciseBody">
-                                        @if (Model is not null)
+                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                @{
+                                    foreach (var workout in Model)
+                                    {
+                                            <thead>
+                                                <tr style="background-color: aliceblue;text-align: center" >
+                                                    <th>@workout.Title</th>
+                                                </tr>
+                                            </thead>
+                                        var superSetIds = workout.SentExerciseRecords
+                                        .Where(x => x.SuperSetId is not null)
+                                        .Select(x => x.SuperSetId).ToList();
+
+                                            @foreach (var exercise in workout.SentExerciseRecords)
                                         {
-                                            @for (var index = 0; index < Model.Count; index++)
+                                            if (exercise.SuperSetId is null & !superSetIds.Contains(exercise.Id))
                                             {
-@*                                                <tr class="attr form-group">
-                                                    <input type="hidden" asp-for="@Model[index].WorkoutId" />
-                                                    <input type="hidden" asp-for="@Model[index].Id" />
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <select class="js-select-example form-select form-control" asp-for="@Model[index].ExerciseVideoId"
-                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.ExersiceVideo">
-                                                                <option value="@null"> انتخاب کنید</option>
-                                                            </select>
-                                                            <span class="text-danger d-flex" asp-validation-for="@Model[index].ExerciseVideoId"></span>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
-                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
-                                                                <option value="@null"> انتخاب کنید</option>
-                                                            </select>
-                                                            <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
-                                                        </div>
-                                                    </td>
-                                                    <td class="d-flex border-0">
-                                                        @{
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
-                                                            </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button class="btn btn-primary" type="submit">
-                                                                    ویرایش تمرین این سطر
-                                                                </button>
-                                                            </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
-                                                            </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id')">
-                                                                    حذف
-                                                                </button>
-                                                            </div>
-                                                            if (index == Model.Count - 1)
-                                                            {
-                                                                <div class="form-group" style="margin: 0px 10px">
-
-                                                                    <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseRow()">
-                                                                        <i class="fas fa-plus"></i>
-
-                                                                        <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                                    </button>
-                                                                </div>
-                                                            }
+                                                    <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>@exercise.ExerciseTitle</th>
+                                                                <th>ویدئو:<a>@exercise.ExerciseFileName</a></th>
+                                                                <th></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>وزن</th>
+                                                                <th>تعداد</th>
+                                                                <th>زمان</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="approverRowsContainer" id="exerciseBody">
+                                                            @foreach (var set in exercise.SentExerciseSetRecords)
+                                                        {
+                                                                <tr class="attr form-group">
+                                                                    <td width="20%">
+                                                                        @set.Weight
+                                                                    </td>
+                                                                    <td width="20%">
+                                                                        @set.Count
+                                                                    </td>
+                                                                    <td width="20%">
+                                                                        @set.Minute : @set.Second
+                                                                    </td>
+                                                                </tr>
                                                         }
 
-                                                    </td>
+                                                        </tbody>
+                                                    </table>
+                                            }
+                                            else if (exercise.SuperSetId is not null)
+                                            {
+                                                var superSet = workout.SentExerciseRecords.Where(x => x.Id == exercise.SuperSetId).First();
+                                                    <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                        <thead>
+                                                        <tr style="background-color:ivory;text-align: center">
+                                                            سوپر ست
+                                                            </tr>
+                                                            <tr style="text-align: center;background-color: white">
+                                                                <th>@exercise.ExerciseTitle</th>
+                                                                <th>ویدئو:<a>@exercise.ExerciseFileName</a></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        <tr style="text-align: center;background-color: bisque">
+                                                                <th>@superSet.ExerciseTitle</th>
+                                                                <th>ویدئو:<a>@superSet.ExerciseFileName</a></th>
+                                                                <th></th>
+                                                            </tr>
+                                                        <tr style="text-align: center">
+                                                                <th>وزن</th>
+                                                                <th>تعداد</th>
+                                                                <th>زمان</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="approverRowsContainer" id="exerciseBody">
+                                                            @{
+                                                            var maxCount = Math.Max(exercise.SentExerciseSetRecords.Count, superSet.SentExerciseSetRecords.Count);
 
-                                                </tr>
-*@
+                                                            for (int i = 0; i < maxCount; i++)
+                                                            {
+                                                                <tr class="attr form-group" style="text-align: center">
+                                                                            <td width="20%">
+                                                                                @(exercise.SentExerciseSetRecords.Count>i ?
+                                                                            exercise.SentExerciseSetRecords[i].Weight:0)
+                                                                            </td>
+                                                                    <td width="20%" style="text-align: center">
+                                                                                @(exercise.SentExerciseSetRecords.Count > i ?
+                                                                            exercise.SentExerciseSetRecords[i].Count : 0)
+                                                                            </td>
+                                                                    <td width="20%" style="text-align: center">
+                                                                                @(exercise.SentExerciseSetRecords.Count > i ?
+                                                                            exercise.SentExerciseSetRecords[i].Minute + ":" + exercise.SentExerciseSetRecords[i].Second : 0)
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="attr form-group" style="background-color: bisque">
+                                                                    <td width="20%" style="text-align: center">
+                                                                                @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                            superSet.SentExerciseSetRecords[i].Weight:0)
+                                                                            </td>
+                                                                            <td width="20%" style="text-align: center">
+                                                                                @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                            superSet.SentExerciseSetRecords[i].Count : 0)
+                                                                            </td>
+                                                                    <td width="20%" style="text-align: center">
+                                                                                @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                    superSet.SentExerciseSetRecords[i].Minute + ":" + superSet.SentExerciseSetRecords[i].Second : 0)
+                                                                            </td>
+                                                                        </tr>
+                                                            }
+                                                            }
 
+
+                                                        </tbody>
+                                                    </table>
                                             }
                                         }
+                                    }
+                                }
 
-
-                                    </tbody>
-                                </table>
+                            </table>
                         </div>
 
                     </div>
@@ -105,7 +145,7 @@
                         <div class="col-md-9">
                         </div>
                         <div class="form-actions-buttons col-md-3">
-                           <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                            <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
                         </div>
                     </div>
                 </div>

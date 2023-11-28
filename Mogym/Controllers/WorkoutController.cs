@@ -126,7 +126,7 @@ namespace Mogym.Controllers
             try
             {
                 var sentWorkoutDetail = await _workoutService.GetSentWorkoutDetail(planId);
-                return View();
+                return View(sentWorkoutDetail);
             }
             catch (Exception e)
             {
