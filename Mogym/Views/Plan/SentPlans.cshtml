@@ -1,8 +1,8 @@
 ﻿@using Mogym.Common
-@model List<Mogym.Application.Records.Plan.ApprovePlanRecord>
+@model List<Mogym.Application.Records.Plan.SentPlanRecord>
 @{
     Layout = "_Layout";
-    ViewData["title"] = "برنامه های تائید شده";
+    ViewData["title"] = "برنامه های ارسال شده";
 }
 
 <style>
@@ -12,13 +12,14 @@
         padding: .5rem 1rem;
         color: #fff;
     }
+
     a:link {
         color: #fff !important
     }
 
-        a.btn:hover {
-            border-radius: .25rem;
-        }
+    a.btn:hover {
+        border-radius: .25rem;
+    }
 </style>
 
 <section class="content">
@@ -29,12 +30,13 @@
                 <div class="">
                     <div class="card-body mb-50">
 
-                        <table id="approvePlan" class="table table-bordered" style="width:100%">
+                        <table id="sentPlan" class="table table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>نام ورزشکار</th>
                                     <th>تاریخ ثبت </th>
                                     <th>وضعیت</th>
+                                    <th>توضیحات تکمیلی برنامه</th>
                                     <th>عملیات</th>
                                 </tr>
                             </thead>
@@ -46,9 +48,11 @@
                                         <td>@itm.AthletName</td>
                                         <td>@itm.InsertDate.GetPersianDateDetail()</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
+                                        <td>@itm.Description</td>
                                         <td>
-                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="PlanDetails">جزئیات برنامه</a>
-                                            <a class="btn btn-success" asp-route-planId="@itm.Id" asp-action="SendPlan">ارسال برنامه</a>
+                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
+                                            @*  <a class="btn btn-success" asp-route-planId="@itm.Id" asp-action="SentDietDetail">رژیم غذایی</a>
+                                            <a class="btn btn-info" asp-route-planId="@itm.Id" asp-action="SentSupplimentDetail">مکمل</a>*@
 
 
                                         </td>
@@ -90,7 +94,7 @@
         (function () {
 
 
-            $("#approvePlan").DataTable({
+            $("#sentPlan").DataTable({
                 dom: 'Bfrtip',
                 buttons: [
                 ],

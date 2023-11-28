@@ -177,5 +177,44 @@ namespace Mogym.Controllers
             return View("NotFound");
         }
 
+
+
+        public async Task<IActionResult> SendPlan(int planId)
+        {
+            try
+            {
+                await _planService.SendPlan(planId);
+                return RedirectToAction(nameof(PaidPlans));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+
+        public async Task<IActionResult> SentPlans()
+        {
+            try
+            {
+                var planRecords = await _planService.GetSentPlans();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+
+
+
+
+
+
     }
 }

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Mogym.Application.Interfaces;
+using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Workout;
+using Mogym.Application.Services;
 
 namespace Mogym.Controllers
 {
@@ -110,6 +112,21 @@ namespace Mogym.Controllers
             {
 
                  await _workoutService.Delete(deleteId);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+        public async Task<IActionResult> SentWorkoutDetail(int planId)
+        {
+            try
+            {
+                var sentWorkoutDetail = await _workoutService.GetSentWorkoutDetail(planId);
+                return View();
             }
             catch (Exception e)
             {

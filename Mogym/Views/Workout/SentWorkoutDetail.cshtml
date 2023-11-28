@@ -1,0 +1,116 @@
+﻿@model List<Mogym.Application.Records.Workout.SentWorkoutRecord>
+
+@{
+    Layout = "_Layout";
+    ViewData["title"] = "برنامه های پرداخت شده";
+}
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">حرکات تمرینی</h3>
+                </div>
+                <div class="card-body py-5">
+                    <div class="mb-1">
+                        <div id="attributes-recruit-training" class="add-row-table pt-3">
+                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                    <thead>
+                                        <tr>
+                                            <th>نام حرکت</th>
+                                            <th>حرکت سوپر ست</th>
+                                            <th>عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="approverRowsContainer" id="exerciseBody">
+                                        @if (Model is not null)
+                                        {
+                                            @for (var index = 0; index < Model.Count; index++)
+                                            {
+@*                                                <tr class="attr form-group">
+                                                    <input type="hidden" asp-for="@Model[index].WorkoutId" />
+                                                    <input type="hidden" asp-for="@Model[index].Id" />
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="js-select-example form-select form-control" asp-for="@Model[index].ExerciseVideoId"
+                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="ViewBag.ExersiceVideo">
+                                                                <option value="@null"> انتخاب کنید</option>
+                                                            </select>
+                                                            <span class="text-danger d-flex" asp-validation-for="@Model[index].ExerciseVideoId"></span>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
+                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
+                                                                <option value="@null"> انتخاب کنید</option>
+                                                            </select>
+                                                            <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="d-flex border-0">
+                                                        @{
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
+                                                            </div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    ویرایش تمرین این سطر
+                                                                </button>
+                                                            </div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
+                                                            </div>
+                                                            <div class="form-group" style="margin: 0px 10px">
+                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id')">
+                                                                    حذف
+                                                                </button>
+                                                            </div>
+                                                            if (index == Model.Count - 1)
+                                                            {
+                                                                <div class="form-group" style="margin: 0px 10px">
+
+                                                                    <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseRow()">
+                                                                        <i class="fas fa-plus"></i>
+
+                                                                        <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
+
+                                                                    </button>
+                                                                </div>
+                                                            }
+                                                        }
+
+                                                    </td>
+
+                                                </tr>
+*@
+
+                                            }
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                        </div>
+                        <div class="form-actions-buttons col-md-3">
+                           <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

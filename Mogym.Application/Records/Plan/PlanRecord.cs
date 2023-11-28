@@ -11,6 +11,7 @@ namespace Mogym.Application.Records.Plan
     {
         public int? Id { get; init; }
         public string TrainerName { get; init; }
+        public string? Description { get; init; }
         public EnumPlanStatus PlanStatus { get; init; }
         public DateTime InsertDate { get; init; }
 

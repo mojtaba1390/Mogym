@@ -16,5 +16,6 @@ namespace Mogym.Application.Interfaces
         Task<List<SuperSetRecord>> GetSuperSetExercises(int id);
         Task Edit(int id, string title);
         Task Delete(int deleteId);
+        Task<List<SentWorkoutRecord>> GetSentWorkoutDetail(int planId);
     }
 }

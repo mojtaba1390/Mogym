@@ -114,5 +114,26 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<List<SentWorkoutRecord>> GetSentWorkoutDetail(int planId)
+        {
+            try
+            {
+                var workouts = await _unitOfWork.WorkoutRepository.Find(x => x.PlanId == planId)
+                    .Include(x => x.Exercises)
+                    .ThenInclude(x => x.ExerciseVideo_Exercise)
+                    .Include(x => x.Exercises)
+                    .ThenInclude(x => x.ExerciseSets).ToListAsync();
+
+                return _mapper.Map<List<SentWorkoutRecord>>(workouts);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetSentWorkoutDetail in WorkoutService,id=" + planId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

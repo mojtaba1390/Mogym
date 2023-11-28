@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
+using Mogym.Application.Records.Workout;
 
 namespace Mogym.Application.Interfaces
 {
@@ -19,5 +20,7 @@ namespace Mogym.Application.Interfaces
         Task<List<ApprovePlanRecord>?> GetApprovePlans();
         Task<PlanDetailsRecord> GetPlanDetails(int planId);
         Task AddDescription(int planId, string description);
+        Task SendPlan(int planId);
+        Task<List<SentPlanRecord>?> GetSentPlans();
     }
 }

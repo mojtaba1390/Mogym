@@ -11,6 +11,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
+using Mogym.Application.Records.Workout;
 using Mogym.Common;
 using Mogym.Infrastructure;
 
@@ -186,5 +187,44 @@ namespace Mogym.Application.Services
             plan.Description = description;
             await _unitOfWork.PlanRepository.UpdateAsync(plan);
         }
+
+        public async Task SendPlan(int planId)
+        {
+            try
+            {
+                var plan = _unitOfWork.PlanRepository.GetById(planId);
+                plan.PlanStatus = EnumPlanStatus.Sent;
+                await _unitOfWork.PlanRepository.UpdateAsync(plan);
+            }
+            catch (Exception ex)
+            {
+                var message = $"SendPlan in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<SentPlanRecord>?> GetSentPlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.TrainerId == trainer.Id && x.PlanStatus == EnumPlanStatus.Sent)
+                    .AsNoTracking()
+                    .Include(x => x.User_Plan)
+                    .ToListAsync();
+                return _mapper.Map<List<SentPlanRecord>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetSentPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+
     }
 }
