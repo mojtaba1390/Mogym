@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Mogym.Application.Records.Meal;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Infrastructure;
 using Mogym.Application.Records.Workout;
@@ -78,6 +79,24 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"Delete in MealService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<SentMealRecord>> GetSentDietDetail(int planId)
+        {
+            try
+            {
+                var meals =await  _unitOfWork.MealRepository.Find(x => x.PlanId == planId)
+                    .Include(x => x.MealIngridients)
+                    .ThenInclude(x => x.Ingredient_MealIngridient)
+                    .ToListAsync();
+                return _mapper.Map<List<SentMealRecord>>(meals);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetSentDietDetail in MealService,id=" + planId;
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }

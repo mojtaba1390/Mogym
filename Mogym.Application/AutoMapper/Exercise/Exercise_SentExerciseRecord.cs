@@ -24,9 +24,9 @@ namespace Mogym.Application.AutoMapper.Exercise
                         a => a.ExerciseVideo_Exercise != null ? a.ExerciseVideo_Exercise.Title : String.Empty))
                 .ForMember(x => x.SuperSetId,
                     z => z.MapFrom(a => a.SuperSetId))
-                .ForMember(x => x.ExerciseFileName,
+                .ForMember(x => x.ExerciseVideoId,
                     z => z.MapFrom(a =>
-                        a.Exercise_Exercise != null ? a.Exercise_Exercise.ExerciseVideo_Exercise.FileName : String.Empty))
+                        a.ExerciseVideoId))
                 .ForMember(x=>x.SentExerciseSetRecords,
                     z=>z.MapFrom(a=>a.ExerciseSets));
 

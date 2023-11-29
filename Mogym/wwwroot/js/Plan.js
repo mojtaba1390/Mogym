@@ -19,7 +19,7 @@
 })
 
 function addWorkoutRow() {
-    workoutConts = $("#mealCount").val();
+    workoutConts = $("#workoutConts").val();
     $.ajax({
         type: "POST",
         url: "/Workout/AddWorkoutRow",

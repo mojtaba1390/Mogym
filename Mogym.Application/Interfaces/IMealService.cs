@@ -12,5 +12,6 @@ namespace Mogym.Application.Interfaces
         Task AddOrUpdate(List<MealRecord> mealRecords);
         Task Edit(int id, string title);
         Task Delete(int deleteId);
+        Task<List<SentMealRecord>> GetSentDietDetail(int planId);
     }
 }

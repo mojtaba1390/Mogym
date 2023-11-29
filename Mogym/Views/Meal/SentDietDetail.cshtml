@@ -1,0 +1,86 @@
+﻿@model List<Mogym.Application.Records.Meal.SentMealRecord>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">رژیم غذایی</h3>
+                </div>
+                <div class="card-body py-5">
+                    <div class="mb-1">
+                        <div id="attributes-recruit-training" class="add-row-table pt-3">
+                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                @{
+                                    foreach (var meal in Model)
+                                    {
+                                        <table class="table attr-training-request col-12  trainingCourse_employment  p-0 ">
+
+                                            <thead>
+                                                <tr style="background-color:#f56c6c;text-align: center">
+                                                    <th>@meal.Title</th>
+                                                </tr>
+                                            </thead>
+                                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                <thead>
+                                                    <tr style="text-align: center">
+                                                        <th>نام ماده غذایی</th>
+                                                        <th>تعداد</th>
+                                                        <th>اندازه</th>
+                                                        <th>مقدار(گرم)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="approverRowsContainer" id="exerciseBody">
+
+                                                    @foreach (var mealIngridient in meal.MealIngridients)
+                                                    {
+                                                        <tr class="attr form-group" style="text-align: center">
+                                                            <td width="30%">
+                                                                @mealIngridient.IngridientTitle
+                                                            </td>
+                                                            <td width="20%">
+                                                                @mealIngridient.Count
+                                                            </td>
+                                                            <td width="20%">
+                                                                @mealIngridient.Size
+                                                            </td>
+                                                            <td width="20%">
+                                                                @mealIngridient.Amount
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </table>
+                                    }
+                                }
+
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                        </div>
+                        <div class="form-actions-buttons col-md-3">
+                            <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

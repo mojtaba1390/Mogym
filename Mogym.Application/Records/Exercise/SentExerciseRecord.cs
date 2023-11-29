@@ -14,7 +14,7 @@ namespace Mogym.Application.Records.Exercise
         public int WorkoutId { get; init; }
         public string ExerciseTitle { get; init; }
         public int ExerciseId { get; init; }
-        public string? ExerciseFileName { get; init; }
+        public int ExerciseVideoId { get; init; }
         public int? SuperSetId { get; init; }
         public List<SentExerciseSetRecord> SentExerciseSetRecords{ get; init; }
     }
