@@ -52,7 +52,7 @@
                                         <td>
                                             <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
                                             <a class="btn btn-success" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
-                                           @* <a class="btn btn-info" asp-route-planId="@itm.Id" asp-action="SentSupplimentDetail">مکمل</a>*@
+                                           <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan"  asp-action="SentSupplimentDetail">مکمل</a>
 
 
                                         </td>

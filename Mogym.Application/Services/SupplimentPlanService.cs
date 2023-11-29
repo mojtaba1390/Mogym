@@ -11,6 +11,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Records.Suppliment;
 using Mogym.Infrastructure;
 using Mogym.Application.Records.SupplimentPlan;
 
@@ -95,6 +96,25 @@ namespace Mogym.Application.Services
             catch (Exception ex)
             {
                 var message = $"Delete in SupplimentPlanService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<SentSupplimentPlanRecord>> GetSentSupplimentDetail(int planId)
+        {
+            try
+            {
+                var supplimentPlans =await  _unitOfWork.SupplimentPlanRepository.Find(x => x.PlanId == planId)
+                    .Include(x => x.SupplimentPlanDetails)
+                    .ThenInclude(x => x.Suppliment_SupplimentPlanDetail)
+                    .ToListAsync();
+
+                return _mapper.Map<List<SentSupplimentPlanRecord>>(supplimentPlans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetSentSupplimentDetail in SupplimentPlanService,id=" + planId;
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }

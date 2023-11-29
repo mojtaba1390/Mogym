@@ -1,0 +1,83 @@
+﻿@model List<Mogym.Application.Records.SupplimentPlan.SentSupplimentPlanRecord>
+
+    
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">مکمل</h3>
+                </div>
+                <div class="card-body py-5">
+                    <div class="mb-1">
+                        <div id="attributes-recruit-training" class="add-row-table pt-3">
+                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                @{
+                                    foreach (var supplimentPlan in Model)
+                                    {
+                                        <table class="table attr-training-request col-12  trainingCourse_employment  p-0 ">
+
+                                            <thead>
+                                                <tr style="background-color:#f56c6c;text-align: center">
+                                                    <th>@supplimentPlan.Title</th>
+                                                </tr>
+                                            </thead>
+                                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                <thead>
+                                                    <tr style="text-align: center">
+                                                        <th>نام مکمل</th>
+                                                        <th>مقدار</th>
+                                                        <th>واحد اندازه گیری</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="approverRowsContainer" id="exerciseBody">
+
+                                                    @foreach (var suppliment in supplimentPlan.SentSupplimentRecords)
+                                                    {
+                                                        <tr class="attr form-group" style="text-align: center">
+                                                            <td width="30%">
+                                                                @suppliment.SupplimentTitle
+                                                            </td>
+                                                            <td width="20%">
+                                                                @suppliment.Amount
+                                                            </td>
+                                                            <td width="20%">
+                                                                @suppliment.Scale
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </table>
+                                    }
+                                }
+
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                        </div>
+                        <div class="form-actions-buttons col-md-3">
+                            <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

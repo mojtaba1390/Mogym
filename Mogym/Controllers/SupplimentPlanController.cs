@@ -78,5 +78,24 @@ namespace Mogym.Controllers
             return View("NotFound");
         }
 
+
+        public async Task<IActionResult> SentSupplimentDetail(int planId)
+        {
+            try
+            {
+                var sentSupplimentDetail = await _supplimentPlanService.GetSentSupplimentDetail(planId);
+                return View(sentSupplimentDetail);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+
+
+
     }
 }

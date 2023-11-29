@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace Mogym.Application.Records.SupplimentPlan
 {
     public record SupplimentPlanRecord
-        (
-            int? Id,
-            int? PlanId,
-            string Title
-            );
+    {
+        public int? Id { get; init; }
+        public int? PlanId { get; init; }
+        public string Title { get; init; }
+    }
 
 }
