@@ -15,5 +15,6 @@ namespace Mogym.Application.Interfaces
         Task<MenuRecord> GetMenuByEnglishName(string englishName);
         void AddMenu(CreateMenuRecord model);
         Task<List<MenuRecord>> GetAllWithRelated();
+        Task<List<MenuRecord>> GetActiveUserMenus();
     }
 }

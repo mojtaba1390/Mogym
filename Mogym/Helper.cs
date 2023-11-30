@@ -30,6 +30,10 @@ namespace Mogym
         {
             return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.MobilePhone)?.Value ?? "";
         }
+        public static string GetCurrentUserRoleName(this IHttpContextAccessor httpContextAccessor)
+        {
+            return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.Role)?.Value ?? "";
+        }
         public static List<Role> GetCurrentUserRole(IServiceProvider sp)
         {
             using (var scope = sp.CreateScope())

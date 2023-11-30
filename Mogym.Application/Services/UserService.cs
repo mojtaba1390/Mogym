@@ -88,8 +88,7 @@ namespace Mogym.Application.Services
                 }
 
                 var newUser = _mapper.Map<User>(loginRecord);
-                var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(newUser);
-                var userRole = _mapper.Map<UserRole>(userRoleRecord);
+                var userRole = _mapper.Map<UserRole>(newUser);
 
                 newUser.UserRoles.Add(userRole);
                 await _unitOfWork.UserRepository.AddAsync(newUser);
@@ -142,11 +141,15 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var entityInWaitingForConfirmSmsCode = await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status==EnumStatus.WaitingForSmsConfirm).FirstOrDefaultAsync();
+                var entityInWaitingForConfirmSmsCode = await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile &&
+                    x.Status==EnumStatus.WaitingForSmsConfirm).FirstOrDefaultAsync();
+
                 if (entityInWaitingForConfirmSmsCode!=null)
                     return await UpdateEntityToActiveForAuthentication(entityInWaitingForConfirmSmsCode);
 
-                var entityInActiveMode= await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile && x.Status == EnumStatus.Active).FirstOrDefaultAsync();
+                var entityInActiveMode= await _unitOfWork.UserRepository.Find(x => x.Mobile == mobile &&
+                    x.Status == EnumStatus.Active).FirstOrDefaultAsync();
+
                 if (entityInActiveMode != null)
                 {
                     var entity = GetEntityWithRoleAndPermission(entityInActiveMode);

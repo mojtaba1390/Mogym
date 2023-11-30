@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
@@ -22,13 +24,14 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly IPermissionService _permissionService;
         private readonly ISeriLogService _logger;
-
-        public MenuService(IUnitOfWork unitOfWork,IMapper mapper,IPermissionService permissionService,ISeriLogService logger)
+        private readonly IHttpContextAccessor _accessor;
+        public MenuService(IUnitOfWork unitOfWork,IMapper mapper,IPermissionService permissionService,ISeriLogService logger,IHttpContextAccessor accessor)
         {
             _unitOfWork=unitOfWork;
             _mapper = mapper;
             _permissionService=permissionService;
             _logger=logger;
+            _accessor=accessor;
         }
         public async Task<List<MenuRecord>> GetAllActiveMenuList()
         {
@@ -118,6 +121,43 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex);
                 throw ex;
             }
+        }
+
+        public async Task<List<MenuRecord>> GetActiveUserMenus()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var userWithRelateds = await _unitOfWork.UserRepository.Find(x => x.Id == userId)
+                    .Include(x => x.UserRoles)
+                    .ThenInclude(x => x.UserRole_Role)
+                    .ThenInclude(x => x.RolePermissions)
+                    .ThenInclude(x => x.RolePermission_Permission)
+                    .FirstOrDefaultAsync();
+                if (userWithRelateds is not null)
+                {
+                    var permissions = userWithRelateds.UserRoles
+                        .Select(x => x.UserRole_Role.RolePermissions
+                            .Select(z => z.RolePermission_Permission).ToList()).FirstOrDefault();
+
+                    var allMenus= _unitOfWork.MenuRepository.GetAll().Include(x => x.Menu_Menu).ToList();
+
+                    var menus = allMenus.IntersectBy(permissions.Select(z=>z.EnglishName), x => x.EnglishName);
+                    return _mapper.Map<List<MenuRecord>>(menus);
+
+                }
+
+                ArgumentNullException.ThrowIfNull(userWithRelateds);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetAllWithRelated in Menu Service";
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+
+            return null;
         }
     }
 }

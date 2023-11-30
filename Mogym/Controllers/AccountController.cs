@@ -88,10 +88,10 @@ namespace Mogym.Controllers
                 {
 
                     var user = await _userService.GetUserWithRoleAndPermission(confirmRegisterRecord.Mobile);
-                    var activeMenus =await _menuService.GetAllActiveMenuList();
+                    //var activeMenus =await _menuService.GetActiveUserMenus();
 
-                    var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
-                    var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
+                    //var userInfoKey = _configuration.GetSection("RedisKey").GetValue<string>("UserInformation");
+                    //var activeMenusKey = _configuration.GetSection("RedisKey").GetValue<string>("MenuList");
 
 
 
@@ -115,7 +115,8 @@ namespace Mogym.Controllers
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.UserName ??""),
                         new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                        new Claim(ClaimTypes.MobilePhone, user.Mobile)
+                        new Claim(ClaimTypes.MobilePhone, user.Mobile),
+                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName)
 
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

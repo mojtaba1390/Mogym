@@ -31,7 +31,7 @@
     //{
         var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
          user =await _userService.GetUserWithRoleAndPermission(mobile);
-         activeMenus = await _menuService.GetAllActiveMenuList();
+    activeMenus = await _menuService.GetActiveUserMenus();
         menus = activeMenus;
     //}
 
@@ -226,9 +226,9 @@
 
                                                 @foreach (var itmSub in sub1)
                                                 {
-                                                    var Sub2 = menus.Where(m => m.ParentId == itmSub.Id).ToList();
+                                                    var Sub2 = sub1.Where(m => m.ParentId == itmSub.Id).ToList();
                                                     <li class="nav-item ">
-                                                        <a href="@itmSub.Link" class="nav-link ">
+                                                        <a href="~/@itmSub.Link" class="nav-link ">
                                                             <i class="@( $"fas")"></i>
                                                             <p>
                                                                 @itmSub.PersianName
@@ -246,9 +246,9 @@
                                                                 <ul class="nav nav-treeview" data-accordion="@Sub2.Any()">
                                                                     @foreach (var itmSub2 in Sub2)
                                                                     {
-                                                                        var Sub3 = menus.Where(m => m.ParentId == itmSub2.Id).ToList();
+                                                                        var Sub3 = Sub2.Where(m => m.ParentId == itmSub2.Id).ToList();
                                                                         <li class="nav-item">
-                                                                            <a href="@itmSub2.Link" class="nav-link  ">
+                                                                            <a href="~/@itmSub2.Link" class="nav-link  ">
                                                                                 <i class="@( $"fas ")"></i>
                                                                                 <p>@itmSub2.PersianName </p>
                                                                             </a>
@@ -261,7 +261,7 @@
                                                                                         {
 
                                                                                             <li class="nav-item">
-                                                                                                <a href="@itmSub3.Link" class="nav-link ">
+                                                                                                <a href="~/@itmSub3.Link" class="nav-link ">
                                                                                                     <i class="@( $"fas")"></i>
                                                                                                     <p>@itmSub3.PersianName </p>
                                                                                                 </a>
