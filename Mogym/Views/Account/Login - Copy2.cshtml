@@ -1,0 +1,84 @@
+﻿@model Mogym.Application.Records.User.LoginRecord
+
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <title>ورود - موجیم</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="~/assets/styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/demo/style-demo.css" />
+    <link rel="stylesheet" type="text/css" href="~/assets/styles/rtl.css" />
+
+    <!-- Mapbox-->
+
+
+</head>
+<body class="bg-triangles">
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader__wrap">
+            <div class="circle-pulse">
+                <div class="circle-pulse__1"></div>
+                <div class="circle-pulse__2"></div>
+            </div>
+            <div class="preloader__progress"><span></span></div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container gutter-top">
+            <div class="row sticky-parent">
+
+
+
+                <!-- Content -->
+                <div class="col-12 col-md-6" style="margin: 0 auto">
+                    <div class="box shadow">
+                        <h2 class="title title--h3">ورود و ثبت نام</h2>
+
+                        <form asp-action="Login" method="post">
+                            <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
+                            <p class="timeline__description">لطفا برای ورود یا ثبت نام شماره موبایل خود را وارد کنید</p>
+                            <div class="row">
+                                <div class="form-group col-12 col-md-12">
+                                    <i class="font-icon icon-user"></i>
+
+                                    <input asp-for="Mobile" type="number" class="input input__icon form-control"
+                                           placeholder="09*********" required="required"
+                                           oninvalid="setCustomValidity('شماره موبایل خود را وارد کنید')" onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12 order-1 order-md-2 text-left">
+                                    <button type="submit" class="btn col-md-12">
+                                        <i class="font-icon icon-send"></i> ورود
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- Demo Menu -->
+    <!-- JavaScripts -->
+    <script src="~/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/common.js"></script>
+
+    <script src="~/assets/demo/plugins-demo.js"></script>
+
+</body>
+</html>
