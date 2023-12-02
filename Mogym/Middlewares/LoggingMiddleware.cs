@@ -1,4 +1,5 @@
-﻿using Mogym.Application.Interfaces.ILog;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Mogym.Application.Interfaces.ILog;
 
 namespace Mogym.Middlewares
 {
@@ -14,19 +15,32 @@ namespace Mogym.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            var permalink = context.Request.Path.Value;
             var ip = context.Connection.RemoteIpAddress.ToString();
 
+            var permalink = context.Request.Path.Value;
+            if (permalink == "/")
+               await InsertLog(permalink, ip);
+
+
+            var referer = context.Request.Headers["Referer"];
+
+            if (!string.IsNullOrWhiteSpace(referer))
+                await InsertLog(referer.ToString(), ip);
+
+
+            await _next(context);
+        }
+
+
+        private async Task InsertLog(string permalink,string ip)
+        {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var _userLoggingService = scope.ServiceProvider.GetRequiredService<IUserLoggingService>();
                 await _userLoggingService.Save(permalink, ip);
 
             }
-
-
-
-            await _next(context);
         }
+
     }
 }
