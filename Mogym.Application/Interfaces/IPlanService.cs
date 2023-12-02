@@ -11,7 +11,7 @@ namespace Mogym.Application.Interfaces
 {
     public interface IPlanService
     {
-        Task<List<PlanRecord>?> GetMyPlans();
+        Task<List<PlanRecord>?> MyUnPaidPlans();
         Task UpdatePaidPicture(int planId,string paidPictureFileName);
         Task<bool> IsThisPlanIdForThisCurrentUser(int planId);
         Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId);
@@ -22,5 +22,8 @@ namespace Mogym.Application.Interfaces
         Task AddDescription(int planId, string description);
         Task SendPlan(int planId);
         Task<List<SentPlanRecord>?> GetSentPlans();
+        Task<List<PlanRecord>> GetMyPaidPlans();
+        Task<List<PlanRecord>> MyApprovedPlans();
+        Task<List<PlanRecord>> MyRecivedPlans();
     }
 }

@@ -34,13 +34,13 @@ namespace Mogym.Application.Services
             _trainerProfileService = trainerProfileService;
         }
 
-        public async Task<List<PlanRecord>?> GetMyPlans()
+        public async Task<List<PlanRecord>?> MyUnPaidPlans()
         {
             try
             {
                 var userId = _accessor.GetUser();
                 var plans = await _unitOfWork.PlanRepository
-                    .Find(x => x.UserId == userId)
+                    .Find(x => x.UserId == userId && x.PlanStatus==EnumPlanStatus.Registered)
                     .AsNoTracking()
                     .Include(x=>x.TrainerProfile_Plan)
                     .ThenInclude(x=>x.User)
@@ -225,6 +225,67 @@ namespace Mogym.Application.Services
             }
         }
 
+        public async Task<List<PlanRecord>> GetMyPaidPlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.UserId == userId && x.PlanStatus == EnumPlanStatus.Paid)
+                    .AsNoTracking()
+                    .Include(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.User)
+                    .ToListAsync();
+                return _mapper.Map<List<PlanRecord>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetMyPaidPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
 
+        public async Task<List<PlanRecord>> MyApprovedPlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.UserId == userId && x.PlanStatus == EnumPlanStatus.TrainerApprovment)
+                    .AsNoTracking()
+                    .Include(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.User)
+                    .ToListAsync();
+                return _mapper.Map<List<PlanRecord>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"MyApprovedPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<List<PlanRecord>> MyRecivedPlans()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.UserId == userId && x.PlanStatus == EnumPlanStatus.Sent)
+                    .AsNoTracking()
+                    .Include(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.User)
+                    .ToListAsync();
+                return _mapper.Map<List<PlanRecord>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"MyRecivedPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

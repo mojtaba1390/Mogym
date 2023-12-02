@@ -2,7 +2,7 @@
 @model List<Mogym.Application.Records.Plan.PlanRecord>
 @{
     Layout = "_Layout";
-    ViewData["title"] = "برنامه های من";
+    ViewData["title"] = "برنامه های تائید شده من";
 }
 
 
@@ -34,12 +34,7 @@
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
 
                                         <td>
-                                            @{
-                                                if (itm.PlanStatus == EnumPlanStatus.Registered)
-                                                {
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
-                                                }
-                                            }
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
 
 

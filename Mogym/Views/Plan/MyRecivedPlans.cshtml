@@ -1,0 +1,194 @@
+﻿@using Mogym.Common
+@model List<Mogym.Application.Records.Plan.PlanRecord>
+@{
+    Layout = "_Layout";
+    ViewData["title"] = "برنامه های دریافت شده من";
+}
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="">
+                    <div class="card-body mb-50">
+
+                        <table id="sentPlan" class="table table-bordered" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>نام مربی</th>
+                                <th>تاریخ ثبت </th>
+                                <th>توضیحات تکمیلی برنامه</th>
+                                <th>عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var itm in Model)
+                            {
+                                <tr>
+
+                                    <td>@itm.TrainerName</td>
+                                    <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                    <td>@itm.Description</td>
+                                    <td>
+                                        <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
+                                        <a class="btn btn-success" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
+                                        <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan"  asp-action="SentSupplimentDetail">مکمل</a>
+
+
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="col-md-9">
+                                <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
+                            </div>
+                            <div class="form-actions-buttons col-md-12">
+                                <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="AddPaidPictureModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">بارگزاری تصویر پرداخت</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <form asp-action="AddPaidPicture" asp-controller="Plan" enctype="multipart/form-data" id="AddPaidPicture">
+                    <input hidden name="planId" value="" id="planId" />
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body row py-5">
+                                <fieldset class="row p-3 mb-5">
+                                    <legend class="float-none w-auto"> تصویر پرداخت</legend>
+
+                                    <div class="form-group col-md-3">
+                                        <label class="pt-1" for="paidPicture">تصویر رسید پرداختی</label>
+                                        <div>
+                                            <input type="file" name="PaidPicture" accept="image/*" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="card-footer">
+                                <div class="form-group row">
+                                    <div class="form-actions-buttons col-md-12">
+                                        <input type="submit" value="ثبت" class="btn bg-buttom-yellow" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+
+
+            </div>
+            @* <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            <button type="submit" name="action" value="draft" class="btn btn-success-card">ثبت</button>
+
+            </div>*@
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ViewAQModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">پرسشنامه پاسخ داده شده</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-viewAQ">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- Main content -->
+<!-- /.content -->
+@section Scripts{
+    <script>
+
+        function viewAQ(planId) {
+            $.ajax({
+                url: "/Plan/GetPlanAnswerQuestion?planId=" + planId,
+                dataType: 'html',
+                success: function (data) {
+                    $('#modal-viewAQ').html(data);
+                }
+            });
+        }
+
+
+        function setplanId(planId) {
+            $("#planId").val(planId);
+        }
+
+
+        $(function () {
+
+
+            $("#myplan").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                ],
+                "pageLength": 25,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+    </script>
+}

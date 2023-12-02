@@ -21,11 +21,11 @@ namespace Mogym.Controllers
         }
 
         [DisplayName("برنامه های من")]
-        public async Task<IActionResult> MyPlan()
+        public async Task<IActionResult> MyUnPaidPlans()
         {
             try
             {
-                var planRecords = await _planService.GetMyPlans();
+                var planRecords = await _planService.MyUnPaidPlans();
                 return View(planRecords);
 
             }
@@ -57,12 +57,12 @@ namespace Mogym.Controllers
                     }
 
                     await _planService.UpdatePaidPicture(Int32.Parse(planId),PaidPicture.FileName);
-                    return RedirectToAction(nameof(MyPlan));
+                    return RedirectToAction(nameof(MyUnPaidPlans));
 
 
                 }
                 TempData["errormessage"] = "تصویری بارگزاری نشده است";
-                return RedirectToAction(nameof(MyPlan));
+                return RedirectToAction(nameof(MyUnPaidPlans));
             }
             catch (Exception e)
             {
@@ -86,7 +86,7 @@ namespace Mogym.Controllers
 
                 }
                 TempData["errormessage"] = "برنامه ی انتخاب شده مربوط به شما نمی باشد";
-                return RedirectToAction(nameof(MyPlan));
+                return RedirectToAction(nameof(MyUnPaidPlans));
             }
             catch (Exception e)
             {
@@ -113,6 +113,57 @@ namespace Mogym.Controllers
             return View("NotFound");
 
         }
+        public async Task<IActionResult> MyPaidPlans()
+        {
+            try
+            {
+                var planRecords = await _planService.GetMyPaidPlans();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+        public async Task<IActionResult> MyApprovedPlans()
+        {
+            try
+            {
+                var planRecords = await _planService.MyApprovedPlans();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+        public async Task<IActionResult> MyRecivedPlans()
+        {
+            try
+            {
+                var planRecords = await _planService.MyRecivedPlans();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+
+
+
+
+
+
         public async Task<IActionResult> ApprovePlan(int planId)
         {
             try
