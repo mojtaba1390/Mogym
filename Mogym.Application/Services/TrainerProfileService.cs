@@ -150,5 +150,16 @@ namespace Mogym.Application.Services
             var userId = _accessor.GetUser();
             return await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
         }
+
+        public async Task<List<TrainersRecord>> GetAllTrainers()
+        {
+            var trainers = await  _unitOfWork.TrainerProfileRepository
+                .GetAll()
+                .Include(x=>x.User)
+                .OrderByDescending(x => x.Id)
+                .ToListAsync() ;
+
+            return _mapper.Map<List<TrainersRecord>>(trainers);
+        }
     }
 }

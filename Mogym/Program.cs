@@ -63,4 +63,9 @@ app.MapControllerRoute(
     defaults: new { controller = "Profile", action = "Index" }
 );
 
+app.MapControllerRoute(
+    name: "trainers",
+    pattern: "/Trainers",
+    defaults: new {  controller = "Home", action = "Trainers" });
+
 app.Run();

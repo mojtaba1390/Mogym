@@ -20,5 +20,6 @@ namespace Mogym.Application.Interfaces
         Task<TrainerProfileRecord?> GetById(int trainerId);
         Task<CreateQuestionRecord?> GetTrainerForCreateQuestion(int trainerId);
         Task<TrainerProfile?> GetCurrentUserTrainer();
+        Task<List<TrainersRecord>> GetAllTrainers();
     }
 }

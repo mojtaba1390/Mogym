@@ -1,0 +1,139 @@
+﻿@model List<Mogym.Application.Records.Profile.TrainersRecord>
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--favicon icon-->
+    <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
+
+    <!--title-->
+    <title>موجیم - پروفایل</title>
+
+    <!--build:css-->
+    <link rel="stylesheet" href="~/mainassets/css/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+
+    <!--preloader start-->
+    <div id="preloader">
+        <div class="preloader-wrap">
+            <img src="~/img/mogym-transparent.png" alt="mogym" class="img-fluid">
+            <div class="thecube">
+                <div class="cube c1"></div>
+                <div class="cube c2"></div>
+                <div class="cube c4"></div>
+                <div class="cube c3"></div>
+            </div>
+        </div>
+    </div>
+    <!--preloader end-->
+    <!--header section start-->
+    <header class="header">
+        <!--start navbar-->
+        <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+            <div class="container">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
+                    <span class="ti-menu"></span>
+                </button>
+
+                <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!--header section end-->
+
+    <div class="main">
+        <div class="breadcrumb-bar gray-light-bg border-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="custom-breadcrumb">
+                            <ol class="breadcrumb pl-0 mb-0 bg-transparent">
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Trainers">مربیان</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="team-two-section ptb-100 ">
+            <div class="container">
+                <div class="row">
+                    @{
+                        foreach (var trainer in Model)
+                        {
+                            <div class="col-md-6 col-lg-3">
+                                <div class="single-team-wrap bg-white text-center border rounded p-4 my-3">
+                                    <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.ProfilePic" width="120" class="img-fluid m-auto pb-4">
+                                    <div class="team-content">
+                                        <h5 class="mb-0">@trainer.FullName</h5>
+                                        <span></span>
+                                        <p class="mt-3"></p>
+                                        <div class="action-btns mt-3">
+                                            <a asp-controller="Profile" asp-action="Index" asp-route-username="@trainer.UserName" class="btn btn-brand-02 mr-3">جزئیات</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                    
+                    
+                    
+
+
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <!--footer section start-->
+    <footer class="footer-1 ptb-60 gradient-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 mb-4 mb-md-4 mb-sm-4 mb-lg-0">
+                </div>
+            </div>
+        </div>
+        <!--end of container-->
+    </footer>
+
+
+    <!--scroll bottom to top button start-->
+    <div class="scroll-top scroll-to-target primary-bg text-white" data-target="html">
+        <span class="fas fa-hand-point-up"></span>
+    </div>
+    <!--scroll bottom to top button end-->
+    <!--build:js-->
+    <script src="~/mainassets/js/vendors/jquery-3.5.1.min.js"></script>
+    <script src="~/mainassets/js/vendors/popper.min.js"></script>
+    <script src="~/mainassets/js/vendors/bootstrap.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.easing.min.js"></script>
+    <script src="~/mainassets/js/vendors/owl.carousel.min.js"></script>
+    <script src="~/mainassets/js/vendors/countdown.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.waypoints.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.rcounterup.js"></script>
+    <script src="~/mainassets/js/vendors/magnific-popup.min.js"></script>
+    <script src="~/mainassets/js/vendors/validator.min.js"></script>
+    <script src="~/mainassets/js/app.js"></script>
+    <!--endbuild-->
+
+</body>
+</html>
