@@ -1,218 +1,246 @@
 ﻿@model Mogym.Application.Records.Profile.TrainerProfileRecord
 
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
+
+
 <head>
-    <meta charset="utf-8" />
-    <title>@Model.UserName</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    <!--favicon icon-->
+    <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
 
+    <!--title-->
+    <title>موجیم - پروفایل</title>
 
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="assets/styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="assets/demo/style-demo.css" />
-    <link rel="stylesheet" type="text/css" href="assets/styles/rtl.css" />
-
-
-    <!-- Mapbox-->
-    <link href='assets/styles/mapbox-gl.css' rel='stylesheet' />
-
+    <!--build:css-->
+    <link rel="stylesheet" href="~/mainassets/css/main.css">
+    <!-- endbuild -->
 </head>
-<body class="bg-triangles">
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader__wrap">
-            <div class="circle-pulse">
-                <div class="circle-pulse__1"></div>
-                <div class="circle-pulse__2"></div>
+
+<body>
+
+    <!--preloader start-->
+    <div id="preloader">
+        <div class="preloader-wrap">
+            <img src="~/img/mogym-transparent.png" alt="mogym" class="img-fluid">
+            <div class="thecube">
+                <div class="cube c1"></div>
+                <div class="cube c2"></div>
+                <div class="cube c4"></div>
+                <div class="cube c3"></div>
             </div>
-            <div class="preloader__progress"><span></span></div>
         </div>
     </div>
+    <!--preloader end-->
+    <!--header section start-->
+    <header class="header">
+        <!--start navbar-->
+        <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+            <div class="container">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
+                    <span class="ti-menu"></span>
+                </button>
 
-    <main class="main">
-        <div class="container gutter-top">
-            <div class="row sticky-parent">
-                <!-- Sidebar -->
-                <aside class="col-12 col-md-12 col-xl-3">
-                    <div class="sidebar box shadow pb-0 sticky-column">
-                        <svg class="avatar avatar--180" viewBox="0 0 188 188">
-                            <g class="avatar__box">
-                                @{
-                                    if (!string.IsNullOrWhiteSpace(Model.ProfilePic))
-                                    {
-                                        <image xlink:href="/ProfilePic/@Model.ProfilePic" height="100%" width="100%" />
-                                    }
-                                    else
-                                    {
-                                        <image xlink:href="/img/avatar5.png" height="100%" width="100%" />
-                                    }
-
-                                }
-                            </g>
-                        </svg>
-                        <div class="text-center">
-                            <h3 class="title title--h1 sidebar__user-name"><span class="weight--300">@Model.FirstName</span> @Model.LastName </h3>
-                            @*							<div class="badge badge--gray">مدیر خلاق</div>
-                            *@
-
-                        </div>
-
-                        <div class="sidebar__info box-inner box-inner--rounded">
-                            <ul class="contacts-block">
-                                <li class="contacts-block__item" data-toggle="tooltip" data-placement="top">
-                                </li>
-                                <li class="contacts-block__item" data-toggle="tooltip" data-placement="top">
-                                </li>
-                                <li class="contacts-block__item" data-toggle="tooltip" data-placement="top">
-                                </li>
-                                <li class="contacts-block__item" data-toggle="tooltip" data-placement="top">
-                                </li>
-                                <li class="contacts-block__item" data-toggle="tooltip" data-placement="top">
-                                </li>
-                            </ul>
-
-                            <a class="btn" asp-action="AnswerQuestion" asp-controller="Question" asp-route-trainerId="@Model.TrainerId">درخواست برنامه</a>
-                        </div>
-                    </div>
-                </aside>
-
-                <!-- Content -->
-                <div class="col-12 col-md-12 col-xl-9">
-                    <div class="box shadow pb-0">
-                        <!-- Menu -->
-                        @*						<div class="circle-menu">
-                        <div class="hamburger">
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        <div class="line"></div>
-                        </div>
-                        </div>*@
-                        @*						<div class="inner-menu js-menu js-tabs">
-                        <ul class="nav">
-                        <li class="nav__item"><a class="active" href="#about-tab">درباره من</a></li>
-                        <li class="nav__item"><a href="#resume-tab">رزومه من</a></li>
-                        <li class="nav__item"><a href="#portfolio-tab">نمونه کار ها</a></li>
-                        <li class="nav__item"><a href="#blog-tab">وبلاگ</a></li>
-                        <li class="nav__item"><a href="#contact-tab">تماس با من</a></li>
-                        </ul>
-                        </div>*@
-
-                        <div class="content" id="content">
-                            <div id="about-tab" class="tabcontent active">
-
-                                <div class="box-inner pb-0">
-                                    <h2 class="title title--h1 title__separate">بیوگرافی</h2>
-                                    <div class="row">
-
-                                        <div class="col-12 col-lg-12">
-                                            <div class="case-item box box__second">
-                                                <p>@Model.Biography</p>
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                </div>
-
-
-
-                                <div class="box-inner pb-0">
-                                    <h2 class="title title--h1 title__separate">افتخارات</h2>
-                                    <div class="row">
-                                        @{
-                                            if (Model.TrainerAchievementRecords.Any())
-                                            {
-                                                <div class="col-12 col-lg-12">
-                                                    <div class="case-item box box__second">
-                                                        <div class="timeline">
-
-                                                            @foreach (var achievement in Model.TrainerAchievementRecords)
-                                                            {
-                                                                <article class="timeline__item">
-                                                                    <h5 class="title title--h5 timeline__title">@achievement.Title</h5>
-                                                                    <span class="timeline__period">@achievement.Date</span>
-                                                                </article>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div class="box-inner pb-0">
-                                    <h2 class="title title--h1 title__separate">هزینه برنامه ها</h2>
-                                    <div class="row">
-
-
-                                        @{
-                                            if (Model.TrainerPlanCostRecords.Any())
-                                            {
-                                                foreach (var cost in Model.TrainerPlanCostRecords)
-                                                {
-                                                    <div class="col-12 col-lg-12">
-                                                        <div class="case-item box box__second">
-                                                            <img class="case-item__icon" src="assets/icons/icon-design.svg" alt="">
-                                                            <div>
-                                                                <h3 class="title title--h5">@cost.TrainerPlan</h3>
-                                                                <p class="case-item__caption">@cost.Cost.Value.ToString("N0") ریال</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        }
-
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
-
+                <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
                 </div>
+            </div>
+        </nav>
+    </header>
+    <!--header section end-->
 
+    <div class="main">
 
-
-
-
+        <!--page header section start-->
+        <section class="page-header-section ptb-100 bg-image" image-overlay="8">
+            <div class="background-image-wraper" style="background: url('~/mainassets/img/hero-bg-1.jpg'); opacity: 1;"></div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-9 col-lg-7">
+                        <div class="page-header-content text-white pt-4">
+                            <h1 class="text-white mb-0">@Model.FirstName @Model.LastName</h1>
+                            @*                            <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+                            *@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--page header section end-->
+        <!--breadcrumb section start-->
+        <div class="breadcrumb-bar gray-light-bg border-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="custom-breadcrumb">
+                            <ol class="breadcrumb pl-0 mb-0 bg-transparent">
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
+                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">مربیان</a></li>
+                                <li class="breadcrumb-item active">@Model.FirstName @Model.LastName</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </main>
+        <!--breadcrumb section end-->
 
-    <div class="back-to-top"></div>
 
-    <!-- SVG masks -->
-    <svg class="svg-defs">
-        <clipPath id="avatar-box">
-            <path d="M1.85379 38.4859C2.9221 18.6653 18.6653 2.92275 38.4858 1.85453 56.0986.905299 77.2792 0 94 0c16.721 0 37.901.905299 55.514 1.85453 19.821 1.06822 35.564 16.81077 36.632 36.63137C187.095 56.0922 188 77.267 188 94c0 16.733-.905 37.908-1.854 55.514-1.068 19.821-16.811 35.563-36.632 36.631C131.901 187.095 110.721 188 94 188c-16.7208 0-37.9014-.905-55.5142-1.855-19.8205-1.068-35.5637-16.81-36.63201-36.631C.904831 131.908 0 110.733 0 94c0-16.733.904831-37.9078 1.85379-55.5141z" />
-        </clipPath>
-        <clipPath id="avatar-hexagon">
-            <path d="M0 27.2891c0-4.6662 2.4889-8.976 6.52491-11.2986L31.308 1.72845c3.98-2.290382 8.8697-2.305446 12.8637-.03963l25.234 14.31558C73.4807 18.3162 76 22.6478 76 27.3426V56.684c0 4.6805-2.5041 9.0013-6.5597 11.3186L44.4317 82.2915c-3.9869 2.278-8.8765 2.278-12.8634 0L6.55974 68.0026C2.50414 65.6853 0 61.3645 0 56.684V27.2891z" />
-        </clipPath>
-    </svg>
+        <section class="team-single-section ptb-100">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-12 col-sm-12 col-lg-6">
+                        <div class="team-single-img">
+                            @{
+                                if (!string.IsNullOrWhiteSpace(Model.ProfilePic))
+                                {
+                                    <img src="/ProfilePic/@Model.ProfilePic" alt="@Model.ProfilePic" class="img-fluid rounded shadow-sm">
+                                }
+                                else
+                                {
+                                    <img src="/img/avatar5.png" alt="عضو" class="img-fluid rounded shadow-sm">
 
-    <!-- Demo Menu -->
-    <div class="btnSlideNav slideOpen"></div>
-    <div class="btnSlideNav slideClose"></div>
+                                }
 
-    <div class="overlay-slideNav"></div>
-    <!-- Demo Menu -->
-    <!-- JavaScripts -->
-    <script src="assets/js/jquery-3.4.1.min.js"></script>
-    <script src="assets/js/plugins.min.js"></script>
-    <script src="assets/js/common.js"></script>
+                            }
 
-    <!-- Mapbox init -->
-    <script src="assets/js/mapbox.init.js"></script>
-    <script src="assets/demo/plugins-demo.js"></script>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-6">
+                        <div class="team-single-text">
+                            <div class="team-name mb-4">
+                                <h4 class="mb-1">@Model.FirstName @Model.LastName</h4>
+                                <span>@Model.UserName</span>
+                            </div>
+                            <ul class="team-single-info">
+                                <li><</li>
+                                <li></li>
+                            </ul>
+                            <div class="text-content mt-20">
+                                <p>@Model.Biography</p>
+                            </div>
+                            <div class="action-btns mt-4">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a asp-action="AnswerQuestion" asp-controller="Question" asp-route-trainerId="@Model.TrainerId" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                                            <div class="download-text text-left">
+                                                <h5 class="mb-0">درخواست برنامه</h5>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-md-6 col-sm-6 col-12">
+                        <div class="section-heading">
+                            <h5>عناوین و افتخارات</h5>
+                            <div class="section-heading-line-left"></div>
+                        </div>
+                        <ul class="check-list-wrap pt-3">
+                            @{
+                                if (Model.TrainerAchievementRecords.Any())
+                                {
+                                    @foreach (var achievement in Model.TrainerAchievementRecords)
+                                    {
+                                        <li>
+                                            <strong>
+                                                @achievement.Title
+                                            </strong>
+                                            - @achievement.Date
+                                        </li>
+
+                                    }
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        
+        <section id="pricing" class="pricing-section ptb-100 ">
+            <div class="container">
+                <div class="row align-items-center justify-content-md-center justify-content-center">
+                    
+                    @{
+                        if (Model.TrainerPlanCostRecords.Any())
+                        {
+                            foreach (var cost in Model.TrainerPlanCostRecords)
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-8">
+                                    <div class="text-center bg-white single-pricing-pack mt-4">
+                                        <div class="price-img pt-4">
+                                            <img src="~/mainassets/img/priching-img-1.png" alt="قیمت" width="120" class="img-fluid">
+                                        </div>
+                                        <div class="py-4 border-0 pricing-header">
+                                            <div class="price text-center mb-0 monthly-price color-secondary" style="display: block;">@cost.Cost.Value.ToString("N0") ریال<span></span></div>
+                                        </div>
+                                        <div class="price-name">
+                                            <h5 class="mb-0">نوع برنامه</h5>
+                                        </div>
+                                        <div class="pricing-content">
+                                            <ul class="list-unstyled mb-4 pricing-feature-list">
+                                                <li><span></span> <span>@cost.TrainerPlan</span></li>
+                                                <li></li>
+                                                <li></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                }
+
+                </div>
+            </div>
+        </section>
+        
+
+
+    </div>
+
+    <!--footer section start-->
+    <footer class="footer-1 ptb-60 gradient-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 mb-4 mb-md-4 mb-sm-4 mb-lg-0">
+                </div>
+            </div>
+        </div>
+        <!--end of container-->
+    </footer>
+
+
+    <!--scroll bottom to top button start-->
+    <div class="scroll-top scroll-to-target primary-bg text-white" data-target="html">
+        <span class="fas fa-hand-point-up"></span>
+    </div>
+    <!--scroll bottom to top button end-->
+    <!--build:js-->
+    <script src="~/mainassets/js/vendors/jquery-3.5.1.min.js"></script>
+    <script src="~/mainassets/js/vendors/popper.min.js"></script>
+    <script src="~/mainassets/js/vendors/bootstrap.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.easing.min.js"></script>
+    <script src="~/mainassets/js/vendors/owl.carousel.min.js"></script>
+    <script src="~/mainassets/js/vendors/countdown.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.waypoints.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.rcounterup.js"></script>
+    <script src="~/mainassets/js/vendors/magnific-popup.min.js"></script>
+    <script src="~/mainassets/js/vendors/validator.min.js"></script>
+    <script src="~/mainassets/js/app.js"></script>
+    <!--endbuild-->
+
 </body>
 </html>
