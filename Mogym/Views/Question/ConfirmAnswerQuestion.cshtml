@@ -1,5 +1,36 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Mogym.Application.Records.Profile.TrainerProfileRecord
+
+
 @{
+    ViewData["Title"] = "تائید ثبت درخواست";
 }
+
+<section class="content card-custome" id="guide-card">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="position-absolute">
+                <div class="section1 mb-5 section" id="section1">
+                    <div class="container-fluid  row">
+                        <div class="col-6 text-right text aos-init aos-animate " data-aos="fade-up">
+                            <h3 class="pb-4 text-right">تائید ثبت درخواست</h3>
+                            <p> <i class="fas fa-comment-dots px-2"></i>ورزشکار عزیز، درخواست </p>
+                            <ul class="list-base">
+                                <li><i class="fas fa-arrow-left"></i> &nbspمنابع انسانی</li>
+                                <li><i class="fas fa-arrow-left"></i> &nbspآموزش</li>
+                                <li><i class="fas fa-arrow-left"></i> &nbsp عمومی</li>
+                                <li> <i class="fas fa-arrow-left"></i> &nbspسنجش و ارزیابی</li>
+                            </ul>
+                            <p class="text-red"><i class="fas fa-exclamation-circle"></i> لازم به ذکر است که هر کدام از این موارد تک فیلدی بوده و برای استفاده از بقیه منو ها لازم است تکمیل گردد.  </p>
+
+                        </div>
+                        <div class="col-md-6 img aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+@*                            <img src="~/img/2862309.png" alt="trainig-guide" width="80%" />
+*@                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

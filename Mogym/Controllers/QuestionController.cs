@@ -79,9 +79,11 @@ namespace Mogym.Controllers
                         }
                     }
 
-
-
                     await _questionService.AddQuestion(createQuestionRecord);
+
+                    var trainer = await _trainerProfileService.GetById(createQuestionRecord.TrainerId);
+
+                    return View("ConfirmAnswerQuestion", trainer);
                 }
 
                 ViewData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);
