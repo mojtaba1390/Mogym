@@ -4,6 +4,8 @@ using System.ComponentModel;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Question;
 using Mogym.Infrastructure.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Mogym.Application.Records.Profile;
 
 namespace Mogym.Controllers
 {
@@ -13,12 +15,15 @@ namespace Mogym.Controllers
     {
         private readonly IQuestionService _questionService;
         private readonly ITrainerProfileService _trainerProfileService;
-        private readonly IServiceProvider _serviceProvider;
-        public QuestionController(ITrainerProfileService trainerProfileService, IQuestionService questionService,IServiceProvider serviceProvider)
+        private readonly IHttpContextAccessor _accessor;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public QuestionController(ITrainerProfileService trainerProfileService, IQuestionService questionService, IHttpContextAccessor accessor, IWebHostEnvironment webHostEnvironment)
         {
             _trainerProfileService = trainerProfileService;
             _questionService = questionService;
-            _serviceProvider = serviceProvider;
+            _accessor = accessor;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -29,13 +34,13 @@ namespace Mogym.Controllers
         {
             try
             {
-                //var roles = Helper.GetCurrentUserRole(_serviceProvider);
-                //if (roles.Any(x => x.Id == 3))
-                //{
-                //    TempData["errormessage"] = "نقش شما مربی می باشد و امکان ثبت برنامه برای این نقش مقدور نیست";
-                //    return RedirectToAction("Index", "Account");
+                var role = _accessor.GetCurrentUserRoleName();
+                if (role.Equals("Trainer"))
+                {
+                    TempData["errormessage"] = "نقش شما مربی می باشد و امکان ثبت برنامه برای این نقش مقدور نیست";
+                    return RedirectToAction("Index", "Account");
 
-                //}
+                }
                 var createQuestionRecord = await _trainerProfileService.GetTrainerForCreateQuestion(trainerId);
                 if (createQuestionRecord is null)
                 {
@@ -59,6 +64,23 @@ namespace Mogym.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    var pics = typeof(CreateQuestionRecord).GetProperties()
+                        .Where(x => x.PropertyType == typeof(IFormFile))
+                        .Select(x => (IFormFile)x.GetValue(createQuestionRecord))
+                        .ToList();
+                    
+                    foreach (var item in pics.Where(x=>!string.IsNullOrWhiteSpace(x.FileName)))
+                    {
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "BodyPic", item.FileName);
+                        using (FileStream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await item.CopyToAsync(stream);
+                            stream.Close();
+                        }
+                    }
+
+
+
                     await _questionService.AddQuestion(createQuestionRecord);
                 }
 

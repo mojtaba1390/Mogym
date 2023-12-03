@@ -43,7 +43,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th>نوع هزینه</th>
-                                                            <th>مبلغ</th>
+                                                            <th>مبلغ(ریال)</th>
                                                             <th>عملیات</th>
                                                         </tr>
                                                     </thead>
@@ -54,7 +54,7 @@
                                                             {
                                                                 <tr>
                                                                     <td>@itm.TrainerPlan</td>
-                                                                    <td>@itm.Cost</td>
+                                                                    <td>@itm.Cost.Value.ToString("N0")</td>
                                                                     <td class="operation-icon">
                                                                         <a asp-action="Delete" asp-route-id="@itm.Id" class="show px-2 tooltip"><i class="far fa-2xl fa-trash-alt"></i> <span class="tooltiptext tooltip-top">مشاهده</span></a>
                                                                         @*<a  asp-action="AllClass" asp-route-classId="@itm.Id" class="show px-2 tooltip"><i class="far fa-2xl fa-eye"></i> <span class="tooltiptext tooltip-top">مشاهده</span></a>
@@ -65,14 +65,13 @@
                                                             }
                                                         }
                                                     </tbody>
-                                                    @*                                <tfoot>
+                                                    @*<tfoot>
                                                     <tr>
                                                     <th>عنوان</th>
                                                     <th>نوع کلاس</th>
                                                     <th>برنامه آموزشی</th>
                                                     <th>عملیات</th>
                                                     </tr>
-
                                                     </tfoot>*@
                                                 </table>
                                             </div>

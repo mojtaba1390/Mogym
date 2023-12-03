@@ -25,7 +25,15 @@ namespace Mogym.Application.AutoMapper.Question
                 .ForMember(x => x.Smoke, z => z.MapFrom(a => a.Smoke != null ? (EnumYesNo)a.Smoke : 0))
                 .ForMember(x => x.SessionsInWeek,
                     z => z.MapFrom(a => a.SessionsInWeek != null ? (EnumSessionsInWeek)a.SessionsInWeek : 0))
-                .ForMember(x => x.TrainerPlan, z => z.MapFrom(a => (EnumTrainerPlan)a.TrainerPlanId));
+                .ForMember(x => x.TrainerPlan, z => z.MapFrom(a => (EnumTrainerPlan)a.TrainerPlanId))
+                .ForMember(x => x.FrontPic,
+                    z => z.MapFrom(a => a.FrontPic != null ? a.FrontPic.FileName : null))
+                .ForMember(x => x.BackPic,
+                    z => z.MapFrom(a => a.BackPic != null ? a.BackPic.FileName : null))
+                .ForMember(x => x.LeftPic,
+                    z => z.MapFrom(a => a.LeftPic != null ? a.LeftPic.FileName : null))
+                .ForMember(x => x.RightPic,
+                    z => z.MapFrom(a => a.RightPic != null ? a.RightPic.FileName : null));
 
         }
     }

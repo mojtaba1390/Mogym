@@ -4134,6 +4134,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\ExerciseVideo\" />
+    <Folder Include="wwwroot\BodyPic\" />
     <Folder Include="wwwroot\PaidPic\" />
     <Folder Include="wwwroot\ProfilePic\" />
   </ItemGroup>

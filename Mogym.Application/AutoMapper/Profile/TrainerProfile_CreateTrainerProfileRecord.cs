@@ -23,6 +23,8 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.Email, z => z.MapFrom(a => a.User.Email))
                 .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
                 .ForMember(x => x.UserId, z => z.MapFrom(a => a.User.Id))
+                .ForMember(x=>x.CartNumber,
+                    z=>z.MapFrom(a=>string.IsNullOrWhiteSpace(a.CartNumber)?string.Empty:a.CartNumber))
                 .ForMember(x => x.ProfilePic, z => z.Ignore());
         }
     }
