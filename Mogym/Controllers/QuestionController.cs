@@ -81,9 +81,9 @@ namespace Mogym.Controllers
 
                     await _questionService.AddQuestion(createQuestionRecord);
 
-                    var trainer = await _trainerProfileService.GetById(createQuestionRecord.TrainerId);
+                    var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId,createQuestionRecord.TrainerPlanId);
 
-                    return View("ConfirmAnswerQuestion", trainer);
+                    return View("ConfirmAnswerQuestion", confirmAnswerQuestion);
                 }
 
                 ViewData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);

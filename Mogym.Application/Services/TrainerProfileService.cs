@@ -161,5 +161,14 @@ namespace Mogym.Application.Services
 
             return _mapper.Map<List<TrainersRecord>>(trainers);
         }
+
+        public async Task<ConfirmAnswerQuestionRecord> GetConfirmAnswerQuestion(int trainerId,int trainerPlanId)
+        {
+            var trainer = await _unitOfWork.TrainerProfileRepository.Find(x => x.Id == trainerId)
+                .Include(x => x.User)
+                .Include(x => x.TrainerPlanCosts.Where(z => z.Id == trainerPlanId))
+                .Include(x => x.User).FirstOrDefaultAsync();
+            return _mapper.Map<ConfirmAnswerQuestionRecord>(trainer);
+        }
     }
 }
