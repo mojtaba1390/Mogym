@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations.MogymLog
 {
     [DbContext(typeof(MogymLogContext))]
-    partial class MogymLogContextModelSnapshot : ModelSnapshot
+    [Migration("20231205090405_add-smslog")]
+    partial class addsmslog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,55 +61,6 @@ namespace Mogym.Domain.Migrations.MogymLog
                     b.HasKey("Id");
 
                     b.ToTable("SeriLog");
-                });
-
-            modelBuilder.Entity("Mogym.Domain.Entities.Log.SmsLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("InsertDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int?>("cost")
-                        .HasColumnType("int");
-
-                    b.Property<long?>("date")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("messageid")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("receptor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("sender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("statustext")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SmsLog");
                 });
 
             modelBuilder.Entity("Mogym.Domain.Entities.Log.UserLogging", b =>

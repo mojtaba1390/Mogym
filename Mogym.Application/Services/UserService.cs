@@ -28,13 +28,15 @@ namespace Mogym.Application.Services
         private readonly IRoleService _roleService;
         private readonly IUserRoleService _userRoleService;
         private readonly IHttpContextAccessor _accessor;
+        private readonly ISmsLogService _smsLogService;
 
         public UserService(IUnitOfWork unitOfWork,
             IMapper mapper,
             ISeriLogService logger,
             IRoleService roleService,
             IUserRoleService userRoleService,
-            IHttpContextAccessor accessor)
+            IHttpContextAccessor accessor,
+            ISmsLogService smsLogService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -42,6 +44,7 @@ namespace Mogym.Application.Services
             _roleService = roleService;
             _userRoleService = userRoleService;
             _accessor = accessor;
+            _smsLogService = smsLogService;
         }
 
         public bool IsExistMobile(string mobile)
@@ -80,10 +83,12 @@ namespace Mogym.Application.Services
                 var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == loginRecord.Mobile.Trim()).FirstOrDefaultAsync();
                 if (entity != null)
                 {
-                    //TODO:خط زیر از کامنت در بیاد
-                    //entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
-                    entity.SmsConfirmCode = "12345";
+                    entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                    //entity.SmsConfirmCode = "12345";
                     _unitOfWork.UserRepository.Update(entity);
+
+                    await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
+
                     return _mapper.Map<ConfirmSmsRecord>(entity);
                 }
 
@@ -93,6 +98,7 @@ namespace Mogym.Application.Services
                 newUser.UserRoles.Add(userRole);
                 await _unitOfWork.UserRepository.AddAsync(newUser);
 
+                await _smsLogService.SendConfirmSmsCode(newUser.Mobile,newUser.SmsConfirmCode);
 
                 return _mapper.Map<ConfirmSmsRecord>(newUser);
 

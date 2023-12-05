@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -64,7 +65,15 @@ namespace Mogym.Application
             services.AddTransient<ISupplimentService, SupplimentService>();
             services.AddTransient<ISupplimentPlanService, SupplimentPlanService>();
             services.AddTransient<ISupplimentPlanDetailService, SupplimentPlanDetailService>();
+            services.AddTransient<ISmsLogService, SmsLogService>();
             #endregion
+
+
+
+
+            services.AddHttpClient();
+
+
 
             return services;
         }

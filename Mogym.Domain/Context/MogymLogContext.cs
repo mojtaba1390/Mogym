@@ -30,5 +30,6 @@ namespace Mogym.Domain.Context
 
         public DbSet<SeriLog> SeriLog { get; set; }
         public DbSet<UserLogging> UserLogging { get; set; }
+        public DbSet<SmsLog> SmsLog { get; set; }
     }
 }

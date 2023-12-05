@@ -7,5 +7,9 @@
     "UserRoles": "User_Role_Information",
     "UserPermissions": "User_Permission_Information",
     "MenuList": "Menu_List"
+  },
+  "KaveNegar": {
+    "ConfirmSmsCodeTemplate": "MogymConfirmSmsCode",
+    "ConfirmSmsCodeUrl": "https://api.kavenegar.com/v1/6448696B4A593266524D4D5750577A6964497579744E7171667079437955474E6A464B622F446665305A733D/verify/lookup.json?"
   }
 }
