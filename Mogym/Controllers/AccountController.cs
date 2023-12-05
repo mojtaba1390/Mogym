@@ -166,5 +166,35 @@ namespace Mogym.Controllers
 
         }
 
+
+        public async Task<IActionResult> SignUp()
+        {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> SignUp(SignupRecord signupRecord)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    await _userService.SignUp(signupRecord);
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                return View("NotFound");
+            }
+
+            return View();
+        }
+
+
+
     }
 }

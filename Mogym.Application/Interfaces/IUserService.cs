@@ -18,5 +18,6 @@ namespace Mogym.Application.Interfaces
         Task<UserRecord> GetUserWithRoleAndPermission(string mobile);
         Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
         User? GetCurrentUserRols();
+        Task SignUp(SignupRecord signupRecord);
     }
 }

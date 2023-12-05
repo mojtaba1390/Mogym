@@ -213,6 +213,11 @@ namespace Mogym.Application.Services
                 .ThenInclude(x => x.UserRole_Role).FirstOrDefault();
         }
 
+        public Task SignUp(SignupRecord signupRecord)
+        {
+            throw new NotImplementedException();
+        }
+
 
         /// <summary>
         /// این متد برای تغییر وضعیت یوزر از منتظر تائید اس ام اس به تائید و اعطای رول ورزشکار به یوزر بعد از ثبت نام هست
