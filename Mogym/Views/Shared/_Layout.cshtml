@@ -29,8 +29,8 @@
     //}
     //else
     //{
-        var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
-         user =await _userService.GetUserWithRoleAndPermission(mobile);
+        //var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
+        // user =await _userService.GetUserWithRoleAndPermission(mobile);
     activeMenus = await _menuService.GetActiveUserMenus();
         menus = activeMenus;
     //}
@@ -136,21 +136,21 @@
                 <li class="px-3 user-panel1 ">
                     <div class="dropdown">
                         @{
-                            if (!string.IsNullOrWhiteSpace(user.ProfilePic))
+                            if (!string.IsNullOrWhiteSpace(User.FindFirstValue("ProfilePic")))
                             {
-                                <img src="/ProfilePic/@user.ProfilePic" class="img-circle elevation-2" alt="User Image">
+                                <img src="/ProfilePic/@User.FindFirstValue("ProfilePic")" class="img-circle elevation-2" alt="User Image">
                             }
                             else
                             {
                                 <img src="/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                             }
 
-                            if (!string.IsNullOrWhiteSpace(user.UserName))
+                            if (!string.IsNullOrWhiteSpace(User.FindFirstValue(ClaimTypes.Name)))
                             {
-                                @user.UserName;
+                                @User.FindFirstValue(ClaimTypes.Name)
                             }
                                     else
-                                @user.Mobile
+                                @User.FindFirstValue(ClaimTypes.Email)
 
                         }
                         <div class="dropdown-content">

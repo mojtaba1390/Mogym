@@ -41,18 +41,68 @@ namespace Mogym.Controllers
             return PartialView();
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginRecord loginRecord)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var confirmSmsCode = await _userService.LoginAsync(loginRecord);
+
+        //            ArgumentNullException.ThrowIfNull(confirmSmsCode);
+
+        //            return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile,loginRecord.ReturnUrl });
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+        //    }
+
+
+        //    return View();
+        //}
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRecord loginRecord)
+        public async Task<IActionResult> Login(LoginRecord loginRecord, string? returnurl)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var confirmSmsCode = await _userService.LoginAsync(loginRecord);
+                    var user = await _userService.Login(loginRecord);
+                    if (user != null)
+                    {
+                        var claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                            new Claim(ClaimTypes.Name, user.UserName ??""),
+                            new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+                            new Claim(ClaimTypes.MobilePhone, user.Mobile),
+                            new Claim(ClaimTypes.Role, user.Roles.First().EnglishName)
 
-                    ArgumentNullException.ThrowIfNull(confirmSmsCode);
+                        };
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
 
-                    return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile,loginRecord.ReturnUrl });
+                        var peraperties = new AuthenticationProperties()
+                        {
+                            IsPersistent = true
+                        };
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+                        if (!string.IsNullOrWhiteSpace(returnurl) && Url.IsLocalUrl(returnurl))
+                            return Redirect(returnurl);
+
+
+                        return RedirectToAction(nameof(Index));
+                    }
+
+
+                    ArgumentNullException.ThrowIfNull(user);
+
+                    return RedirectToAction(nameof(Login));
                 }
             }
             catch (Exception e)
@@ -182,7 +232,27 @@ namespace Mogym.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    await _userService.SignUp(signupRecord);
+                    var user = await _userService.SignUp(signupRecord);
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName ??""),
+                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+                        new Claim(type: "ProfilePic", value: user.ProfilePic)
+
+                    };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    var peraperties = new AuthenticationProperties()
+                    {
+                        IsPersistent = true
+                    };
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+                    return RedirectToAction(nameof(Index));
                 }
             }
             catch (Exception e)

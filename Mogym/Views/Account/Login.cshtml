@@ -8,16 +8,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta property="og:title" content="موجیم - ورود و ثبت نام" />
+    <meta property="og:title" content="موجیم -  ورود" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" /> 
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
     <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع مربیگری بدنسازی آنلاین" />
     <meta property="og:url" content="http://mogym.ir/login" />
     <!--favicon icon-->
     <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
 
     <!--title-->
-    <title>موجیم - ورود و ثبت نام</title>
+    <title>موجیم -  ورود</title>
 
     <!--build:css-->
     <link rel="stylesheet" href="~/mainassets/css/main.css">
@@ -47,32 +47,50 @@
                     <div class="login-signup-wrap p-5 gray-light-bg rounded shadow">
                         <div class="login-signup-header text-center">
                             <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
-                            <h4 class="mb-5">ورود و ثبت نام</h4>
+                            <h4 class="mb-5">ورود</h4>
                         </div>
                         <form asp-action="Login" method="post" class="login-signup-form">
-                            <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
                             <div class="form-group">
                                 <!-- Label -->
                                 <label class="pb-1">
-                                    برای ورود یا ثبت نام شماره موبایل خود را وارد کنید                   
-                                    </label>
+                                    آدرس ایمیل
+                                </label>
                                 <!-- Input group -->
                                 <div class="input-group input-group-merge">
                                     <div class="input-icon">
-                                        <span class="ti-mobile"></span>
+                                        <span class="ti-email"></span>
                                     </div>
-                                    <input asp-for="Mobile" type="number" class="form-control" placeholder="09*********" required="required">
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="name@address.com" required>
                                 </div>
                                 <div>
-                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    کلمه عبور
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-lock"></span>
+                                    </div>
+                                    <input asp-for="Password" type="password" class="form-control" required>
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <!-- Submit -->
                             <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
-                                ارسال کد تائید
+                                ورود
                             </button>
                         </form>
+
                     </div>
                 </div>
             </div>

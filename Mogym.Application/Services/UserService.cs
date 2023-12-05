@@ -114,6 +114,26 @@ namespace Mogym.Application.Services
             return null;
         }
 
+        public async Task<UserRecord> Login(LoginRecord loginRecord)
+        {
+            try
+            {
+                var hashPassword = Common.Helper.HashString(loginRecord.Password);
+                var user =await  _unitOfWork.UserRepository
+                    .Find(x => x.Email.Trim() == loginRecord.Email && x.Password == hashPassword).FirstOrDefaultAsync();
+                if (user is not null)
+                    return _mapper.Map<UserRecord>(user);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// چک کردن موبایل با کد تائید
         /// </summary>
@@ -213,9 +233,11 @@ namespace Mogym.Application.Services
                 .ThenInclude(x => x.UserRole_Role).FirstOrDefault();
         }
 
-        public Task SignUp(SignupRecord signupRecord)
+        public async Task<UserRecord> SignUp(SignupRecord signupRecord)
         {
-            throw new NotImplementedException();
+            var user = _mapper.Map<User>(signupRecord);
+            await _unitOfWork.UserRepository.AddAsync(user);
+            return _mapper.Map<UserRecord>(user);
         }
 
 
