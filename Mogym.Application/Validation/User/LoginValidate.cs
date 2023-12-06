@@ -23,12 +23,12 @@ namespace Mogym.Application.Validation.User
             #endregion
 
 
-            RuleFor(x => x.Mobile)
-                .Cascade(CascadeMode.Stop)
-                .NotNull().WithMessage("شماره موبایل نباید خالی باشد")
-                .NotEmpty().WithMessage("شماره موبایل نباید خالی باشد")
-                .Length(11).WithMessage("شماره موبایل باید ۱۱ رقم باشد")
-                .Matches("^09\\d{9}$").WithMessage("فرمت شماره موبایل اشتباه می باشد");
+            //RuleFor(x => x.Mobile)
+            //    .Cascade(CascadeMode.Stop)
+            //    .NotNull().WithMessage("شماره موبایل نباید خالی باشد")
+            //    .NotEmpty().WithMessage("شماره موبایل نباید خالی باشد")
+            //    .Length(11).WithMessage("شماره موبایل باید ۱۱ رقم باشد")
+            //    .Matches("^09\\d{9}$").WithMessage("فرمت شماره موبایل اشتباه می باشد");
             //.DependentRules(() =>
             //{
             //    RuleFor(x => x.Mobile)

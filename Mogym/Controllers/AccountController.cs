@@ -63,6 +63,8 @@ namespace Mogym.Controllers
 
         //    return View();
         //}
+
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRecord loginRecord, string? returnurl)
         {
@@ -78,8 +80,9 @@ namespace Mogym.Controllers
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Name, user.UserName ??""),
                             new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                            new Claim(ClaimTypes.MobilePhone, user.Mobile),
-                            new Claim(ClaimTypes.Role, user.Roles.First().EnglishName)
+                            new Claim(ClaimTypes.Email, user.Email),
+                            new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+                            new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 
                         };
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -240,7 +243,7 @@ namespace Mogym.Controllers
                         new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
-                        new Claim(type: "ProfilePic", value: user.ProfilePic)
+                        new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

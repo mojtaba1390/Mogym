@@ -120,7 +120,12 @@ namespace Mogym.Application.Services
             {
                 var hashPassword = Common.Helper.HashString(loginRecord.Password);
                 var user =await  _unitOfWork.UserRepository
-                    .Find(x => x.Email.Trim() == loginRecord.Email && x.Password == hashPassword).FirstOrDefaultAsync();
+                    .Find(x => x.Email.Trim() == loginRecord.Email && x.Password == hashPassword)
+                    .Include(x => x.UserRoles)
+                    .ThenInclude(x => x.UserRole_Role)
+                    .ThenInclude(x => x.RolePermissions)
+                    .ThenInclude(x => x.RolePermission_Permission)
+                    .FirstOrDefaultAsync();
                 if (user is not null)
                     return _mapper.Map<UserRecord>(user);
             }
@@ -235,9 +240,30 @@ namespace Mogym.Application.Services
 
         public async Task<UserRecord> SignUp(SignupRecord signupRecord)
         {
-            var user = _mapper.Map<User>(signupRecord);
-            await _unitOfWork.UserRepository.AddAsync(user);
-            return _mapper.Map<UserRecord>(user);
+            try
+            {
+                var newUser = _mapper.Map<User>(signupRecord);
+                var userRoleRecord = _mapper.Map<CreateAthleteUserRoleRecord>(newUser);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                newUser.UserRoles.Add(userRole);
+
+                await _unitOfWork.UserRepository.AddAsync(newUser);
+
+                var entity = GetEntityWithRoleAndPermission(newUser);
+                return _mapper.Map<UserRecord>(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"SignUp in User Service,object=" + JsonSerializer.Serialize(signupRecord);
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public bool IsThereAnyEmailAddress(string email)
+        {
+            return _unitOfWork.UserRepository.Find(x => x.Email.Trim() == email.Trim()).Any();
         }
 
 
@@ -290,7 +316,6 @@ namespace Mogym.Application.Services
                 .ThenInclude(x => x.UserRole_Role)
                 .ThenInclude(x => x.RolePermissions)
                 .ThenInclude(x=>x.RolePermission_Permission)
-                .AsNoTracking()
                 .First();
         }
     }

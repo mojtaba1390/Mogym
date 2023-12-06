@@ -20,5 +20,6 @@ namespace Mogym.Application.Interfaces
         Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
         User? GetCurrentUserRols();
         Task<UserRecord> SignUp(SignupRecord signupRecord);
+        bool IsThereAnyEmailAddress(string email);
     }
 }

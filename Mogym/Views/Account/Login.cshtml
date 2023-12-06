@@ -50,6 +50,7 @@
                             <h4 class="mb-5">ورود</h4>
                         </div>
                         <form asp-action="Login" method="post" class="login-signup-form">
+                            <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
                             <div class="form-group">
                                 <!-- Label -->
                                 <label class="pb-1">

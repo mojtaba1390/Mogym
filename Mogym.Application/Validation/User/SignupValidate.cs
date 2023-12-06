@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Mogym.Application.Interfaces;
 using Mogym.Application.Records.User;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,22 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Validation.User
 {
+
     public class SignupValidate : AbstractValidator<SignupRecord>
     {
-        public SignupValidate()
+        private readonly IUserService _userService;
+
+        public SignupValidate(IUserService userService)
         {
+
+            #region Dependency
+
+            _userService = userService;
+
+
+            #endregion
+
+
             RuleFor(x => x.FirstName)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("نام را وارد کنید")
@@ -26,13 +39,19 @@ namespace Mogym.Application.Validation.User
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("ایمیل را وارد کنید")
                 .NotNull().WithMessage("ایمیل را وارد کنید")
-                .EmailAddress().WithMessage("فرمت ایمیل اشتباه می باشد");
+                .EmailAddress().WithMessage("فرمت ایمیل اشتباه می باشد")
+                .Must(x => !UniqueEmail(x)).WithMessage("این آدرس ایمیل قبلا در سیستم ثبت شده است");
 
             RuleFor(x => x.Password)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("پسورد را وارد کنید")
                 .NotNull().WithMessage("پسورد را وارد کنید");
 
+        }
+
+        private bool UniqueEmail(string email)
+        {
+            return _userService.IsThereAnyEmailAddress(email);
         }
     }
 }
