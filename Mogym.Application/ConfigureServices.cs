@@ -66,6 +66,7 @@ namespace Mogym.Application
             services.AddTransient<ISupplimentPlanService, SupplimentPlanService>();
             services.AddTransient<ISupplimentPlanDetailService, SupplimentPlanDetailService>();
             services.AddTransient<ISmsLogService, SmsLogService>();
+            services.AddTransient<IRolePermissionService, RolePermissionService>();
             #endregion
 
 

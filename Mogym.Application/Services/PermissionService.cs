@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
@@ -76,6 +77,14 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex);
                 throw ex;
             }
+        }
+
+        public async Task<List<PermissionToRolePermissionRecord>> GetAllForRolePermission()
+        {
+            return await _unitOfWork.PermissionRepository.GetAll()
+                .Include(x => x.RolePermissions)
+                .ProjectTo<PermissionToRolePermissionRecord>(_mapper.ConfigurationProvider)
+                .ToListAsync();
         }
     }
 }

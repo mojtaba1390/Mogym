@@ -37,6 +37,7 @@ namespace Mogym.Infrastructure
             SupplimentRepository = new SupplimentRepository(_context);
             SupplimentPlanRepository = new SupplimentPlanRepository(_context);
             SupplimentPlanDetailRepository = new SupplimentPlanDetailRepository(_context);
+            RolePermissionRepository = new RolePermissionRepository(_context);
         }
 
 
@@ -60,6 +61,7 @@ namespace Mogym.Infrastructure
         public ISupplimentRepository SupplimentRepository { get; }
         public ISupplimentPlanRepository SupplimentPlanRepository { get; }
         public ISupplimentPlanDetailRepository SupplimentPlanDetailRepository { get; }
+        public IRolePermissionRepository RolePermissionRepository { get; }
 
         public void Dispose()
         {

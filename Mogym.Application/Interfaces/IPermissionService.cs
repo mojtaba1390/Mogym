@@ -13,5 +13,6 @@ namespace Mogym.Application.Interfaces
         Task<PermissionRecord> GetPermissionByEnglishName(string englishName);
         Task<List<PermissionRecord>> GetAll();
         Task<PermissionRecord> AddAsync(Permission permission, bool saveChanges);
+        Task<List<PermissionToRolePermissionRecord>> GetAllForRolePermission();
     }
 }

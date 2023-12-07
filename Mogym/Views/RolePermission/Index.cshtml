@@ -1,0 +1,105 @@
+﻿@using Mogym.Application.Records.Role
+@model List<Mogym.Application.Records.Permission.PermissionToRolePermissionRecord>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "سطح دسترسی";
+    List<RoleRecord> roles = (List<RoleRecord>)ViewData["Roles"];
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary">
+                    <!-- /.card-header -->
+                    <div class="card-body mb-5">
+                        <h2>@TempData["message"]</h2>
+                        <table id="example" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var rp in Model)
+                                {
+                                    <tr>
+                                        <td>@rp.Title</td>
+                                        <td style="width:30% !important">
+                                            @foreach (var role in roles)
+                                            {
+                                                var exists = rp.RolePermissionRecords.Any(x => x.RoleId == role.Id);
+                                                @if (exists)
+                                                {
+                                                    <a asp-action="DeleteByPermissionIdAndRoleId"
+                                                       asp-route-permissionId="@rp.Id"
+                                                       asp-route-roleId="@role.Id"
+                                                       class="btn @(exists ? "btn-success" : "btn-primary") m-1">@role.PersianName</a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="AddByPermissionIdAndRoleId"
+                                                       asp-route-permissionId="@rp.Id"
+                                                       asp-route-roleId="@role.Id"
+                                                       class="btn @(exists ? "btn-success" : "btn-outline-dark") m-1">@role.PersianName</a>
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>عنوان</th>
+                                    <th>عملیات</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#example").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+
+                ],
+                "pageLength": 25,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+    </script>
+}
