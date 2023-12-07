@@ -36,14 +36,14 @@
                                                     <a asp-action="DeleteByPermissionIdAndRoleId"
                                                        asp-route-permissionId="@rp.Id"
                                                        asp-route-roleId="@role.Id"
-                                                       class="btn @(exists ? "btn-success" : "btn-primary") m-1">@role.PersianName</a>
+                                                       class="btn btn-success m-1">@role.PersianName</a>
                                                 }
                                                 else
                                                 {
                                                     <a asp-action="AddByPermissionIdAndRoleId"
                                                        asp-route-permissionId="@rp.Id"
                                                        asp-route-roleId="@role.Id"
-                                                       class="btn @(exists ? "btn-success" : "btn-outline-dark") m-1">@role.PersianName</a>
+                                                       class="btn btn-outline-darkm-1">@role.PersianName</a>
                                                 }
                                             }
                                         </td>
