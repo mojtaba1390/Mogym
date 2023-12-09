@@ -41,21 +41,28 @@ namespace Mogym.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateExerciseVideoRecord createExerciseVideoRecord)
         {
-            if (ModelState.IsValid)
+            try
             {
-
-                if (createExerciseVideoRecord.ExerciseVideo is not null)
+                if (ModelState.IsValid)
                 {
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ExerciseVideo", createExerciseVideoRecord.ExerciseVideo.FileName);
-                    using (FileStream stream = new FileStream(path, FileMode.Create))
-                    {
-                        await createExerciseVideoRecord.ExerciseVideo.CopyToAsync(stream);
-                        stream.Close();
-                    }
+
+
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "ExerciseVideo", createExerciseVideoRecord.ExerciseVideo.FileName);
+                        using (FileStream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await createExerciseVideoRecord.ExerciseVideo.CopyToAsync(stream);
+                            stream.Close();
+                        }
+                    
+
+
+                    await _exerciseVideoService.AddAsync(createExerciseVideoRecord);
+
                 }
-
-
-                await _exerciseVideoService.AddAsync(createExerciseVideoRecord);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = e.InnerException.Message.ToString();
 
             }
 

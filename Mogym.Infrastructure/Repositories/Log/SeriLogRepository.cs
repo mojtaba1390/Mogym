@@ -22,7 +22,7 @@ namespace Mogym.Infrastructure.Repositories.Log
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.MSSqlServer(
-                    connectionString: "Server=45.139.10.231;Database=MogymLog;User Id=MogymUser;Password=Mojt@b@12345;TrustServerCertificate=true",
+                    connectionString: "Server=45.139.10.231;Database=MogymLog;User Id=MogymUser;Password=Mojt@b@123456;TrustServerCertificate=true",
                     tableName: "SeriLog",
                     autoCreateSqlTable: false)
                 .CreateLogger();
