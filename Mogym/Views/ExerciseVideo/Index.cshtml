@@ -13,7 +13,7 @@
                 <div class="card-body mb-50">
                     <a asp-action="Create" class="btn btn-success-card px-5 mb-4">ایجاد</a>
 
-                    <table id="paidPlan" class="table table-bordered" style="width:100%">
+                    <table id="exercisevideo" class="table table-bordered" style="width:100%">
                         <thead>
                             <tr>
                                 <th>نام حرکت</th>
@@ -83,5 +83,41 @@
                 }
             });
         }
+
+
+        $(function () {
+
+
+            $("#exercisevideo").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                ],
+                "pageLength": 25,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+
     </script>
 }

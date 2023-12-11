@@ -38,7 +38,7 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var exercises = _unitOfWork.ExerciseVideoRepository.GetAll();
+                var exercises = _unitOfWork.ExerciseVideoRepository.GetAll().OrderByDescending(x=>x.Id);
                 return _mapper.Map<List<ExerciseVideoRecord>>(exercises);
             }
             catch (Exception ex)
