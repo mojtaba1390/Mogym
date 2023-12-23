@@ -18,10 +18,11 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.Biography, z => z.MapFrom(a => a.Biography))
                 .ForMember(x => x.Id, z => z.MapFrom(a => a.Id))
                 .ForMember(x => x.RowVersion, z => z.Ignore())
-                .ForAllMembers(opts =>
-                {
-                    opts.Condition((src, dest, srcMember) => srcMember != null);
-                });
+                .ForPath(x => x.User.UserName, z => z.MapFrom(a => a.UserName));
+            //.ForAllMembers(opts =>
+            //{
+            //    opts.Condition((src, dest, srcMember) => srcMember != null);
+            //});
 
 
         }

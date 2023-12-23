@@ -82,7 +82,7 @@ namespace Mogym.Application.Services
 
 
 
-		public async Task Update(CreateTrainerProfileRecord trainerInfoRecord)
+		public void Update(CreateTrainerProfileRecord trainerInfoRecord)
         {
             try
             {
@@ -91,10 +91,10 @@ namespace Mogym.Application.Services
                     .FirstOrDefault();
 
                 var trainerInfo = _mapper.Map(trainerInfoRecord, trainerProfileOld);
-                var user = _mapper.Map(trainerInfoRecord, trainerProfileOld.User);
+                //var user = _mapper.Map(trainerInfoRecord, trainerProfileOld.User);
 
-                 _unitOfWork.TrainerProfileRepository.Update(trainerInfo,false);
-                 _unitOfWork.UserRepository.Update(user);
+                  _unitOfWork.TrainerProfileRepository.Update(trainerInfo);
+                  //_unitOfWork.UserRepository.Update(user);
             }
             catch (Exception ex)
             {

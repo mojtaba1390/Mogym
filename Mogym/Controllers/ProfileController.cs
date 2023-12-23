@@ -80,12 +80,18 @@ namespace Mogym.Controllers
                 }
 
 
-                await _trainerProfileService.Update(CreateTrainerProfileRecord);
+                _trainerProfileService.Update(CreateTrainerProfileRecord);
 
             }
-
+            else
+            {
+                TempData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);
+            }
 
             return RedirectToAction("Index", "Account");
+
+
+
         }
 
 

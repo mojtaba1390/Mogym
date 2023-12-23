@@ -28,7 +28,7 @@ namespace Mogym.Application.Validation.TrainerProfile
 
 
             RuleFor(x => x.UserName)
-                .Must(z => !IsAnyUserNameExist(z)).WithMessage("نام کاربری انتخابی قبلا در سیستم ثبت شده است")
+                //.Must(z => !IsAnyUserNameExist(z)).WithMessage("نام کاربری انتخابی قبلا در سیستم ثبت شده است")
                 .Must(z => !IsDigitOrLetter(z)).WithMessage("نام کاربری فقط شامل حروف یا عدد باشد");
 
 

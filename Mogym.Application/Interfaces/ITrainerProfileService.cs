@@ -14,7 +14,7 @@ namespace Mogym.Application.Interfaces
         Task<TrainerProfileRecord?> GetByUserName(string username);
         Task<CreateTrainerProfileRecord> GetByUserId(int userId);
 
-		Task Update(CreateTrainerProfileRecord trainerInfo);
+		void Update(CreateTrainerProfileRecord trainerInfo);
         Task<CreateTrainerProfileRecord> GetEntityByUserId(int userId);
         bool IsAnyUserNameExist(string? username);
         Task<TrainerProfileRecord?> GetById(int trainerId);
