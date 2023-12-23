@@ -161,6 +161,25 @@ namespace Mogym.Api.Controllers
             }
 
         }
+        [HttpPost("SignUpTrainerNew")]
+        public async Task<IActionResult> SignUpTrainerNew([FromBody] SignUpTrainerRecordNew signUpTrainerRecordNew )
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                     await _userService.CreateTrainerNew(signUpTrainerRecordNew);
+                    return Ok();
+                }
+
+                return BadRequest(Helper.GetModelSateErroMessage(ModelState));
+            }
+            catch (Exception e)
+            {
+                return Problem();
+            }
+
+        }
 
     }
 }

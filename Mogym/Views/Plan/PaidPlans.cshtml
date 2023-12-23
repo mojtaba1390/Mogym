@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>نام ورزشکار</th>
                                     <th>تاریخ ثبت </th>
+                                    <th>کد رهگیری </th>
                                     <th>وضعیت</th>
                                     <th>تصویر رسید</th>
                                     <th>عملیات</th>
@@ -42,6 +43,7 @@
 
                                         <td>@itm.AthletName</td>
                                         <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                        <td>@itm.TrackingCode</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>
                                             <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#ShowPaidPicture" onclick="paidPicture('@itm.PaidPicture')">نمایش</button>

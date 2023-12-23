@@ -266,6 +266,46 @@ namespace Mogym.Application.Services
             return _unitOfWork.UserRepository.Find(x => x.Email.Trim() == email.Trim()).Any();
         }
 
+        public async Task CreateTrainerNew(SignUpTrainerRecordNew signUpTrainerRecordNew)
+        {
+            try
+            {
+                var trainer = _mapper.Map<User>(signUpTrainerRecordNew);
+                var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(trainer);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                trainer.UserRoles.Add(userRole);
+
+                await _unitOfWork.UserRepository.AddAsync(trainer);
+
+                var trainerProfile = new TrainerProfile();
+                trainerProfile.UserId = trainer.Id;
+                trainerProfile.CartOwnerName = trainer.FirstName + " " + trainer.LastName;
+                await _unitOfWork.TrainerProfileRepository.AddAsync(trainerProfile);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task ChangePassword(string password)
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var entity = _unitOfWork.UserRepository.GetById(userId);
+                entity.Password = Common.Helper.HashString(password);
+                await _unitOfWork.UserRepository.UpdateAsync(entity);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+;           }
+        }
+
 
         /// <summary>
         /// این متد برای تغییر وضعیت یوزر از منتظر تائید اس ام اس به تائید و اعطای رول ورزشکار به یوزر بعد از ثبت نام هست

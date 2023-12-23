@@ -21,6 +21,8 @@ namespace Mogym.Domain.Entities
         public EnumPlanStatus PlanStatus { get; set; }
         public string? PaidPicture { get; set; }
 
+        public int TrackingCode { get; set; }
+
         public string? Description { get; set; }
 
 

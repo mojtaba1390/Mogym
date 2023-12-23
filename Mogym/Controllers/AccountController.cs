@@ -268,6 +268,35 @@ namespace Mogym.Controllers
         }
 
 
+        [Authorize]
+        public async Task<IActionResult> ChangePassword()
+        {
+            return View();
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(string passsword)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(passsword))
+                    ArgumentNullException.ThrowIfNull(passsword);
+
+                await _userService.ChangePassword(passsword);
+                await HttpContext.SignOutAsync();
+                return View(nameof(Login));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+
 
     }
 }

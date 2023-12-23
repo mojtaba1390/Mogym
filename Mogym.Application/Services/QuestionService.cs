@@ -41,7 +41,8 @@ namespace Mogym.Application.Services
                     AnserQuestionId = question.Id,
                     UserId = userId,
                     TrainerId = createQuestionRecord.TrainerId,
-                    PlanStatus = EnumPlanStatus.Registered
+                    PlanStatus = EnumPlanStatus.Registered,
+                    TrackingCode = Random.Shared.Next(1000,9999)
                 };
                 await _unitOfWork.PlanRepository.AddAsync(plan);
 

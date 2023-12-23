@@ -21,5 +21,7 @@ namespace Mogym.Application.Interfaces
         User? GetCurrentUserRols();
         Task<UserRecord> SignUp(SignupRecord signupRecord);
         bool IsThereAnyEmailAddress(string email);
+        Task CreateTrainerNew(SignUpTrainerRecordNew signUpTrainerRecordNew);
+        Task ChangePassword(string password);
     }
 }

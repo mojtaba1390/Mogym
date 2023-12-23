@@ -13,6 +13,7 @@ namespace Mogym.Application.Records.Plan
         public string TrainerName { get; init; }
         public string? Description { get; init; }
         public EnumPlanStatus PlanStatus { get; init; }
+        public int TrackingCode { get; init; }
         public DateTime InsertDate { get; init; }
 
     }

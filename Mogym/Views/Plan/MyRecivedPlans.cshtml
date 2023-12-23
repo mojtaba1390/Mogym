@@ -20,6 +20,7 @@
                             <tr>
                                 <th>نام مربی</th>
                                 <th>تاریخ ثبت </th>
+                                <th>کد رهگیری </th>
                                 <th>توضیحات تکمیلی برنامه</th>
                                 <th>عملیات</th>
                             </tr>
@@ -31,6 +32,7 @@
 
                                     <td>@itm.TrainerName</td>
                                     <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                    <td>@itm.TrackingCode</td>
                                     <td>@itm.Description</td>
                                     <td>
                                         <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>

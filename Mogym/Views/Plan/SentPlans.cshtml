@@ -35,6 +35,7 @@
                                 <tr>
                                     <th>نام ورزشکار</th>
                                     <th>تاریخ ثبت </th>
+                                    <th>کد رهگیری </th>
                                     <th>وضعیت</th>
                                     <th>توضیحات تکمیلی برنامه</th>
                                     <th>عملیات</th>
@@ -47,6 +48,7 @@
 
                                         <td>@itm.AthletName</td>
                                         <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                        <td>@itm.TrackingCode</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>@itm.Description</td>
                                         <td>
