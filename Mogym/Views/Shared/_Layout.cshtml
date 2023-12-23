@@ -6,10 +6,13 @@
 @using Mogym.Application.Records.Role
 @using Mogym.Application.Records.User
 @using StackExchange.Redis
+@using Mogym
 @inject IRedisCacheService _redisCacheService;
 @inject IConfiguration _configuration;
 @inject IUserService _userService;
 @inject IMenuService _menuService;
+@inject IHttpContextAccessor _accessor;
+
 @{
 
 
@@ -29,15 +32,16 @@
     //}
     //else
     //{
-        //var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
-        // user =await _userService.GetUserWithRoleAndPermission(mobile);
+    //var mobile = User.FindFirstValue(ClaimTypes.MobilePhone);
+    // user =await _userService.GetUserWithRoleAndPermission(mobile);
     activeMenus = await _menuService.GetActiveUserMenus();
-        menus = activeMenus;
+    menus = activeMenus;
     //}
 
 
     //TODO:اینجا باید لیستی از منو ها گرفته بشه که در دسترسی وجد دارد
 
+    var roleName = _accessor.GetCurrentUserRoleName();
 
 }
 
@@ -149,21 +153,23 @@
                             {
                                 @User.FindFirstValue(ClaimTypes.Name)
                             }
-                                    else
+                            else
                                 @User.FindFirstValue(ClaimTypes.Email)
 
                         }
                         <div class="dropdown-content">
                             <ul>
-
-                                <li>
-                                    <a class="text-align" asp-controller="Profile" asp-action="PersonInfo">
-                                        <i class="fas fa-user"></i>
-                                        <span>پروفایل</span>
-                                    </a>
-                                </li>
-
-
+                                @{
+                                    if (roleName.Equals("Trainer"))
+                                    {
+                                        <li>
+                                            <a class="text-align" asp-controller="Profile" asp-action="PersonInfo">
+                                                <i class="fas fa-user"></i>
+                                                <span>پروفایل</span>
+                                            </a>
+                                        </li>
+                                    }
+                                }
                                 <li>
                                     <a class="text-align" asp-controller="Account" asp-action="ChangePassword">
                                         <i class="fas fa-key"></i>
@@ -192,7 +198,7 @@
             <a href="/" class="brand-link d-flex justify-content-start">
                 <img src="/img/mogym-logo.png" loading="lazy" class="text-center margin-0 ronix-logo-header py-3 px-3 " />
                 <img src="/img/mogym-logo.png" loading="lazy" width="43" class="favicon-svg" />
-           </a>
+            </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
@@ -202,12 +208,12 @@
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                         @{
-                            var mainMenus = menus.Where(p => p.ParentId == null).OrderBy(x=>x.Id).ToList();
+                            var mainMenus = menus.Where(p => p.ParentId == null).OrderBy(x => x.Id).ToList();
                             @foreach (var itm in mainMenus)
                             {
                                 var sub1 = menus.Where(m => m.ParentId == itm.Id).ToList();
                                 <li class="nav-item has-treeview ">
-                                    <a href="#" class="nav-link" >
+                                    <a href="#" class="nav-link">
                                         @*<i class="@( $"fas {itm.Icon}")"></i>*@
                                         <p>
 
@@ -377,8 +383,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-right">
-
-
                 </div>
                 <div class="modal-footer">
                     <a asp-action="LogOut" asp-controller="Account" class="btn bg-buttom-red">بله</a>

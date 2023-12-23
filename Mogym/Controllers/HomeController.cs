@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
+using System.ComponentModel;
 
 namespace Mogym.Controllers
 {
+    [DisplayName("خانه")]
     public class HomeController : Controller
     {
         private readonly ITrainerProfileService _trainerProfileService;
@@ -18,7 +20,7 @@ namespace Mogym.Controllers
             return View(lastTrainers);
         }
 
-
+        [DisplayName("مربیان")]
         public async Task<IActionResult> Trainers()
         {
             var trainers = await _trainerProfileService.GetAllTrainers();

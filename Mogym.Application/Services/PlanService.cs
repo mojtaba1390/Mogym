@@ -44,6 +44,7 @@ namespace Mogym.Application.Services
                     .AsNoTracking()
                     .Include(x=>x.TrainerProfile_Plan)
                     .ThenInclude(x=>x.User)
+                    .OrderByDescending(x=>x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<PlanRecord>>(plans);
             }
@@ -111,6 +112,7 @@ namespace Mogym.Application.Services
                     .Find(x => x.TrainerId == trainer.Id && x.PlanStatus==EnumPlanStatus.Paid)
                     .AsNoTracking()
                     .Include(x => x.User_Plan)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<PaidPlanRecorrd>>(plans);
             }
@@ -149,6 +151,7 @@ namespace Mogym.Application.Services
                     .Find(x => x.TrainerId == trainer.Id && x.PlanStatus == EnumPlanStatus.TrainerApprovment)
                     .AsNoTracking()
                     .Include(x => x.User_Plan)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<ApprovePlanRecord>>(plans);
             }
@@ -214,6 +217,7 @@ namespace Mogym.Application.Services
                     .Find(x => x.TrainerId == trainer.Id && x.PlanStatus == EnumPlanStatus.Sent)
                     .AsNoTracking()
                     .Include(x => x.User_Plan)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<SentPlanRecord>>(plans);
             }
@@ -235,6 +239,7 @@ namespace Mogym.Application.Services
                     .AsNoTracking()
                     .Include(x => x.TrainerProfile_Plan)
                     .ThenInclude(x => x.User)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<PlanRecord>>(plans);
             }
@@ -256,6 +261,7 @@ namespace Mogym.Application.Services
                     .AsNoTracking()
                     .Include(x => x.TrainerProfile_Plan)
                     .ThenInclude(x => x.User)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<PlanRecord>>(plans);
             }
@@ -277,6 +283,7 @@ namespace Mogym.Application.Services
                     .AsNoTracking()
                     .Include(x => x.TrainerProfile_Plan)
                     .ThenInclude(x => x.User)
+                    .OrderByDescending(x => x.Id)
                     .ToListAsync();
                 return _mapper.Map<List<PlanRecord>>(plans);
             }

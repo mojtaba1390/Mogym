@@ -84,18 +84,14 @@
                                 <div class="single-team-wrap bg-white text-center border rounded p-4 my-3">
                                     @if (!string.IsNullOrWhiteSpace(trainer.ProfilePic))
                                     {
-                                        <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" width="120" class="img-fluid m-auto pb-4">
+                                        <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" style="width: 120px;height: 144px" class="img-fluid m-auto pb-4">
 
                                     }
                                     else
                                     {
-                                        <img src="/img/avatar5.png" alt="@trainer.FullName" width="120" class="img-fluid m-auto pb-4">
+                                        <img src="/img/avatar5.png" alt="@trainer.FullName" style="width: 120px;height: 144px" class="img-fluid m-auto pb-4">
 
                                     }
-
-
-
-
 
                                     <div class="team-content">
                                         <h5 class="mb-0">@trainer.FullName</h5>
