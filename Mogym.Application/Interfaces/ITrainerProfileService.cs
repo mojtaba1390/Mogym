@@ -22,5 +22,6 @@ namespace Mogym.Application.Interfaces
         Task<TrainerProfile?> GetCurrentUserTrainer();
         Task<List<TrainersRecord>> GetAllTrainers();
         Task<ConfirmAnswerQuestionRecord> GetConfirmAnswerQuestion(int trainerId,int trainerPlanId);
+        Task<List<LastTrainersForHomePageRecord>> GetLastTrainersForHomepage();
     }
 }

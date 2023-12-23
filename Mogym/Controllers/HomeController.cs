@@ -14,7 +14,8 @@ namespace Mogym.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+            var lastTrainers =await _trainerProfileService.GetLastTrainersForHomepage();
+            return View(lastTrainers);
         }
 
 

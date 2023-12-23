@@ -170,5 +170,17 @@ namespace Mogym.Application.Services
                 .Include(x => x.User).FirstOrDefaultAsync();
             return _mapper.Map<ConfirmAnswerQuestionRecord>(trainer);
         }
+
+        public async Task<List<LastTrainersForHomePageRecord>> GetLastTrainersForHomepage()
+        {
+            var lastTrainers = await _unitOfWork.TrainerProfileRepository
+                .GetAll()
+                .Include(x=>x.User)
+                .OrderByDescending(x=>x.Id)
+                .Take(2)
+                .ToListAsync();
+
+            return   _mapper.Map<List<LastTrainersForHomePageRecord>>(lastTrainers);
+        }
     }
 }

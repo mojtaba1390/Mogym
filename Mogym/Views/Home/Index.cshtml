@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model List<Mogym.Application.Records.Profile.LastTrainersForHomePageRecord>
+
+<!DOCTYPE html>
 <html lang="en">
 
 
@@ -8,12 +10,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:title" content="موجیم" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" /> 
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
     <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع مربیگری بدنسازی آنلاین" />
     <meta property="og:url" content="http://mogym.ir/" />
-    
-    
-    
+
+
+
 
     <!--favicon icon-->
     <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
@@ -117,8 +119,7 @@
             <!--shape image end-->
         </section>
         <!--hero section end-->
-        
-            <!--testimonial section start-->
+        <!--testimonial section start-->
         <section class="position-relative gradient-bg ptb-100">
             <div class="container">
                 <div class="row align-items-center">
@@ -134,74 +135,36 @@
                     <div class="col-md-6 col-lg-6">
                         <div class="testimonial-content-wrap">
                             <div class="owl-carousel owl-theme client-testimonial-1 dot-indicator testimonial-shape">
-                                <div class="item">
-                                    <div class="testimonial-quote-wrap">
-                                        <div class="media author-info mb-3">
-                                            <div class="author-img mr-3">
-                                                <img src="~/mainassets/img/client/1.jpg" alt="مشتری" class="img-fluid">
+                                @{
+                                    foreach (var trainer in Model)
+                                    {
+                                        <div class="item">
+                                            <div class="testimonial-quote-wrap">
+                                                <div class="media author-info mb-3">
+                                                    <div class="author-img mr-3">
+                                                        @if (!string.IsNullOrWhiteSpace(trainer.ProfilePic))
+                                                        {
+                                                            <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" class="img-fluid">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="/img/avatar5.png" alt="@trainer.FullName" class="img-fluid">
+                                                        }
+                                                    </div>
+                                                    <div class="media-body text-white">
+                                                        <h5 class="mb-0 text-white">@trainer.FullName</h5>
+                                                        <span>@trainer.UserName</span>
+                                                    </div>
+                                                    <i class="fas fa-quote-right text-white"></i>
+                                                </div>
+                                                <div class="client-say text-white">
+                                                    <p>@trainer.Biography</p>
+                                                </div>
                                             </div>
-                                            <div class="media-body text-white">
-                                                <h5 class="mb-0 text-white">جان چارلز</h5>
-                                                <span>رئیس مدیر</span>
-                                            </div>
-                                            <i class="fas fa-quote-right text-white"></i>
                                         </div>
-                                        <div class="client-say text-white">
-                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimonial-quote-wrap">
-                                        <div class="media author-info mb-3">
-                                            <div class="author-img mr-3">
-                                                <img src="~/mainassets/img/client/2.jpg" alt="مشتری" class="img-fluid">
-                                            </div>
-                                            <div class="media-body text-white">
-                                                <h5 class="mb-0 text-white">نام کاربر</h5>
-                                                <span>مدیریت منابع انسانی</span>
-                                            </div>
-                                            <i class="fas fa-quote-right text-white"></i>
-                                        </div>
-                                        <div class="client-say text-white">
-                                            <p>پس از ابتکارات گسترده ، استراتژی های رشد دوستانه کاربر را با سرعت توسعه دهید. به راحتی از طریق تحویل کاملاً آزمایش شده مزایای ابتکاری را پرورش دهید. به سرعت از سیستم عامل های متمرکز از طریق طرح های پایان به انتها استفاده کنید.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimonial-quote-wrap">
-                                        <div class="media author-info mb-3">
-                                            <div class="author-img mr-3">
-                                                <img src="~/mainassets/img/client/3.jpg" alt="مشتری" class="img-fluid">
-                                            </div>
-                                            <div class="media-body text-white">
-                                                <h5 class="mb-0 text-white">جرمی جر</h5>
-                                                <span>سرگروه</span>
-                                            </div>
-                                            <i class="fas fa-quote-right text-white"></i>
-                                        </div>
-                                        <div class="client-say text-white">
-                                            <p>بطور عینی سنتز الکترونیکی مشتری محور را برای کانالهای قابل نگهدارنده ترکیب کنید. کل نگرانه کلاهکهای مشتری را هدایت می کند در حالی که ویژگی های تاکتیکی دارد. با استفاده از انرژی از ضروریات قابل اعتماد از طریق مشتری محور استفاده کنید.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimonial-quote-wrap">
-                                        <div class="media author-info mb-3">
-                                            <div class="author-img mr-3">
-                                                <img src="~/mainassets/img/client/4.jpg" alt="مشتری" class="img-fluid">
-                                            </div>
-                                            <div class="media-body text-white">
-                                                <h5 class="mb-0 text-white">جان چارلز</h5>
-                                                <span>رئیس بازاریابی</span>
-                                            </div>
-                                            <i class="fas fa-quote-right text-white"></i>
-                                        </div>
-                                        <div class="client-say text-white">
-                                            <p>با اشتیاق نوآوری داده های را بدون همگرایی با کلیک و ملات نوآوری کنید. به صورت یکتایی روشهای تست قانع کننده را در مقابل روشهای تست ارائه می دهد. منابع مجتمع را بطور صحیح و در عین حال جهانی کشف کنید</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    }
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -264,7 +227,7 @@
             </div>
         </section>
         <!--promo section end-->
-    <section id="process" class="work-process-section position-relative  ptb-100 gray-light-bg">
+        <section id="process" class="work-process-section position-relative  ptb-100 gray-light-bg">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-9 col-lg-8">
@@ -337,7 +300,7 @@
             </div>
         </section>
 
-    
+
     </div>
 
     <!--footer section start-->
