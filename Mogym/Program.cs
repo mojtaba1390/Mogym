@@ -40,7 +40,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 // Middelware
-app.UseMiddleware<LoggingMiddleware>();
+//app.UseMiddleware<LoggingMiddleware>();
 
 
 // Configure the HTTP request pipeline.

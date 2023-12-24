@@ -39,5 +39,6 @@ namespace Mogym.Application.Records.Question
         public string? RightPic { get; init; }
 
         public string TrainerPlan { get; set; }
+        public string Mobile { get; set; }
     }
 }

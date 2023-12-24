@@ -44,9 +44,10 @@
                                     <tr>
 
                                         <td>@itm.AthletName</td>
-                                        <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                        <td style="display: table-caption;">@itm.InsertDate.GetPersianDateDetail()</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>
+                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
                                             <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="PlanDetails">جزئیات برنامه</a>
                                             <a class="btn btn-success" asp-route-planId="@itm.Id" asp-action="SendPlan">ارسال برنامه</a>
 
@@ -77,7 +78,21 @@
         </div>
     </div>
 </section>
-
+<div class="modal fade" id="ViewAQModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">پرسشنامه پاسخ داده شده</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-viewAQ">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -86,6 +101,15 @@
 @section Scripts{
     <script>
 
+        function viewAQ(planId) {
+            $.ajax({
+                url: "/Plan/GetPlanAnswerQuestion?planId=" + planId,
+                dataType: 'html',
+                success: function (data) {
+                    $('#modal-viewAQ').html(data);
+                }
+            });
+        }
 
         (function () {
 
