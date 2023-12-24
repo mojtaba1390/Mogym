@@ -135,5 +135,10 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<Workout?> GetByIdAsync(int id)
+        {
+            return await _unitOfWork.WorkoutRepository.Find(x=>x.Id==id).FirstOrDefaultAsync();
+        }
     }
 }

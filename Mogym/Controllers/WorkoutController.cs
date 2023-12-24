@@ -72,6 +72,7 @@ namespace Mogym.Controllers
                 var superSets = await _workoutService.GetSuperSetExercises(id);
                 var exerciseVideos = await _exerciseVideoService.GetAllExerciseVideo();
                 var superSetsIds = await _exerciseservice.GetWorkoutSuperSetIds(id);
+                var workout = await _workoutService.GetByIdAsync(id);
 
 
                 ViewData["ExersiceVideo"] = new SelectList(exerciseVideos, "Id", "Title");
@@ -79,6 +80,7 @@ namespace Mogym.Controllers
 
                 ViewBag.WorkoutId=id;
                 ViewBag.SuperSetsIds = superSetsIds;
+                ViewBag.PlanId = workout.PlanId;
 
                 return View(workoutDetails);
             }

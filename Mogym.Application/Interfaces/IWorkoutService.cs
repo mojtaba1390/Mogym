@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mogym.Application.Records.Exercise;
 using Mogym.Application.Records.ExerciseVideo;
 using Mogym.Application.Records.Workout;
+using Mogym.Domain.Entities;
 
 namespace Mogym.Application.Interfaces
 {
@@ -17,5 +18,6 @@ namespace Mogym.Application.Interfaces
         Task Edit(int id, string title);
         Task Delete(int deleteId);
         Task<List<SentWorkoutRecord>> GetSentWorkoutDetail(int planId);
+        Task<Workout?> GetByIdAsync(int id);
     }
 }

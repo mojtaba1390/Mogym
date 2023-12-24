@@ -262,7 +262,17 @@
 
                     </div>
                     <!-- /.card-body -->
-
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9" style="color: red">
+                            @TempData["errormessage"]
+                        </div>
+                        <div class="form-actions-buttons col-md-3">
+                                <a class="btn btn-success" asp-route-planId="@Model.PlanId" asp-action="SendPlan">ارسال برنامه</a>
+                            <a asp-controller="Plan" asp-action="ApprovePlans" class="btn btn-secondary py-2">بازگشت </a>
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <!-- /.card -->
                 <!-- /.card-footer-->

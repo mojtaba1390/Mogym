@@ -10,9 +10,11 @@ namespace Mogym.Controllers
     public class ExerciseSetController : Controller
     {
         private readonly IExerciseSetService _exerciseSetService;
-        public ExerciseSetController(IExerciseSetService exerciseSetService)
+        private readonly IExerciseservice _exerciseservice;
+        public ExerciseSetController(IExerciseSetService exerciseSetService, IExerciseservice exerciseservice)
         {
             _exerciseSetService = exerciseSetService;
+            _exerciseservice = exerciseservice;
         }
         public IActionResult Index()
         {
@@ -44,7 +46,7 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddExerciseSet(List<ExerciseSetRecord> exerciseSetRecords)
+        public async Task<IActionResult> AddExerciseSet(List<ExerciseSetRecord> exerciseSetRecords)
         {
             try
             {
@@ -55,7 +57,9 @@ namespace Mogym.Controllers
                 TempData["errormessage"] = "خطایی در سیستم رخ داده است";
 
             }
-            return View("NotFound");
+
+            var exercise =await _exerciseservice.GetByIdAsync(exerciseSetRecords.First().ExerciseId);
+            return RedirectToAction("WorkoutDetail", "Workout",new{id=exercise.WorkoutId});
         }
     }
 }

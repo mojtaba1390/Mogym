@@ -61,7 +61,7 @@ namespace Mogym.Application.Services
                 var insertedSets =  _unitOfWork.ExerciseSetRepository.Find(x => x.ExerciseId == exerciseId).ToList();
 
                 var newSets = sets.Where(x => x.Id == 0).ToList();
-                var updatedSets = sets.Where(x => x.Id > 0).ToList();
+                var updatedSets = exerciseSetRecords.Where(x => x.Id > 0).ToList();
 
                 var deletedSets = insertedSets.ExceptBy(updatedSets.Select(x=>x.Id),x=>x.Id).ToList();
 
@@ -77,9 +77,10 @@ namespace Mogym.Application.Services
                         foreach (var item in updatedSets)
                         {
                             var entity = _unitOfWork.ExerciseSetRepository.Where(x => x.Id == item.Id).First();
-                            updateList.Add(entity);
+                            var mapped = _mapper.Map(item, entity);
+                            updateList.Add(mapped);
                         }
-                        _unitOfWork.ExerciseSetRepository.UpdateRange(updatedSets);
+                        _unitOfWork.ExerciseSetRepository.UpdateRange(updateList);
                     }
                 }
                 if (deletedSets.Count > 0)

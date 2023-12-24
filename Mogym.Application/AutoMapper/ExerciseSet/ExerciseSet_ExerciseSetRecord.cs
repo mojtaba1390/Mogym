@@ -11,7 +11,7 @@ namespace Mogym.Application.AutoMapper.ExerciseSet
     {
         public ExerciseSet_ExerciseSetRecord()
         {
-            CreateMap<Domain.Entities.ExerciseSet, ExerciseSetRecord>().ReverseMap();
+            CreateMap<Domain.Entities.ExerciseSet, ExerciseSetRecord>();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Workout;
+using Mogym.Domain.Entities;
 
 namespace Mogym.Application.Interfaces
 {
@@ -13,5 +14,6 @@ namespace Mogym.Application.Interfaces
          Task<string> Delete(int id, int workoutId);
         Task<bool> IsAnyExcerciseExistByWorkoutId(int id);
         Task<List<int?>> GetWorkoutSuperSetIds(int workoutId);
+        Task<Exercise?> GetByIdAsync(int id);
     }
 }

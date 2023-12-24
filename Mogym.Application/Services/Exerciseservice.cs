@@ -122,5 +122,10 @@ namespace Mogym.Application.Services
                 .Select(z => z.SuperSetId)
                 .ToListAsync();
         }
+
+        public async Task<Exercise?> GetByIdAsync(int id)
+        {
+            return await _unitOfWork.ExerciseRepository.GetByIdAsync(id);
+        }
     }
 }
