@@ -9,8 +9,9 @@ namespace Mogym.Application.Interfaces
 {
     public interface IExerciseservice
     {
-        Task AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords);
-        Task Delete(int id);
+        Task<string> AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords);
+         Task<string> Delete(int id, int workoutId);
         Task<bool> IsAnyExcerciseExistByWorkoutId(int id);
+        Task<List<int?>> GetWorkoutSuperSetIds(int workoutId);
     }
 }

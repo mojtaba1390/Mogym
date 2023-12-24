@@ -3,6 +3,7 @@
 @{
     Layout = "_Layout";
     ViewData["title"] = "جزئیات تمرین";
+    var superSetIds = (List<int?>) ViewBag.SuperSetsIds;
 }
 
 
@@ -51,11 +52,24 @@
 
                                                     <td>
                                                         <div class="form-group">
-                                                            <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
-                                                                    aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList)ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
-                                                                <option value="@null"> انتخاب کنید</option>
-                                                            </select>
-                                                            <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
+                                                            @{
+                                                                if (superSetIds.Any(z => z == Model[index].Id))
+                                                                {
+                                                                    <span class="text-danger d-flex">این حرکت به عنوان حرکت سوپر ست انتخاب شده است</span>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
+                                                            aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList) ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
+                                                                        <option value="@null"> انتخاب کنید</option>
+                                                                    </select>
+                                                                    <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
+                                                                }
+                                                            }
+                                                            
+
+
                                                         </div>
                                                     </td>
                                                     <td class="d-flex border-0">
@@ -72,7 +86,7 @@
                                                                 <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
                                                             </div>
                                                             <div class="form-group" style="margin: 0px 10px">
-                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id')">
+                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id','@Model[index].WorkoutId')">
                                                                     حذف
                                                                 </button>
                                                             </div>
@@ -109,7 +123,8 @@
                 </div>
                 <div class="card-footer">
                     <div class="form-group row">
-                        <div class="col-md-9">
+                        <div class="col-md-9" style="color: red">
+                            @TempData["errormessage"]
                         </div>
                         <div class="form-actions-buttons col-md-3">
 @*                            <input type="submit" value="ثبت" class="btn btn-success-card" />

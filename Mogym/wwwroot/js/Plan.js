@@ -211,11 +211,11 @@ function addDescription() {
 }
 
 
-function deleteWorkout(id) {
+function deleteWorkout(id,planId) {
     $.ajax({
         type: "POST",
         url: "/Workout/Delete",
-        data: { "id": id },
+        data: { "id": id,"planId":planId },
         success: function (response) {
             $('#modal-deleteRow').html(response);
         },

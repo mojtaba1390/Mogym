@@ -69,7 +69,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteWorkout('@Model.WorkoutRecords[index].Id')">حذف</button>
+                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteWorkout('@Model.WorkoutRecords[index].Id','@Model.WorkoutRecords[index].PlanId')">حذف</button>
                                                         </div>
                                                         if (index == Model.WorkoutRecords.Count - 1)
                                                         {

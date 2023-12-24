@@ -71,11 +71,14 @@ namespace Mogym.Controllers
                 var workoutDetails = await _workoutService.GetWorkoutDetails(id);
                 var superSets = await _workoutService.GetSuperSetExercises(id);
                 var exerciseVideos = await _exerciseVideoService.GetAllExerciseVideo();
+                var superSetsIds = await _exerciseservice.GetWorkoutSuperSetIds(id);
+
 
                 ViewData["ExersiceVideo"] = new SelectList(exerciseVideos, "Id", "Title");
                 ViewData["SuperSets"] = new SelectList(superSets, "Id", "Title");
 
                 ViewBag.WorkoutId=id;
+                ViewBag.SuperSetsIds = superSetsIds;
 
                 return View(workoutDetails);
             }
@@ -89,13 +92,13 @@ namespace Mogym.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id,int planId)
         {
             try
             {
 
                 bool isAnyExerciseExist = await _exerciseservice.IsAnyExcerciseExistByWorkoutId(id);
-                return PartialView("_DeleteConfirmation",new Tuple<bool, int, string>(isAnyExerciseExist,id,"Workout"));
+                return PartialView("_DeleteConfirmation",new Tuple<bool, int,int, string>(isAnyExerciseExist,id,planId,"Workout"));
             }
             catch (Exception e)
             {
@@ -106,7 +109,7 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(int deleteId)
+        public async Task<IActionResult> DeleteConfirmation(int deleteId,int planId)
         {
             try
             {
@@ -118,7 +121,7 @@ namespace Mogym.Controllers
                 TempData["errormessage"] = "خطایی در سیستم رخ داده است";
 
             }
-            return View("NotFound");
+            return RedirectToAction("PlanDetails","Plan",new{ planId =planId});
         }
 
         public async Task<IActionResult> SentWorkoutDetail(int planId)

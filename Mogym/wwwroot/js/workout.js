@@ -12,11 +12,11 @@
 
 })
 
-function deleteExercise(id) {
+function deleteExercise(id,workoutId) {
     $.ajax({
         type: "POST",
         url: "/Exercise/Delete",
-        data: { "id": id },
+        data: { "id": id,"workoutId":workoutId },
         success: function (response) {
             window.location.reload();
         },

@@ -31,22 +31,44 @@ namespace Mogym.Application.Services
             _logger = logger;
         }
 
-        public async Task AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords)
+        public async Task<string> AddAndUpdateExercises(List<WorkoutExerciseRecord> workoutExerciseRecords)
         {
             try
             {
-                var exercises = _mapper.Map<List<Exercise>>(workoutExerciseRecords);
 
-                var newExercises = exercises.Where(x => x.Id == 0).ToList();
-                var updateExercises = exercises.Where(x => x.Id != 0).ToList();
+                var newExercises = workoutExerciseRecords.Where(x => x.Id == 0).ToList();
+                var updateExercises = workoutExerciseRecords.Where(x => x.Id != 0).ToList();
 
                 if (newExercises.Any())
-                    await _unitOfWork.ExerciseRepository.AddRangAsync(newExercises);
+                {
+                    var nexercises = _mapper.Map<List<Exercise>>(newExercises);
+                    await _unitOfWork.ExerciseRepository.AddRangAsync(nexercises);
+
+                }
+
                 if (updateExercises.Any())
-                    _unitOfWork.ExerciseRepository.UpdateRange(updateExercises);
+                {
+                    List<Exercise> exercises = new List<Exercise>();
+                    foreach (var ex in updateExercises)
+                    {
+                        if (ex.SuperSetId is not null)
+                        {
+                            var thisSupersetCount = updateExercises.Count(x=>x.SuperSetId==ex.SuperSetId);
+                            if (thisSupersetCount>1)
+                                return "این حرکت قبلا برای سوپرست انتخاب شده است";
+
+                        }
+                        var exercise = _unitOfWork.ExerciseRepository.GetById(ex.Id??0);
+
+                        var uexercise = _mapper.Map(ex, exercise);
+                        exercises.Add(uexercise);
+                    }
+                    _unitOfWork.ExerciseRepository.UpdateRange(exercises);
+
+                }
 
 
-
+                return null;
             }
             catch (Exception ex)
             {
@@ -56,13 +78,19 @@ namespace Mogym.Application.Services
             }
         }
 
-        public async Task Delete(int id)
+        public async Task<string> Delete(int id,int workoutId)
         {
             try
             {
+                bool isThisIdIsAnyExerciseSuperSetId = await _unitOfWork.ExerciseRepository
+                    .Find(x => x.SuperSetId == id && x.WorkoutId == workoutId).AnyAsync();
+                if (isThisIdIsAnyExerciseSuperSetId)
+                    return
+                        "این حرکت سوپر ست حرکت دیگری می باشد و امکان حذف آن وجود ندارد.لطفا ابتدا حرکت سوپرست وابسته را تغییر و سپس این حرکت را حذف کنید.";
+
                 var entity = await _unitOfWork.ExerciseRepository.GetByIdAsync(id);
                  _unitOfWork.ExerciseRepository.Delete(entity);
-
+                 return null;
             }
             catch (Exception ex)
             {
@@ -85,6 +113,14 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex);
                 throw ex;
             }
+        }
+
+        public async Task<List<int?>> GetWorkoutSuperSetIds(int workoutId)
+        {
+            return await _unitOfWork.ExerciseRepository
+                .Find(x => x.WorkoutId == workoutId && x.SuperSetId!=null)
+                .Select(z => z.SuperSetId)
+                .ToListAsync();
         }
     }
 }

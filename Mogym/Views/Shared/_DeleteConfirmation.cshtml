@@ -1,8 +1,9 @@
-﻿@model Tuple<bool,int,string>
+﻿@model Tuple<bool,int,int,string>
 
 
-<form asp-controller="@Model.Item3" asp-action="DeleteConfirmation" onsubmit="window.location.reload();">
+<form asp-controller="@Model.Item4" asp-action="DeleteConfirmation" onsubmit="window.location.reload();">
     <input hidden id="deleteId" name="deleteId" value="@Model.Item2" />
+    <input hidden id="planId" name="planId" value="@Model.Item3" />
     <div class="card-body py-5">
         <div class="mb-1">
             @if (Model.Item1)

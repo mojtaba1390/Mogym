@@ -39,7 +39,11 @@ namespace Mogym.Controllers
         {
             try
             {
-                await _exerciseservice.AddAndUpdateExercises(workoutExerciseRecords);
+                var message=await _exerciseservice.AddAndUpdateExercises(workoutExerciseRecords);
+
+                if (!string.IsNullOrWhiteSpace(message))
+                    TempData["errormessage"] = message;
+
 
                 return RedirectToAction("WorkoutDetail", "Workout",
                     new { id = workoutExerciseRecords.FirstOrDefault().WorkoutId});
@@ -52,18 +56,20 @@ namespace Mogym.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task Delete(int id,int workoutId)
         {
             try
             {
-                await _exerciseservice.Delete(id);
+                var message=await _exerciseservice.Delete(id,workoutId);
+                if (!string.IsNullOrWhiteSpace(message))
+                    TempData["errormessage"] = message;
 
             }
             catch (Exception ex)
             {
                 TempData["errormessage"] = "خطایی در سیستم رخ داده است";
             }
-            return View("NotFound");
+            //return RedirectToAction("WorkoutDetail", "Workout", new { id = workoutId });
 
         }
     }

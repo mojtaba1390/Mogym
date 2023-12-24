@@ -64,13 +64,13 @@ namespace Mogym.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int id, int planId)
         {
             try
             {
 
                 bool isAnyIngridientExist = await _mealIngridientService.IsAnyIngridientExistByMealId(id);
-                return PartialView("_DeleteConfirmation", new Tuple<bool, int, string>(isAnyIngridientExist, id, "Meal"));
+                return PartialView("_DeleteConfirmation", new Tuple<bool, int,int, string>(isAnyIngridientExist, id,planId, "Meal"));
             }
             catch (Exception e)
             {
@@ -81,7 +81,7 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(int deleteId)
+        public async Task<IActionResult> DeleteConfirmation(int deleteId, int planId)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Mogym.Controllers
                 TempData["errormessage"] = "خطایی در سیستم رخ داده است";
 
             }
-            return View("NotFound");
+            return RedirectToAction("PlanDetails", "Plan", new { planId = planId });
         }
 
 
