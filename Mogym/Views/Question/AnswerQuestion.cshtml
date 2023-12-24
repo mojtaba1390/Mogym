@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="pt-1" for="LastName">موبایل</label>
-                                <input class="form-control" />
+                                <input class="form-control" asp-for="Mobile" />
                                 <span class="text-danger"></span>
                             </div>
 
@@ -290,6 +290,12 @@
                     required: true,
                     valueNotEquals: "0"
 
+                },
+                Mobile: {
+                    required: true,
+                    maxlength: 11,
+                    minlength:11
+
                 }
             },
             messages: {
@@ -310,11 +316,15 @@
                 },
                 FirstName: {
                     required: "پر کردن نام  الزامی است",
-                    maxlength: "نام  بیشتر از 100 کارکتر میباشد.",
+                    maxlength: "نام  بیشتر از 100 کارکتر میباشد."
                 },
                 LastName: {
                     required: "پر کردن نام خانوادگی الزامی است",
-                    maxlength: "نام خانوادگی بیشتر از 100 کارکتر میباشد.",
+                    maxlength: "نام خانوادگی بیشتر از 100 کارکتر میباشد."
+                },
+                Mobile: {
+                    required: "پر کردن شماره موبایل الزامی است",
+                    maxlength: "شماره موبایل باید ۱۱ کاراکتر باشد."
                 }
 
             }

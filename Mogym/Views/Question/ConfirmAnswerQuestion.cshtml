@@ -8,15 +8,15 @@
 
 <section class="content card-custome" id="guide-card">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="position-absolute">
                 <div class="section1 mb-5 section" id="section1">
                     <div class="container-fluid  row">
-                        <div class="col-6 text-right text aos-init aos-animate " data-aos="fade-up">
+                        <div class="col-12 text-right text aos-init aos-animate " data-aos="fade-up">
                             <h3 class="pb-4 text-right">تائید ثبت درخواست</h3>
-                            <p> <i class="fas fa-comment-dots px-2"></i>ورزشکار عزیز، درخواست شما برای @Model.PlanName ثبت گردید. لطفا هزینه ی این برنامه به مبلغ @Model.PlanCost.ToString("N0") ریال را به کارت با مشخصات زیر واریز کرده و تصویر رسید پرداخت شده را در صفحه کاربری و از طریق منو <span>پرداخت نشده</span> بارگزاری کرده و کلید <span> ارسال را کلیک کنید.</span> </p>
+                            <p> <i class="fas fa-comment-dots px-2"></i>ورزشکار عزیز، درخواست شما برای @Model.PlanName ثبت گردید. لطفا هزینه ی این برنامه به مبلغ @Model.PlanCost.ToString("N0") ریال را به کارت با مشخصات زیر واریز کرده و تصویر رسید پرداخت شده را در صفحه کاربری و از طریق منو <span style="color: red">پرداخت نشده</span> بارگزاری کرده و کلید <span style="color: red"> ارسال را کلیک کنید.</span> </p>
                             <ul class="list-base">
-                                <li><i class="fas fa-arrow-left"></i> شماره کارت : @Model.CartNumber</li>
+                                <li><i class="fas fa-arrow-left"></i> شماره کارت : <span style="direction: ltr">@Model.CartNumber</span></li>
                                 <li><i class="fas fa-arrow-left"></i> نام صاحب کارت: @Model.CartOwner</li>
                                 <li><i class="fas fa-arrow-left"></i> نام مربی: @Model.TrainerName</li>
                             </ul>

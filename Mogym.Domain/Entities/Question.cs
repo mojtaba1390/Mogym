@@ -42,7 +42,7 @@ namespace Mogym.Domain.Entities
         public string? LeftPic { get; set; }
         public string? RightPic { get; set; }
 
-        public EnumTrainerPlan TrainerPlan { get; set; }
+        public int TrainerPlan { get; set; }
 
 
 

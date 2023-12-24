@@ -36,6 +36,13 @@ namespace Mogym.Application.Services
                 var userId = _accessor.GetUser();
                 var entity = _mapper.Map<Question>(createQuestionRecord);
                 var question = await _unitOfWork.QuestionRepository.AddAsync(entity);
+
+                //TODO:چون قبلا بر اساس otp لاگین می شد شماره موبایل رو داشتیم ولی الان که لاگین عوض شده شماره موبایل رو دستی ست کردم.بعدا این مورد اصلاح بشه.توی auttomapper
+                var user = _unitOfWork.UserRepository.GetById(userId);
+                user.Mobile = createQuestionRecord.Mobile;
+                await _unitOfWork.UserRepository.UpdateAsync(user);
+
+
                 var plan = new Plan()
                 {
                     AnserQuestionId = question.Id,

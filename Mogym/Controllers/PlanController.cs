@@ -57,7 +57,7 @@ namespace Mogym.Controllers
                     }
 
                     await _planService.UpdatePaidPicture(Int32.Parse(planId),PaidPicture.FileName);
-                    return RedirectToAction(nameof(MyUnPaidPlans));
+                    return RedirectToAction(nameof(PaidPlans));
 
 
                 }

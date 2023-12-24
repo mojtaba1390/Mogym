@@ -22,7 +22,7 @@
                                     <th>تاریخ ثبت </th>
                                     <th>کد رهگیری </th>
                                     <th>وضعیت</th>
-                                    <th>عملیات</th>
+                                    <th colspan="2">عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,27 +31,20 @@
                                     <tr>
 
                                         <td>@itm.TrainerName</td>
-                                        <td>@itm.InsertDate.GetPersianDateDetail()</td>
+                                        <td style="display: table-caption;">@itm.InsertDate.GetPersianDateDetail()</td>
                                         <td>@itm.TrackingCode</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
 
                                         <td>
                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
+                                        </td>
+                                        <td>
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
-
 
                                         </td>
                                     </tr>
                                 }
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>نام مربی</th>
-                                    <th>تاریخ ثبت </th>
-                                    <th>وضعیت</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </tfoot>
                         </table>
 
                     </div>

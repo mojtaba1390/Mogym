@@ -13,6 +13,7 @@ namespace Mogym.Application.Records.Question
     {
         public string FirstName { get; init; }
         public string LastName { get; init; }
+        public string Mobile { get; init; }
         public int Gender { get; init; }
         public int Age { get; init; }
         public int Height { get; init; }

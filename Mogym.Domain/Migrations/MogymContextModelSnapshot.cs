@@ -573,6 +573,8 @@ namespace Mogym.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TrainerPlan");
+
                     b.ToTable("Question", (string)null);
                 });
 
@@ -1132,6 +1134,17 @@ namespace Mogym.Domain.Migrations
                     b.Navigation("User_Plan");
                 });
 
+            modelBuilder.Entity("Mogym.Domain.Entities.Question", b =>
+                {
+                    b.HasOne("Mogym.Domain.Entities.TrainerPlanCost", "TrainerPlanCost")
+                        .WithMany("Questions")
+                        .HasForeignKey("TrainerPlan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrainerPlanCost");
+                });
+
             modelBuilder.Entity("Mogym.Domain.Entities.RolePermission", b =>
                 {
                     b.HasOne("Mogym.Domain.Entities.Permission", "RolePermission_Permission")
@@ -1305,6 +1318,11 @@ namespace Mogym.Domain.Migrations
             modelBuilder.Entity("Mogym.Domain.Entities.SupplimentPlan", b =>
                 {
                     b.Navigation("SupplimentPlanDetails");
+                });
+
+            modelBuilder.Entity("Mogym.Domain.Entities.TrainerPlanCost", b =>
+                {
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Mogym.Domain.Entities.TrainerProfile", b =>

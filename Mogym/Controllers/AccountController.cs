@@ -103,10 +103,13 @@ namespace Mogym.Controllers
                     }
 
 
-                    ArgumentNullException.ThrowIfNull(user);
+                    ViewBag.ErrorMessage = "کاربری با این مشخصات یافت نشد";
 
-                    return RedirectToAction(nameof(Login));
                 }
+
+
+
+
             }
             catch (Exception e)
             {

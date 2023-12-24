@@ -143,26 +143,60 @@
                         <div class="form-group col-md-3">
                             <label class="pt-1" for="Gender">تصویر از رو به رو</label>
                             <div>
-                                <img src="/BodyPic/@Model.FrontPic" />
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(@Model.FrontPic))
+                                    {
+                                        <img style="width: 300px;height: 328px" src="/BodyPic/@Model.FrontPic" />
+                                    }
+                                    else
+                                    {
+                                        <p style="color: red">تصویری بارگزاری نشده است</p>
+                                    }
+                                }
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="pt-1" for="Gender">تصویر از پشت</label>
                             <div>
-                                <img src="/BodyPic/@Model.BackPic" />
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(@Model.BackPic))
+                                    {
+                                        <img style="width: 300px;height: 328px" src="/BodyPic/@Model.BackPic" />
+                                    }
+                                    else
+                                    {
+                                        <p style="color: red">تصویری بارگزاری نشده است</p>
+                                    }
+                                }
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="pt-1" for="Gender">تصویر از پهلو چپ</label>
                             <div>
-                                <img src="/BodyPic/@Model.LeftPic" />
-                            </div>
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(@Model.LeftPic))
+                                    {
+                                        <img style="width: 300px;height: 328px" src="/BodyPic/@Model.LeftPic" />
+                                    }
+                                    else
+                                    {
+                                        <p style="color: red">تصویری بارگزاری نشده است</p>
+                                    }
+                                }                            </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label class="pt-1" for="Gender">تصویر از پهلو راست</label>
                             <div>
-                                <img src="/BodyPic/@Model.RightPic" />
-                            </div>
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(@Model.RightPic))
+                                    {
+                                        <img style="width: 300px;height: 328px" src="/BodyPic/@Model.RightPic" />
+                                    }
+                                    else
+                                    {
+                                        <p style="color: red">تصویری بارگزاری نشده است</p>
+                                    }
+                                }                            </div>
                         </div>
                     </fieldset>
                     <fieldset class="row p-3 mb-5">

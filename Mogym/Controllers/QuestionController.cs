@@ -68,15 +68,21 @@ namespace Mogym.Controllers
                         .Where(x => x.PropertyType == typeof(IFormFile))
                         .Select(x => (IFormFile)x.GetValue(createQuestionRecord))
                         .ToList();
-                    
-                    foreach (var item in pics.Where(x=>!string.IsNullOrWhiteSpace(x.FileName)))
+
+                    var picsWithData = pics.Where(z=>z!=null);
+
+
+                    foreach (var item in picsWithData)
                     {
-                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "BodyPic", item.FileName);
-                        using (FileStream stream = new FileStream(path, FileMode.Create))
-                        {
-                            await item.CopyToAsync(stream);
-                            stream.Close();
-                        }
+
+                            var path = Path.Combine(_webHostEnvironment.WebRootPath, "BodyPic", item.FileName);
+                            using (FileStream stream = new FileStream(path, FileMode.Create))
+                            {
+                                await item.CopyToAsync(stream);
+                                stream.Close();
+                            }
+                        
+
                     }
 
                     await _questionService.AddQuestion(createQuestionRecord);

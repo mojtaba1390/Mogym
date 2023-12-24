@@ -38,6 +38,6 @@ namespace Mogym.Application.Records.Question
         public string? LeftPic { get; init; }
         public string? RightPic { get; init; }
 
-        public string TrainerPlan { get; init; }
+        public string TrainerPlan { get; set; }
     }
 }

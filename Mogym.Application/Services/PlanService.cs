@@ -79,9 +79,10 @@ namespace Mogym.Application.Services
             var userId= _accessor.GetUser();
             return await _unitOfWork.PlanRepository.Find(x => x.UserId == userId && planId == planId).AnyAsync();
         }
-
+        
         public async Task<AnswerQuestionRecord> GetAnswerQuestionWithPlanId(int planId)
         {
+            //TODO: اینجا یه ایراد طراحی اتفاق افتاده و اونم اینه که نوع برنامه در کواسچن مشخص شده و هیچ رابطه ای بین اون و هزینه مربی وجود نداره در صورتی که باید این رابطه در پلن تعریف می ش.دو تا کار میشه کرد که در جدول پلن بجای ترینر با هزینه ها رابطه زد و از روی اون به مربی رسید یا هر دو رو داشته باشیم
             try
             {
                 var userId = _accessor.GetUser();
@@ -90,7 +91,13 @@ namespace Mogym.Application.Services
                     .Include(x => x.AnsweQuestion_Plan)
                     .Select(x => x.AnsweQuestion_Plan)
                     .FirstOrDefaultAsync();
-                return _mapper.Map<AnswerQuestionRecord>(answerQuestion);
+                var aq= _mapper.Map<AnswerQuestionRecord>(answerQuestion);
+
+                var cost =await  _unitOfWork.TrainerPlanCostRepository.GetByIdAsync(answerQuestion.TrainerPlan);
+                aq.TrainerPlan = cost.TrainerPlan.GetEnumDescription() + "-" + cost.OriginalCost.Value.ToString("N0") + "ریال ";
+
+                return aq;
+
             }
             catch (Exception ex)
             {

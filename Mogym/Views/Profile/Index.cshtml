@@ -119,14 +119,14 @@
                         <div class="team-single-text">
                             <div class="team-name mb-4">
                                 <h4 class="mb-1">@Model.FirstName @Model.LastName</h4>
-                                <span>@Model.UserName</span>
+                                <span>@Model.UserName@@</span>
                             </div>
                             <ul class="team-single-info">
-                                <li><</li>
+                                <li></li>
                                 <li></li>
                             </ul>
                             <div class="text-content mt-20">
-                                <p>@Model.Biography</p>
+                                @Html.Raw(Model.Biography.Replace("\r\n", "<br />"))
                             </div>
                             <div class="action-btns mt-4">
                                 <ul class="list-inline">
@@ -184,7 +184,7 @@
                                 <div class="col-lg-4 col-md-6 col-sm-8">
                                     <div class="text-center bg-white single-pricing-pack mt-4">
                                         <div class="price-img pt-4">
-                                            <img src="~/mainassets/img/priching-img-1.png" alt="قیمت" width="120" class="img-fluid">
+                                            <img src="~/mainassets/img/icon/icon-2.svg" alt="قیمت" width="120" class="img-fluid">
                                         </div>
                                         <div class="py-4 border-0 pricing-header">
                                             <div class="price text-center mb-0 monthly-price color-secondary" style="display: block;">@cost.Cost.Value.ToString("N0") ریال<span></span></div>
