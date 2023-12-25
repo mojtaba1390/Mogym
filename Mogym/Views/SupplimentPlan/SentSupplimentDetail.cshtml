@@ -1,6 +1,7 @@
 ﻿@model List<Mogym.Application.Records.SupplimentPlan.SentSupplimentPlanRecord>
+@using Mogym;
+@inject IHttpContextAccessor _accessor;
 
-    
 @{
     Layout = "_Layout";
 }
@@ -72,7 +73,17 @@
                         <div class="col-md-9">
                         </div>
                         <div class="form-actions-buttons col-md-3">
-                            <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                            @{
+                                var roleName = _accessor.GetCurrentUserRoleName();
+                                if (roleName.Equals("Trainer"))
+                                {
+                                    <a asp-action="SentPlans" asp-controller="Plan" class="btn btn-secondary py-2">بازگشت </a>
+                                }
+                                else
+                                {
+                                    <a asp-action="MyRecivedPlans" asp-controller="Plan" class="btn btn-secondary py-2">بازگشت </a>
+                                }
+                            }
                         </div>
                     </div>
                 </div>

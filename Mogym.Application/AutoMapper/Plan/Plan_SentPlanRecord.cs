@@ -11,7 +11,9 @@ namespace Mogym.Application.AutoMapper.Plan
     {
         public Plan_SentPlanRecord()
         {
-            CreateMap<Domain.Entities.Plan, SentPlanRecord>();
+            CreateMap<Domain.Entities.Plan, SentPlanRecord>()
+                .ForMember(x => x.AthletName, z => z.MapFrom(a => a.User_Plan.FirstName + " " + a.User_Plan.LastName));
+
         }
     }
 }
