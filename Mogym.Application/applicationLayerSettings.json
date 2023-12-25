@@ -11,5 +11,13 @@
   "KaveNegar": {
     "ConfirmSmsCodeTemplate": "MogymConfirmSmsCode",
     "ConfirmSmsCodeUrl": "https://api.kavenegar.com/v1/6448696B4A593266524D4D5750577A6964497579744E7171667079437955474E6A464B622F446665305A733D/verify/lookup.json?"
-  }
+  },
+  "EmailConfiguration": {
+    "From": "ramezannia.mojtaba@gmail.com",
+    "SmtpServer": "smtp.gmail.com",
+    "Port": 465,
+    "Username": "ramezannia.mojtaba@gmail.com",
+    "Password": "Mojt@b@  205016"
+  },
+  "AllowedHosts": "*"
 }

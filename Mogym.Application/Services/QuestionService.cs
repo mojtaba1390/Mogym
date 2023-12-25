@@ -9,6 +9,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Question;
 using Mogym.Common;
+using Mogym.Common.ModelExtended;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 using Newtonsoft.Json;
@@ -21,13 +22,18 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IEmailSender _emailSender;
+        private readonly ITrainerProfileService _trainerProfileService;
 
-        public QuestionService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor)
+
+        public QuestionService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, IEmailSender emailSender, ITrainerProfileService trainerProfileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _accessor = accessor;
+            _emailSender = emailSender;
+            _trainerProfileService = trainerProfileService;
         }
         public async Task AddQuestion(CreateQuestionRecord createQuestionRecord)
         {
@@ -52,6 +58,17 @@ namespace Mogym.Application.Services
                     TrackingCode = Random.Shared.Next(1000,9999)
                 };
                 await _unitOfWork.PlanRepository.AddAsync(plan);
+
+
+                var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
+
+                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
+                    $"ورزشکار عزیز درخواست شما با کد پیگیری {plan.TrackingCode} برنامه {confirmAnswerQuestion.PlanName} با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال برای آقا/خانم {createQuestionRecord.TrainerFullName} ثبت گردید." +
+                    $"لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber} به نام {confirmAnswerQuestion.CartOwner} واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم");
+
+                await _emailSender.SendEmailAsync(message);
+
 
             }
             catch (Exception ex)

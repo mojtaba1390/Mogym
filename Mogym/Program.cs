@@ -34,6 +34,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login"; 
 
     });
+//builder.Configuration.AddJsonFile("applicationLayerSettings.json", optional: false, reloadOnChange: true);
 
 
 

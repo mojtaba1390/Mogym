@@ -6,6 +6,7 @@ using Mogym.Application.Records.Question;
 using Mogym.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Mogym.Application.Records.Profile;
+using Mogym.Common.ModelExtended;
 
 namespace Mogym.Controllers
 {
@@ -88,6 +89,7 @@ namespace Mogym.Controllers
                     await _questionService.AddQuestion(createQuestionRecord);
 
                     var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId,createQuestionRecord.TrainerPlanId);
+
 
                     return View("ConfirmAnswerQuestion", confirmAnswerQuestion);
                 }

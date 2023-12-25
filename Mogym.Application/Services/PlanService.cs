@@ -13,6 +13,7 @@ using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
 using Mogym.Application.Records.Workout;
 using Mogym.Common;
+using Mogym.Common.ModelExtended;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -24,14 +25,16 @@ namespace Mogym.Application.Services
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
         private readonly ITrainerProfileService _trainerProfileService;
+        private readonly IEmailSender _emailSender;
 
-        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor,ITrainerProfileService trainerProfileService)
+        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, ITrainerProfileService trainerProfileService, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _accessor = accessor;
             _trainerProfileService = trainerProfileService;
+            _emailSender = emailSender;
         }
 
         public async Task<List<PlanRecord>?> MyUnPaidPlans()
@@ -65,6 +68,20 @@ namespace Mogym.Application.Services
                 plan.PaidPicture = paidPictureFileName;
                 plan.PlanStatus = EnumPlanStatus.Paid;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+                var trainer = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                    .Include(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.User)
+                    .Select(x=>x.TrainerProfile_Plan.User)
+                    .FirstOrDefaultAsync();
+                    
+                
+                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"افزودن تصویر رسید-{trainer.Mobile}",
+                    $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
+
+               await  _emailSender.SendEmailAsync(message);
+
             }
             catch (Exception ex)
             {
@@ -152,6 +169,21 @@ namespace Mogym.Application.Services
                 var plan = _unitOfWork.PlanRepository.GetById(planId);
                 plan.PlanStatus = EnumPlanStatus.TrainerApprovment;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+
+                var athlete = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                    .Include(x => x.User_Plan)
+                    .Select(x => x.User_Plan)
+                    .FirstOrDefaultAsync();
+
+
+
+                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"تائید برنامه توسط مربی-{athlete.Mobile}",
+                    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} توسط مربی تائید گردد - موجیم");
+
+                await _emailSender.SendEmailAsync(message);
+
             }
             catch (Exception ex)
             {
@@ -218,6 +250,22 @@ namespace Mogym.Application.Services
                 var plan = _unitOfWork.PlanRepository.GetById(planId);
                 plan.PlanStatus = EnumPlanStatus.Sent;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+
+                var athlete = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                    .Include(x => x.User_Plan)
+                    .Select(x => x.User_Plan)
+                    .FirstOrDefaultAsync();
+
+
+
+                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"ارسال برنامه توسط مربی-{athlete.Mobile}",
+                    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} در کارتابل برنامه های دریافت شده قابل دسترسی می باشد - موجیم");
+
+                await _emailSender.SendEmailAsync(message);
+
+
             }
             catch (Exception ex)
             {

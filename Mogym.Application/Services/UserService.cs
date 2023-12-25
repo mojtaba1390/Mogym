@@ -15,6 +15,7 @@ using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.User;
 using Mogym.Application.Records.UserRole;
 using Mogym.Common;
+using Mogym.Common.ModelExtended;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -29,7 +30,7 @@ namespace Mogym.Application.Services
         private readonly IUserRoleService _userRoleService;
         private readonly IHttpContextAccessor _accessor;
         private readonly ISmsLogService _smsLogService;
-
+        private readonly IEmailSender _emailSender;
         public UserService(IUnitOfWork unitOfWork,
             IMapper mapper,
             ISeriLogService logger,
@@ -127,7 +128,10 @@ namespace Mogym.Application.Services
                     .ThenInclude(x => x.RolePermission_Permission)
                     .FirstOrDefaultAsync();
                 if (user is not null)
+                {
                     return _mapper.Map<UserRecord>(user);
+
+                }
             }
             catch (Exception ex)
             {

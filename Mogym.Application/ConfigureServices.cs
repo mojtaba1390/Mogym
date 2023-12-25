@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Configuration;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Services;
@@ -17,6 +18,7 @@ using Mogym.Application.AutoMapper;
 using Mogym.Application.AutoMapper.User;
 using Mogym.Application.Interfaces.ICache;
 using Mogym.Application.Services.Cache;
+using Mogym.Common.ModelExtended;
 
 namespace Mogym.Application
 {
@@ -25,6 +27,15 @@ namespace Mogym.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(LoginRecord_User));
+
+
+            //var configuration = new ConfigurationBuilder()
+            //    .AddJsonFile($"appsettings.json");
+
+            //var config = configuration.Build();
+            //var emailConfig = services.Configure<Email>(config.GetSection("EmailConfiguration"));
+            //services.AddSingleton(emailConfig);
+
 
 
             #region fluent validation
@@ -67,6 +78,8 @@ namespace Mogym.Application
             services.AddTransient<ISupplimentPlanDetailService, SupplimentPlanDetailService>();
             services.AddTransient<ISmsLogService, SmsLogService>();
             services.AddTransient<IRolePermissionService, RolePermissionService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+
             #endregion
 
 
