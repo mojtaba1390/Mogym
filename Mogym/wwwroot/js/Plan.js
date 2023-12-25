@@ -227,6 +227,22 @@ function deleteWorkout(id,planId) {
         }
     });
 }
+function deleteMeal(id,planId) {
+    $.ajax({
+        type: "POST",
+        url: "/Meal/Delete",
+        data: { "id": id,"planId":planId },
+        success: function (response) {
+            $('#modal-deleteRow').html(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
 
 $(function () {
 

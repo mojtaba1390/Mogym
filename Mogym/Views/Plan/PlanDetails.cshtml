@@ -133,9 +133,8 @@
                                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ingridientDetailsModal" onclick="ingridientDetails('@Model.MealRecords[index].Id')">جزئیات</button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-danger" type="button" onclick="addMealRow()">
-                                                                حذف
-                                                            </button>
+                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteMeal('@Model.MealRecords[index].Id','@Model.MealRecords[index].PlanId')">حذف</button>
+
                                                         </div>
                                                         if (index == Model.MealRecords.Count - 1)
                                                         {

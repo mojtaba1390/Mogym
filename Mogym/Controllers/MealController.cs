@@ -12,10 +12,12 @@ namespace Mogym.Controllers
     {
         private readonly IMealService _mealService;
         private readonly IMealIngridientService _mealIngridientService;
-        public MealController(IMealService mealService, IMealIngridientService mealIngridientService)
+        private readonly IPlanService _planService;
+        public MealController(IMealService mealService, IMealIngridientService mealIngridientService, IPlanService planService)
         {
             _mealService = mealService;
             _mealIngridientService = mealIngridientService;
+            _planService = planService;
         }
 
 
@@ -68,6 +70,12 @@ namespace Mogym.Controllers
         {
             try
             {
+                bool isThisWorkoutForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisWorkoutForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
 
                 bool isAnyIngridientExist = await _mealIngridientService.IsAnyIngridientExistByMealId(id);
                 return PartialView("_DeleteConfirmation", new Tuple<bool, int,int, string>(isAnyIngridientExist, id,planId, "Meal"));

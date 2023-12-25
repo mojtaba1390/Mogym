@@ -13,10 +13,12 @@ namespace Mogym.Controllers
     {
         private readonly IMealIngridientService _mealIngridientService;
         private readonly IIngridientService _ingridientService;
-        public MealIngridientController(IMealIngridientService mealIngridientService,IIngridientService ingridientService)
+        private readonly IMealService _mealService;
+        public MealIngridientController(IMealIngridientService mealIngridientService,IIngridientService ingridientService, IMealService mealService)
         {
-            _mealIngridientService= mealIngridientService;
+            _mealIngridientService = mealIngridientService;
             _ingridientService = ingridientService;
+            _mealService = mealService;
         }
         public IActionResult Index()
         {
@@ -57,11 +59,13 @@ namespace Mogym.Controllers
 
 
         [HttpPost]
-        public IActionResult AddMealIngridients(List<MealIngridientRecord> mealIngridientRecords)
+        public async Task<IActionResult> AddMealIngridients(List<MealIngridientRecord> mealIngridientRecords)
         {
             try
             {
                 _mealIngridientService.AddOrUpdateSets(mealIngridientRecords);
+                var meal = await _mealService.GetByIdAsync(mealIngridientRecords.First().MealId.Value);
+                return RedirectToAction("PlanDetails", "Plan", new { planId = meal.PlanId });
             }
             catch (Exception e)
             {

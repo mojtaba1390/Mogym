@@ -101,5 +101,10 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task<Meal> GetByIdAsync(int mealId)
+        {
+            return await _unitOfWork.MealRepository.GetByIdAsync(mealId);
+        }
     }
 }

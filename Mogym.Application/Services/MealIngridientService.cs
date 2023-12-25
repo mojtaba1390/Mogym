@@ -60,7 +60,7 @@ namespace Mogym.Application.Services
                 var insertedMealIngridients = _unitOfWork.MealIngridientRepository.Find(x => x.MealId == mealId).ToList();
 
                 var newMealIngridients = sets.Where(x => x.Id == 0).ToList();
-                var updatedMealIngridientss = sets.Where(x => x.Id > 0).ToList();
+                var updatedMealIngridientss = mealIngridientRecords.Where(x => x.Id > 0).ToList();
 
                 var deletedMealIngridients = insertedMealIngridients.ExceptBy(updatedMealIngridientss.Select(x => x.Id), x => x.Id).ToList();
 
@@ -73,7 +73,8 @@ namespace Mogym.Application.Services
                     foreach (var item in updatedMealIngridientss)
                     {
                         var entity = _unitOfWork.MealIngridientRepository.Where(x => x.Id == item.Id).First();
-                        updateList.Add(entity);
+                        var mapped = _mapper.Map(item, entity);
+                        updateList.Add(mapped);
                     }
                     _unitOfWork.MealIngridientRepository.UpdateRange(updateList);
                 }

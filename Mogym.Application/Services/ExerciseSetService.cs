@@ -71,8 +71,7 @@ namespace Mogym.Application.Services
 
                 if (updatedSets.Count > 0)
                 {
-                    if (updatedSets.Count > 0)
-                    {
+
                         List<ExerciseSet> updateList = new List<ExerciseSet>();
                         foreach (var item in updatedSets)
                         {
@@ -81,7 +80,7 @@ namespace Mogym.Application.Services
                             updateList.Add(mapped);
                         }
                         _unitOfWork.ExerciseSetRepository.UpdateRange(updateList);
-                    }
+                    
                 }
                 if (deletedSets.Count > 0)
                 {
