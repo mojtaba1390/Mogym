@@ -85,26 +85,31 @@ namespace Mogym.Application.Services
             //TODO: اینجا یه ایراد طراحی اتفاق افتاده و اونم اینه که نوع برنامه در کواسچن مشخص شده و هیچ رابطه ای بین اون و هزینه مربی وجود نداره در صورتی که باید این رابطه در پلن تعریف می ش.دو تا کار میشه کرد که در جدول پلن بجای ترینر با هزینه ها رابطه زد و از روی اون به مربی رسید یا هر دو رو داشته باشیم
             try
             {
-                var plan =  _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                var userId = _accessor.GetUser();
+                var trainerId =   _trainerProfileService.GetCurrentUserTrainer().Result?.Id;
+                var plan =  _unitOfWork.PlanRepository.Find(x => x.Id == planId && (x.UserId==userId || x.TrainerId== trainerId))
                     .AsNoTracking()
                     .Include(x => x.AnsweQuestion_Plan).FirstOrDefault();
+                if (plan is not null)
+                {
+                    var answerQuestion = plan.AnsweQuestion_Plan;
 
-                var answerQuestion = plan.AnsweQuestion_Plan;
+                    var aq = _mapper.Map<AnswerQuestionRecord>(answerQuestion);
 
-                var aq= _mapper.Map<AnswerQuestionRecord>(answerQuestion);
-
-                var user = _unitOfWork.UserRepository.GetById(plan.UserId);
-                aq.Mobile = user.Mobile;
-
-
-                var cost =await  _unitOfWork.TrainerPlanCostRepository.GetByIdAsync(answerQuestion.TrainerPlan);
-                aq.TrainerPlan = cost.TrainerPlan.GetEnumDescription() + "-" + cost.OriginalCost.Value.ToString("N0") + " ریال ";
+                    var user = _unitOfWork.UserRepository.GetById(plan.UserId);
+                    aq.Mobile = user.Mobile;
 
 
+                    var cost = await _unitOfWork.TrainerPlanCostRepository.GetByIdAsync(answerQuestion.TrainerPlan);
+                    aq.TrainerPlan = cost.TrainerPlan.GetEnumDescription() + "-" + cost.OriginalCost.Value.ToString("N0") + " ریال ";
 
 
 
-                return aq;
+
+
+                    return aq;
+                }
+
 
             }
             catch (Exception ex)
@@ -308,6 +313,17 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
+        }
+
+        public async Task<bool> IsThisPlanIdForThisTrainer(int planId)
+        {
+            var trainerId = _trainerProfileService.GetCurrentUserTrainer().Result?.Id;
+            return await _unitOfWork.PlanRepository.Find(x => x.Id == planId && x.TrainerId == trainerId).AnyAsync();
+        }
+
+        public async Task<bool> IsThereAnyPlanWithStatus(int planId, EnumPlanStatus planStatus)
+        {
+            return await _unitOfWork.PlanRepository.Find(x => x.Id == planId && x.PlanStatus == planStatus).AnyAsync();
         }
     }
 }

@@ -11,7 +11,7 @@
     <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
 
     <!--title-->
-    <title>404</title>
+    <title>درخواست غیر مجاز</title>
 
     <!--build:css-->
     <link rel="stylesheet" href="~/mainassets/css/main.css">
@@ -44,10 +44,10 @@
                     <div class="col-md-9 col-lg-7">
                         <div class="error-content-wrap text-center text-white">
                             <div class="notfound-404">
-                                <h1 class="text-white">404</h1>
+                                <h2 class="text-white">@TempData["errormessage"]</h2>
                             </div>
-                            <h2 class="text-white">متاسفانه صفحه مورد نظر یافت نشد!</h2>
-                            <a class="btn btn-brand-03" asp-controller="Home" asp-action="Index">به صفحه اصلی بروید</a>
+@*                            <h2 class="text-white">@TempData["errormessage"]</h2>
+*@                            <a class="btn btn-brand-03" asp-controller="Home" asp-action="Index">به صفحه اصلی بروید</a>
                         </div>
                     </div>
                 </div>

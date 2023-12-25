@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Profile;
+using Mogym.Common;
 
 namespace Mogym.Controllers
 {
@@ -47,6 +48,16 @@ namespace Mogym.Controllers
         {
             try
             {
+                bool isThisPlanStatusIsRegistered =
+                    await _planService.IsThereAnyPlanWithStatus(Int32.Parse(planId),  EnumPlanStatus.Registered);
+                if (!isThisPlanStatusIsRegistered)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست داده شده پرداخت شده نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+
+
                 if (PaidPicture is not null)
                 {
                     var path = Path.Combine(_webHostEnvironment.WebRootPath, "PaidPic", PaidPicture.FileName);
@@ -79,6 +90,7 @@ namespace Mogym.Controllers
         {
             try
             {
+
                 var answerQuestion = await _planService.GetAnswerQuestionWithPlanId(planId);
                 if (answerQuestion is not null)
                 {
@@ -86,7 +98,7 @@ namespace Mogym.Controllers
 
                 }
                 TempData["errormessage"] = "برنامه ی انتخاب شده مربوط به شما نمی باشد";
-                return RedirectToAction(nameof(MyUnPaidPlans));
+                return View("IlegalRequest");
             }
             catch (Exception e)
             {
@@ -168,7 +180,22 @@ namespace Mogym.Controllers
         {
             try
             {
-                 await _planService.ApprovePlan(planId);
+                bool isThisPlanForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisPlanForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                bool isThisPlanStatusIsApproved =
+                    await _planService.IsThereAnyPlanWithStatus(planId, EnumPlanStatus.Paid);
+                if (!isThisPlanStatusIsApproved)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست داده شده پرداخت شده نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                await _planService.ApprovePlan(planId);
                  return RedirectToAction(nameof(PaidPlans));
             }
             catch (Exception e)
@@ -201,6 +228,24 @@ namespace Mogym.Controllers
         {
             try
             {
+                bool isThisPlanForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisPlanForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                bool isThisPlanStatusIsApproved =
+                    await _planService.IsThereAnyPlanWithStatus(planId, EnumPlanStatus.TrainerApprovment);
+                if (!isThisPlanStatusIsApproved)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست داده شده تائید مربی نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+
+
+
                 var planDetails = await _planService.GetPlanDetails(planId);
                 return View(planDetails);
             }
@@ -217,7 +262,22 @@ namespace Mogym.Controllers
         {
             try
             {
-                 await _planService.AddDescription(planId,description);
+                bool isThisPlanForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisPlanForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                bool isThisPlanStatusIsApproved =
+                    await _planService.IsThereAnyPlanWithStatus(planId, EnumPlanStatus.TrainerApprovment);
+                if (!isThisPlanStatusIsApproved)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست داده شده تائید مربی نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                await _planService.AddDescription(planId,description);
                 
             }
             catch (Exception e)
@@ -234,6 +294,21 @@ namespace Mogym.Controllers
         {
             try
             {
+                bool isThisPlanForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisPlanForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                bool isThisPlanStatusIsApproved =
+                    await _planService.IsThereAnyPlanWithStatus(planId, EnumPlanStatus.TrainerApprovment);
+                if (!isThisPlanStatusIsApproved)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست شده تائید مربی نمی باشد";
+                    return View("IlegalRequest");
+                }
+
                 await _planService.SendPlan(planId);
                 return RedirectToAction(nameof(PaidPlans));
             }

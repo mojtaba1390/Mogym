@@ -38,5 +38,6 @@ namespace Mogym.Application
         {
             return httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.MobilePhone)?.Value ?? "";
         }
+
     }
 }

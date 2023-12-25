@@ -24,12 +24,14 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
-        public WorkoutService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger, IHttpContextAccessor accessor)
+        private readonly ITrainerProfileService _trainerProfileService;
+        public WorkoutService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger, IHttpContextAccessor accessor, ITrainerProfileService trainerProfileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _accessor = accessor;
+            _trainerProfileService = trainerProfileService;
         }
         public async Task AddOrUpdate(List<WorkoutRecord> workoutRecords)
         {
@@ -119,7 +121,11 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var workouts = await _unitOfWork.WorkoutRepository.Find(x => x.PlanId == planId)
+                var useId = _accessor.GetUser();
+                var trainerId = _trainerProfileService.GetCurrentUserTrainer().Result?.Id;
+
+                var workouts = await _unitOfWork.WorkoutRepository.Find(x => x.PlanId == planId && (x.Plan_Workout.UserId==useId || x.Plan_Workout.TrainerId== trainerId))
+                    .Include(x=>x.Plan_Workout)
                     .Include(x => x.Exercises)
                     .ThenInclude(x => x.ExerciseVideo_Exercise)
                     .Include(x => x.Exercises)

@@ -5,6 +5,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Workout;
 using Mogym.Application.Services;
+using Mogym.Domain.Entities;
 
 namespace Mogym.Controllers
 {
@@ -14,11 +15,13 @@ namespace Mogym.Controllers
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseVideoService _exerciseVideoService;
         private readonly IExerciseservice _exerciseservice;
-        public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService,IExerciseservice exerciseservice)
+        private readonly IPlanService _planService;
+        public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService,IExerciseservice exerciseservice, IPlanService planService)
         {
             _workoutService = workoutService;
             _exerciseVideoService = exerciseVideoService;
             _exerciseservice = exerciseservice;
+            _planService = planService;
         }
         public IActionResult Index()
         {
@@ -68,11 +71,25 @@ namespace Mogym.Controllers
         {
             try
             {
+
+                var workout = await _workoutService.GetByIdAsync(id);
+                if (workout is null)
+                {
+                    TempData["errormessage"] = "تمرین مورد نظر یافت نشد";
+                    return View("NotFound");
+                }
+
+                bool isThisWorkoutForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(workout.PlanId);
+                if (!isThisWorkoutForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+
                 var workoutDetails = await _workoutService.GetWorkoutDetails(id);
                 var superSets = await _workoutService.GetSuperSetExercises(id);
                 var exerciseVideos = await _exerciseVideoService.GetAllExerciseVideo();
                 var superSetsIds = await _exerciseservice.GetWorkoutSuperSetIds(id);
-                var workout = await _workoutService.GetByIdAsync(id);
 
 
                 ViewData["ExersiceVideo"] = new SelectList(exerciseVideos, "Id", "Title");
@@ -98,6 +115,12 @@ namespace Mogym.Controllers
         {
             try
             {
+                bool isThisWorkoutForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisWorkoutForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
 
                 bool isAnyExerciseExist = await _exerciseservice.IsAnyExcerciseExistByWorkoutId(id);
                 return PartialView("_DeleteConfirmation",new Tuple<bool, int,int, string>(isAnyExerciseExist,id,planId,"Workout"));

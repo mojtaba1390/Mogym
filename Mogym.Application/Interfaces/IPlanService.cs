@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
 using Mogym.Application.Records.Workout;
+using Mogym.Common;
 
 namespace Mogym.Application.Interfaces
 {
@@ -25,5 +26,7 @@ namespace Mogym.Application.Interfaces
         Task<List<PlanRecord>> GetMyPaidPlans();
         Task<List<PlanRecord>> MyApprovedPlans();
         Task<List<PlanRecord>> MyRecivedPlans();
+        Task<bool> IsThisPlanIdForThisTrainer(int planId);
+        Task<bool> IsThereAnyPlanWithStatus(int planId, EnumPlanStatus planStatus);
     }
 }
