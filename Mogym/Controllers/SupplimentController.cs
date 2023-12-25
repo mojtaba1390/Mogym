@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Ingridient;
 using Mogym.Application.Records.Suppliment;
+using Mogym.Application.Services;
 
 namespace Mogym.Controllers
 {
@@ -12,9 +13,13 @@ namespace Mogym.Controllers
     public class SupplimentController : Controller
     {
         private readonly ISupplimentService _supplimentService;
-        public SupplimentController(ISupplimentService supplimentService)
+        private readonly IPlanService _planService;
+        private readonly ISupplimentPlanDetailService _supplimentPlanDetailService;
+        public SupplimentController(ISupplimentService supplimentService, IPlanService planService, ISupplimentPlanDetailService supplimentPlanDetailService)
         {
             _supplimentService = supplimentService;
+            _planService = planService;
+            _supplimentPlanDetailService = supplimentPlanDetailService;
         }
         [DisplayName("لیست مکمل ها")]
         public async Task<IActionResult> Index()
@@ -42,5 +47,22 @@ namespace Mogym.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, string title)
+        {
+            try
+            {
+                await _supplimentService.Edit(id, title);
+            }
+            catch (Exception ex)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+            return View("NotFound");
+        }
+
+
     }
 }

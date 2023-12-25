@@ -57,7 +57,7 @@ namespace Mogym.Application.Services
                 var inserterdSupplimentPlanDetails = _unitOfWork.SupplimentPlanDetailRepository.Find(x => x.SupplimentPlanId == supplimentPlanId).ToList();
 
                 var newSupplimentPlanDetails = supplimentPlanDetails.Where(x => x.Id == 0).ToList();
-                var updatedSupplimentPlanDetails = supplimentPlanDetails.Where(x => x.Id > 0).ToList();
+                var updatedSupplimentPlanDetails = supplimentPlanDetailRecords.Where(x => x.Id > 0).ToList();
 
                 var deleteSupplimentPlanDetails = inserterdSupplimentPlanDetails.ExceptBy(updatedSupplimentPlanDetails.Select(x => x.Id), x => x.Id).ToList();
 
@@ -70,7 +70,8 @@ namespace Mogym.Application.Services
                     foreach (var item in updatedSupplimentPlanDetails)
                     {
                         var entity = _unitOfWork.SupplimentPlanDetailRepository.Where(x => x.Id == item.Id).First();
-                        updateList.Add(entity);
+                        var mapped = _mapper.Map(item, entity);
+                        updateList.Add(mapped);
                     }
                     _unitOfWork.SupplimentPlanDetailRepository.UpdateRange(updateList);
                 }
@@ -113,6 +114,7 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
 
 
     }

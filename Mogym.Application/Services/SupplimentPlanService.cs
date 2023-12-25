@@ -119,5 +119,26 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task Edit(int id, string title)
+        {
+            try
+            {
+                var entity = await _unitOfWork.SupplimentPlanRepository.GetByIdAsync(id);
+                entity.Title = title;
+                await _unitOfWork.SupplimentPlanRepository.UpdateAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Edit in SupplimentPlanService,id=" + id;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task<SupplimentPlan?> GetByIdAsync(int supplimentId)
+        {
+            return await _unitOfWork.SupplimentPlanRepository.GetByIdAsync(supplimentId);
+        }
     }
 }

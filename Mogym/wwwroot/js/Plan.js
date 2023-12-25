@@ -90,12 +90,31 @@ function editWorkout(index, workoutId) {
         }
     });
 }
+
+
 function editMeal(index, mealId) {
     var title = $("#MealRecords_" + index + "__Title").val();
     $.ajax({
         type: "POST",
         url: "/Meal/Edit",
         data: { "id": mealId, "title": title },
+        success: function (response) {
+            window.location.reload();
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+function editSupliment(index, suplimentId) {
+    var title = $("#SupplimentPlanRecords_" + index + "__Title").val();
+    $.ajax({
+        type: "POST",
+        url: "/SupplimentPlan/Edit",
+        data: { "id": suplimentId, "title": title },
         success: function (response) {
             window.location.reload();
         },
@@ -231,6 +250,22 @@ function deleteMeal(id,planId) {
     $.ajax({
         type: "POST",
         url: "/Meal/Delete",
+        data: { "id": id,"planId":planId },
+        success: function (response) {
+            $('#modal-deleteRow').html(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+function deleteSupliment(id,planId) {
+    $.ajax({
+        type: "POST",
+        url: "/SupplimentPlan/Delete",
         data: { "id": id,"planId":planId },
         success: function (response) {
             $('#modal-deleteRow').html(response);

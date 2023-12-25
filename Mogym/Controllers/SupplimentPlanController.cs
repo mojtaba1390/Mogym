@@ -35,6 +35,8 @@ namespace Mogym.Controllers
             try
             {
                await _supplimentPlanService.AddOrUpdate(supplimentPlanRecords);
+               return RedirectToAction("PlanDetails", "Plan", new { planId = supplimentPlanRecords.FirstOrDefault().PlanId });
+
             }
             catch (Exception e)
             {
@@ -95,7 +97,19 @@ namespace Mogym.Controllers
         }
 
 
-
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, string title)
+        {
+            try
+            {
+                await _supplimentPlanService.Edit(id, title);
+            }
+            catch (Exception ex)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+            return View("NotFound");
+        }
 
     }
 }

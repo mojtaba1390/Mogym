@@ -11,10 +11,12 @@ namespace Mogym.Controllers
     {
         private readonly ISupplimentPlanDetailService _supplimentPlanDetailService;
         private readonly ISupplimentService _supplimentService;
-        public SupplimentPlanDetailController(ISupplimentPlanDetailService supplimentPlanDetailService, ISupplimentService supplimentService)
+        private readonly ISupplimentPlanService _supplimentPlanService;
+        public SupplimentPlanDetailController(ISupplimentPlanDetailService supplimentPlanDetailService, ISupplimentService supplimentService, ISupplimentPlanService supplimentPlanService)
         {
             _supplimentPlanDetailService = supplimentPlanDetailService;
             _supplimentService = supplimentService;
+            _supplimentPlanService = supplimentPlanService;
         }
         public IActionResult Index()
         {
@@ -54,11 +56,13 @@ namespace Mogym.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddSupplimentPlanDetails(List<SupplimentPlanDetailRecord> supplimentPlanDetailRecords)
+        public async Task<IActionResult> AddSupplimentPlanDetails(List<SupplimentPlanDetailRecord> supplimentPlanDetailRecords)
         {
             try
             {
                 _supplimentPlanDetailService.AddOrUpdateSets(supplimentPlanDetailRecords);
+                var suppliment = await _supplimentPlanService.GetByIdAsync(supplimentPlanDetailRecords.First().SupplimentPlanId.Value);
+                return RedirectToAction("PlanDetails", "Plan", new { planId = suppliment.PlanId });
             }
             catch (Exception e)
             {

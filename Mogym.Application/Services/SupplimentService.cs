@@ -58,5 +58,36 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+
+        public async Task Edit(int id, string title)
+        {
+            try
+            {
+                var entity = await _unitOfWork.SupplimentRepository.GetByIdAsync(id);
+                entity.Title = title;
+                await _unitOfWork.SupplimentRepository.UpdateAsync(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Edit in SupplimentService,id=" + id;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task Delete(int deleteId)
+        {
+            try
+            {
+                var entity = await _unitOfWork.SupplimentRepository.GetByIdAsync(deleteId);
+                _unitOfWork.SupplimentRepository.Delete(entity);
+            }
+            catch (Exception ex)
+            {
+                var message = $"Delete in SupplimentService,id=" + deleteId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
     }
 }

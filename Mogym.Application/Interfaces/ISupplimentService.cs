@@ -11,5 +11,7 @@ namespace Mogym.Application.Interfaces
     {
         Task<List<SupplimentRecord>> GetAll();
         Task AddAsync(SupplimentRecord supplimentRecord);
+        Task Edit(int id, string title);
+        Task Delete(int deleteId);
     }
 }

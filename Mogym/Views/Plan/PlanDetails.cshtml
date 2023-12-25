@@ -188,7 +188,7 @@
                                                 <td class="d-flex border-0">
                                                     @{
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-primary" type="button" onclick="editMeal('@index','@Model.SupplimentPlanRecords[index].Id')">
+                                                            <button class="btn btn-primary" type="button" onclick="editSupliment('@index','@Model.SupplimentPlanRecords[index].Id')">
                                                                 ویرایش عنوان مکمل
                                                             </button>
                                                         </div>
@@ -196,9 +196,8 @@
                                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#supplimentDetailsModal" onclick="supplimentDetails('@Model.SupplimentPlanRecords[index].Id')">جزئیات</button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-danger" type="button" onclick="addSupplimentPlanRow()">
-                                                                حذف
-                                                            </button>
+                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteSupliment('@Model.SupplimentPlanRecords[index].Id','@Model.SupplimentPlanRecords[index].PlanId')">حذف</button>
+
                                                         </div>
                                                         if (index == Model.SupplimentPlanRecords.Count - 1)
                                                         {
