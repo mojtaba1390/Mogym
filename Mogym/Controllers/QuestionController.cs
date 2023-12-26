@@ -7,6 +7,10 @@ using Mogym.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Mogym.Application.Records.Profile;
 using Mogym.Common.ModelExtended;
+using Microsoft.IdentityModel.Tokens;
+using System.Linq;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp;
 
 namespace Mogym.Controllers
 {
@@ -65,30 +69,65 @@ namespace Mogym.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    string[] permittedExtensions = { ".jpeg", ".jpg", ".png" };
+
                     var pics = typeof(CreateQuestionRecord).GetProperties()
-                        .Where(x => x.PropertyType == typeof(IFormFile))
-                        .Select(x => (IFormFile)x.GetValue(createQuestionRecord))
-                        .ToList();
+                                    .Where(x => x.PropertyType == typeof(IFormFile))
+                                    .Select(x => (IFormFile)x.GetValue(createQuestionRecord))
+                                    .ToList();
 
-                    var picsWithData = pics.Where(z=>z!=null);
+                    var picsWithData = pics.Where(z => z != null);
 
+                    foreach (var pic in picsWithData)
+                    {
+                        var ext = Path.GetExtension(pic.FileName).ToLowerInvariant();
+                        if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                        {
+                            ViewData["errormessage"] = "فرمت تصاویر باید از نوع jpeg یا jpg یا png باشد";
+                            return RedirectToAction(nameof(AnswerQuestion), new { trainerId = createQuestionRecord.TrainerId });
+                        }
+                    }
 
                     foreach (var item in picsWithData)
                     {
 
-                            var path = Path.Combine(_webHostEnvironment.WebRootPath, "BodyPic", item.FileName);
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "BodyPic", item.FileName);
+
+                        if (item.Length < 2097152)
+                        {
                             using (FileStream stream = new FileStream(path, FileMode.Create))
                             {
                                 await item.CopyToAsync(stream);
                                 stream.Close();
                             }
-                        
+                        }
+                        else
+                        {
+                            using (FileStream stream = new FileStream(path, FileMode.Create))
+                            {
+                                await item.CopyToAsync(stream);
+                                stream.Close();
+
+                                // Compress the image
+                                using (var image = SixLabors.ImageSharp.Image.Load(path))
+                                {
+                                    // Resize the image to reduce its dimensions
+                                    //image.Mutate(x => x.Resize(800, 600));
+
+                                    // Compress the image with a quality setting
+                                    var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder { Quality = 70 };
+                                    image.Save(path, encoder);
+                                }
+                            }
+                        }
+
+
 
                     }
 
                     await _questionService.AddQuestion(createQuestionRecord);
 
-                    var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId,createQuestionRecord.TrainerPlanId);
+                    var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
 
 
                     return View("ConfirmAnswerQuestion", confirmAnswerQuestion);

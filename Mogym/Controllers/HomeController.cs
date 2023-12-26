@@ -16,6 +16,11 @@ namespace Mogym.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            //var isLogined = HttpContext.User.Identity.IsAuthenticated;
+            //if (isLogined)
+            //    return RedirectToAction("Index", "Account");
+
+
             var lastTrainers =await _trainerProfileService.GetLastTrainersForHomepage();
             return View(lastTrainers);
         }

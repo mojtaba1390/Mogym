@@ -60,7 +60,10 @@
                                     <div class="input-icon">
                                         <span class="ti-user"></span>
                                     </div>
-                                    <input asp-for="FirstName" type="text" class="form-control" required>
+                                    <input asp-for="FirstName" type="text" class="form-control" required oninvalid="setCustomValidity('نام را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
                                 </div>
                                 <div>
                                     <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -76,7 +79,10 @@
                                     <div class="input-icon">
                                         <span class="ti-user"></span>
                                     </div>
-                                    <input asp-for="LastName" type="text" class="form-control" required>
+                                    <input asp-for="LastName" type="text" class="form-control" required oninvalid="setCustomValidity('نام خانوادگی را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
                                 </div>
                                 <div>
                                     <span asp-validation-for="LastName" class="text-danger"></span>
@@ -92,7 +98,17 @@
                                     <div class="input-icon">
                                         <span class="ti-email"></span>
                                     </div>
-                                    <input asp-for="Email" type="email" class="form-control" placeholder="name@address.com" required>
+                                    <input asp-for="Email"
+                                           type="email" 
+                                           class="form-control"
+                                           placeholder="name@address.com"
+                                           required 
+                                           oninvalid="setCustomValidity('فرمت ایمیل نادرست است.')" 
+                                           pattern="[a-z0-9._%+\-]+@@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                           onchange="try{setCustomValidity('')}catch(e){}"       
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
                                 </div>
                                 <div>
                                     <span asp-validation-for="Email" class="text-danger"></span>
@@ -110,7 +126,10 @@
                                     <div class="input-icon">
                                         <span class="ti-lock"></span>
                                     </div>
-                                    <input asp-for="Password" type="password" class="form-control" required>
+                                    <input asp-for="Password" type="password" class="form-control" required oninvalid="setCustomValidity('پسورد را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
                                 </div>
                                 <div>
                                     <span asp-validation-for="Password" class="text-danger"></span>

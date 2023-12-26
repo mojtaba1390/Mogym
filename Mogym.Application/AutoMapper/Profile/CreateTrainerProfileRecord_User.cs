@@ -17,7 +17,9 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.Password, z => z.Ignore())
                 .ForMember(x => x.Gender, z => z.Ignore())
                 .ForMember(x => x.Status, z => z.Ignore())
-                .ForMember(x => x.UniqeUserName, z => z.Ignore());
+                .ForMember(x => x.UniqeUserName, z => z.Ignore())
+                .ForMember(x => x.ProfilePic,
+                    z => z.MapFrom(a => a.ProfilePic.FileName));
         }
     }
 }

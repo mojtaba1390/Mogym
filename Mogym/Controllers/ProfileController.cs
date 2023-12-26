@@ -6,6 +6,13 @@ using System.ComponentModel;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Mogym.Application.Records.Profile;
+using Microsoft.IdentityModel.Tokens;
+using Mogym.Application.Records.Question;
+using System.Linq;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Mogym.Controllers
 {
@@ -71,12 +78,46 @@ namespace Mogym.Controllers
 
                 if (CreateTrainerProfileRecord.ProfilePic is not null)
                 {
-                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", CreateTrainerProfileRecord.ProfilePic.FileName);
-                    using (FileStream stream = new FileStream(path, FileMode.Create))
+                    string[] permittedExtensions = { ".jpeg", ".jpg", ".png" };
+                    var ext = Path.GetExtension(CreateTrainerProfileRecord.ProfilePic.FileName).ToLowerInvariant();
+                    if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
                     {
-                        await CreateTrainerProfileRecord.ProfilePic.CopyToAsync(stream);
-                        stream.Close();
+                        ViewData["errormessage"] = "فرمت تصویر باید از نوع jpeg یا jpg یا png باشد";
+                        return RedirectToAction("Index", "Account");
                     }
+
+
+                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ProfilePic", CreateTrainerProfileRecord.ProfilePic.FileName);
+
+                    if (CreateTrainerProfileRecord.ProfilePic.Length < 2097152)
+                    {
+                        using (FileStream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await CreateTrainerProfileRecord.ProfilePic.CopyToAsync(stream);
+                            stream.Close();
+                        }
+                    }
+                    else
+                    {
+                        using (FileStream stream = new FileStream(path, FileMode.Create))
+                        {
+                            await CreateTrainerProfileRecord.ProfilePic.CopyToAsync(stream);
+                            stream.Close();
+
+                            // Compress the image
+                            using (var image = SixLabors.ImageSharp.Image.Load(path))
+                            {
+                                // Resize the image to reduce its dimensions
+                                //image.Mutate(x => x.Resize(800, 600));
+
+                                // Compress the image with a quality setting
+                                var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder { Quality = 70 };
+                                image.Save(path, encoder);
+                            }
+                        }
+                    }
+
+
                 }
 
 
@@ -92,6 +133,14 @@ namespace Mogym.Controllers
 
 
 
+        }
+
+        [Authorize]
+        [DisplayName("صفحه ی من")]
+        public async Task<IActionResult> MyPage()
+        {
+            var trainerUserName =_accessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? "";
+            return RedirectToAction("Index", new {username = trainerUserName});
         }
 
 
