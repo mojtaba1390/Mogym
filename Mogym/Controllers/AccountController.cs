@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Mogym.Application.Interfaces.ICache;
 using StackExchange.Redis;
 using System.ComponentModel;
+using Mogym.Common.ModelExtended;
 
 namespace Mogym.Controllers
 {
@@ -22,20 +23,27 @@ namespace Mogym.Controllers
         private readonly IRedisCacheService _redisCacheService;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IEmailSender _emailSender;
         public AccountController(IUserService userService,
             IMenuService menuService, 
             IRedisCacheService redisCacheService,
-            IConfiguration configuration, IHttpContextAccessor accessor)
+            IConfiguration configuration, IHttpContextAccessor accessor, IEmailSender emailSender)
         {
             _userService = userService;
             _menuService = menuService;
             _redisCacheService = redisCacheService;
             _configuration = configuration;
             _accessor = accessor;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> Login()
         {
+            var isLogined = HttpContext.User.Identity.IsAuthenticated;
+            if (isLogined)
+                return RedirectToAction("Index", "Account");
+
+
             string returnUrl = HttpContext.Request.Query["returnUrl"];
             ViewData["returnUrl"] = returnUrl;
             return PartialView();
@@ -203,6 +211,7 @@ namespace Mogym.Controllers
 
 
         [Authorize]
+        [DisplayName("خروج")]
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync();
@@ -258,6 +267,13 @@ namespace Mogym.Controllers
                     };
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+                    var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                        "ثبت نام جدید",signupRecord.FirstName + " " + signupRecord.LastName +"-"+signupRecord.Email );
+
+                    await _emailSender.SendEmailAsync(message);
+
+
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -272,6 +288,7 @@ namespace Mogym.Controllers
 
 
         [Authorize]
+        [DisplayName("تغییر پسورد")]
         public async Task<IActionResult> ChangePassword()
         {
             return View();

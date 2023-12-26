@@ -62,10 +62,17 @@ namespace Mogym.Application.Services
 
                 var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
 
-                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+               
+                var message = new Message(new string[] {"ramezannia.mojtaba@gmail.com"},
                     $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
-                    $"ورزشکار عزیز درخواست شما با کد پیگیری {plan.TrackingCode} برنامه {confirmAnswerQuestion.PlanName} با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال برای آقا/خانم {createQuestionRecord.TrainerFullName} ثبت گردید." +
-                    $"لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber} به نام {confirmAnswerQuestion.CartOwner} واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم");
+                    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}"+
+                    $" برنامه {confirmAnswerQuestion.PlanName}"+
+                    $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
+                    $" برای آقا/خانم {createQuestionRecord.TrainerFullName}"+
+                    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}"+
+                    $" به نام {confirmAnswerQuestion.CartOwner}"+
+                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم"
+                );
 
                 await _emailSender.SendEmailAsync(message);
 

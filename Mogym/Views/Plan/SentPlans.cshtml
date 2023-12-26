@@ -51,12 +51,16 @@
                                         <td>@itm.TrackingCode</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>@itm.Description</td>
-                                        <td>
-                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
-                                            <a class="btn btn-success" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
-                                           <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan"  asp-action="SentSupplimentDetail">مکمل</a>
-
-
+                                        <td class="d-flex border-0">
+                                            <div class="form-group" style="margin: 0px 10px">
+                                                <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
+                                            </div>
+                                            <div class="form-group" style="margin: 0px 10px">
+                                                <a class="btn btn-success" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
+                                            </div>
+                                            <div class="form-group" style="margin: 0px 10px">
+                                                <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan" asp-action="SentSupplimentDetail">مکمل</a>
+                                            </div>
                                         </td>
                                     </tr>
                                 }

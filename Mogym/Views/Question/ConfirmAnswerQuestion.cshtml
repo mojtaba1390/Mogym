@@ -16,9 +16,9 @@
                             <h3 class="pb-4 text-right">تائید ثبت درخواست</h3>
                             <p> <i class="fas fa-comment-dots px-2"></i>ورزشکار عزیز، درخواست شما برای @Model.PlanName ثبت گردید. لطفا هزینه ی این برنامه به مبلغ @Model.PlanCost.ToString("N0") ریال را به کارت با مشخصات زیر واریز کرده و تصویر رسید پرداخت شده را در صفحه کاربری و از طریق منو <span style="color: red">پرداخت نشده</span> بارگزاری کنید. </p>
                             <ul class="list-base">
-                                <li><i class="fas fa-arrow-left"></i> شماره کارت : <span style="direction: ltr">@Model.CartNumber</span></li>
-                                <li><i class="fas fa-arrow-left"></i> نام صاحب کارت: @Model.CartOwner</li>
-                                <li><i class="fas fa-arrow-left"></i> نام مربی: @Model.TrainerName</li>
+                                <li><i class="fas fa-arrow-left"></i> شماره کارت : <span style="float: left">@Model.CartNumber</span></li>
+                                <li><i class="fas fa-arrow-left"></i> نام صاحب کارت: <span style="float: left"> @Model.CartOwner</span></li>
+                                <li><i class="fas fa-arrow-left"></i> نام مربی: <span style="float: left">@Model.TrainerName</span></li>
                             </ul>
 
                         </div>

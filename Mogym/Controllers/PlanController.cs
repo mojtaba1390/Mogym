@@ -68,7 +68,7 @@ namespace Mogym.Controllers
                     }
 
                     await _planService.UpdatePaidPicture(Int32.Parse(planId),PaidPicture.FileName);
-                    return RedirectToAction(nameof(PaidPlans));
+                    return RedirectToAction(nameof(MyUnPaidPlans));
 
 
                 }
@@ -196,7 +196,7 @@ namespace Mogym.Controllers
                 }
 
                 await _planService.ApprovePlan(planId);
-                 return RedirectToAction(nameof(PaidPlans));
+                 return RedirectToAction(nameof(ApprovePlans));
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace Mogym.Controllers
                 }
 
                 await _planService.SendPlan(planId);
-                return RedirectToAction(nameof(PaidPlans));
+                return RedirectToAction(nameof(SentPlans));
             }
             catch (Exception e)
             {

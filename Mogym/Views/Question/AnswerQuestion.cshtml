@@ -16,226 +16,230 @@
             <div class="col-md-12">
                 <!-- Default box -->
                 <div class="card">
-                    <div class="card-header bg-b-yellow">
-                        <h3 class="card-title">مربی : @Model.TrainerFullName</h3>
-                    </div>
+                <div class="card-header bg-b-yellow">
+                    <h3 class="card-title">مربی : @Model.TrainerFullName</h3>
+                </div>
+                <div class="card-header">
+                    <h5 class="card-title" style="color:red">نکته: پر کردن گزینه هایی که * دارند اجباری می باشد</h5>
+                </div>
                     <input type="hidden" asp-for="TrainerId" />
-                    <div class="card-body row py-5">
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> نوع برنامه </legend>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">نوع برنامه مورد نظر را انتخاب کنید</label>
-                                <select class="js-example-disabled-results form-control" asp-for="TrainerPlanId">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (var itm in Model.TrainerPlanCosts)
-                                    {
-                                        <option value="@itm.Id">@itm.TrainerPlan - @itm.Cost.Value.ToString("N0") ریال</option>
-                                    }
-                                </select>
-                            </div>
-                        </fieldset>
+                <div class="card-body row py-5">
 
-
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> اطلاعات شخصی </legend>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="FirstName">نام</label>
-                                <input class="form-control" asp-for="FirstName" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="LastName">نام خانوادگی</label>
-                                <input class="form-control" asp-for="LastName" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="LastName">موبایل</label>
-                                <input class="form-control" asp-for="Mobile" />
-                                <span class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">جنسیت</label>
-                                <select class="js-example-disabled-results form-control" asp-for="Gender">
-                                    <option value="@null">جنسیت را انتخاب کنید</option>
-                                    @foreach (EnumGender itm in Enum.GetValues(typeof(EnumGender)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                                <span class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="LastName">سن</label>
-                                <input class="form-control" asp-for="Age" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-
-
-                        </fieldset>
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> اطلاعات جسمانی</legend>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">قد</label>
-                                <input class="form-control" asp-for="Height" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">وزن</label>
-                                <input class="form-control" asp-for="Weight" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">دور کمر</label>
-                                <input class="form-control" asp-for="Waist" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">دور بازو</label>
-                                <input class="form-control" asp-for="Biceps" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">دور سینه</label>
-                                <input class="form-control" asp-for="Chest" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">دور ران</label>
-                                <input class="form-control" asp-for="Thigh" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="pt-1" for="LastName">دور مچ</label>
-                                <input class="form-control" asp-for="Fist" type="number" />
-                                <span class="text-danger"></span>
-                            </div>
-
-                        </fieldset>
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> اطلاعات حرکتی</legend>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">میزان فعالیت روزانه</label>
-                                <select class="js-example-disabled-results form-control" asp-for="DailyAvtivity">
-                                    <option value="@null">میزان فعالیت روزانه را انتخاب کنید</option>
-                                    @foreach (EnumDailyAvtivity itm in Enum.GetValues(typeof(EnumDailyAvtivity)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">آیا شغل شما در عصر و شب می باشد؟</label>
-                                <select class="js-example-disabled-results form-control" asp-for="NightWork">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">تعداد جلسات تمرین در هفته</label>
-                                <select class="js-example-disabled-results form-control" asp-for="SessionsInWeek">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (EnumSessionsInWeek itm in Enum.GetValues(typeof(EnumSessionsInWeek)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="pt-1" for="Gender">در صورتی که خارج از باشگاه فعالیت ورزشی دارید،نام ببرید</label>
-                                <input class="form-control" asp-for="OutOfGymActivity" />
-                            </div>
-
-                        </fieldset>
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> اطلاعات بیماری</legend>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">آیا بیماری قلبی دارید؟</label>
-                                <select class="js-example-disabled-results form-control" asp-for="HeartDisease">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">آیا دیابت،آسم و یا قند خون دارید؟</label>
-                                <select class="js-example-disabled-results form-control" asp-for="DiabetesAsthmaHypoglycemia">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="pt-1" for="Gender">آیا سیگاری می باشد؟</label>
-                                <select class="js-example-disabled-results form-control" asp-for="Smoke">
-                                    <option value="@null"> انتخاب کنید</option>
-                                    @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
-                                    {
-                                        <option value="@((int)itm)">@itm.GetEnumDescription()</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label class="pt-1" for="Gender">در صورتی که بیماری خاصی دارید،نام ببرید</label>
-                                <input class="form-control" asp-for="Disease" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="pt-1" for="Gender">در صورتی که تحت درمان هستید،نام ببرید</label>
-                                <input class="form-control" asp-for="Treated" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="pt-1" for="Gender">در صورتی که دارویی مصرف می کنید،نام ببرید</label>
-                                <input class="form-control" asp-for="Medicine" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="pt-1" for="Gender">در صورتی که صدمه دیدگی دارید،نام ببرید</label>
-                                <input class="form-control" asp-for="Injury" />
-                            </div>
-                        </fieldset>
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto"> اطلاعات بیماری</legend>
-
-                            <div class="form-group col-md-3">
-                                <label class="pt-1" for="Gender">تصویر از رو به رو</label>
-                                <div>
-                                    <input type="file" name="FrontPic" accept="image/*" />
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="pt-1" for="Gender">تصویر از پشت</label>
-                                <div>
-                                    <input type="file" name="BackPic" accept="image/*" />
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="pt-1" for="Gender">تصویر از پهلو چپ</label>
-                                <div>
-                                    <input type="file" name="LeftPic" accept="image/*" />
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="pt-1" for="Gender">تصویر از پهلو راست</label>
-                                <div>
-                                    <input type="file" name="RightPic" accept="image/*" />
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="row p-3 mb-5">
-                            <legend class="float-none w-auto">دیدگاه و انتظارات</legend>
-                            <textarea asp-for="Expection" rows="4" class="form-control"></textarea>
-
-                        </fieldset>
-
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> نوع برنامه </legend>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">نوع برنامه مورد نظر را انتخاب کنید</label><span style="color: red">*</span>
+                        <select class="js-example-disabled-results form-control" asp-for="TrainerPlanId">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (var itm in Model.TrainerPlanCosts)
+                            {
+                                <option value="@itm.Id">@itm.TrainerPlan - @itm.Cost.Value.ToString("N0") ریال</option>
+                            }
+                        </select>
                     </div>
+                </fieldset>
+
+
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> اطلاعات شخصی </legend>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="FirstName">نام</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="FirstName"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="LastName">نام خانوادگی</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="LastName"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="LastName">موبایل</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="Mobile"/>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">جنسیت</label><span style="color: red">*</span>
+                        <select class="js-example-disabled-results form-control" asp-for="Gender">
+                            <option value="@null">جنسیت را انتخاب کنید</option>
+                            @foreach (EnumGender itm in Enum.GetValues(typeof(EnumGender)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="LastName">سن</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="Age" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+
+
+                </fieldset>
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> اطلاعات جسمانی</legend>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">قد</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="Height" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">وزن</label><span style="color: red">*</span>
+                        <input class="form-control" asp-for="Weight" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">دور کمر</label>
+                        <input class="form-control" asp-for="Waist" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">دور بازو</label>
+                        <input class="form-control" asp-for="Biceps" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">دور سینه</label>
+                        <input class="form-control" asp-for="Chest" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">دور ران</label>
+                        <input class="form-control" asp-for="Thigh" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="pt-1" for="LastName">دور مچ</label>
+                        <input class="form-control" asp-for="Fist" type="number"/>
+                        <span class="text-danger"></span>
+                    </div>
+
+                </fieldset>
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> اطلاعات حرکتی</legend>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">میزان فعالیت روزانه</label>
+                        <select class="js-example-disabled-results form-control" asp-for="DailyAvtivity">
+                            <option value="@null">میزان فعالیت روزانه را انتخاب کنید</option>
+                            @foreach (EnumDailyAvtivity itm in Enum.GetValues(typeof(EnumDailyAvtivity)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">آیا شغل شما در عصر و شب می باشد؟</label>
+                        <select class="js-example-disabled-results form-control" asp-for="NightWork">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">تعداد جلسات تمرین در هفته</label><span style="color: red">*</span>
+                        <select class="js-example-disabled-results form-control" asp-for="SessionsInWeek">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (EnumSessionsInWeek itm in Enum.GetValues(typeof(EnumSessionsInWeek)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="pt-1" for="Gender">در صورتی که خارج از باشگاه فعالیت ورزشی دارید،نام ببرید</label>
+                        <input class="form-control" asp-for="OutOfGymActivity"/>
+                    </div>
+
+                </fieldset>
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> اطلاعات بیماری</legend>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">آیا بیماری قلبی دارید؟</label>
+                        <select class="js-example-disabled-results form-control" asp-for="HeartDisease">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">آیا دیابت،آسم و یا قند خون دارید؟</label>
+                        <select class="js-example-disabled-results form-control" asp-for="DiabetesAsthmaHypoglycemia">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="pt-1" for="Gender">آیا سیگاری می باشد؟</label>
+                        <select class="js-example-disabled-results form-control" asp-for="Smoke">
+                            <option value="@null"> انتخاب کنید</option>
+                            @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
+                            {
+                                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="pt-1" for="Gender">در صورتی که بیماری خاصی دارید،نام ببرید</label>
+                        <input class="form-control" asp-for="Disease"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="pt-1" for="Gender">در صورتی که تحت درمان هستید،نام ببرید</label>
+                        <input class="form-control" asp-for="Treated"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="pt-1" for="Gender">در صورتی که دارویی مصرف می کنید،نام ببرید</label>
+                        <input class="form-control" asp-for="Medicine"/>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="pt-1" for="Gender">در صورتی که صدمه دیدگی دارید،نام ببرید</label>
+                        <input class="form-control" asp-for="Injury"/>
+                    </div>
+                </fieldset>
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto"> اطلاعات بیماری</legend>
+
+                    <div class="form-group col-md-3">
+                        <label class="pt-1" for="Gender">تصویر از رو به رو</label>
+                        <div>
+                            <input type="file" name="FrontPic" accept="image/*"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="pt-1" for="Gender">تصویر از پشت</label>
+                        <div>
+                            <input type="file" name="BackPic" accept="image/*"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="pt-1" for="Gender">تصویر از پهلو چپ</label>
+                        <div>
+                            <input type="file" name="LeftPic" accept="image/*"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="pt-1" for="Gender">تصویر از پهلو راست</label>
+                        <div>
+                            <input type="file" name="RightPic" accept="image/*"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="row p-3 mb-5">
+                    <legend class="float-none w-auto">دیدگاه و انتظارات</legend>
+                    <textarea asp-for="Expection" rows="4" class="form-control"></textarea>
+
+                </fieldset>
+
+                </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <div class="form-group row">
@@ -244,7 +248,7 @@
                             </div>
                             <div class="form-actions-buttons col-md-12">
                                 <input type="submit" value="ثبت" class="btn bg-buttom-yellow" />
-                                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت</a>
+                                <a asp-action="Index" asp-controller="Home" class="btn btn-secondary py-2">صفحه اصلی</a>
                             </div>
                         </div>
                     </div>
@@ -267,6 +271,9 @@
 
         $("#form-answerQuestion").validate({
             rules: {
+                SessionsInWeek: {
+                    required: true
+                },
                 TrainerPlanId: {
                     required: true
                 },
@@ -313,6 +320,9 @@
                 },
                 TrainerPlanId: {
                     required: "نوع برنامه را مشخص کنید"
+                },
+                SessionsInWeek: {
+                    required: "تعداد جلسات را مشخص کنید"
                 },
                 FirstName: {
                     required: "پر کردن نام  الزامی است",
