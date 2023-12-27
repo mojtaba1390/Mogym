@@ -81,7 +81,7 @@
     </div>
 </section>
 
-<div class="modal fade" id="ShowPaidPicture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ShowPaidPicture" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 500px !important">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -133,7 +133,7 @@
 
 
         function paidPicture(pic) {
-            var html = '<div style="width:728px;height:1024px"><img src="/PaidPic/' + pic + '" ></div>';
+            var html = '<div ><img src="/PaidPic/' + pic + '" style="width:350px;height:500px"></div>';
             $('#modal-paidPicture').html(html);
             
         }
