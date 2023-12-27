@@ -365,8 +365,8 @@ namespace Mogym.Application.Services
 
         public async Task<bool> IsThisPlanIdForThisTrainer(int planId)
         {
-            var trainerId = _trainerProfileService.GetCurrentUserTrainer().Result?.Id;
-            return await _unitOfWork.PlanRepository.Find(x => x.Id == planId && x.TrainerId == trainerId).AnyAsync();
+            var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+            return await _unitOfWork.PlanRepository.Find(x => x.Id == planId && x.TrainerId == trainer.Id).AnyAsync();
         }
 
         public async Task<bool> IsThereAnyPlanWithStatus(int planId, EnumPlanStatus planStatus)
