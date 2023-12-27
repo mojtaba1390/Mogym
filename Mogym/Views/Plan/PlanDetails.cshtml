@@ -60,14 +60,15 @@
                                                 <td class="d-flex border-0">
                                                     @{
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <a class="btn btn-info" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>
-
-                                                        </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
                                                             <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
                                                                 ویرایش عنوان تمرین
                                                             </button>
                                                         </div>
+                                                        <div class="form-group" style="margin: 0px 10px">
+                                                            <a class="btn btn-info" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>
+
+                                                        </div>
+
                                                         <div class="form-group" style="margin: 0px 10px">
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteWorkout('@Model.WorkoutRecords[index].Id','@Model.WorkoutRecords[index].PlanId')">حذف</button>
                                                         </div>
@@ -130,7 +131,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ingridientDetailsModal" onclick="ingridientDetails('@Model.MealRecords[index].Id')">جزئیات</button>
+                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ingridientDetailsModal" onclick="ingridientDetails('@Model.MealRecords[index].Id')">جزئیات رژیم غذایی</button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteMeal('@Model.MealRecords[index].Id','@Model.MealRecords[index].PlanId')">حذف</button>
@@ -193,7 +194,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#supplimentDetailsModal" onclick="supplimentDetails('@Model.SupplimentPlanRecords[index].Id')">جزئیات</button>
+                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#supplimentDetailsModal" onclick="supplimentDetails('@Model.SupplimentPlanRecords[index].Id')">جزئیات مکمل</button>
                                                         </div>
                                                         <div class="form-group" style="margin: 0px 10px">
                                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteSupliment('@Model.SupplimentPlanRecords[index].Id','@Model.SupplimentPlanRecords[index].PlanId')">حذف</button>

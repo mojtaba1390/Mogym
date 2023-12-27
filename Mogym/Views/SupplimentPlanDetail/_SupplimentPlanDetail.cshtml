@@ -49,7 +49,7 @@
                                                         <span asp-validation-for="@Model[index].Amount" class="text-danger"></span>
                                                     </td>
                                                     <td width="20%">
-                                                        <select class="form-select" style="width: 100%" asp-for="@Model[index].Scale">
+                                                        <select class="js-select-example form-select form-control" aria-label="Default select exampleFormControlSelect1" style="width: 100%" asp-for="@Model[index].Scale">
                                                             <option value="-1"> واحد اندازه را انتخاب کنید </option>
                                                             @foreach (EnumScale itm in Enum.GetValues(typeof(EnumScale)))
                                                             {
@@ -115,4 +115,10 @@
         addSupplimentPlanDetailRow(0);
 
 
+</script>
+
+<script>
+    $('.js-select-example').select2({
+        dropdownParent: $('#supplimentDetailsModal')
+    });
 </script>

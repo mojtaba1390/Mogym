@@ -50,7 +50,7 @@
                                                         <span asp-validation-for="@Model[index].Count" class="text-danger"></span>
                                                     </td>
                                                     <td width="20%">
-                                                        <select class="form-select" style="width: 100%" asp-for="@Model[index].Size">
+                                                        <select class="js-select-example form-select form-control" aria-label="Default select exampleFormControlSelect1" asp-for="@Model[index].Size">
                                                             <option value="-1"> اندازه را انتخاب کنید </option>
                                                             @foreach (EnumSize itm in Enum.GetValues(typeof(EnumSize)))
                                                             {
@@ -122,4 +122,10 @@
         addMealIngridientRow(0);
 
 
+</script>
+
+<script>
+    $('.js-select-example').select2({
+        dropdownParent: $('#ingridientDetailsModal')
+    });
 </script>
