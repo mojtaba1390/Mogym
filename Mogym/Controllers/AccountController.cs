@@ -98,7 +98,9 @@ namespace Mogym.Controllers
 
                         var peraperties = new AuthenticationProperties()
                         {
-                            IsPersistent = true
+                            IsPersistent = true,
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+
                         };
 
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);

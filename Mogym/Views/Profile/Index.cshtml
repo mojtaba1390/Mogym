@@ -52,6 +52,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
+                    <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
                 </div>
             </div>
         </nav>
@@ -67,8 +68,8 @@
                 <div class="row align-items-center">
                     <div class="col-md-9 col-lg-7">
                         <div class="page-header-content text-white pt-4">
-                            <h1 class="text-white mb-0">@Model.FirstName @Model.LastName</h1>
-                            @*                            <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+@*                            <h1 class="text-white mb-0">@Model.FirstName @Model.LastName</h1>
+*@                            @*                            <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
                             *@
                         </div>
                     </div>
@@ -126,7 +127,13 @@
                                 <li></li>
                             </ul>
                             <div class="text-content mt-20">
-                                @Html.Raw(Model.Biography.Replace("\r\n", "<br />"))
+                                @{
+                                    if (!string.IsNullOrWhiteSpace(Model.Biography))
+                                    {
+                                        @Html.Raw(Model.Biography.Replace("\r\n", "<br />"))
+
+                                    }
+                                }
                             </div>
                             <div class="action-btns mt-4">
                                 <ul class="list-inline">

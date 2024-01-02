@@ -45,7 +45,7 @@ namespace Mogym.Controllers
             }
 
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Create));
         }
 
 

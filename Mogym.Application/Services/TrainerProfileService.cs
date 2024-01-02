@@ -177,7 +177,7 @@ namespace Mogym.Application.Services
                 .GetAll()
                 .Include(x=>x.User)
                 .OrderByDescending(x=>x.Id)
-                .Take(2)
+                .Take(4)
                 .ToListAsync();
 
             return   _mapper.Map<List<LastTrainersForHomePageRecord>>(lastTrainers);
