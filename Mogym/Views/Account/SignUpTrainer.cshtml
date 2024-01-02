@@ -1,0 +1,219 @@
+﻿@using Mogym.Application.Interfaces
+@model Mogym.Application.Records.User.SignUpTrainerRecordNew
+@inject ITrainerProfileService _trainerProfileService
+@{
+    int traninersCnt = await _trainerProfileService.GetAllTrainersCount();
+    int limit = 20 - traninersCnt;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:title" content="موجیم -ثبت نام مربی" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
+    <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع مربیگری بدنسازی آنلاین" />
+    <meta property="og:url" content="http://mogym.ir/login" />
+    <!--favicon icon-->
+    <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
+
+    <!--title-->
+    <title>موجیم -  ثبت نام مربی</title>
+
+    <!--build:css-->
+    <link rel="stylesheet" href="~/mainassets/css/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+
+    <!--preloader start-->
+    <div id="preloader">
+        <div class="preloader-wrap">
+            <img src="~/img/mogym-transparent.png" alt="mogym" class="img-fluid">
+            <div class="thecube">
+                <div class="cube c1"></div>
+                <div class="cube c2"></div>
+                <div class="cube c4"></div>
+                <div class="cube c3"></div>
+            </div>
+        </div>
+    </div>
+    <!--preloader end-->
+    <section class="page-header-section ptb-100 bg-image full-height" image-overlay="8">
+        <div class="background-image-wraper" style="background: url('~/mainassets/img/cta-bg.jpg'); opacity: 1;"></div>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="login-signup-wrap p-5 gray-light-bg rounded shadow">
+                        <div class="login-signup-header text-center">
+                            <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
+                            <h4 class="mb-5">ثبت نام مربی</h4>
+                            <h6 class="mb-5">تعداد ثبت نام باقی مانده: @limit </h6>
+                        </div>
+                        <form asp-action="SignUpTrainer" method="post" class="login-signup-form">
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    نام
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-user"></span>
+                                    </div>
+                                    <input asp-for="FirstName" type="text" class="form-control" required oninvalid="setCustomValidity('نام را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                                <div>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    نام خانوادگی
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-user"></span>
+                                    </div>
+                                    <input asp-for="LastName" type="text" class="form-control" required oninvalid="setCustomValidity('نام خانوادگی را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                                <div>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    آدرس ایمیل
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-email"></span>
+                                    </div>
+                                    <input asp-for="Email"
+                                           type="email" 
+                                           class="form-control"
+                                           placeholder="name@address.com"
+                                           required 
+                                           oninvalid="setCustomValidity('فرمت ایمیل نادرست است.')" 
+                                           pattern="[a-z0-9._%+\-]+@@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                           onchange="try{setCustomValidity('')}catch(e){}"       
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    کلمه عبور
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-lock"></span>
+                                    </div>
+                                    <input asp-for="Password" type="password" class="form-control" required oninvalid="setCustomValidity('پسورد را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    موبایل
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-user"></span>
+                                    </div>
+                                    <input asp-for="Mobile" type="number" class="form-control" required oninvalid="setCustomValidity('موبایل را وارد کنید.')"
+                                           onkeyup="setCustomValidity('')">
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            @{
+                                if (limit != 0)
+                                {
+                                    <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
+                                        ثبت نام
+                                    </button>
+                                }
+                            }
+                            <!-- Submit -->
+
+                        </form>
+
+                        <p class="text-center mb-0">قبلاً حساب دارید؟ <a asp-controller="Account" asp-action="Login">وارد شدن</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @if (TempData["errormessage"] != null)
+    {
+        <div class="alert alert-error  alert-index alert-index-danger text-right col-md-4">
+            <div class="swal2-icon swal2-error swal2-icon-show" style="display: flex;">
+                <div class="sa">
+                    <div class="sa-error">
+                        <div class="sa-error-x">
+                            <div class="sa-error-left"></div>
+                            <div class="sa-error-right"></div>
+                        </div>
+                        <div class="sa-error-placeholder"></div>
+                        <div class="sa-error-fix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="alret-title">
+                @TempData["errormessage"]
+            </div>
+        </div>
+    }
+    <!--build:js-->
+    <script src="~/mainassets/js/vendors/jquery-3.5.1.min.js"></script>
+    <script src="~/mainassets/js/vendors/popper.min.js"></script>
+    <script src="~/mainassets/js/vendors/bootstrap.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.easing.min.js"></script>
+    <script src="~/mainassets/js/vendors/owl.carousel.min.js"></script>
+    <script src="~/mainassets/js/vendors/countdown.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.waypoints.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.rcounterup.js"></script>
+    <script src="~/mainassets/js/vendors/magnific-popup.min.js"></script>
+    <script src="~/mainassets/js/vendors/validator.min.js"></script>
+    <script src="~/mainassets/js/app.js"></script>
+    <!--endbuild-->
+
+
+</body>
+</html>

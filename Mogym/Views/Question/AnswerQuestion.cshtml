@@ -158,7 +158,7 @@
                 <fieldset class="row p-3 mb-5">
                     <legend class="float-none w-auto"> اطلاعات بیماری</legend>
                     <div class="form-group col-md-4">
-                        <label class="pt-1" for="Gender">آیا بیماری قلبی دارید؟</label>
+                        <label class="pt-1" for="Gender">آیا بیماری قلبی دارید؟</label><span style="color: red">*</span>
                         <select class="js-example-disabled-results form-control" asp-for="HeartDisease">
                             <option value="@null"> انتخاب کنید</option>
                             @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
@@ -168,7 +168,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="pt-1" for="Gender">آیا دیابت،آسم و یا قند خون دارید؟</label>
+                        <label class="pt-1" for="Gender">آیا دیابت،آسم و یا قند خون دارید؟</label><span style="color: red">*</span>
                         <select class="js-example-disabled-results form-control" asp-for="DiabetesAsthmaHypoglycemia">
                             <option value="@null"> انتخاب کنید</option>
                             @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
@@ -178,7 +178,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="pt-1" for="Gender">آیا سیگاری می باشد؟</label>
+                        <label class="pt-1" for="Gender">آیا سیگاری می باشد؟</label><span style="color: red">*</span>
                         <select class="js-example-disabled-results form-control" asp-for="Smoke">
                             <option value="@null"> انتخاب کنید</option>
                             @foreach (EnumYesNo itm in Enum.GetValues(typeof(EnumYesNo)))
@@ -201,7 +201,7 @@
                         <input class="form-control" asp-for="Medicine"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label class="pt-1" for="Gender">در صورتی که صدمه دیدگی دارید،نام ببرید</label>
+                                <label class="pt-1" for="Gender">در صورتی که صدمه دیدگی دارید،نام ببرید</label>
                         <input class="form-control" asp-for="Injury"/>
                     </div>
                 </fieldset>
@@ -274,6 +274,15 @@
                 SessionsInWeek: {
                     required: true
                 },
+                HeartDisease: {
+                    required: true
+                },
+                DiabetesAsthmaHypoglycemia: {
+                    required: true
+                },
+                Smoke: {
+                    required: true
+                },
                 TrainerPlanId: {
                     required: true
                 },
@@ -323,6 +332,15 @@
                 },
                 SessionsInWeek: {
                     required: "تعداد جلسات را مشخص کنید"
+                },
+                HeartDisease: {
+                    required: "بیماری قلبی را مشخص کنید"
+                },
+                DiabetesAsthmaHypoglycemia: {
+                    required: "دیابت آسم و یا قند خون را مشخص کنید"
+                },
+                Smoke: {
+                    required: "آیا سیگاری هستید را مشخص کنید"
                 },
                 FirstName: {
                     required: "پر کردن نام  الزامی است",

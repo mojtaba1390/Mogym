@@ -23,5 +23,6 @@ namespace Mogym.Application.Interfaces
         bool IsThereAnyEmailAddress(string email);
         Task CreateTrainerNew(SignUpTrainerRecordNew signUpTrainerRecordNew);
         Task ChangePassword(string password);
+        Task<UserRecord> CreateTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew);
     }
 }

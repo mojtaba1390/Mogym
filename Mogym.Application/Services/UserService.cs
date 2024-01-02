@@ -293,6 +293,32 @@ namespace Mogym.Application.Services
                 throw ex;
             }
         }
+        public async Task<UserRecord> CreateTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew)
+        {
+            try
+            {
+                var trainer = _mapper.Map<User>(signUpTrainerRecordNew);
+                var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(trainer);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                trainer.UserRoles.Add(userRole);
+
+                await _unitOfWork.UserRepository.AddAsync(trainer);
+
+                var trainerProfile = new TrainerProfile();
+                trainerProfile.UserId = trainer.Id;
+                trainerProfile.CartOwnerName = trainer.FirstName + " " + trainer.LastName;
+                await _unitOfWork.TrainerProfileRepository.AddAsync(trainerProfile);
+
+                var entity = GetEntityWithRoleAndPermission(trainer);
+                return _mapper.Map<UserRecord>(entity);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public async Task ChangePassword(string password)
         {

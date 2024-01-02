@@ -182,5 +182,10 @@ namespace Mogym.Application.Services
 
             return   _mapper.Map<List<LastTrainersForHomePageRecord>>(lastTrainers);
         }
+
+        public async Task<int> GetAllTrainersCount()
+        {
+            return await _unitOfWork.TrainerProfileRepository.GetAll().CountAsync();
+        }
     }
 }

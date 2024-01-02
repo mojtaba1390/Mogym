@@ -12,6 +12,8 @@ using Mogym.Application.Interfaces.ICache;
 using StackExchange.Redis;
 using System.ComponentModel;
 using Mogym.Common.ModelExtended;
+using Telegram.Bot.Types;
+using Message = Mogym.Common.ModelExtended.Message;
 
 namespace Mogym.Controllers
 {
@@ -238,6 +240,69 @@ namespace Mogym.Controllers
         {
             return View();
         }
+
+
+
+        public async Task<IActionResult> SignUpTrainer()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> SignUpTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = await _userService.CreateTrainer(signUpTrainerRecordNew);
+
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.UserName ??""),
+                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+                        new Claim(type: "ProfilePic", value: user.ProfilePic??"")
+
+                    };
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+
+                    var peraperties = new AuthenticationProperties()
+                    {
+                        IsPersistent = true
+                    };
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+                    var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                        " ثبت نام جدید مربی", signUpTrainerRecordNew.FirstName + " " + signUpTrainerRecordNew.LastName + "-" + signUpTrainerRecordNew.Email + "-" + signUpTrainerRecordNew.Mobile);
+
+                    await _emailSender.SendEmailAsync(message);
+
+
+                    return RedirectToAction(nameof(Index));
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                return View("NotFound");
+            }
+
+            return View();
+
+        }
+
+
+
+
+
 
 
 
