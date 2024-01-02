@@ -52,7 +52,14 @@
                 </button>
 
                 <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
-                    <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
+                    <ul class="navbar-nav ml-auto menu">
+                        <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود</a></li>
+                        <li><a asp-controller="Account" asp-action="SignUp" class="page-scroll">ثبت نام ورزشکار</a></li>
+                        <li><a asp-controller="Account" asp-action="SignUpTrainer" class="page-scroll">ثبت نام مربی</a></li>
+                        <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
+                        <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -119,11 +126,48 @@
 
     </div>
 
-    <!--footer section start-->
     <footer class="footer-1 ptb-60 gradient-bg">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-lg-4 mb-4 mb-md-4 mb-sm-4 mb-lg-0">
+                    <a href="#" class="navbar-brand mb-2">
+                        <img src="~/img/mogym-logo.png" class="img-fluid mb-3" alt="mogym">
+                        </a>
+                    <br>
+                    <p>موجیم تخصصی ترین مرجع بدنسازی و طراحی تمرین در حال حاضر می باشد(نسخه آزمایشی)</p>
+                    <div class="list-inline social-list-default background-color social-hover-2 mt-2">
+                        <li class="list-inline-item"><a class="twitter" href="https://t.me/mogym"><i class="fab fa-telegram"></i></a></li>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-8">
+                    <div class="row mt-0">
+                        <div class="col-sm-6 col-md-3 col-lg-3 mb-4 mb-sm-4 mb-md-0 mb-lg-0">
+                            <h6 class="text-uppercase">صفحات</h6>
+                            <ul>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Login">ورود</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="SignUp">ثبت نام ورزشکار</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="SignUpTrainer">ثبت نام مربی</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Trainers">مربیان</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 mb-4 mb-sm-4 mb-md-0 mb-lg-0">
+                            <h6 class="text-uppercase">عمومی</h6>
+                            <ul>
+                                <li>
+                                    <a asp-controller="Home" asp-action="ContactUs">ارتباط با ما</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

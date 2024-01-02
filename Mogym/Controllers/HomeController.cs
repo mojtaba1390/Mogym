@@ -24,6 +24,11 @@ namespace Mogym.Controllers
             var lastTrainers =await _trainerProfileService.GetLastTrainersForHomepage();
             return View(lastTrainers);
         }
+        public async Task<IActionResult> ContactUs()
+        {
+
+            return View();
+        }
 
         [DisplayName("مربیان")]
         public async Task<IActionResult> Trainers()
