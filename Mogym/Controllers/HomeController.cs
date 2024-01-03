@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Mogym.Controllers
 {
@@ -8,11 +11,12 @@ namespace Mogym.Controllers
     public class HomeController : Controller
     {
         private readonly ITrainerProfileService _trainerProfileService;
+        private readonly IHttpContextAccessor _accessor;
 
-
-        public HomeController(ITrainerProfileService trainerProfileService)
+        public HomeController(ITrainerProfileService trainerProfileService, IHttpContextAccessor accessor)
         {
-            _trainerProfileService= trainerProfileService;
+            _trainerProfileService = trainerProfileService;
+            _accessor = accessor;
         }
         public async Task<IActionResult> Index()
         {
@@ -37,6 +41,13 @@ namespace Mogym.Controllers
 
 
             return View(trainers);
+        }
+
+        [DisplayName("لینک صفحه من")]
+        [Authorize]
+        public async Task<IActionResult> MyPageLink()
+        {
+            return View();
         }
     }
 }

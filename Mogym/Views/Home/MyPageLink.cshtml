@@ -1,0 +1,63 @@
+﻿@using System.Security.Claims
+@inject IHttpContextAccessor _accessor;
+@{
+
+    ViewBag.Title = "لینک صفحه من";
+    Layout = "_Layout";
+    var username= _accessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? "";
+
+
+}
+<section class="content">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Default box -->
+                <div class="card" id="change-password">
+                    <div class="card-header bg-success-card">
+                        <h3 class="card-title">لینک صفحه من</h3>
+                    </div>
+                    <div class="card-body py-5">
+                        <input id="mylink" name="mylink" type="text" class="col-md-6" readonly="readonly" value="http://mogym.ir/@username">
+                    </div>
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="form-actions-buttons col-md-3">
+                            <button id="copyBtn" type="button" class="btn btn-success-card col-md-12"> کپی</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+@section Scripts{
+    <script>
+        function copyToClipboard(text) {
+
+            var textArea = document.createElement( "textarea" );
+            textArea.value = text;
+            document.body.appendChild( textArea );       
+            textArea.select();
+
+            try {
+                var successful = document.execCommand( 'copy' );
+                var msg = successful ? 'successful' : 'unsuccessful';
+                console.log('Copying text command was ' + msg);
+            } catch (err) {
+                console.log('Oops, unable to copy',err);
+            }    
+            document.body.removeChild( textArea );
+        }
+
+        $('#copyBtn').click(function () {
+            var clipboardText = "";
+            clipboardText = $('#mylink').val();
+            copyToClipboard( clipboardText );
+            alert( "کپی انجام شد" );
+        });
+
+
+    </script>
+}
+
