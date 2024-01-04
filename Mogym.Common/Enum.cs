@@ -101,7 +101,10 @@ namespace Mogym.Common
         TrainerApprovment = 3,
         [EnumMember]
         [Description("ارسال شده")]
-        Sent =4
+        Sent =4,
+        [EnumMember]
+        [Description("در انتظار تائید سیستم تصویر")]
+        WaitForApprovePaidPic =5
     }
     public enum EnumSize
     {

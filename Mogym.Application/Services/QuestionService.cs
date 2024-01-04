@@ -66,7 +66,7 @@ namespace Mogym.Application.Services
                 var message = new Message(new string[] {"ramezannia.mojtaba@gmail.com"},
                     $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
                     $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}"+
-                    $" برنامه {confirmAnswerQuestion.PlanName}"+
+                    $" {confirmAnswerQuestion.PlanName}"+
                     $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
                     $" برای آقا/خانم {createQuestionRecord.TrainerFullName}"+
                     $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}"+

@@ -28,5 +28,8 @@ namespace Mogym.Application.Interfaces
         Task<List<PlanRecord>> MyRecivedPlans();
         Task<bool> IsThisPlanIdForThisTrainer(int planId);
         Task<bool> IsThereAnyPlanWithStatus(int planId, EnumPlanStatus planStatus);
+        Task<List<PaidPlanRecorrd>?> CheckPaidPic();
+        Task ApprovePic(int planId);
+        Task IgnorePic(int planId);
     }
 }

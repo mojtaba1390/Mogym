@@ -338,8 +338,52 @@ namespace Mogym.Controllers
         }
 
 
+        [DisplayName("شناسایی تصویر رسید")]
+        public async Task<IActionResult> CheckPaidPic()
+        {
+            try
+            {
+                var planRecords = await _planService.CheckPaidPic();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
 
+            }
+            return View("NotFound");
 
+        }
+        public async Task<IActionResult> ApprovePic(int planId)
+        {
+            try
+            {
+                 await _planService.ApprovePic(planId);
+                return RedirectToAction(nameof(CheckPaidPic));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+        public async Task<IActionResult> IgnorePic(int planId)
+        {
+            try
+            {
+                 await _planService.IgnorePic(planId);
+                return RedirectToAction(nameof(CheckPaidPic));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
 
 
     }

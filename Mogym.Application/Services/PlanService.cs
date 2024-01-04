@@ -66,19 +66,30 @@ namespace Mogym.Application.Services
             {
                 var plan = await _unitOfWork.PlanRepository.GetByIdAsync(planId);
                 plan.PaidPicture = paidPictureFileName;
-                plan.PlanStatus = EnumPlanStatus.Paid;
+                plan.PlanStatus = EnumPlanStatus.WaitForApprovePaidPic;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
 
-                var trainer = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
-                    .Include(x => x.TrainerProfile_Plan)
-                    .ThenInclude(x => x.User)
-                    .Select(x=>x.TrainerProfile_Plan.User)
+                //var trainer = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                //    .Include(x => x.TrainerProfile_Plan)
+                //    .ThenInclude(x => x.User)
+                //    .Select(x=>x.TrainerProfile_Plan.User)
+                //    .FirstOrDefaultAsync();
+
+
+                var user = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                    .Include(x => x.User_Plan)
+                    .Select(x=>x.User_Plan)
                     .FirstOrDefaultAsync();
                     
                 
                 var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                    $"افزودن تصویر رسید-{trainer.Mobile}",
-                    $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
+                    $"شناسایی تصویر رسید-{user.Mobile}",
+                    $"تصویر رسید برنامه با کد پیگیری { plan.TrackingCode} در حال پردازش سیستم می باشد.نتیجه از طریق پیامک اعلام می گردد. موجیم");   
+                
+
+                //var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                //    $"افزودن تصویر رسید-{trainer.Mobile}",
+                //    $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
 
                await  _emailSender.SendEmailAsync(message);
 
@@ -159,6 +170,91 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
+        }
+
+
+        public async Task<List<PaidPlanRecorrd>?> CheckPaidPic()
+        {
+            try
+            {
+                var userId = _accessor.GetUser();
+                var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+                var plans = await _unitOfWork.PlanRepository
+                    .Find(x => x.PlanStatus==EnumPlanStatus.WaitForApprovePaidPic)
+                    .AsNoTracking()
+                    .Include(x => x.User_Plan)
+                    .OrderByDescending(x => x.Id)
+                    .ToListAsync();
+                return _mapper.Map<List<PaidPlanRecorrd>>(plans);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetPaidPlans in PlanService";
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+        }
+
+        public async Task ApprovePic(int planId)
+        {
+            var plan = await _unitOfWork.PlanRepository.Where(x => x.Id == planId).FirstOrDefaultAsync();
+            plan.PlanStatus = EnumPlanStatus.Paid;
+            await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+            var trainer = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                .Include(x => x.TrainerProfile_Plan)
+                .ThenInclude(x => x.User)
+                .Select(x => x.TrainerProfile_Plan.User)
+                .FirstOrDefaultAsync();
+
+            var messageTrainer = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                $"تائید تصویر رسید مربی-{trainer.Mobile}",
+                $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
+
+             await _emailSender.SendEmailAsync(messageTrainer);
+
+
+
+
+            var user = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                .Include(x => x.User_Plan)
+                .Select(x => x.User_Plan)
+                .FirstOrDefaultAsync();
+
+
+            var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                $"شاگرد تائید تصویر رسید-{user.Mobile}",
+                $"تصویر رسید بارگزاری شده برنامه با کد پیگیری {plan.TrackingCode} شما تائید شد- موجیم");
+
+
+
+            await _emailSender.SendEmailAsync(messageUser);
+
+
+
+        }
+
+        public async Task IgnorePic(int planId)
+        {
+            var plan = await _unitOfWork.PlanRepository.Where(x => x.Id == planId).FirstOrDefaultAsync();
+            plan.PlanStatus = EnumPlanStatus.Registered;
+            await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+
+            var user = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
+                .Include(x => x.User_Plan)
+                .Select(x => x.User_Plan)
+                .FirstOrDefaultAsync();
+
+
+            var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                $"عدم تائید تصویر رسید-{user.Mobile}",
+                $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} به یکی از دلایل تصویر نامتعارف،تصویر خالی،مشخص نبودن شماره پیگیری،تصویر مخدوش نامعتبر شناخته شد.لطفا در پنل پرداخت نشده تصویر مناسب بارگزاری نمایید.موجیم");
+
+
+
+            await _emailSender.SendEmailAsync(messageUser);
+
         }
 
         [HttpPost]
