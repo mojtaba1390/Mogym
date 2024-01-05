@@ -29,6 +29,10 @@ namespace Mogym.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AttendanceClientRecord attendanceClientRecord)
         {
+
+
+
+
             return View();
         }
     }

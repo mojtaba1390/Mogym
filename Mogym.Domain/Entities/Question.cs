@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Common;
@@ -43,6 +44,8 @@ namespace Mogym.Domain.Entities
         public string? RightPic { get; set; }
 
         public int TrainerPlan { get; set; }
+
+        public string Code { get; set; }
 
 
 
