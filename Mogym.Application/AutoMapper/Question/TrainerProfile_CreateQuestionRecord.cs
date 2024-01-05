@@ -15,7 +15,7 @@ namespace Mogym.Application.AutoMapper.Question
             CreateMap<TrainerProfile, CreateQuestionRecord>()
                 .ForMember(x => x.TrainerFullName, z => z.MapFrom(a => a.User.FirstName + " " + a.User.LastName))
                 .ForMember(x => x.TrainerId, z => z.MapFrom(a => a.Id))
-                .ForMember(x => x.TrainerPlanCosts, z => z.MapFrom(a => a.TrainerPlanCosts));
+                .ForMember(x => x.TrainerPlanCosts, z => z.MapFrom(a => a.TrainerPlanCosts.Where(x=>(int)x.TrainerPlan<4)));
         }
     }
 }

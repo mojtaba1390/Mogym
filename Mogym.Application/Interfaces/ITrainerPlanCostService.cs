@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.TrainerPlanCost;
+using Mogym.Application.Records.User;
 using Mogym.Domain.Entities;
 
 namespace Mogym.Application.Interfaces
@@ -14,5 +15,6 @@ namespace Mogym.Application.Interfaces
         Task<List<TrainerPlanCostRecord>> GetListByUserId(int userId);
         Task Create(int userId, CreateTrainerCostsRecord model);
         bool IsThereAnyEntityWithTrainerProfileIdAndPlanType(int trainerProfileId, int? trainerPlan);
+        Task<AttendanceClientRecord> GetAttendanceClientRecord();
     }
 }

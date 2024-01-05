@@ -48,7 +48,16 @@ namespace Mogym.Common
         Diet = 2,
         [EnumMember]
         [Description("برنامه حرکات تمرینی و رژیم غذایی")]
-        WorkoutAndDiet = 3
+        WorkoutAndDiet = 3,
+        [EnumMember]
+        [Description("برنامه حرکات تمرینی حضوری")]
+        AttendanceClientWorkout = 4,
+        [EnumMember]
+        [Description("برنامه رژیم غذایی حضوری")]
+        AttendanceClientDiet = 5,
+        [EnumMember]
+        [Description("برنامه حرکات تمرینی و رژیم غذایی حضوری")]
+        AttendanceClientWorkoutAndDiet = 6
     }
     public enum EnumDailyAvtivity
     {

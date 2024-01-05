@@ -6,10 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.TrainerPlanCost;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Infrastructure;
 using Mogym.Application.Records.TrainerAchievement;
+using Mogym.Application.Records.User;
 using Mogym.Common;
 using Mogym.Domain.Entities;
 
@@ -20,12 +22,16 @@ namespace Mogym.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
+        private readonly ITrainerProfileService _trainerProfileService;
+        private readonly IHttpContextAccessor _accessor;
 
-        public TrainerPlanCostService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger)
+        public TrainerPlanCostService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,ITrainerProfileService trainerProfileService, IHttpContextAccessor accessor)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
+            _trainerProfileService = trainerProfileService;
+            _accessor = accessor;
         }
 
         public async Task<List<TrainerPlanCostRecord>> GetListByUserId(int userId)
@@ -65,6 +71,18 @@ namespace Mogym.Application.Services
         {
             return _unitOfWork.TrainerPlanCostRepository.Find(x =>
                 x.TrainerProfileId == trainerProfileId && x.TrainerPlan == (EnumTrainerPlan)trainerPlan.Value).Any();
+        }
+
+        public async Task<AttendanceClientRecord> GetAttendanceClientRecord()
+        {
+            var userId = _accessor.GetUser();
+            var trainer= await _unitOfWork.TrainerProfileRepository
+                .Find(x => x.UserId == userId )
+                .Include(x=>x.TrainerPlanCosts.Where(z=>(int)z.TrainerPlan>3))
+                .FirstOrDefaultAsync();
+
+
+            return _mapper.Map<AttendanceClientRecord>(trainer);
         }
 
         public void Delete(int id)
