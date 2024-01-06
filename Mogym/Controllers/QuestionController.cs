@@ -247,7 +247,7 @@ namespace Mogym.Controllers
                     var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
 
 
-                    return View("ConfirmAnswerQuestion", confirmAnswerQuestion);
+                    return View("ConfirmAnswerQuestionAnonymous", confirmAnswerQuestion);
                 }
 
                 ViewData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);
