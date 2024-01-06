@@ -113,7 +113,10 @@ namespace Mogym.Common
         Sent =4,
         [EnumMember]
         [Description("در انتظار تائید سیستم تصویر")]
-        WaitForApprovePaidPic =5
+        WaitForApprovePaidPic =5,
+        [EnumMember]
+        [Description("در انتظار تکمیل فرم توسط شاگرد حضوری")]
+        WaitForCompleteAnswerProcessByAttendanceClient =6
     }
     public enum EnumSize
     {

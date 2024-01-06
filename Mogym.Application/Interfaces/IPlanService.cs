@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
+using Mogym.Application.Records.User;
 using Mogym.Application.Records.Workout;
 using Mogym.Common;
 
@@ -31,5 +32,9 @@ namespace Mogym.Application.Interfaces
         Task<List<PaidPlanRecorrd>?> CheckPaidPic();
         Task ApprovePic(int planId);
         Task IgnorePic(int planId);
+        Task AddAttendancClientRequest(AttendanceClientRecord attendanceClientRecord);
+
+        //TODO:مدل خروجی باید عوض بشه و بر اساس اسم متد باشه
+        Task<List<PaidPlanRecorrd>> GetAttendanceClientRequests();
     }
 }

@@ -58,7 +58,8 @@
                 <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto menu">
                         <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
-                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود</a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود با ایمیل</a></li>
+                        <li><a asp-controller="Account" asp-action="LoginMobile" class="page-scroll">ورود با موبایل</a></li>
                         <li><a asp-controller="Account" asp-action="SignUp" class="page-scroll">ثبت نام ورزشکار</a></li>
                         <li><a asp-controller="Account" asp-action="SignUpTrainer" class="page-scroll">ثبت نام مربی</a></li>
                         <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
@@ -97,7 +98,14 @@
                                     <li class="list-inline-item">
                                         <a asp-controller="Account" asp-action="Login" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
                                             <div class="download-text text-left">
-                                                <h5 class="mb-0">ورود</h5>
+                                                <h5 class="mb-0">ورود با ایمیل</h5>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a asp-controller="Account" asp-action="LoginMobile" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                                            <div class="download-text text-left">
+                                                <h5 class="mb-0">ورود با موبایل</h5>
                                             </div>
                                         </a>
                                     </li>

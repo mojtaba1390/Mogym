@@ -30,8 +30,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.AccessDeniedPath = "/Account/Login/";
-        options.LoginPath = "/Account/Login"; 
+        options.AccessDeniedPath = "/Account/LoginMobile/";
+        options.LoginPath = "/Account/LoginMobile"; 
 
     });
 //builder.Configuration.AddJsonFile("applicationLayerSettings.json", optional: false, reloadOnChange: true);
@@ -71,5 +71,9 @@ app.MapControllerRoute(
     name: "trainers",
     pattern: "/Trainers",
     defaults: new {  controller = "Home", action = "Trainers" });
+app.MapControllerRoute(
+    name: "trainers",
+    pattern: "/attendanceclient/{code}",
+    defaults: new {  controller = "Question", action = "AttendanceQuestionForm" });
 
 app.Run();

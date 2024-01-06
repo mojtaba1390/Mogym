@@ -336,6 +336,21 @@ namespace Mogym.Controllers
             return View("NotFound");
 
         }
+        public async Task<IActionResult> AttendanceClientRequest()
+        {
+            try
+            {
+                var planRecords = await _planService.GetAttendanceClientRequests();
+                return View(planRecords);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
 
 
         [DisplayName("شناسایی تصویر رسید")]

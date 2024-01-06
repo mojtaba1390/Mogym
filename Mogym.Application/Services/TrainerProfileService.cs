@@ -148,7 +148,9 @@ namespace Mogym.Application.Services
         public async Task<TrainerProfile?> GetCurrentUserTrainer()
         {
             var userId = _accessor.GetUser();
-            return await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId).FirstOrDefaultAsync();
+            return await _unitOfWork.TrainerProfileRepository.Find(x => x.UserId == userId)
+                .Include(x=>x.User)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<TrainersRecord>> GetAllTrainers()

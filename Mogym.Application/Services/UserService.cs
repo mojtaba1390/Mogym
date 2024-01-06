@@ -320,6 +320,34 @@ namespace Mogym.Application.Services
             }
         }
 
+        public async Task<UserRecord> LoginMobile(LoginRecord loginRecord)
+        {
+            try
+            {
+                var hashPassword = Common.Helper.HashString(loginRecord.Password);
+                var user = await _unitOfWork.UserRepository
+                    .Find(x => x.Mobile.Trim() == loginRecord.Mobile && x.Password == hashPassword)
+                    .Include(x => x.UserRoles)
+                    .ThenInclude(x => x.UserRole_Role)
+                    .ThenInclude(x => x.RolePermissions)
+                    .ThenInclude(x => x.RolePermission_Permission)
+                    .FirstOrDefaultAsync();
+                if (user is not null)
+                {
+                    return _mapper.Map<UserRecord>(user);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
+
+            return null;
+        }
+
         public async Task ChangePassword(string password)
         {
             try

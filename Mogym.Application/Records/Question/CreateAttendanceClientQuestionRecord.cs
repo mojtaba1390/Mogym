@@ -9,7 +9,7 @@ using Mogym.Application.Records.TrainerPlanCost;
 
 namespace Mogym.Application.Records.Question
 {
-    public record CreateAttendanceClientQuestionRecord
+    public record CreateQuestionRecord
     {
         public string FirstName { get; init; }
         public string LastName { get; init; }
@@ -44,11 +44,8 @@ namespace Mogym.Application.Records.Question
 
 
         public int TrainerPlanId { get; init; }
-        public int TrainerId { get; init; }
 
         public string? TrainerFullName { get; init; }
-        public int QuestionId { get; init; }
-        public int PlanId { get; init; }
-        public string Code { get; init; }
+        public int TrainerId { get; init; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Printing;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
@@ -11,10 +13,12 @@ namespace Mogym.Controllers
     public class AttendanceClientController : Controller
     {
         private readonly ITrainerPlanCostService _trainerPlanCostService;
+        private readonly IPlanService _planService;
 
-        public AttendanceClientController(ITrainerPlanCostService trainerPlanCostService)
+        public AttendanceClientController(ITrainerPlanCostService trainerPlanCostService, IPlanService planService)
         {
             _trainerPlanCostService = trainerPlanCostService;
+            _planService = planService;
         }
 
 
@@ -31,9 +35,24 @@ namespace Mogym.Controllers
         {
 
 
+            try
+            {
+                await _planService.AddAttendancClientRequest(attendanceClientRecord);
+                return RedirectToAction("AttendanceClientRequest", "Plan");
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                return View("NotFound");
+            }
 
 
             return View();
         }
+
+
+
+
     }
 }

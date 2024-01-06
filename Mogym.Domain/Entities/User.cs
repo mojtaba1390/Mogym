@@ -29,7 +29,7 @@ namespace Mogym.Domain.Entities
         public string? BirthDay { get; set; }
         public string? SmsConfirmCode { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
         public string? ProfilePic { get; set; }
 
 

@@ -10,5 +10,7 @@ namespace Mogym.Application.Interfaces
     public interface IQuestionService
     {
         Task AddQuestion(CreateQuestionRecord createQuestionRecord);
+        Task<CreateAttendanceClientQuestionRecord> GetQuestionWithCode(string code);
+        Task UpdateQuestion(CreateAttendanceClientQuestionRecord createAttendanceClientQuestionRecord);
     }
 }

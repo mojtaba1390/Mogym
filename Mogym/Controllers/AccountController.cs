@@ -12,7 +12,6 @@ using Mogym.Application.Interfaces.ICache;
 using StackExchange.Redis;
 using System.ComponentModel;
 using Mogym.Common.ModelExtended;
-using Telegram.Bot.Types;
 using Message = Mogym.Common.ModelExtended.Message;
 
 namespace Mogym.Controllers
@@ -50,6 +49,17 @@ namespace Mogym.Controllers
             ViewData["returnUrl"] = returnUrl;
             return PartialView();
         }
+        public async Task<IActionResult> LoginMobile()
+        {
+            var isLogined = HttpContext.User.Identity.IsAuthenticated;
+            if (isLogined)
+                return RedirectToAction("Index", "Account");
+
+
+            string returnUrl = HttpContext.Request.Query["returnUrl"];
+            ViewData["returnUrl"] = returnUrl;
+            return PartialView();
+        }
 
         //[HttpPost]
         //public async Task<IActionResult> Login(LoginRecord loginRecord)
@@ -74,6 +84,63 @@ namespace Mogym.Controllers
         //    return View();
         //}
 
+
+        [HttpPost]
+        public async Task<IActionResult> LoginMobile(LoginRecord loginRecord, string? returnurl)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = await _userService.LoginMobile(loginRecord);
+                    if (user != null)
+                    {
+                        var claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                            new Claim(ClaimTypes.Name, user.UserName ??""),
+                            new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+                            new Claim(ClaimTypes.Email, user.Email),
+                            new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+                            new Claim(type: "ProfilePic", value: user.ProfilePic??"")
+
+                        };
+                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var principal = new ClaimsPrincipal(identity);
+
+                        var peraperties = new AuthenticationProperties()
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+
+                        };
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+                        if (!string.IsNullOrWhiteSpace(returnurl) && Url.IsLocalUrl(returnurl))
+                            return Redirect(returnurl);
+
+
+                        return RedirectToAction(nameof(Index));
+                    }
+
+
+                    ViewBag.ErrorMessage = "کاربری با این مشخصات یافت نشد";
+
+                }
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+            }
+
+
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginRecord loginRecord, string? returnurl)

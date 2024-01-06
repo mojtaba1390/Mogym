@@ -11,9 +11,12 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
+using Mogym.Application.Records.User;
+using Mogym.Application.Records.UserRole;
 using Mogym.Application.Records.Workout;
 using Mogym.Common;
 using Mogym.Common.ModelExtended;
+using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
 namespace Mogym.Application.Services
@@ -26,6 +29,7 @@ namespace Mogym.Application.Services
         private readonly IHttpContextAccessor _accessor;
         private readonly ITrainerProfileService _trainerProfileService;
         private readonly IEmailSender _emailSender;
+        
 
         public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, ITrainerProfileService trainerProfileService, IEmailSender emailSender)
         {
@@ -255,6 +259,89 @@ namespace Mogym.Application.Services
 
             await _emailSender.SendEmailAsync(messageUser);
 
+        }
+
+        public async Task AddAttendancClientRequest(AttendanceClientRecord attendanceClientRecord)
+        {
+            try
+            {
+                var currentTrainer =await _trainerProfileService.GetCurrentUserTrainer();
+                var mobile = attendanceClientRecord.Mobile;
+                 var user = await _unitOfWork.UserRepository.Where(x => x.Mobile.Trim()==mobile).FirstOrDefaultAsync();
+                if (user is null)
+                {
+                    //create new user
+
+                    user = _mapper.Map<User>(attendanceClientRecord);
+                     var userRoleRecord = _mapper.Map<CreateAthleteUserRoleRecord>(user);
+                     var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                     user.UserRoles.Add(userRole);
+
+                     await _unitOfWork.UserRepository.AddAsync(user);
+
+
+                    var insertUserMessage = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                         $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName}-{attendanceClientRecord.Mobile}-کاربر جدید شاگرد حضوری",
+                         $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName} عزیز"+
+                         $"کاربری شما با رمز عبور 123456 در پلتفرم ایجاد شد-موجیم");
+
+                     await _emailSender.SendEmailAsync(insertUserMessage);
+                }
+
+                //create new question entity
+
+                var question = new Question()
+                {
+                    FirstName = attendanceClientRecord.FirstName,
+                    LastName = attendanceClientRecord.LastName,
+                    TrainerPlan = attendanceClientRecord.TrainerPlanId,
+                    Code = Helper.RandomStringCode(5)
+                };
+
+                var insertedQuestion = await _unitOfWork.QuestionRepository.AddAsync(question);
+
+
+                //create plan
+
+                var plan = new Plan()
+                {
+                    TrainerId=currentTrainer.Id,
+                    UserId=user.Id,
+                    AnserQuestionId=insertedQuestion.Id,
+                    PlanStatus=EnumPlanStatus.WaitForCompleteAnswerProcessByAttendanceClient,
+                    TrackingCode= Random.Shared.Next(1000, 9999)
+                };
+
+                var insertedPlan= await _unitOfWork.PlanRepository.AddAsync(plan);
+
+                var questionPaageMessage = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"ارسال فرم پرسشنامه شاگرد حضوری - {user.Mobile}",
+                    $"{user.FirstName} {user.LastName} عزیز"+
+                    $"فرم پذیرش برنامه ی شما توسط آقا/خانم {currentTrainer.User.FirstName} {currentTrainer.User.LastName} ایجاد شد. لطفا لینک زیر را کلیک کنید و فرآیند پذیرش خود را تکمیل کنید."+
+                    Environment.NewLine+
+                    $"http://mogym.ir/attendanceclient/{question.Code}" );
+
+                await _emailSender.SendEmailAsync(questionPaageMessage);
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw e;
+            }
+        }
+
+        public async Task<List<PaidPlanRecorrd>> GetAttendanceClientRequests()
+        {
+            var trainer = await _trainerProfileService.GetCurrentUserTrainer();
+            var plans = await _unitOfWork.PlanRepository
+                .Find(x => x.TrainerId == trainer.Id && x.PlanStatus == EnumPlanStatus.WaitForCompleteAnswerProcessByAttendanceClient)
+                .AsNoTracking()
+                .Include(x => x.User_Plan)
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
+            return _mapper.Map<List<PaidPlanRecorrd>>(plans);
         }
 
         [HttpPost]

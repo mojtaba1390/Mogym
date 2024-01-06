@@ -27,7 +27,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.UniqeUserName).HasColumnType("varchar").HasMaxLength(100).ValueGeneratedOnAdd().IsRequired();
             builder.Property(x => x.BirthDay).HasColumnType("varchar").HasMaxLength(10).IsRequired(false);
             builder.Property(x => x.SmsConfirmCode).HasColumnType("varchar").HasMaxLength(5).IsRequired(false);
-            builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
             builder.Property(x => x.ProfilePic).HasColumnType("nvarchar(100)").IsRequired(false);
 
 
