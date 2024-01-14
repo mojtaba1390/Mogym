@@ -36,5 +36,7 @@ namespace Mogym.Application.Interfaces
 
         //TODO:مدل خروجی باید عوض بشه و بر اساس اسم متد باشه
         Task<List<PaidPlanRecorrd>> GetAttendanceClientRequests();
+        Task<string> EditPlanAfterSent(int planId);
+        Task<int> GetSentPlanCountForIndexPage();
     }
 }

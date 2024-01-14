@@ -3,7 +3,6 @@
 @inject ITrainerProfileService _trainerProfileService
 @{
     int traninersCnt = await _trainerProfileService.GetAllTrainersCount();
-    int limit = 20 - traninersCnt;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +52,6 @@
                         <div class="login-signup-header text-center">
                             <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
                             <h4 class="mb-5">ثبت نام مربی</h4>
-                            <h6 class="mb-5">تعداد ثبت نام باقی مانده: @limit </h6>
                         </div>
                         <form asp-action="SignUpTrainer" method="post" class="login-signup-form">
                             <div class="form-group">
@@ -161,15 +159,10 @@
                                     <span asp-validation-for="Mobile" class="text-danger"></span>
                                 </div>
                             </div>
-
-                            @{
-                                if (limit != 0)
-                                {
-                                    <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
+                            <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
                                         ثبت نام
                                     </button>
-                                }
-                            }
+
                             <!-- Submit -->
 
                         </form>

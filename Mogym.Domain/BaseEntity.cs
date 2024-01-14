@@ -18,7 +18,13 @@ namespace Mogym.Domain
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime InsertDate { get; set; } = DateTime.Now;
+
+        private DateTime? insertDate;
+        public DateTime InsertDate
+        {
+            get { return insertDate ?? DateTime.Now; }
+            set { insertDate = value; }
+        }
 
         public DateTime? LastModifiedDate { get; set; } = DateTime.Now;
 

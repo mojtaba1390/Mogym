@@ -1,4 +1,16 @@
-﻿@model List<Mogym.Application.Records.Profile.LastTrainersForHomePageRecord>
+﻿@using Mogym.Application.Interfaces
+@model List<Mogym.Application.Records.Profile.LastTrainersForHomePageRecord>
+
+@inject IUserService _userService;
+@inject IPlanService _planService;
+@{
+    var trainerCount = await _userService.GetTrainerCountForIndexPage();
+    var userCount = await _userService.GetUserCountForIndexPage();
+    var sentPlanCount =await _planService.GetSentPlanCountForIndexPage();
+}
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -226,7 +238,7 @@
                                 </div>
                                 <div class="pt-2 pb-3">
                                     <h5>فیلم آموزش حرکات</h5>
-                                    <p class="mb-0">بیش از ۱۶۰ حرکت تمرینی با جزئیات و فیلم آموزشی</p>
+                                    <p class="mb-0">بیش از ۱۹۰ حرکت تمرینی با جزئیات و فیلم آموزشی</p>
                                 </div>
                             </div>
                         </div>
@@ -248,6 +260,35 @@
             </div>
         </section>
     <!--promo section end-->
+    
+    
+    <section class="counter-section gradient-bg ptb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-user-circle icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@trainerCount</h3>
+                        <span>مربیان</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-users icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@userCount</h3>
+                        <span>ورزشکاران</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-edit icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@sentPlanCount</h3>
+                        <span>برنامه ارسال شده</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section id="screenshots" class="screenshots-section pb-100 pt-100 gray-light-bg">
         <div class="container">
@@ -274,7 +315,7 @@
     </section>
     
     
-    
+
 
     <section id="process" class="work-process-section position-relative  ptb-100 gray-light-bg">
             <div class="container">

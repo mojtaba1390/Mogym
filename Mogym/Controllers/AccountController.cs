@@ -100,7 +100,7 @@ namespace Mogym.Controllers
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Name, user.UserName ??""),
                             new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                            new Claim(ClaimTypes.Email, user.Email),
+                            new Claim(ClaimTypes.Email, user.Email??""),
                             new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
                             new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 

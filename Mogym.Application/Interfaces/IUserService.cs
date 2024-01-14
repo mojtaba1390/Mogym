@@ -25,5 +25,7 @@ namespace Mogym.Application.Interfaces
         Task ChangePassword(string password);
         Task<UserRecord> CreateTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew);
         Task<UserRecord> LoginMobile(LoginRecord loginRecord);
+        Task<int> GetTrainerCountForIndexPage();
+        Task<int> GetUserCountForIndexPage();
     }
 }

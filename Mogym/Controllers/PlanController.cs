@@ -400,6 +400,44 @@ namespace Mogym.Controllers
 
         }
 
+        public async Task<IActionResult> EditPlanAfterSent(int planId)
+        {
+            try
+            {
+                bool isThisPlanForThisTrainer = await _planService.IsThisPlanIdForThisTrainer(planId);
+                if (!isThisPlanForThisTrainer)
+                {
+                    TempData["errormessage"] = "برنامه درخواست شده مربوط به شما نمی باشد";
+                    return View("IlegalRequest");
+                }
+                bool isThisPlanStatusIsSent =
+                    await _planService.IsThereAnyPlanWithStatus(planId, EnumPlanStatus.Sent);
+                if (!isThisPlanStatusIsSent)
+                {
+                    TempData["errormessage"] = "وضعیت برنامه درخواست شده ارسال شده مربی نمی باشد";
+                    return View("IlegalRequest");
+                }
+
+                var message= await _planService.EditPlanAfterSent(planId);
+
+                if (!string.IsNullOrWhiteSpace(message))
+                {
+                    TempData["errormessage"] = message;
+                    return RedirectToAction(nameof(SentPlans));
+
+                }
+
+                return RedirectToAction(nameof(ApprovePlans));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+
+        }
+
 
     }
 }

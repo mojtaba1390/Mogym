@@ -344,6 +344,43 @@ namespace Mogym.Application.Services
             return _mapper.Map<List<PaidPlanRecorrd>>(plans);
         }
 
+        public async Task<string> EditPlanAfterSent(int planId)
+        {
+            try
+            {
+                var plan = await _unitOfWork.PlanRepository.Where(x => x.Id == planId).FirstOrDefaultAsync();
+
+                var diffTime = DateTime.Now.Subtract(plan.InsertDate).TotalHours;
+                if (diffTime < 24)
+                {
+                    plan.PlanStatus = EnumPlanStatus.TrainerApprovment;
+                    await _unitOfWork.PlanRepository.UpdateAsync(plan);
+
+                    var user = _unitOfWork.UserRepository.GetById(plan.UserId);
+                    var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                        $"برگشت برنامه برای اصلاح-{user.Mobile}",
+                        $"ورزشکار عزیز;برنامه با کد {plan.TrackingCode} برای اصلاح توسط مربی شما برگشت داده شد.موجیم");
+                    await _emailSender.SendEmailAsync(messageUser);
+
+                    return null;
+
+                }
+                else return $"بیشتر از ۲۴ ساعت از ثبت برنامه گذشته و امکان اصلاح وجود ندارد";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+
+        }
+
+        public async Task<int> GetSentPlanCountForIndexPage()
+        {
+            return await _unitOfWork.PlanRepository.Find(x => x.PlanStatus == EnumPlanStatus.Sent).CountAsync();
+        }
+
         [HttpPost]
         public async Task ApprovePlan(int planId)
         {
@@ -352,7 +389,6 @@ namespace Mogym.Application.Services
                 var plan = _unitOfWork.PlanRepository.GetById(planId);
                 plan.PlanStatus = EnumPlanStatus.TrainerApprovment;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
-
 
                 var athlete = await _unitOfWork.PlanRepository.Find(x => x.Id == planId)
                     .Include(x => x.User_Plan)

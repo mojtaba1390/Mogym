@@ -348,6 +348,23 @@ namespace Mogym.Application.Services
             return null;
         }
 
+        public async Task<int> GetTrainerCountForIndexPage()
+        {
+            return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Trainer"))
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.UserRole_Role)
+                .CountAsync();
+
+        }
+
+        public async Task<int> GetUserCountForIndexPage()
+        {
+            return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Athlete"))
+                .Include(x => x.UserRoles)
+                .ThenInclude(x => x.UserRole_Role)
+                .CountAsync();
+        }
+
         public async Task ChangePassword(string password)
         {
             try
