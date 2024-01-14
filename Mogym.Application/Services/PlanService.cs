@@ -29,9 +29,10 @@ namespace Mogym.Application.Services
         private readonly IHttpContextAccessor _accessor;
         private readonly ITrainerProfileService _trainerProfileService;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsService _smsService;
         
 
-        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, ITrainerProfileService trainerProfileService, IEmailSender emailSender)
+        public PlanService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, ITrainerProfileService trainerProfileService, IEmailSender emailSender,ISmsService smsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -39,6 +40,7 @@ namespace Mogym.Application.Services
             _accessor = accessor;
             _trainerProfileService = trainerProfileService;
             _emailSender = emailSender;
+            _smsService = smsService;
         }
 
         public async Task<List<PlanRecord>?> MyUnPaidPlans()
@@ -251,13 +253,19 @@ namespace Mogym.Application.Services
                 .FirstOrDefaultAsync();
 
 
-            var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                $"عدم تائید تصویر رسید-{user.Mobile}",
-                $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} به یکی از دلایل تصویر نامتعارف،تصویر خالی،مشخص نبودن شماره پیگیری،تصویر مخدوش نامعتبر شناخته شد.لطفا در پنل پرداخت نشده تصویر مناسب بارگزاری نمایید.موجیم");
+            //var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+            //    $"عدم تائید تصویر رسید-{user.Mobile}",
+            //    $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} به یکی از دلایل تصویر نامتعارف،تصویر خالی،مشخص نبودن شماره پیگیری،تصویر مخدوش نامعتبر شناخته شد.لطفا در پنل پرداخت نشده تصویر مناسب بارگزاری نمایید.موجیم");
 
 
 
-            await _emailSender.SendEmailAsync(messageUser);
+            //await _emailSender.SendEmailAsync(messageUser);
+
+            var msg = $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} به یکی از دلایل تصویر نامتعارف،تصویر خالی،مشخص نبودن شماره پیگیری،تصویر مخدوش نامعتبر شناخته شد.لطفا در پنل پرداخت نشده تصویر مناسب بارگزاری نمایید.موجیم";
+
+
+            await _smsService.SendSms("09031239853", msg);
+
 
         }
 

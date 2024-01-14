@@ -36,7 +36,9 @@ namespace Mogym.Application
             //var emailConfig = services.Configure<Email>(config.GetSection("EmailConfiguration"));
             //services.AddSingleton(emailConfig);
 
-
+            services.AddHttpContextAccessor();
+            services.AddHttpClient();
+            services.AddHttpClient<ISmsService, SmsService>();
 
             #region fluent validation
             services.AddControllers()
@@ -53,6 +55,8 @@ namespace Mogym.Application
 
             #region Service Life Time
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IBaseService, BaseService>();
+            services.AddScoped<ISmsService, SmsService>();
             services.AddTransient<IUserService, UserService>();
             services.AddScoped<ISeriLogService, SeriLogService>();
             services.AddScoped<IUserLoggingService, UserLoggingService>();

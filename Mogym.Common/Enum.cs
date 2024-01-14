@@ -142,4 +142,11 @@ namespace Mogym.Common
         [Description("اسکوپ")]
         Scope = 3
     }
+    public enum EnumApiType
+    {
+        [EnumMember]
+        Get=1,
+        [EnumMember]
+        Post=2
+    }
 }
