@@ -1,6 +1,4 @@
-﻿@model Mogym.Application.Records.Profile.TrainerProfileRecord
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 
@@ -8,16 +6,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta property="og:title" content="موجیم - @(Model.FirstName +" " +Model.LastName) " />
+    <meta property="og:title" content="موجیم-قوانین و مقررات" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" /> 
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
     <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع تناسب اندام آنلاین" />
     <meta property="og:url" content="http://mogym.ir/" />
+
+
+
+
     <!--favicon icon-->
     <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
 
     <!--title-->
-    <title>موجیم - @(Model.FirstName + " " + Model.LastName)</title>
+    <title>موجیم-قوانین و مقررات</title>
 
     <!--build:css-->
     <link rel="stylesheet" href="~/mainassets/css/main.css">
@@ -29,7 +31,7 @@
     <!--preloader start-->
     <div id="preloader">
         <div class="preloader-wrap">
-            <img src="~/img/mogym-transparent.png" alt="mogym" class="img-fluid">
+            <img src="~/mainassets/img/logo-color.png" alt="لوگو" class="img-fluid">
             <div class="thecube">
                 <div class="cube c1"></div>
                 <div class="cube c2"></div>
@@ -56,30 +58,35 @@
                         <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود</a></li>
                         <li><a asp-controller="Account" asp-action="LoginMobile" class="page-scroll">ورود با موبایل</a></li>
+
                         <li><a asp-controller="Account" asp-action="SignUp" class="page-scroll">ثبت نام ورزشکار</a></li>
                         <li><a asp-controller="Account" asp-action="SignUpTrainer" class="page-scroll">ثبت نام مربی</a></li>
                         <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
                         <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
+
+
+
+
     <!--header section end-->
 
     <div class="main">
 
+
         <!--page header section start-->
         <section class="page-header-section ptb-100 bg-image" image-overlay="8">
-            <div class="background-image-wraper" style="background: url('~/mainassets/img/hero-bg-1.jpg'); opacity: 1;"></div>
+            <div class="background-image-wraper" style="background: url('~/mainassets/img/slider-bg-1.jpg'); opacity: 1;"></div>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-9 col-lg-7">
                         <div class="page-header-content text-white pt-4">
-@*                            <h1 class="text-white mb-0">@Model.FirstName @Model.LastName</h1>
-*@                            @*                            <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
-                            *@
                         </div>
                     </div>
                 </div>
@@ -94,8 +101,7 @@
                         <div class="custom-breadcrumb">
                             <ol class="breadcrumb pl-0 mb-0 bg-transparent">
                                 <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">خانه</a></li>
-                                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Trainers">مربیان</a></li>
-                                <li class="breadcrumb-item active">@Model.FirstName @Model.LastName</li>
+                                <li class="breadcrumb-item active">قوانین و مقررات</li>
                             </ol>
                         </div>
                     </div>
@@ -104,129 +110,90 @@
         </div>
         <!--breadcrumb section end-->
 
-
-        <section class="team-single-section ptb-100">
+        <section class="ptb-100">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-12 col-sm-12 col-lg-6">
-                        <div class="team-single-img">
-                            @{
-                                if (!string.IsNullOrWhiteSpace(Model.ProfilePic))
-                                {
-                                    <img src="/ProfilePic/@Model.ProfilePic" alt="@Model.ProfilePic" class="img-fluid rounded shadow-sm">
-                                }
-                                else
-                                {
-                                    <img src="/img/avatar5.png" alt="عضو" class="img-fluid rounded shadow-sm">
-
-                                }
-
-                            }
-
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-6">
-                        <div class="team-single-text">
-                            <div class="team-name mb-4">
-                                <h4 class="mb-1">@Model.FirstName @Model.LastName</h4>
-                                <span>@Model.UserName@@</span>
-                            </div>
-                            <ul class="team-single-info">
-                                <li></li>
-                                <li></li>
-                            </ul>
-                            <div class="text-content mt-20">
-                                @{
-                                    if (!string.IsNullOrWhiteSpace(Model.Biography))
-                                    {
-                                        @Html.Raw(Model.Biography.Replace("\r\n", "<br />"))
-
-                                    }
-                                }
-                            </div>
-                            <div class="action-btns mt-4">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <a asp-action="AnswerQuestion" asp-controller="Question" asp-route-trainerId="@Model.TrainerId" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
-                                            <div class="download-text text-left">
-                                                <h5 class="mb-0">درخواست برنامه</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-9 col-lg-8">
+                        <div class="section-heading mb-3 text-center">
+                            <h2>قوانین و مقررات</h2>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-5">
-                    <div class="col-md-6 col-sm-6 col-12">
-                        <div class="section-heading">
-                            <h5>عناوین و افتخارات</h5>
-                            <div class="section-heading-line-left"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>هر گونه استفاده از خدمات سایت موجیم به معنی پذیرفتن شرایط مندرج در سایت موجیم می‌باشد. سایت موجیم هیچ توافقی با مربیان و ورزشکاران خارج از این شرایط ندارد. شرایط و قوانین زیر مربوط به تمام مربیان و ورزشکارانی است که به هر شکلی با سایت موجیم همکاری و از خدمات آن استفاده می‌کنند.</p>
                         </div>
-                        <ul class="check-list-wrap pt-3">
-                            @{
-                                if (Model.TrainerAchievementRecords.Any())
-                                {
-                                    @foreach (var achievement in Model.TrainerAchievementRecords)
-                                    {
-                                        <li>
-                                            <strong>
-                                                @achievement.Title
-                                            </strong>
-                                            - @achievement.Date
-                                        </li>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                با توجه به اینکه هویت و اطلاعات ارائه شده توسط ورزشکاران به هیچ وجه قابل راستی آزمایی نمی‌باشد.،موجیم هیچ مسئولیت یا تعهدی در قبال اطلاعات ارائه شده توسط ورزشکاران از طریق ارسال درخواست معرفی مربی از طریق سایت ندارد.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                ورزشکار موظف است در صورتیکه بیماری و یا نقضی که منجر به صدمه در حرکات تمرینی و یا رژیم های غذایی و یا مکمل ها می باشد را حتما در فرم پرسشنامه آنلاین ذکر کند. در صورتی که این موارد گفته نشود و بعد از ارسال برنامه هر گونه صدمه ای با در نظر گرفتن عدم اعلام از سوی ورزشکار صورت پذیرد، مسئولیت کامل آن با ورزشکار است.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                تصاویر پروفایل مربیان باید طبق شئونات جامعه و در چارچوب قوانین کشور ایران باشد و موجیم این اختیار را دارد تا با تشخیص مغایرت تصویر پروفایلی با آنچه ذکر شده، تصویر مربوطه را در هر زمان حذف نماید.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                موجیم هیچ قرارداد، تعهدنامه یا سندی را با هیچ شخص حقیقی یا حقوقی در حوزه آموزش و طراحی برنامه منعقد نکرده است. مربیان سایت موجیم در هر لحظه قادر به ویرایش پروفایل خود هستند، بنابراین سایت موجیم هیچ‌گونه مسئولیتی در قبال هر نوع اطلاعات درج شده در پروفایل مربیان نخواهد داشت و صرفا مطالب درج شده توسط مربیان را نمایش می‌دهد.
+                            </p>
+                        </div>
 
-                                    }
-                                }
-                            }
-
-                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                اکیدا لازم و ضروری است که مربی در خصوص تعهدات خود نسبت به ورزشکار پایبند باشد. پاسخ‌گویی به درخواست ورزشکار ، دریافت وجه به میزان توافق شده و سایر توافقات از جمله تعهدات مربی نسبت به ورزشکار می‌باشد.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                درصورت مشاهده تخلف یا تلاش برای سوءاستفاده از تضمین درستی رزومه‌ها، حق عدم پذیرش آن درخواست برای موجیم محفوظ است.موجیم می‌تواند در هر زمان به تشخیص خود شرایط تضمین‌ها را تغییر داده یا ارائه آن را متوقف کند. در موارد اختلاف، مدیریت موجیم تصمیم گیرنده نهایی خواهد بود.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                مربی موظف است اطلاعات پرسشنامه آنلاین طراحی شده در درخواست برنامه را کاملا چک کند و مطابق با آن برنامه های تمرینی و غذایی و مکمل را طراحی کند. مسئولیت هر گونه صدمه که با بی توجهی به موارد ذکر شده در پرسشنامه آنلاین صورت پذیرد با مربی می باشد.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                ارسال تصاویر بدن ورزشکار برای مربی صرفا برای بهتر شدن فرآیند طراحی برنامه می باشد و در ثبت آن هیچ اجباری وجود ندارد.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="single-faq mt-3">
+                            <p>
+                                تصاویر بدن ورزشکار تنها برای مربی مربوط به پرسشنامه آنلاین نمایش داده می شود و هر گونه پخش یا تکثیر به هر نحوی بدون اجازه ورزشکار تبعات قانونی را برای مربی یا هر شخص تکثیر کننده به همراه دارد.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-        
-        
-        <section id="pricing" class="pricing-section ptb-100 ">
-            <div class="container">
-                <div class="row align-items-center justify-content-md-center justify-content-center">
-                    
-                    @{
-                        if (Model.TrainerPlanCostRecords.Any())
-                        {
-                            foreach (var cost in Model.TrainerPlanCostRecords)
-                            {
-                                <div class="col-lg-4 col-md-6 col-sm-8">
-                                    <div class="text-center bg-white single-pricing-pack mt-4">
-                                        <div class="price-img pt-4">
-                                            <img src="~/mainassets/img/icon/icon-2.svg" alt="قیمت" width="120" class="img-fluid">
-                                        </div>
-                                        <div class="py-4 border-0 pricing-header">
-                                            <div class="price text-center mb-0 monthly-price color-secondary" style="display: block;">@cost.Cost.Value.ToString("N0") ریال<span></span></div>
-                                        </div>
-                                        <div class="price-name">
-                                            <h5 class="mb-0">نوع برنامه</h5>
-                                        </div>
-                                        <div class="pricing-content">
-                                            <ul class="list-unstyled mb-4 pricing-feature-list">
-                                                <li><span></span> <span>@cost.TrainerPlan</span></li>
-                                                <li></li>
-                                                <li></li>
 
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            }
-                        }
-                }
 
-                </div>
-            </div>
-        </section>
-        
 
 
     </div>
@@ -284,7 +251,7 @@
     </footer>
 
 
-
+    <!--footer section end-->
     <!--scroll bottom to top button start-->
     <div class="scroll-top scroll-to-target primary-bg text-white" data-target="html">
         <span class="fas fa-hand-point-up"></span>
@@ -304,5 +271,8 @@
     <script src="~/mainassets/js/app.js"></script>
     <!--endbuild-->
 
+
+
 </body>
+
 </html>

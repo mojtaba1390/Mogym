@@ -13,5 +13,7 @@ namespace Mogym.Application.Records.User
 
         public string Email { get; init; }
         public string Password { get; init; }
+
+        public bool IsConfirm { get; init; }
     }
 }

@@ -159,6 +159,19 @@
                                     <span asp-validation-for="Mobile" class="text-danger"></span>
                                 </div>
                             </div>
+                            
+                            
+                            <div class="my-4">
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="check-terms" asp-for="IsConfirm">
+                                    <label class="custom-control-label small-text" for="check-terms">من با <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a> .موافقم</label>
+                                </div>
+                                <div>
+                                    <span asp-validation-for="IsConfirm" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+
                             <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
                                         ثبت نام
                                     </button>

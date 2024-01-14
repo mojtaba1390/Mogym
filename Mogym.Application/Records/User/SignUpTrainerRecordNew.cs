@@ -13,5 +13,7 @@ namespace Mogym.Application.Records.User
         public string FirstName { get; init; }
         public string LastName { get; init; }
         public string Mobile { get; init; }
+        public bool IsConfirm { get; init; }
+
     }
 }
