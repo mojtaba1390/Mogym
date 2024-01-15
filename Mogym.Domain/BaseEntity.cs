@@ -19,12 +19,8 @@ namespace Mogym.Domain
         public int Id { get; set; }
 
 
-        private DateTime? insertDate;
-        public DateTime InsertDate
-        {
-            get { return insertDate ?? DateTime.Now; }
-            set { insertDate = value; }
-        }
+        public DateTime InsertDate { get; set; } = DateTime.Now;
+
 
         public DateTime? LastModifiedDate { get; set; } = DateTime.Now;
 

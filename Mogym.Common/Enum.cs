@@ -145,11 +145,17 @@ namespace Mogym.Common
     public enum EnumTicketStatus
     {
         [EnumMember]
+        [Description("ایجاد شده")]
+        Creat = 1,
+        [EnumMember]
         [Description("ارسال شده")]
-        Sent = 1,
+        Sent = 2,
         [EnumMember]
         [Description("خوانده شده")]
-        Read = 2
+        Read = 3,
+        [EnumMember]
+        [Description("خوانده نشده")]
+        NotRead = 4
     }
     public enum EnumApiType
     {
