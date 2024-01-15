@@ -87,17 +87,18 @@ namespace Mogym.Application.Services
                     .Select(x=>x.User_Plan)
                     .FirstOrDefaultAsync();
                     
-                
-                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                var message = $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} در حال پردازش سیستم می باشد.نتیجه از طریق پیامک اعلام می گردد. موجیم";
+
+                var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
                     $"شناسایی تصویر رسید-{user.Mobile}",
-                    $"تصویر رسید برنامه با کد پیگیری { plan.TrackingCode} در حال پردازش سیستم می باشد.نتیجه از طریق پیامک اعلام می گردد. موجیم");   
-                
+                    message);   
 
-                //var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                //    $"افزودن تصویر رسید-{trainer.Mobile}",
-                //    $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
 
-               await  _emailSender.SendEmailAsync(message);
+               await  _emailSender.SendEmailAsync(email);
+
+
+               await _smsService.SendSms(user.Mobile, message);
+
 
             }
             catch (Exception ex)
@@ -213,11 +214,17 @@ namespace Mogym.Application.Services
                 .Select(x => x.TrainerProfile_Plan.User)
                 .FirstOrDefaultAsync();
 
-            var messageTrainer = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                $"تائید تصویر رسید مربی-{trainer.Mobile}",
-                $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ");
 
-             await _emailSender.SendEmailAsync(messageTrainer);
+            var messageTrainer =
+                $"مربی عزیز,برنامه ای با کد پیگیری {plan.TrackingCode} در منو پرداخت شده شما اضافه شد - موجیم ";
+
+            await _smsService.SendSms(trainer.Mobile, messageTrainer);
+
+            //var messageTrainer = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+            //    $"تائید تصویر رسید مربی-{trainer.Mobile}",
+            //    );
+
+            // await _emailSender.SendEmailAsync(messageTrainer);
 
 
 
@@ -228,13 +235,17 @@ namespace Mogym.Application.Services
                 .FirstOrDefaultAsync();
 
 
-            var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                $"شاگرد تائید تصویر رسید-{user.Mobile}",
-                $"تصویر رسید بارگزاری شده برنامه با کد پیگیری {plan.TrackingCode} شما تائید شد- موجیم");
+            var messageUser = $"تصویر رسید بارگزاری شده برنامه با کد پیگیری {plan.TrackingCode} شما تائید شد- موجیم";
+
+            await _smsService.SendSms(trainer.Mobile, messageUser);
+
+            //var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+            //    $"شاگرد تائید تصویر رسید-{user.Mobile}",
+            //    $"تصویر رسید بارگزاری شده برنامه با کد پیگیری {plan.TrackingCode} شما تائید شد- موجیم");
 
 
 
-            await _emailSender.SendEmailAsync(messageUser);
+            //await _emailSender.SendEmailAsync(messageUser);
 
 
 
@@ -264,7 +275,7 @@ namespace Mogym.Application.Services
             var msg = $"تصویر رسید برنامه با کد پیگیری {plan.TrackingCode} به یکی از دلایل تصویر نامتعارف،تصویر خالی،مشخص نبودن شماره پیگیری،تصویر مخدوش نامعتبر شناخته شد.لطفا در پنل پرداخت نشده تصویر مناسب بارگزاری نمایید.موجیم";
 
 
-            await _smsService.SendSms("09031239853", msg);
+            await _smsService.SendSms(user.Mobile, msg);
 
 
         }
@@ -289,12 +300,18 @@ namespace Mogym.Application.Services
                      await _unitOfWork.UserRepository.AddAsync(user);
 
 
-                    var insertUserMessage = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                         $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName}-{attendanceClientRecord.Mobile}-کاربر جدید شاگرد حضوری",
-                         $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName} عزیز"+
-                         $"کاربری شما با رمز عبور 123456 در پلتفرم ایجاد شد-موجیم");
+                     var insertUserMessage = $"کاربری شما با رمز عبور 123456 در پلتفرم ایجاد شد-موجیم";
 
-                     await _emailSender.SendEmailAsync(insertUserMessage);
+                    //var insertUserMessage = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    //     $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName}-{attendanceClientRecord.Mobile}-کاربر جدید شاگرد حضوری",
+                    //     $"{attendanceClientRecord.FirstName} {attendanceClientRecord.LastName} عزیز"+
+                    //     $"کاربری شما با رمز عبور 123456 در پلتفرم ایجاد شد-موجیم");
+
+                    // await _emailSender.SendEmailAsync(insertUserMessage);
+
+                    await _smsService.SendSms(attendanceClientRecord.Mobile, insertUserMessage);
+
+
                 }
 
                 //create new question entity
@@ -323,15 +340,21 @@ namespace Mogym.Application.Services
 
                 var insertedPlan= await _unitOfWork.PlanRepository.AddAsync(plan);
 
+
+                var qmessage = $"{user.FirstName} {user.LastName} عزیز" +
+                               $"فرم پذیرش برنامه ی شما توسط آقا/خانم {currentTrainer.User.FirstName} {currentTrainer.User.LastName} ایجاد شد. لطفا لینک زیر را کلیک کنید و فرآیند پذیرش خود را تکمیل کنید." +
+                               Environment.NewLine +
+                               $"http://mogym.ir/attendanceclient/{question.Code}";
+
                 var questionPaageMessage = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
                     $"ارسال فرم پرسشنامه شاگرد حضوری - {user.Mobile}",
-                    $"{user.FirstName} {user.LastName} عزیز"+
-                    $"فرم پذیرش برنامه ی شما توسط آقا/خانم {currentTrainer.User.FirstName} {currentTrainer.User.LastName} ایجاد شد. لطفا لینک زیر را کلیک کنید و فرآیند پذیرش خود را تکمیل کنید."+
-                    Environment.NewLine+
-                    $"http://mogym.ir/attendanceclient/{question.Code}" );
+                    qmessage);
 
                 await _emailSender.SendEmailAsync(questionPaageMessage);
 
+
+                _smsService.SendSms(user.Mobile, qmessage)
+                    ;
             }
             catch (Exception e)
             {
@@ -358,17 +381,24 @@ namespace Mogym.Application.Services
             {
                 var plan = await _unitOfWork.PlanRepository.Where(x => x.Id == planId).FirstOrDefaultAsync();
 
-                var diffTime = DateTime.Now.Subtract(plan.InsertDate).TotalHours;
+                var diffTime = DateTime.Now.Subtract(plan.SendPlanDate.Value).TotalHours;
                 if (diffTime < 24)
                 {
                     plan.PlanStatus = EnumPlanStatus.TrainerApprovment;
                     await _unitOfWork.PlanRepository.UpdateAsync(plan);
 
                     var user = _unitOfWork.UserRepository.GetById(plan.UserId);
-                    var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                        $"برگشت برنامه برای اصلاح-{user.Mobile}",
-                        $"ورزشکار عزیز;برنامه با کد {plan.TrackingCode} برای اصلاح توسط مربی شما برگشت داده شد.موجیم");
-                    await _emailSender.SendEmailAsync(messageUser);
+
+                    var message =
+                        $"ورزشکار عزیز;برنامه با کد {plan.TrackingCode} برای اصلاح توسط مربی شما برگشت داده شد.موجیم";
+
+
+                    //var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    //    $"برگشت برنامه برای اصلاح-{user.Mobile}",
+                    //    message);
+                    //await _emailSender.SendEmailAsync(messageUser);
+
+                    await _smsService.SendSms(user.Mobile, message);
 
                     return null;
 
@@ -403,13 +433,15 @@ namespace Mogym.Application.Services
                     .Select(x => x.User_Plan)
                     .FirstOrDefaultAsync();
 
+                var message = $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} توسط مربی تائید گردد - موجیم";
 
+                //var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                //    $"تائید برنامه توسط مربی-{athlete.Mobile}",
+                //    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} توسط مربی تائید گردد - موجیم");
 
-                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                    $"تائید برنامه توسط مربی-{athlete.Mobile}",
-                    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} توسط مربی تائید گردد - موجیم");
+                //await _emailSender.SendEmailAsync(message);
 
-                await _emailSender.SendEmailAsync(message);
+                await _smsService.SendSms(athlete.Mobile, message);
 
             }
             catch (Exception ex)
@@ -476,6 +508,7 @@ namespace Mogym.Application.Services
             {
                 var plan = _unitOfWork.PlanRepository.GetById(planId);
                 plan.PlanStatus = EnumPlanStatus.Sent;
+                plan.SendPlanDate=DateTime.Now;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
 
 
@@ -484,13 +517,17 @@ namespace Mogym.Application.Services
                     .Select(x => x.User_Plan)
                     .FirstOrDefaultAsync();
 
+                var message =
+                    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} در کارتابل برنامه های دریافت شده قابل دسترسی می باشد - موجیم";
 
-
-                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
                     $"ارسال برنامه توسط مربی-{athlete.Mobile}",
-                    $"ورزشکار عزیز;برنامه شما با کد پیگیری {plan.TrackingCode} در کارتابل برنامه های دریافت شده قابل دسترسی می باشد - موجیم");
+                    message);
 
-                await _emailSender.SendEmailAsync(message);
+                await _emailSender.SendEmailAsync(email);
+
+
+                await _smsService.SendSms(athlete.Mobile, message);
 
 
             }

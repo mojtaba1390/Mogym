@@ -25,6 +25,8 @@ namespace Mogym.Domain.Entities
 
         public string? Description { get; set; }
 
+        public DateTime? SendPlanDate { get; set; }
+
 
         public TrainerProfile TrainerProfile_Plan { get; set; }
         public User User_Plan { get; set; }

@@ -25,10 +25,11 @@ namespace Mogym.Controllers
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _accessor;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsService _smsService;
         public AccountController(IUserService userService,
             IMenuService menuService, 
             IRedisCacheService redisCacheService,
-            IConfiguration configuration, IHttpContextAccessor accessor, IEmailSender emailSender)
+            IConfiguration configuration, IHttpContextAccessor accessor, IEmailSender emailSender, ISmsService smsService)
         {
             _userService = userService;
             _menuService = menuService;
@@ -36,6 +37,7 @@ namespace Mogym.Controllers
             _configuration = configuration;
             _accessor = accessor;
             _emailSender = emailSender;
+            _smsService = smsService;
         }
 
         public async Task<IActionResult> Login()
@@ -150,6 +152,7 @@ namespace Mogym.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = await _userService.Login(loginRecord);
+
                     if (user != null)
                     {
                         var claims = new List<Claim>()

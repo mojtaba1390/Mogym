@@ -10,6 +10,6 @@ namespace Mogym.Application.Interfaces
     public interface ISmsService
     {
         Task<ResultDTO> SendSms(string reciverMobile, string message);
-        Task<ResultDTO> SendOTP(string mobile, string token, string tmplate);
+        Task<ResultDTO> SendOTP(string mobile, string token);
     }
 }

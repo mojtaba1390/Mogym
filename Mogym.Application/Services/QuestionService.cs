@@ -25,9 +25,10 @@ namespace Mogym.Application.Services
         private readonly IHttpContextAccessor _accessor;
         private readonly IEmailSender _emailSender;
         private readonly ITrainerProfileService _trainerProfileService;
+        private readonly ISmsService _smsService;
 
 
-        public QuestionService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, IEmailSender emailSender, ITrainerProfileService trainerProfileService)
+        public QuestionService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor, IEmailSender emailSender, ITrainerProfileService trainerProfileService, ISmsService smsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -35,6 +36,7 @@ namespace Mogym.Application.Services
             _accessor = accessor;
             _emailSender = emailSender;
             _trainerProfileService = trainerProfileService;
+            _smsService = smsService;
         }
         public async Task AddQuestion(CreateQuestionRecord createQuestionRecord)
         {
@@ -63,19 +65,22 @@ namespace Mogym.Application.Services
 
                 var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
 
-               
-                var message = new Message(new string[] {"ramezannia.mojtaba@gmail.com"},
-                    $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
-                    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}"+
-                    $" {confirmAnswerQuestion.PlanName}"+
+                var message =
+                    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
+                    $" {confirmAnswerQuestion.PlanName}" +
                     $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
-                    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}"+
-                    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}"+
-                    $" به نام {confirmAnswerQuestion.CartOwner}"+
-                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم "
-                );
+                    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
+                    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
+                    $" به نام {confirmAnswerQuestion.CartOwner}" +
+                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
 
-                await _emailSender.SendEmailAsync(message);
+                var email = new Message(new string[] {"ramezannia.mojtaba@gmail.com"},
+                    $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
+                message);
+
+                await _emailSender.SendEmailAsync(email);
+
+                await _smsService.SendSms(createQuestionRecord.Mobile, message);
 
 
             }
@@ -134,20 +139,23 @@ namespace Mogym.Application.Services
 
                 var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
 
-                var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                    $"پر کردن پرسشنامه-{createAttendanceClientQuestionRecord.Mobile}",
+                var message =
                     $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
                     $" {confirmAnswerQuestion.PlanName}" +
                     $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
                     $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
                     $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
                     $" به نام {confirmAnswerQuestion.CartOwner}" +
-                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم "
+                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
+
+
+                var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                    $"پر کردن پرسشنامه-{createAttendanceClientQuestionRecord.Mobile}",message
                 );
 
-                await _emailSender.SendEmailAsync(message);
+                await _emailSender.SendEmailAsync(email);
 
-
+                await _smsService.SendSms(createAttendanceClientQuestionRecord.Mobile, message);
 
             }
             catch(Exception ex)
