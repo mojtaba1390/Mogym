@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
@@ -14,6 +15,9 @@ namespace Mogym.Domain.Entities
         {
             UserRoles = new HashSet<UserRole>();
             Plans = new HashSet<Plan>();
+            Creators = new HashSet<Ticket>();
+            Assigns = new HashSet<Ticket>();
+            TicketDetails = new HashSet<TicketDetail>();
 
 
         }
@@ -34,11 +38,18 @@ namespace Mogym.Domain.Entities
 
 
         public TrainerProfile TrainerProfile { get; set; }
+
+
         #region Collections
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Plan> Plans { get; set; }
 
+        [InverseProperty("User_Creator")]
+        public ICollection<Ticket> Creators { get; set; }
+        [InverseProperty("User_Assign")]
+        public ICollection<Ticket> Assigns { get; set; }
 
+        public ICollection<TicketDetail> TicketDetails { get; set; }
         #endregion
     }
 }

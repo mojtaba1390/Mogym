@@ -83,6 +83,8 @@ namespace Mogym.Application
             services.AddTransient<ISmsLogService, SmsLogService>();
             services.AddTransient<IRolePermissionService, RolePermissionService>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<ITicketDetailService, TicketDetailService>();
 
             #endregion
 

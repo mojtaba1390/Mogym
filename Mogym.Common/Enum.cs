@@ -142,6 +142,15 @@ namespace Mogym.Common
         [Description("اسکوپ")]
         Scope = 3
     }
+    public enum EnumTicketStatus
+    {
+        [EnumMember]
+        [Description("ارسال شده")]
+        Sent = 1,
+        [EnumMember]
+        [Description("خوانده شده")]
+        Read = 2
+    }
     public enum EnumApiType
     {
         [EnumMember]

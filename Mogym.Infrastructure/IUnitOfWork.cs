@@ -30,6 +30,8 @@ namespace Mogym.Infrastructure
         ISupplimentPlanRepository SupplimentPlanRepository { get; }
         ISupplimentPlanDetailRepository SupplimentPlanDetailRepository { get; }
         IRolePermissionRepository RolePermissionRepository { get; }
+        ITicketRepository TicketRepository { get; }
+        ITicketDetailRepository TicketDetailRepository { get; }
         
     }
 }
