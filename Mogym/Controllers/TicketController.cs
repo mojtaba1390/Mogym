@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Common;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace Mogym.Controllers
 {
@@ -34,18 +35,17 @@ namespace Mogym.Controllers
                 return View("IlegalRequest");
             }
 
-            var result = await _ticketService.CreateOrGetTickets(planId);
+            var code=await _ticketService.CreateOrGetTickets(planId);
 
-            ViewData["TicketId"] = result.Item1;
-            return View("Index",result.Item2);
+            return RedirectToAction(nameof(TicketDetail),new{ticketCode=code});
         }
 
 
-        public async Task<IActionResult> Send(string message, int ticketId)
+        public async Task<IActionResult> Send(string message, int code)
         {
             try
             {
-                await _ticketService.SendMessage(message, ticketId);
+                await _ticketService.SendMessage(message, code);
             }
             catch (Exception e)
             {
@@ -53,7 +53,40 @@ namespace Mogym.Controllers
                 throw;
             }
 
-            return null;
+            return RedirectToAction(nameof(TicketDetail), new { ticketCode = code });
+        }
+
+
+        [DisplayName("گفتگوهای من")]
+        public async Task<IActionResult> MyTickets()
+        {
+
+            var tickets = await _ticketService.MyTickets();
+            return View(tickets);
+        }
+
+
+        public async Task<IActionResult> TicketDetail(int ticketCode)
+        {
+            try
+            {
+                var ticketDetails = await _ticketService.ViewTicketDetail(ticketCode);
+
+                if (ticketDetails is null)
+                {
+                    TempData["errormessage"] = "یا کد تیکت اشتباه می باشد و یا این تیکت مربوط به شما نیست";
+                    return View("IlegalRequest");
+                }
+
+                ViewData["TicketCode"] = ticketCode;
+                return View(ticketDetails);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
         }
 
     }

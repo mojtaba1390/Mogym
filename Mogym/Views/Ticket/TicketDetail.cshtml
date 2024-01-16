@@ -1,0 +1,100 @@
+﻿@using Mogym
+@model List<Mogym.Application.Records.TicketDetail.TicketDetailRecord>
+@inject IHttpContextAccessor _accessor;
+@{
+    ViewBag.Title = "گفتگو";
+    Layout = "_Layout";
+    var currentUser = _accessor.GetUser();
+}
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card card-primary card-outline direct-chat direct-chat-primary" style="height:550px">
+
+                    <div class="card-body">
+
+                        @{
+                            if (Model.Any())
+                            {
+                                <div class="direct-chat-messages" style="height: 420px">
+
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            if (item.UserId == currentUser)
+                                            {
+                                                <div class="direct-chat-msg right">
+                                                    <div class="direct-chat-infos clearfix">
+                                                        <span class="direct-chat-name float-right">@item.FullName</span>
+                                                        <span class="direct-chat-timestamp float-left">@item.InsertDate</span>
+                                                    </div>
+
+                                                    @*<img class="direct-chat-img" src="../dist/img/user3-128x128.jpg" alt="Message User Image">*@
+
+                                                    <div class="direct-chat-text">
+                                                        @item.Message
+                                                    </div>
+
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="direct-chat-msg">
+                                                    <div class="direct-chat-infos clearfix">
+                                                        <span class="direct-chat-name float-left">@item.FullName</span>
+                                                        <span class="direct-chat-timestamp float-right">@item.InsertDate</span>
+                                                    </div>
+
+                                                    @*<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="Message User Image">*@
+
+                                                    <div class="direct-chat-text">
+                                                        @item.Message
+                                                    </div>
+
+                                                </div>
+                                            }
+                                        }
+                                    }
+
+
+
+
+
+
+                                </div>
+
+                            }
+                        }
+
+
+
+
+
+                    </div>
+
+                    <div class="card-footer">
+                        <form asp-action="Send">
+                            <div class="input-group">
+                                <input name="code" type="hidden" value="@ViewData["TicketCode"]">
+                                <input type="text" name="message" placeholder="پیام" class="form-control" style="height:100px">
+                                <span class="input-group-append">
+                                    <button type="submit" class="btn btn-success" style="width:80px">ارسال</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</section>

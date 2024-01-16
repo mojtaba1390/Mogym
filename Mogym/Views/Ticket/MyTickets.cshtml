@@ -1,0 +1,108 @@
+﻿@model List<Mogym.Application.Records.Ticket.MyTicketRecord>
+
+@{
+    ViewBag.Title = "تیکت های من";
+    Layout = "_Layout";
+}
+
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header bg-success-card">
+                    <h3 class="card-title">تیکت های من</h3>
+                </div>
+
+                <div class="card-body py-5">
+                    <div class="col-auto col-md-12 mt-5" id="tab-myTickets">
+                        <div class="tab-content mt-5" id="tabContent">
+                            <div class="tab-pane fade show active pt-5" id="personal-information" role="tabpanel" aria-labelledby="personal-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="">
+
+                                            <!-- /.card-header -->
+                                            <div class="card-body training-course-class-index mb-50">
+                                                <table id="myTickets" class="table table-bordered table-striped w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>کد گفتگو</th>
+                                                            <th>عملیات</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model.Any())
+                                                        {
+                                                            @foreach (var itm in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td>@itm.TicketCode</td>
+                                                                    <td class="operation-icon">
+                                                                        @*                                                                        <a asp-action="TicketDetail" asp-route-tickeCode="@itm.TicketCode" class="show px-2 tooltip"><i class="far fa-2xl fa-file-alt"></i> <span class="tooltiptext tooltip-top">مشاهده</span></a>
+*@
+                                                                        <a class="btn btn-default" asp-route-ticketCode="@itm.TicketCode" asp-action="TicketDetail">مشاهده</a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- /.card-body -->
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<script>
+    $(function () {
+        $("#myTickets").DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+            ],
+            "pageLength": 25,
+            "ordering": false,
+            language: {
+                processing: "لطفا صبر کنید ...",
+                search: "جستجو ",
+                lengthMenu: "نمایش _MENU_ آیتم",
+                info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                infoPostFix: "",
+                loadingRecords: "لطفا صبر کنید ...",
+                zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                paginate: {
+                    first: "اولین",
+                    previous: "قبلی",
+                    next: "بعدی",
+                    last: "آخرین"
+                },
+                aria: {
+                    sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                    sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                }
+            }
+        });
+    });
+</script>

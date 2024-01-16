@@ -23,6 +23,12 @@ namespace Mogym.Domain.Entities
         public DateTime? CreatorLastSeen { get; set; }
         public DateTime? AssignLastSeen { get; set; }
 
+
+        public EnumYesNo IsSentSmsToCreator { get; set; }
+        public EnumYesNo IsSentSmsToAssign { get; set; }
+
+        public int TicketCode { get; set; }
+
         
         public User User_Creator { get; set; }
         public User User_Assign { get; set; }

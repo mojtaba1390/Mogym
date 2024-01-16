@@ -59,11 +59,12 @@
                                                 <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan" asp-action="SentSupplimentDetail">مکمل</a>
                                             </div>
                                             <div class="form-group" style="margin: 0px 10px">
-                                                <a class="btn btn-default" asp-route-planId="@itm.Id" asp-controller="Plan" asp-action="EditPlanAfterSent">برگشت برای اصلاح</a>
-                                            </div>
-@*                                            <div class="form-group" style="margin: 0px 10px">
                                                 <a class="btn btn-default" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
-                                            </div>*@
+                                            </div>
+                                            <div class="form-group" style="margin: 0px 10px">
+                                                <a class="btn btn-warning" asp-route-planId="@itm.Id" asp-controller="Plan" asp-action="EditPlanAfterSent">برگشت برای اصلاح</a>
+                                            </div>
+
                                         </td>
                                     </tr>
                                 }

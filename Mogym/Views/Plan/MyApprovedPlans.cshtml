@@ -38,6 +38,9 @@
                                         <td>
                                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
                                         </td>
+                                        <div class="form-group" style="margin: 0px 10px">
+                                            <a class="btn btn-default" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
+                                        </div>
                                     </tr>
                                 }
                             </tbody>

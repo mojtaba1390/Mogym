@@ -13,7 +13,7 @@
 @inject IUserService _userService;
 @inject IMenuService _menuService;
 @inject IHttpContextAccessor _accessor;
-
+@inject ITicketService _ticketService;
 @{
 
 
@@ -43,6 +43,9 @@
     //TODO:اینجا باید لیستی از منو ها گرفته بشه که در دسترسی وجد دارد
 
     var roleName = _accessor.GetCurrentUserRoleName();
+
+    //TODO:بعدا حتما بره تو ردیس
+    var ticketCount = await _ticketService.GetMyUnreadTicketsCount();
 
 }
 
@@ -127,16 +130,16 @@
                 </li>
 
                 <li class="mt-1 mx-3">
-                    @*                    <a asp-controller="Cartable" asp-action="Index" class="tooltip">
-                    @if (ViewBag.CartableCount != null )//&& ViewBag.CartableCount != 0 )
-                    {
-                    <badge class="badge bg-success-card"> @(ViewBag.CartableCount)</badge>
-                    }
-                    <i class="fa fa-newspaper fa-lg" aria-hidden="true"></i>
-                    <span class="tooltiptext tooltip-bottom">
-                    کارتابل
-                    </span>
-                    </a>*@
+                    <a asp-controller="Ticket" asp-action="MyTickets" class="tooltip">
+                        @if (ticketCount!=0)
+                        {
+                            <badge class="badge bg-success-card"> @ticketCount</badge>
+                        }
+                        <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                        <span class="tooltiptext tooltip-bottom">
+                            گفتگو خوانده نشده
+                        </span>
+                    </a>
                 </li>
                 <li class="px-3 user-panel1 ">
                     <div class="dropdown">

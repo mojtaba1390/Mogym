@@ -21,6 +21,9 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.AssignStatus).HasColumnType("int").IsRequired();
             builder.Property(x => x.CreatorLastSeen).HasColumnType("datetime2").IsRequired(false);
             builder.Property(x => x.AssignLastSeen).HasColumnType("datetime2").IsRequired(false);
+            builder.Property(x => x.TicketCode).HasColumnType("int").IsRequired();
+            builder.Property(x => x.IsSentSmsToCreator).HasColumnType("int").IsRequired();
+            builder.Property(x => x.IsSentSmsToAssign).HasColumnType("int").IsRequired();
 
 
             builder.HasOne<User>(x => x.User_Creator)
