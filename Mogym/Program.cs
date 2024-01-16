@@ -9,6 +9,8 @@ using Mogym.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddAntiforgery();
+
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
