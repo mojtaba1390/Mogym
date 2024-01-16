@@ -14,6 +14,8 @@ namespace Mogym.Application.AutoMapper.TrainerPlanCost
         {
             CreateMap<CreateTrainerCostsRecord, Domain.Entities.TrainerPlanCost>()
                 .ForMember(x => x.OriginalCost, z => z.MapFrom(a => a.OriginalCost))
+                .ForMember(x=>x.IsDeleted,
+                    z=>z.MapFrom(a=>EnumYesNo.No))
                 .ForMember(x => x.TrainerPlan, z => z.MapFrom(a => (EnumTrainerPlan)a.TrainerPlan));
         }
     }

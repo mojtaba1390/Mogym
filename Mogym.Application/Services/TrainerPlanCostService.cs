@@ -90,7 +90,8 @@ namespace Mogym.Application.Services
             try
             {
                 var entity = _unitOfWork.TrainerPlanCostRepository.GetById(id);
-                _unitOfWork.TrainerPlanCostRepository.Delete(entity);
+                entity.IsDeleted = EnumYesNo.Yes;
+                _unitOfWork.TrainerPlanCostRepository.Update(entity);
             }
             catch (Exception ex)
             {

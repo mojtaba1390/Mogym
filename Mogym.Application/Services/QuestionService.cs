@@ -80,7 +80,7 @@ namespace Mogym.Application.Services
 
                 await _emailSender.SendEmailAsync(email);
 
-                await _smsService.SendSms(createQuestionRecord.Mobile, message);
+                //await _smsService.SendSms(createQuestionRecord.Mobile, message);
 
 
             }
@@ -155,7 +155,7 @@ namespace Mogym.Application.Services
 
                 await _emailSender.SendEmailAsync(email);
 
-                await _smsService.SendSms(createAttendanceClientQuestionRecord.Mobile, message);
+                //await _smsService.SendSms(createAttendanceClientQuestionRecord.Mobile, message);
 
             }
             catch(Exception ex)

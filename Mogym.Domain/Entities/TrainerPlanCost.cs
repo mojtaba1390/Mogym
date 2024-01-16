@@ -13,6 +13,8 @@ namespace Mogym.Domain.Entities
         public double? OriginalCost { get; set; }
         public double? SaleCost { get; set; }
 
+        public EnumYesNo? IsDeleted { get; set; }
+
         public int TrainerProfileId { get; set; }
 
 

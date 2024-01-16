@@ -77,7 +77,8 @@
         $("#cost-create").validate({
             rules: {
                 OriginalCost: {
-                    required: true
+                    required: true,
+                    min:2000000
                 },
                 TrainerPlan: {
                     valueNotEquals: "-1"
@@ -86,7 +87,8 @@
             },
             messages: {
                 OriginalCost: {
-                    required: "پر کردن مبلغ الزامی است"
+                    required: "پر کردن مبلغ الزامی است",
+                    min:"مبلغ از ۲،۰۰۰،۰۰۰ ریال کمتر نمی تواند باشد"
                 },
                 TrainerPlan: {
                     valueNotEquals: "نوع هزینه را وارد کنید"
