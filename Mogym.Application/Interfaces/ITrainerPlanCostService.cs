@@ -16,5 +16,6 @@ namespace Mogym.Application.Interfaces
         Task Create(int userId, CreateTrainerCostsRecord model);
         bool IsThereAnyEntityWithTrainerProfileIdAndPlanType(int trainerProfileId, int? trainerPlan);
         Task<AttendanceClientRecord> GetAttendanceClientRecord();
+        Task Delete(int id);
     }
 }

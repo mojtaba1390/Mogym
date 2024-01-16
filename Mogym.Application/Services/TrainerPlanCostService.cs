@@ -85,13 +85,13 @@ namespace Mogym.Application.Services
             return _mapper.Map<AttendanceClientRecord>(trainer);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             try
             {
                 var entity = _unitOfWork.TrainerPlanCostRepository.GetById(id);
                 entity.IsDeleted = EnumYesNo.Yes;
-                _unitOfWork.TrainerPlanCostRepository.Update(entity);
+                await _unitOfWork.TrainerPlanCostRepository.UpdateAsync(entity);
             }
             catch (Exception ex)
             {

@@ -66,5 +66,29 @@ namespace Mogym.Controllers
             return View("NotFound");
 
         }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    await _trainerPlanCostService.Delete(id);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                TempData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+            }
+
+            return View("NotFound");
+
+        }
     }
 }
