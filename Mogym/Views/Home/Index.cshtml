@@ -71,7 +71,7 @@
                     <ul class="navbar-nav ml-auto menu">
                         <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
-                        <li><a asp-controller="Account" asp-action="LoginMobile" class="page-scroll">پنل مربی</a></li>
+                        <li><a asp-controller="Account" asp-action="LoginMobile" class="page-scroll">عضویت مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
                         <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
@@ -115,9 +115,9 @@
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a asp-controller="Account" asp-action="SignUpTrainer" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                                        <a asp-controller="Home" asp-action="TrainerPanel" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
                                             <div class="download-text text-left">
-                                                <h5 class="mb-0"> پنل مربی</h5>
+                                                <h5 class="mb-0">عضویت مربیان</h5>
                                             </div>
                                         </a>
                                     </li>
@@ -389,7 +389,7 @@
                         <img src="~/img/mogym-logo.png" class="img-fluid mb-3" alt="mogym">
                     </a>
                     <br>
-                    <p>موجیم پلتفرم تخصصی تناسب اندام آنلاین می باشد. ما در این پلتفرم سعی کرده ایم امکاناتی را برای راحتی ارتباط مربیان با ورزشکاران عزیز فراهم کنیم تا به صورت آنلاین بتوانند به هدف خود برسند.به خود افتخار می کنیم که بهرین ها مرا انتخاب می کنند.</p>
+                    <p>موجیم پلتفرم تخصصی تناسب اندام آنلاین می باشد. ما در این پلتفرم سعی کرده ایم امکاناتی را برای راحتی ارتباط مربیان با ورزشکاران عزیز فراهم کنیم تا به صورت آنلاین بتوانند به هدف خود برسند.به خود افتخار می کنیم که بهترین ها مارا انتخاب می کنند.</p>
                     <div class="list-inline social-list-default background-color social-hover-2 mt-2">
                         <li class="list-inline-item"><a class="twitter" href="https://t.me/mogym"><i class="fab fa-telegram"></i></a></li>
                     </div>
@@ -400,13 +400,10 @@
                             <h6 class="text-uppercase">صفحات</h6>
                             <ul>
                                 <li>
-                                    <a asp-controller="Account" asp-action="Login">ورود</a>
+                                    <a asp-controller="Account" asp-action="LoginMobile">ورود</a>
                                 </li>
                                 <li>
-                                    <a asp-controller="Account" asp-action="SignUp">ثبت نام ورزشکار</a>
-                                </li>
-                                <li>
-                                    <a asp-controller="Account" asp-action="SignUpTrainer">ثبت نام مربی</a>
+                                    <a asp-controller="Home" asp-action="TrainerPanel">عضویت مربیان</a>
                                 </li>
                                 <li>
                                     <a asp-controller="Home" asp-action="Trainers">مربیان</a>
@@ -419,7 +416,7 @@
                                 <li>
                                     <a asp-controller="Home" asp-action="ContactUs">ارتباط با ما</a>
                                 </li>
-  <li>
+                                <li>
                                     <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a>
                                 </li>
                             </ul>

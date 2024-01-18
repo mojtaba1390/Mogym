@@ -53,6 +53,10 @@ namespace Mogym.Controllers
         {
             return View();
         }
+        public async  Task<IActionResult> TrainerPanel()
+        {
+            return View();
+        }
 
 
 

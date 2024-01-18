@@ -1,0 +1,382 @@
+﻿@using Mogym.Application.Interfaces
+@inject IUserService _userService;
+@inject IPlanService _planService;
+@{
+    var trainerCount = await _userService.GetTrainerCountForIndexPage();
+    var userCount = await _userService.GetUserCountForIndexPage();
+    var sentPlanCount = await _planService.GetSentPlanCountForIndexPage();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:title" content="موجیم" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
+    <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع تناسب اندام آنلاین" />
+    <meta property="og:url" content="http://mogym.ir/" />
+
+
+
+
+    <!--favicon icon-->
+    <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
+
+    <!--title-->
+    <title>موجیم</title>
+
+    <!--build:css-->
+    <link rel="stylesheet" href="~/mainassets/css/main.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+
+    <!--preloader start-->
+    <div id="preloader">
+        <div class="preloader-wrap">
+            <img src="~/img/mogym-transparent.png" alt="mogym" class="img-fluid">
+            <div class="thecube">
+                <div class="cube c1"></div>
+                <div class="cube c2"></div>
+                <div class="cube c4"></div>
+                <div class="cube c3"></div>
+            </div>
+        </div>
+    </div>
+    <!--preloader end-->
+    <!--header section start-->
+    <header class="header">
+        <!--start navbar-->
+        <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+            <div class="container">
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
+                    <span class="ti-menu"></span>
+                </button>
+
+                <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto menu">
+                        <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
+                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
+                        <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
+                        <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
+                        <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
+                        <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!--header section end-->
+
+    <div class="main">
+
+        <!--hero section start-->
+        <section class="ptb-100 bg-image" image-overlay="8">
+            <div class="animated-shape-wrap">
+                <div class="animated-shape-item"></div>
+                <div class="animated-shape-item"></div>
+                <div class="animated-shape-item"></div>
+                <div class="animated-shape-item"></div>
+                <div class="animated-shape-item"></div>
+            </div>
+            <div class="container">
+                <div class="row align-items-center justify-content-lg-between justify-content-md-center justify-content-sm-center">
+                    <div class="col-md-12 col-lg-6">
+                        <div class="hero-slider-content text-white py-5">
+                            <h1 class="text-white">موجیم تخصصی ترین مرجع تناسب اندام آنلاین</h1>
+@*                             <p class="lead">به طور کلی همگرایی مهم و مهم را با سرویس قابل اعتماد مشتری به تعویق بیندازید. به طور قاطع مشارکت ایده برای راه حل های تاثیر گذار را تحت تأثیر قرار داد.</p>
+                            <div id="clock" class="hero-countdown-wrap my-4 text-center"></div>*@
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="discount-banner bg-white  text-center">
+                            <p class="lead">ﺑﻪ ﺟﻤﻊ ﺑﺮﺗﺮﯾﻦ مربیان موجیم ﺑﭙﯿﻮﻧﺪﯾﺪ.</p>
+                            <form action="#" method="post" class="subscribe-form subscribe-form-footer">
+                                <div class="d-flex align-items-center">
+                                    <input type="number" class="form-control input" id="mobile" name="mobile" placeholder="شماره همراه خود را وارد کنید" requied>
+                                </div>
+                                <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
+                                    ارسال کد تائید
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+        <!--hero section end-->
+    <!--features section start-->
+        <div id="features" class="feature-section ptb-100 ">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9 col-lg-9">
+                        <div class="section-heading text-center mb-5">
+                            <h2>چرا موجیم؟</h2>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--feature new style start-->
+                <div class="row align-items-center justify-content-md-center">
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-face-smile icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2">امکان دیده شدن</h5>
+                                        <p>روزانه هزاران نفر از موجیم برای درخواست برنامه های ورزشی بازدید می کنن.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-panel icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2">صفحه شخصی</h5>
+                                        <p>تو موجیم می تونین برای خودتون صفحه شخصی بسازین و هزینه های خودتونو اونجا وارد کنین.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-link icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2">لینک منحصربفرد</h5>
+                                        <p>تو موجیم هر صفحه شخصی لینک منحصربفرد داره و میتونین برای ثبت برنامه، اونو تو شبکه های اجتماعی خودتون بزارین.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-5 d-none d-sm-none d-md-block d-lg-block">
+                        <div class="position-relative pb-md-5 py-lg-0">
+                            <img alt="مکان یاب تصویر" src="~/mainassets/img/trainerplan-main-pic.png" class="img-center img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-layout-media-right icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2">کاملا آنلاین</h5>
+                                        <p>تو موجیم از ثبت درخواست تا دریافت برنامه کاملا آنلاینه. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-layout-cta-right icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2"> حرکات تمرینی با توضیح و فیلم آموزشی</h5>
+                                        <p>تو موجیم بیشتر از 200 جرکت تمرینی با توضیخ و فیلم آموزشی وجود داره.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex align-items-start mb-sm-0 mb-md-3 mb-lg-3">
+                                    <span class="ti-ticket icon-size-md color-secondary mr-4"></span>
+                                    <div class="icon-text">
+                                        <h5 class="mb-2">امکان گفتگو بین مربی و شاگرد</h5>
+                                        <p>تو موجیم بدون نیاز به هیچ پیام رسانی مربی و ورزشکار می تونن در مورد برنامه باهم صحبت کنن.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--feature new style end-->
+            </div>
+        </div>
+
+    <section class="counter-section gradient-bg ptb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-user-circle icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@trainerCount</h3>
+                        <span>مربیان</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-users icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@userCount</h3>
+                        <span>ورزشکاران</span>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-4">
+                    <div class="text-white p-2 count-data text-center my-3">
+                        <span class="fas fa-edit icon-size-lg mb-2"></span>
+                        <h3 class="count-number mb-1 text-white font-weight-bolder">@sentPlanCount</h3>
+                        <span>برنامه ارسال شده</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!--faq or accordion section start-->
+        <section id="faq" class="ptb-100 gray-light-bg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9 col-lg-8">
+                        <div class="section-heading text-center mb-5">
+                            <h2>سوالات متداول</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-12 col-lg-6 mb-5 mb-md-5 mb-sm-5 mb-lg-0">
+                        <div class="img-wrap">
+                            <img src="~/mainassets/img/trainer-f&q.png" alt="دانلود" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <div id="accordion" class="accordion faq-wrap">
+                            <div class="card mb-3">
+                                <a class="card-header " data-toggle="collapse" href="#collapse0" aria-expanded="false">
+                                    <h6 class="mb-0 d-inline-block">برای ثبت نام چه مدارکی نیازه؟</h6>
+                                </a>
+                                <div id="collapse0" class="collapse show" data-parent="#accordion" style="">
+                                    <div class="card-body white-bg">
+                                        <p>برای ثبت نام به تصویر کارت ملی و تصویر مدرک مربیگری فدراسیون بدنسازی و پرورش اندام اجباریه.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card my-3">
+                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse1" aria-expanded="false">
+                                    <h6 class="mb-0 d-inline-block">چرا تو ثبت نام غیر از کارت ملی و مدرک مربیگری،مدارک دیگه م میخاد؟</h6>
+                                </a>
+                                <div id="collapse1" class="collapse " data-parent="#accordion" style="">
+                                    <div class="card-body white-bg">
+                                        <p>مدارک دیگه غیر از کارت ملی و مدرک مربیگری اختیاریه. با وارد کردن این مدارک اولویت نام شما برای نمایش تو صفحه ی اول بیشتر میشه.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card my-3">
+                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse2" aria-expanded="false">
+                                    <h6 class="mb-0 d-inline-block">تعرفه مربیگری تو موجیم چقدره؟</h6>
+                                </a>
+                                <div id="collapse2" class="collapse " data-parent="#accordion" style="">
+                                    <div class="card-body white-bg">
+                                        <p>تمام امکانات موجیم در حال حاضر برای مربیان رایگان هست.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse3" aria-expanded="false">
+                                    <h6 class="mb-0 d-inline-block">من تو شبکه اجتماعی شاگرد دارم،چرا باید موجیم رو انتخاب کنم؟</h6>
+                                </a>
+                                <div id="collapse3" class="collapse " data-parent="#accordion" style="">
+                                    <div class="card-body white-bg">
+                                        <p>شما تو صفحه خودتون به تعداد محدودی از کاربران دسترسی دارین ولی تو موجیم این امکان رو دارین تا همه جا دیده بشین. </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mt-3">
+                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse3" aria-expanded="false">
+                                    <h6 class="mb-0 d-inline-block">برای شاگرد حضوری باشگاه هم می تونم آنلاین برنامه بنویسم؟</h6>
+                                </a>
+                                <div id="collapse3" class="collapse " data-parent="#accordion" style="">
+                                    <div class="card-body white-bg">
+                                        <p>بله شما تو موجیم این امکان رو دارین که برای شاگردان حضوری در باشگاه هم آنلاین برنامه نویسی کنین.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--faq or accordion section end-->
+
+
+    </div>
+
+    <!--footer section start-->
+    <footer class="footer-1 ptb-60 gradient-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-4 mb-4 mb-md-4 mb-sm-4 mb-lg-0">
+                    <a href="#" class="navbar-brand mb-2">
+                        <img src="~/img/mogym-logo.png" class="img-fluid mb-3" alt="mogym">
+                    </a>
+                    <br>
+                    <p>موجیم پلتفرم تخصصی تناسب اندام آنلاین می باشد. ما در این پلتفرم سعی کرده ایم امکاناتی را برای راحتی ارتباط مربیان با ورزشکاران عزیز فراهم کنیم تا به صورت آنلاین بتوانند به هدف خود برسند.به خود افتخار می کنیم که بهترین ها مارا انتخاب می کنند.</p>
+                    <div class="list-inline social-list-default background-color social-hover-2 mt-2">
+                        <li class="list-inline-item"><a class="twitter" href="https://t.me/mogym"><i class="fab fa-telegram"></i></a></li>
+                    </div>
+                </div>
+                <div class="col-md-12 col-lg-8">
+                    <div class="row mt-0">
+                        <div class="col-sm-6 col-md-3 col-lg-3 mb-4 mb-sm-4 mb-md-0 mb-lg-0">
+                            <h6 class="text-uppercase">صفحات</h6>
+                            <ul>
+                                <li>
+                                    <a asp-controller="Account" asp-action="LoginMobile">ورود</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="TrainerPanel">عضویت مربیان</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Trainers">مربیان</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 mb-4 mb-sm-4 mb-md-0 mb-lg-0">
+                            <h6 class="text-uppercase">عمومی</h6>
+                            <ul>
+                                <li>
+                                    <a asp-controller="Home" asp-action="ContactUs">ارتباط با ما</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of container-->
+    </footer>
+    <!--footer bottom copyright end-->
+    <!--footer section end-->
+    <!--scroll bottom to top button start-->
+    <div class="scroll-top scroll-to-target primary-bg text-white" data-target="html">
+        <span class="fas fa-hand-point-up"></span>
+    </div>
+    <!--scroll bottom to top button end-->
+    <!--build:js-->
+    <script src="~/mainassets/js/vendors/jquery-3.5.1.min.js"></script>
+    <script src="~/mainassets/js/vendors/popper.min.js"></script>
+    <script src="~/mainassets/js/vendors/bootstrap.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.easing.min.js"></script>
+    <script src="~/mainassets/js/vendors/owl.carousel.min.js"></script>
+    <script src="~/mainassets/js/vendors/countdown.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.waypoints.min.js"></script>
+    <script src="~/mainassets/js/vendors/jquery.rcounterup.js"></script>
+    <script src="~/mainassets/js/vendors/magnific-popup.min.js"></script>
+    <script src="~/mainassets/js/vendors/validator.min.js"></script>
+    <script src="~/mainassets/js/app.js"></script>
+    <!--endbuild-->
+
+
+</body>
+</html>
