@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mogym.Application.Records.User
 {
-    public record LoginRecord
+    public record OTPRecord
     {
         public string Mobile { get; init; }
-        public string? Email { get; init; }
-        public string Password { get; init; }
-        public string? CofirmCode { get; init; }
+        public string? ConfirmCode { get; init; }
         public string? ReturnUrl { get; init; }
+
     }
 }

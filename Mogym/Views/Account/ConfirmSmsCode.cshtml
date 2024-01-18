@@ -1,4 +1,4 @@
-﻿@model Mogym.Application.Records.User.ConfirmSmsRecord
+﻿@model Mogym.Application.Records.User.OTPRecord
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,10 +57,13 @@
                                     <div class="input-icon">
                                         <span class="ti-mobile"></span>
                                     </div>
-                                    <input asp-for="ConfirmCode" type="number" class="form-control" required="required">
+                                    <input asp-for="ConfirmCode" type="number" class="form-control" required oninvalid="setCustomValidity('کد را وارد کنید.')">
                                 </div>
                                 <div>
                                     <span asp-validation-for="ConfirmCode" class="text-danger"></span>
+                                </div>
+                                <div>
+                                    <span class="text-danger">@ViewData["ErrorMessage"]</span>
                                 </div>
                             </div>
 

@@ -31,13 +31,15 @@ namespace Mogym.Application.Services
         private readonly IHttpContextAccessor _accessor;
         private readonly ISmsLogService _smsLogService;
         private readonly IEmailSender _emailSender;
+        private readonly ISmsService _smsService;
         public UserService(IUnitOfWork unitOfWork,
             IMapper mapper,
             ISeriLogService logger,
             IRoleService roleService,
             IUserRoleService userRoleService,
             IHttpContextAccessor accessor,
-            ISmsLogService smsLogService)
+            ISmsLogService smsLogService,
+            ISmsService smsService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -46,6 +48,7 @@ namespace Mogym.Application.Services
             _userRoleService = userRoleService;
             _accessor = accessor;
             _smsLogService = smsLogService;
+            _smsService = smsService;
         }
 
         public bool IsExistMobile(string mobile)
@@ -76,38 +79,41 @@ namespace Mogym.Application.Services
         /// </summary>
         /// <param name="loginRecord"></param>
         /// <returns>ConfirmSmsRecord</returns>
-        public async Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord)
+        public async Task<OTPRecord> LoginAsync(OTPLoginRecord otpLoginRecord)
         {
             
             try
             {
-                var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == loginRecord.Mobile.Trim()).FirstOrDefaultAsync();
+                var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == otpLoginRecord.Mobile.Trim()).FirstOrDefaultAsync();
                 if (entity != null)
                 {
                     entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
-                    //entity.SmsConfirmCode = "12345";
                     _unitOfWork.UserRepository.Update(entity);
 
-                    await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
+                    //await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
 
-                    return _mapper.Map<ConfirmSmsRecord>(entity);
+                    await _smsService.SendOTP(otpLoginRecord.Mobile, entity.SmsConfirmCode);
+                    return _mapper.Map<OTPRecord>(entity);
                 }
 
-                var newUser = _mapper.Map<User>(loginRecord);
-                var userRole = _mapper.Map<UserRole>(newUser);
+                var newUser = _mapper.Map<User>(otpLoginRecord);
+
+                var userRoleRecord = _mapper.Map<CreateAthleteUserRoleRecord>(newUser);
+                var userRole = _mapper.Map<UserRole>(userRoleRecord);
 
                 newUser.UserRoles.Add(userRole);
                 await _unitOfWork.UserRepository.AddAsync(newUser);
 
-                await _smsLogService.SendConfirmSmsCode(newUser.Mobile,newUser.SmsConfirmCode);
+                await _smsService.SendOTP(newUser.Mobile,newUser.SmsConfirmCode);
+                //await _smsLogService.SendConfirmSmsCode(newUser.Mobile,newUser.SmsConfirmCode);
 
-                return _mapper.Map<ConfirmSmsRecord>(newUser);
+                return _mapper.Map<OTPRecord>(newUser);
 
 
             }
             catch (Exception ex)
             {
-                var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(loginRecord);
+                var message = $"Login in User Service,entity:" + JsonSerializer.Serialize(otpLoginRecord);
                 _logger.LogError(message, ex.InnerException);
                 throw ex;
             }
@@ -202,7 +208,7 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        public async Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord)
+        public async Task<OTPRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord)
         {
             try
             {
@@ -221,7 +227,7 @@ namespace Mogym.Application.Services
                 /////
                 await _unitOfWork.TrainerProfileRepository.AddAsync(trainerProfile);
 
-                return _mapper.Map<ConfirmSmsRecord>(newTrainer);
+                return _mapper.Map<OTPRecord>(newTrainer);
 
 
             }

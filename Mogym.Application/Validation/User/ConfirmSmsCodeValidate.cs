@@ -9,7 +9,7 @@ using Mogym.Application.Records.User;
 
 namespace Mogym.Application.Validation.User
 {
-    public class ConfirmSmsCodeValidate:AbstractValidator<ConfirmSmsRecord>
+    public class ConfirmSmsCodeValidate:AbstractValidator<OTPRecord>
     {
         private readonly IUserService _userService;
 

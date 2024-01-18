@@ -47,24 +47,24 @@
                 <div class="login-signup-wrap p-5 gray-light-bg rounded shadow">
                     <div class="login-signup-header text-center">
                         <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
-                        <h4 class="mb-5">ورود</h4>
+                        <h4 class="mb-5">ورود با ایمیل</h4>
                     </div>
-                    <form asp-action="LoginMobile" method="post" class="login-signup-form">
+                    <form asp-action="Login" method="post" class="login-signup-form">
                         <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
                         <div class="form-group">
                             <!-- Label -->
                             <label class="pb-1">
-                                موبایل
-                                </label>
+                                آدرس ایمیل
+                            </label>
                             <!-- Input group -->
                             <div class="input-group input-group-merge">
                                 <div class="input-icon">
                                     <span class="ti-email"></span>
                                 </div>
-                                <input asp-for="Mobile" type="number" class="form-control" placeholder="09*********" required maxlength="11">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="name@address.com" required>
                             </div>
                             <div>
-                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                         </div>
 
@@ -92,7 +92,9 @@
                             ورود
                         </button>
                     </form>
-                    <p class="text-center mb-0"><a asp-controller="Account" asp-action="Login">ورود با رمز یک بار مصرف</a></p>
+                    <p class="text-center mb-0"><a asp-controller="Account" asp-action="SignUp">ثبت نام</a></p>
+                    <p class="text-center mb-0"><a asp-controller="Account" asp-action="LoginMobile">ورود با موبایل</a></p>
+
                 </div>
             </div>
         </div>

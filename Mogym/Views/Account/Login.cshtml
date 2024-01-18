@@ -1,4 +1,4 @@
-﻿@model Mogym.Application.Records.User.LoginRecord
+﻿@model Mogym.Application.Records.User.OTPLoginRecord
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,16 +8,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta property="og:title" content="موجیم -  ورود" />
+    <meta property="og:title" content="موجیم - ورود و ثبت نام" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" />
+    <meta property="og:image" content="http://mogym.ir/img/mogym-transparent.png" /> 
     <meta property="og:image:alt" content="موجیم تخصصی ترین مرجع مربیگری بدنسازی آنلاین" />
     <meta property="og:url" content="http://mogym.ir/login" />
     <!--favicon icon-->
     <link rel="icon" href="~/img/favicon.ico" type="image/png" sizes="16x16">
 
     <!--title-->
-    <title>موجیم -  ورود</title>
+    <title>موجیم - ورود و ثبت نام</title>
 
     <!--build:css-->
     <link rel="stylesheet" href="~/mainassets/css/main.css">
@@ -39,70 +39,52 @@
         </div>
     </div>
     <!--preloader end-->
-<section class="page-header-section ptb-100 bg-image full-height" image-overlay="8">
-    <div class="background-image-wraper" style="background: url('~/mainassets/img/cta-bg.jpg'); opacity: 1;"></div>
-    <div class="container">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <div class="login-signup-wrap p-5 gray-light-bg rounded shadow">
-                    <div class="login-signup-header text-center">
-                        <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
-                        <h4 class="mb-5">ورود با ایمیل</h4>
+    <section class="page-header-section ptb-100 bg-image full-height" image-overlay="8">
+        <div class="background-image-wraper" style="background: url('~/mainassets/img/cta-bg.jpg'); opacity: 1;"></div>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="login-signup-wrap p-5 gray-light-bg rounded shadow">
+                        <div class="login-signup-header text-center">
+                            <a asp-action="Index" asp-controller="Home"><img src="~/img/mogym-transparent.png" class="img-fluid mb-3" alt="mogym"></a>
+                            <h4 class="mb-5">ورود یا ثبت نام</h4>
+                        </div>
+                        <form asp-action="Login" method="post" class="login-signup-form">
+                            <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
+                            <div class="form-group">
+                                <!-- Label -->
+                                <label class="pb-1">
+                                    برای ورود یا ثبت نام شماره موبایل خود را وارد کنید                   
+                                </label>
+                                <!-- Input group -->
+                                <div class="input-group input-group-merge">
+                                    <div class="input-icon">
+                                        <span class="ti-mobile"></span>
+                                    </div>
+                                    <input asp-for="Mobile" type="number" class="form-control" placeholder="09*********" required="required">
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="my-4">
+                                <div class=" mb-3">
+                                    <label class="small-text">با ورود به موجیم شما <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a> .سایت را پذیرفته اید</label>
+                                </div>
+                            </div>
+                            <!-- Submit -->
+                            <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
+                                ارسال کد تائید
+                            </button>
+                        </form>
+                        <p class="text-center mb-0"><a asp-controller="Account" asp-action="LoginMobile">ورود با رمز عبور</a></p>
+
                     </div>
-                    <form asp-action="Login" method="post" class="login-signup-form">
-                        <input type="hidden" asp-for="ReturnUrl" id="ReturnUrl" value="@ViewData["returnUrl"]" />
-                        <div class="form-group">
-                            <!-- Label -->
-                            <label class="pb-1">
-                                آدرس ایمیل
-                            </label>
-                            <!-- Input group -->
-                            <div class="input-group input-group-merge">
-                                <div class="input-icon">
-                                    <span class="ti-email"></span>
-                                </div>
-                                <input asp-for="Email" type="email" class="form-control" placeholder="name@address.com" required>
-                            </div>
-                            <div>
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <!-- Password -->
-                        <div class="form-group">
-                            <!-- Label -->
-                            <label class="pb-1">
-                                کلمه عبور
-                            </label>
-                            <!-- Input group -->
-                            <div class="input-group input-group-merge">
-                                <div class="input-icon">
-                                    <span class="ti-lock"></span>
-                                </div>
-                                <input asp-for="Password" type="password" class="form-control" required>
-                            </div>
-                            <div>
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                                    <span class="text-danger">@ViewBag.ErrorMessage</span>
-                            </div>
-                        </div>
-
-                        <!-- Submit -->
-                        <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
-                            ورود
-                        </button>
-                    </form>
-                    <p class="text-center mb-0"><a asp-controller="Account" asp-action="SignUp">ثبت نام</a></p>
-                    <p class="text-center mb-0"><a asp-controller="Account" asp-action="LoginMobile">ورود با موبایل</a></p>
-
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-
-<!--scroll bottom to top button start-->
+    </section>
+    <!--scroll bottom to top button start-->
     <div class="scroll-top scroll-to-target primary-bg text-white" data-target="html">
         <span class="fas fa-hand-point-up"></span>
     </div>

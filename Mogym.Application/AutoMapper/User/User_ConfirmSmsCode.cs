@@ -11,7 +11,7 @@ namespace Mogym.Application.AutoMapper.User
     {
         public User_ConfirmSmsCode()
         {
-            CreateMap<Domain.Entities.User, ConfirmSmsRecord>()
+            CreateMap<Domain.Entities.User, OTPRecord>()
                 .ForMember(x => x.ConfirmCode, frm => frm.MapFrom(z => z.SmsConfirmCode))
                 .ForMember(x => x.Mobile, frm => frm.MapFrom(z => z.Mobile));
         }

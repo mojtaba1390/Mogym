@@ -13,11 +13,11 @@ namespace Mogym.Application.Interfaces
     {
         bool IsExistMobile(string mobile);
         Task AddAsync(LoginRecord loginRecord);
-        Task<ConfirmSmsRecord> LoginAsync(LoginRecord loginRecord);
+        Task<OTPRecord> LoginAsync(OTPLoginRecord otpLoginRecord);
         Task<UserRecord> Login(LoginRecord loginRecord);
         bool IsExistMobileWithConfirmSmsCode(string mobile, string confirmSmsCode);
         Task<UserRecord> GetUserWithRoleAndPermission(string mobile);
-        Task<ConfirmSmsRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
+        Task<OTPRecord> SignUpTrainer(SignUpTrainerRecord signUpTrainerRecord);
         User? GetCurrentUserRols();
         Task<UserRecord> SignUp(SignupRecord signupRecord);
         bool IsThereAnyEmailAddress(string email);

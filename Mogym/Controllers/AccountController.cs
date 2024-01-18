@@ -63,28 +63,28 @@ namespace Mogym.Controllers
             return PartialView();
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Login(LoginRecord loginRecord)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            var confirmSmsCode = await _userService.LoginAsync(loginRecord);
+        [HttpPost]
+        public async Task<IActionResult> Login(OTPLoginRecord otpLoginRecord)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var confirmSmsCode = await _userService.LoginAsync(otpLoginRecord);
 
-        //            ArgumentNullException.ThrowIfNull(confirmSmsCode);
+                    ArgumentNullException.ThrowIfNull(confirmSmsCode);
 
-        //            return RedirectToAction(nameof(confirmSmsCode), new { loginRecord.Mobile,loginRecord.ReturnUrl });
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
-        //    }
+                    return RedirectToAction(nameof(confirmSmsCode), new { otpLoginRecord.Mobile, otpLoginRecord.ReturnUrl });
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+            }
 
 
-        //    return View();
-        //}
+            return View();
+        }
 
 
         [HttpPost]
@@ -95,14 +95,14 @@ namespace Mogym.Controllers
                 if (ModelState.IsValid)
                 {
                     var user = await _userService.LoginMobile(loginRecord);
-                    if (user != null)
+                    if (user is not null)
                     {
                         var claims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                             new Claim(ClaimTypes.Name, user.UserName ??""),
-                            new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                            new Claim(ClaimTypes.Email, user.Email??""),
+                            new Claim(ClaimTypes.GivenName,!string.IsNullOrWhiteSpace(user.FirstName)? (user.FirstName + " "+user.LastName) : ""),
+                            //new Claim(ClaimTypes.Email, user.Email??""),
                             new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
                             new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 
@@ -113,7 +113,7 @@ namespace Mogym.Controllers
                         var peraperties = new AuthenticationProperties()
                         {
                             IsPersistent = true,
-                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                            ExpiresUtc = DateTime.UtcNow.AddDays(1)
 
                         };
 
@@ -144,68 +144,70 @@ namespace Mogym.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginRecord loginRecord, string? returnurl)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = await _userService.Login(loginRecord);
+        //[HttpPost]
+        //public async Task<IActionResult> Login(ConfirmSmsRecord loginRecord, string? returnurl)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = await _userService.Login(loginRecord);
 
-                    if (user != null)
-                    {
-                        var claims = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                            new Claim(ClaimTypes.Name, user.UserName ??""),
-                            new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                            new Claim(ClaimTypes.Email, user.Email),
-                            new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
-                            new Claim(type: "ProfilePic", value: user.ProfilePic??"")
+        //            if (user != null)
+        //            {
+        //                var claims = new List<Claim>()
+        //                {
+        //                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //                    new Claim(ClaimTypes.Name, user.UserName ??""),
+        //                    new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+        //                    new Claim(ClaimTypes.Email, user.Email),
+        //                    new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+        //                    new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 
-                        };
-                        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var principal = new ClaimsPrincipal(identity);
+        //                };
+        //                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //                var principal = new ClaimsPrincipal(identity);
 
-                        var peraperties = new AuthenticationProperties()
-                        {
-                            IsPersistent = true,
-                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+        //                var peraperties = new AuthenticationProperties()
+        //                {
+        //                    IsPersistent = true,
+        //                    ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
 
-                        };
+        //                };
 
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+        //                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
 
-                        if (!string.IsNullOrWhiteSpace(returnurl) && Url.IsLocalUrl(returnurl))
-                            return Redirect(returnurl);
-
-
-                        return RedirectToAction(nameof(Index));
-                    }
+        //                if (!string.IsNullOrWhiteSpace(returnurl) && Url.IsLocalUrl(returnurl))
+        //                    return Redirect(returnurl);
 
 
-                    ViewBag.ErrorMessage = "کاربری با این مشخصات یافت نشد";
-
-                }
-
+        //                return RedirectToAction(nameof(Index));
+        //            }
 
 
+        //            ViewBag.ErrorMessage = "کاربری با این مشخصات یافت نشد";
 
-            }
-            catch (Exception e)
-            {
-                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
-            }
+        //        }
 
 
-            return View();
-        }
 
-        public async Task<IActionResult> ConfirmSmsCode(string mobile,string returnUrl)
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+        //    }
+
+
+        //    return View();
+        //}
+
+        public async Task<IActionResult> ConfirmSmsCode(string mobile,string returnUrl,string errormessage)
         {
             ViewBag.Mobile = mobile;
             ViewData["returnUrl"] = returnUrl;
+            ViewData["ErrorMessage"] = errormessage;
+
             return View();
         }
 
@@ -218,8 +220,9 @@ namespace Mogym.Controllers
         /// <param name="confirmRegisterRecord"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ConfirmSmsCode(ConfirmSmsRecord confirmRegisterRecord, string? returnurl)
+        public async Task<IActionResult> ConfirmSmsCode(OTPRecord confirmRegisterRecord, string? returnurl)
         {
+            string message = string.Empty;
             try
             {
                 if (ModelState.IsValid)
@@ -252,11 +255,13 @@ namespace Mogym.Controllers
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.UserName ??""),
-                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                        new Claim(ClaimTypes.MobilePhone, user.Mobile),
-                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName)
+                        new Claim(ClaimTypes.GivenName,!string.IsNullOrWhiteSpace(user.FirstName)? (user.FirstName + " "+user.LastName) : ""),
+                        //new Claim(ClaimTypes.Email, user.Email??""),
+                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+                        new Claim(type: "ProfilePic", value: user.ProfilePic??"")
 
                     };
+
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 
@@ -274,13 +279,15 @@ namespace Mogym.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
+
+                 message = Helper.GetModelSateErroMessage(ModelState);
             }
             catch (Exception e)
             {
                 ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
             }
 
-            return RedirectToAction(nameof(ConfirmSmsCode),new{ confirmRegisterRecord .Mobile});
+            return RedirectToAction(nameof(ConfirmSmsCode),new{ mobile=confirmRegisterRecord .Mobile,returnurl=string.Empty,errormessage=message});
         }
 
 
@@ -290,7 +297,7 @@ namespace Mogym.Controllers
         {
             await HttpContext.SignOutAsync();
 
-            return View(nameof(Login));
+            return View(nameof(LoginMobile));
         }
 
 
