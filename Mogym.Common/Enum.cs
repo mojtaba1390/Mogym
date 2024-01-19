@@ -27,7 +27,10 @@ namespace Mogym.Common
         NotActive = 2,
         [Description("در انتظار تائید پیامک")]
         [EnumMember]
-        WaitingForSmsConfirm = 3
+        WaitingForSmsConfirm = 3,
+        [Description("قبل از ثبت نام")]
+        [EnumMember]
+        PreRegister = 4
     }
     public enum EnumYesNo
     {

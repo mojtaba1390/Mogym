@@ -53,8 +53,9 @@ namespace Mogym.Controllers
         {
             return View();
         }
-        public async  Task<IActionResult> TrainerPanel()
+        public async  Task<IActionResult> TrainerPanel(string msg)
         {
+            ViewBag.Message = msg;
             return View();
         }
 

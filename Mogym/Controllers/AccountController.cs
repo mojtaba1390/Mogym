@@ -13,6 +13,15 @@ using StackExchange.Redis;
 using System.ComponentModel;
 using Mogym.Common.ModelExtended;
 using Message = Mogym.Common.ModelExtended.Message;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Mogym.Application.Records.Question;
+using SixLabors.ImageSharp;
+using System.Linq;
+using Microsoft.AspNetCore.Hosting.Server;
+using AutoMapper;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using System.Reflection;
 
 namespace Mogym.Controllers
 {
@@ -26,10 +35,12 @@ namespace Mogym.Controllers
         private readonly IHttpContextAccessor _accessor;
         private readonly IEmailSender _emailSender;
         private readonly ISmsService _smsService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
         public AccountController(IUserService userService,
             IMenuService menuService, 
             IRedisCacheService redisCacheService,
-            IConfiguration configuration, IHttpContextAccessor accessor, IEmailSender emailSender, ISmsService smsService)
+            IConfiguration configuration, IHttpContextAccessor accessor, IEmailSender emailSender, ISmsService smsService, IWebHostEnvironment webHostEnvironment)
         {
             _userService = userService;
             _menuService = menuService;
@@ -38,6 +49,7 @@ namespace Mogym.Controllers
             _accessor = accessor;
             _emailSender = emailSender;
             _smsService = smsService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Login()
@@ -320,61 +332,148 @@ namespace Mogym.Controllers
 
 
 
-        public async Task<IActionResult> SignUpTrainer()
+        public async Task<IActionResult> SignUpTrainer(string mobile)
         {
+            ViewBag.Mobile = mobile;
             return View();
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> SignUpTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew)
+        public async Task<IActionResult> SignUpTrainer(Application.Records.Profile.SignUpTrainerRecord signUpTrainerRecord)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var user = await _userService.CreateTrainer(signUpTrainerRecordNew);
+                    string[] permittedExtensions = { ".jpeg", ".jpg", ".png" };
+                    var pics = typeof(Application.Records.Profile.SignUpTrainerRecord).GetProperties()
+                        .Where(x => x.PropertyType == typeof(IFormFile))
+                        .Select(x => (IFormFile)x.GetValue(signUpTrainerRecord))
+                        .ToList();
 
-                    var claims = new List<Claim>()
+                    var picsWithData = pics.Where(z => z != null);
+
+                    foreach (var pic in picsWithData)
                     {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.UserName ??""),
-                        new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
-                        new Claim(type: "ProfilePic", value: user.ProfilePic??"")
+                        var ext = Path.GetExtension(pic.FileName).ToLowerInvariant();
+                        if (string.IsNullOrEmpty(ext) || !permittedExtensions.Contains(ext))
+                        {
+                            ViewData["errormessage"] = "فرمت تصاویر باید از نوع jpeg یا jpg یا png باشد";
+                            return View(signUpTrainerRecord.Mobile);
+                        }
+                    }
 
-                    };
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-
-                    var peraperties = new AuthenticationProperties()
+                    foreach (var item in picsWithData)
                     {
-                        IsPersistent = true
-                    };
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "SignUpTrainer", signUpTrainerRecord.Mobile);
 
-                    var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                        " ثبت نام جدید مربی", signUpTrainerRecordNew.FirstName + " " + signUpTrainerRecordNew.LastName + "-" + signUpTrainerRecordNew.Email + "-" + signUpTrainerRecordNew.Mobile);
-
-                    await _emailSender.SendEmailAsync(message);
+                        bool exists = Directory.Exists(path);
 
 
-                    return RedirectToAction(nameof(Index));
+                        if (!exists)
+                            Directory.CreateDirectory(path);
+
+                        path = path + "\\" + item.FileName;
 
 
+                        if (item.Length < 2097152)
+                        {
+                            using (FileStream stream = new FileStream(path, FileMode.Create))
+                            {
+                                await item.CopyToAsync(stream);
+                                stream.Close();
+                            }
+                        }
+                        else
+                        {
+                            using (FileStream stream = new FileStream(path, FileMode.Create))
+                            {
+                                await item.CopyToAsync(stream);
+                                stream.Close();
+
+                                // Compress the image
+                                using (var image = Image.Load(path))
+                                {
+                                    var encoder = new JpegEncoder { Quality = 50 };
+                                    image.Save(path, encoder);
+                                }
+                            }
+                        }
+
+                    }
+
+                    await _userService.PreRegisterTrainer(signUpTrainerRecord);
+
+                    return View(nameof(ConfirmSignUpTrainer));
                 }
+
+                ViewBag.Mobile = signUpTrainerRecord.Mobile;
+
+                return View();
             }
             catch (Exception e)
             {
                 ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
-                return View("NotFound");
+                      return View("NotFound");
             }
-
-            return View();
-
         }
+
+
+        public async Task<IActionResult> ConfirmSignUpTrainer()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> SignUpTrainer(SignUpTrainerRecordNew signUpTrainerRecordNew)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = await _userService.CreateTrainer(signUpTrainerRecordNew);
+
+        //            var claims = new List<Claim>()
+        //            {
+        //                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+        //                new Claim(ClaimTypes.Name, user.UserName ??""),
+        //                new Claim(ClaimTypes.GivenName, (user.FirstName + " "+user.LastName) ?? ""),
+        //                new Claim(ClaimTypes.Email, user.Email),
+        //                new Claim(ClaimTypes.Role, user.Roles.First().EnglishName),
+        //                new Claim(type: "ProfilePic", value: user.ProfilePic??"")
+
+        //            };
+        //            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //            var principal = new ClaimsPrincipal(identity);
+
+        //            var peraperties = new AuthenticationProperties()
+        //            {
+        //                IsPersistent = true
+        //            };
+
+        //            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, peraperties);
+
+        //            var message = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+        //                " ثبت نام جدید مربی", signUpTrainerRecordNew.FirstName + " " + signUpTrainerRecordNew.LastName + "-" + signUpTrainerRecordNew.Email + "-" + signUpTrainerRecordNew.Mobile);
+
+        //            await _emailSender.SendEmailAsync(message);
+
+
+        //            return RedirectToAction(nameof(Index));
+
+
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+        //        return View("NotFound");
+        //    }
+
+        //    return View();
+
+        //}
 
 
 
@@ -457,6 +556,57 @@ namespace Mogym.Controllers
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendTrainerOtp(OTPLoginRecord otpLoginRecord)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(otpLoginRecord.Mobile))
+                    ArgumentNullException.ThrowIfNull(otpLoginRecord.Mobile);
+
+                var message= await _userService.SendTrainerOtp(otpLoginRecord);
+                if (!string.IsNullOrWhiteSpace(message))
+                    return RedirectToAction("TrainerPanel", "Home", new {msg = message});
+
+                return RedirectToAction(nameof(ConfirmTrainerSmsCode), new {mobile = otpLoginRecord.Mobile});
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<IActionResult> ConfirmTrainerSmsCode(string mobile, string errormessage)
+        {
+            ViewBag.Mobile = mobile;
+            ViewData["ErrorMessage"] = errormessage;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmTrainerSmsCode(OTPRecord confirmRegisterRecord)
+        {
+            string message = string.Empty;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return RedirectToAction(nameof(SignUpTrainer), new {mobile = confirmRegisterRecord.Mobile});
+                }
+
+                message = Helper.GetModelSateErroMessage(ModelState);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+            }
+
+            return RedirectToAction(nameof(ConfirmTrainerSmsCode), new { mobile = confirmRegisterRecord.Mobile,  errormessage = message });
         }
 
 

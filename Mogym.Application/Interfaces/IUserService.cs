@@ -27,5 +27,7 @@ namespace Mogym.Application.Interfaces
         Task<UserRecord> LoginMobile(LoginRecord loginRecord);
         Task<int> GetTrainerCountForIndexPage();
         Task<int> GetUserCountForIndexPage();
+        Task<string> SendTrainerOtp(OTPLoginRecord otpLoginRecord);
+        Task PreRegisterTrainer(Records.Profile.SignUpTrainerRecord signUpTrainerRecord);
     }
 }

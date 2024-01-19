@@ -1,4 +1,6 @@
-﻿@using Mogym.Application.Interfaces
+﻿@model Mogym.Application.Records.User.OTPLoginRecord
+
+@using Mogym.Application.Interfaces
 @inject IUserService _userService;
 @inject IPlanService _planService;
 @{
@@ -101,9 +103,14 @@
                     <div class="col-md-6 col-lg-4">
                         <div class="discount-banner bg-white  text-center">
                             <p class="lead">ﺑﻪ ﺟﻤﻊ ﺑﺮﺗﺮﯾﻦ مربیان موجیم ﺑﭙﯿﻮﻧﺪﯾﺪ.</p>
-                            <form action="#" method="post" class="subscribe-form subscribe-form-footer">
+                            <form asp-controller="Account" asp-action="SendTrainerOtp" method="post" class="subscribe-form subscribe-form-footer">
                                 <div class="d-flex align-items-center">
-                                    <input type="number" class="form-control input" id="mobile" name="mobile" placeholder="شماره همراه خود را وارد کنید" requied>
+                                    <input type="number" class="form-control input" id="mobile" asp-for="Mobile" placeholder="شماره همراه خود را وارد کنید" requied>
+                                </div>
+                                <div>
+                                    <span asp-validation-for="Mobile" class="text-danger"></span>
+                                    <span class="text-danger">@ViewBag.Message</span>
+
                                 </div>
                                 <button class="btn btn-block btn-brand-02 border-radius mt-4 mb-3">
                                     ارسال کد تائید
@@ -290,10 +297,10 @@
                                 </div>
                             </div>
                             <div class="card mt-3">
-                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse3" aria-expanded="false">
+                                <a class="card-header collapsed" data-toggle="collapse" href="#collapse4" aria-expanded="false">
                                     <h6 class="mb-0 d-inline-block">برای شاگرد حضوری باشگاه هم می تونم آنلاین برنامه بنویسم؟</h6>
                                 </a>
-                                <div id="collapse3" class="collapse " data-parent="#accordion" style="">
+                                <div id="collapse4" class="collapse " data-parent="#accordion" style="">
                                     <div class="card-body white-bg">
                                         <p>بله شما تو موجیم این امکان رو دارین که برای شاگردان حضوری در باشگاه هم آنلاین برنامه نویسی کنین.</p>
                                     </div>

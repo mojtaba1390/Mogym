@@ -10,6 +10,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Profile;
 using Mogym.Application.Records.Question;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -156,7 +157,7 @@ namespace Mogym.Application.Services
         public async Task<List<TrainersRecord>> GetAllTrainers()
         {
             var trainers = await  _unitOfWork.TrainerProfileRepository
-                .GetAll()
+                .Where(x=>x.User.Status==EnumStatus.Active)
                 .Include(x=>x.User)
                 .OrderByDescending(x => x.Id)
                 .ToListAsync() ;

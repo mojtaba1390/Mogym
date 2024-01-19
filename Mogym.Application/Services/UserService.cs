@@ -371,6 +371,77 @@ namespace Mogym.Application.Services
                 .CountAsync();
         }
 
+        public async Task<string> SendTrainerOtp(OTPLoginRecord otpLoginRecord)
+        {
+            try
+            {
+                var userWithThisMobile = await _unitOfWork.UserRepository.Where(x => x.Mobile == otpLoginRecord.Mobile.Trim())
+                    .FirstOrDefaultAsync();
+                if (userWithThisMobile == null)
+                {
+                    var newUser = _mapper.Map<User>(otpLoginRecord);
+
+                    var userRoleRecord = _mapper.Map<CreateTrainerUserRoleRecord>(newUser);
+                    var userRole = _mapper.Map<UserRole>(userRoleRecord);
+
+                    newUser.UserRoles.Add(userRole);
+                    await _unitOfWork.UserRepository.AddAsync(newUser);
+
+                    await _smsService.SendOTP(newUser.Mobile, newUser.SmsConfirmCode);
+                }
+                else if (userWithThisMobile.Status == EnumStatus.Active)
+                {
+                    return "این شماره قبلا در سیستم ثبت شده است";
+                }
+                else if (userWithThisMobile.Status == EnumStatus.NotActive)
+                {
+                    return null;
+                }
+                else if (userWithThisMobile.Status == EnumStatus.PreRegister)
+                {
+                    return "مدارک شماره وارد شده در دست بررسی می باشد";
+                }
+                else if (userWithThisMobile.Status == EnumStatus.WaitingForSmsConfirm)
+                {
+                    userWithThisMobile.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                    _unitOfWork.UserRepository.Update(userWithThisMobile);
+                    await _smsService.SendOTP(otpLoginRecord.Mobile, userWithThisMobile.SmsConfirmCode);
+                }
+
+
+
+                return null;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            
+        }
+
+        public async Task PreRegisterTrainer(Records.Profile.SignUpTrainerRecord signUpTrainerRecord)
+        {
+            try
+            {
+                var user = await _unitOfWork.UserRepository.Where(x => x.Mobile == signUpTrainerRecord.Mobile)
+                    .Include(x => x.TrainerProfile)
+                    .FirstOrDefaultAsync();
+
+                var updatedUser = _mapper.Map(signUpTrainerRecord, user);
+                await _unitOfWork.UserRepository.UpdateAsync(updatedUser);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         public async Task ChangePassword(string password)
         {
             try

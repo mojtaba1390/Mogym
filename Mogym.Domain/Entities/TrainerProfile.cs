@@ -20,7 +20,14 @@ namespace Mogym.Domain.Entities
         public string? CartNumber { get; set; }
         public string? CartOwnerName { get; set; }
 
-
+        public string? NationalCartPic { get; set; }
+        public string? TrainingCertificatePic { get; set; }
+        public string? WorkingCertificatePic { get; set; }
+        public string? ChampCertificatePic1 { get; set; }
+        public string? ChampCertificatePic2 { get; set; }
+        public string? ChampCertificatePic3 { get; set; }
+        public string? GraduationCertificatePic { get; set; }
+        public string? StudingCertificatePic { get; set; }
 
 
         public int UserId { get; set; } 
