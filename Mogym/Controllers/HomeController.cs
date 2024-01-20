@@ -4,6 +4,8 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using MailKit.Search;
+using Mogym.Application.Records.Profile;
 
 namespace Mogym.Controllers
 {
@@ -35,9 +37,11 @@ namespace Mogym.Controllers
         }
 
         [DisplayName("مربیان")]
-        public async Task<IActionResult> Trainers()
+        public async Task<IActionResult> Trainers(int? page,string search,string sort)
         {
-            var trainers = await _trainerProfileService.GetAllTrainers();
+            ViewBag.Sort = sort;
+
+            var trainers = await _trainerProfileService.GetAllTrainers(page,search,sort);
 
 
             return View(trainers);
@@ -59,7 +63,39 @@ namespace Mogym.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Search(string searchText)
+        {
+            try
+            {
+                ViewBag.SearchText = searchText;
+                var lstTrainers = await _trainerProfileService.Search(searchText);
+                return View("Trainers", lstTrainers);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
 
+
+        public async Task<IActionResult> Sort(string by)
+        {
+            Tuple<int, int, List<TrainersRecord>> model=new Tuple<int, int, List<TrainersRecord>>(0,0,new List<TrainersRecord>());
+            ViewBag.Sort = by;
+            if (by == "newest")
+                model = await _trainerProfileService.SortByNewest();
+            else if (by == "sentPlan")
+                model = await _trainerProfileService.SortBySentPlan();
+
+            return View("Trainers", model);
+        }
+        public async Task<IActionResult> SortBySentPlan()
+        {
+            ViewBag.Sort = "sentPlan" ;
+            var lstTrainers = await _trainerProfileService.SortBySentPlan();
+            return View("Trainers", lstTrainers);
+        }
 
     }
 }

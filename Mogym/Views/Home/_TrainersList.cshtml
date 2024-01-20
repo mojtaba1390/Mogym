@@ -1,0 +1,79 @@
+﻿@model List<Mogym.Application.Records.Profile.TrainersRecord>
+
+
+
+    @{
+        if (Model.Any())
+        {
+            foreach (var trainer in Model)
+            {
+                <article class="post">
+
+                    <div class="post-preview">
+                        @if (!string.IsNullOrWhiteSpace(trainer.ProfilePic))
+                        {
+                            <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" style="width: 40% !important" class="img-fluid m-auto pb-4">
+
+                        }
+                        else
+                        {
+                            <img src="/img/avatar5.png" alt="@trainer.FullName" style="width: 40% !important" class="img-fluid m-auto pb-4">
+
+                        }
+
+                    </div>
+                    <div class="post-wrapper">
+                        <div class="post-header">
+                            <h2 class="post-title m-2">
+                                @trainer.FullName
+                            </h2>
+                            <ul class="post-meta">
+                                <li>تعداد برنامه ارسالی:@trainer.SentPlanCount</li>
+                                @*<li>تعداد نظرات:@trainer.CommentCount</li>
+                                <li>امتیاز کاربران:@trainer.Score</li>*@
+                            </ul>
+                        </div>
+                        <div class="post-content">
+                            <ul class="check-list-wrap pt-3">
+                            
+                                @{
+                                    if (trainer.TrainerAchievementRecords.Any())
+                                    {
+                                        foreach (var achivement in trainer.TrainerAchievementRecords)
+                                        {
+                                            <li>
+                                                <strong>
+                                                    @achivement.Title
+                                                </strong>
+                                            </li>
+                                        }
+
+                                    }
+                                }
+
+
+                            </ul>
+
+
+                        </div>
+                        <div class="post-more pt-4 align-items-center d-flex">
+                            <a asp-controller="Profile" asp-action="Index" asp-route-username="@trainer.UserName" class="btn btn-brand-02 mr-3">
+                                جزئیات
+                                <span class="ti-arrow-left"></span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            }
+
+        }
+        else
+        {
+            <h2 class="post-title m-2">
+                مربی یافت نشد
+            </h2>
+        }
+    }
+
+
+

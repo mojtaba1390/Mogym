@@ -1,16 +1,5 @@
-﻿@using Mogym.Application.Records.Profile
-@model Tuple<int, int, List<Mogym.Application.Records.Profile.TrainersRecord>>
+﻿@model List<Mogym.Application.Records.Profile.TrainersRecord>
 
-
-@{
-    var search = (string)ViewBag.SearchText;
-    var sort = (string)ViewBag.Sort;
-
-    int totalCount = Model.Item1;
-    int currentPage = Model.Item2;
-    List<TrainersRecord> records = Model.Item3;
-
-}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,7 +55,7 @@
                     <ul class="navbar-nav ml-auto menu">
                         <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
-                        <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">پنل مربی</a></li>
+                        <li><a asp-controller="Account" asp-action="LoginMobile" class="page-scroll">پنل مربی</a></li>
                         <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
                         <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
@@ -94,121 +83,46 @@
             </div>
         </div>
 
-        <div class="module ptb-100">
+        <section class="team-two-section ptb-100 ">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 col-md-4">
-                        <div class="sidebar-left pr-4">
+                    @{
+                        foreach (var trainer in Model)
+                        {
+                            <div class="col-md-6 col-lg-3">
+                                <div class="single-team-wrap bg-white text-center border rounded p-4 my-3">
+                                    @if (!string.IsNullOrWhiteSpace(trainer.ProfilePic))
+                                    {
+                                        <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" style="width: 120px;height: 144px" class="img-fluid m-auto pb-4">
 
-                            <!-- Search widget-->
-                            <aside class="widget widget-search">
-                                <form asp-controller="Home" asp-action="Search" method="get">
-                                    <input class="form-control"
-                                           type="search"
-                                           name="searchText"
-                                           placeholder="نام یا نام خانوادگی مربی را تایپ کنید"
-                                           value="@(!string.IsNullOrWhiteSpace(search)?search:String.Empty)">
-                                    <button class="search-button" type="submit"><span class="ti-search"></span></button>
-                                </form>
-                            </aside>
-
-
-                            <!-- Tags widget-->
-                            <aside class="widget widget-tag-cloud">
-                                <div class="widget-title">
-                                    <h6>مرتب شده بر اساس</h6>
-                                </div>
-                                <div class="tag-cloud">
-                                    <a  asp-controller="Home"
-                                        asp-action="Trainers"
-                                        asp-route-page="1"
-                                        asp-route-search="@search"
-                                        asp-route-sort="newest">جدیدترین</a>
-                                    <a asp-action="Trainers"
-                                       asp-route-page="1"
-                                       asp-route-search="@search"
-                                       asp-route-sort="sentPlan">برنامه ارسالی</a>
-                                    @*                                     <a href="#">متن ساختگی </a>
-                                    <a href="#">خود راه انداز </a>
-                                    <a href="#">کسب و کار </a>
-                                    <a href="#">شرکت های بزرگ</a> *@
-                                </div>
-                            </aside>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8 col-md-8">
-
-                        @{
-                            if (!string.IsNullOrWhiteSpace(sort))
-                            {
-                                var text = " مرتب سازی بر اساس ";
-
-                                if (sort == "newest")
-                                    text = text + "جدیدترین";
-                                if (sort == "sentPlan")
-                                    text = text + "برنامه ارسالی";
-
-                                <h5> @text</h5>
-
-                            }
-                        }
-
-
-
-
-                        @{
-                            await Html.RenderPartialAsync("_TrainersList", records);
-                        }
-                    </div>
-                    <!-- Post-->
-                    <!-- Post end-->
-                    <!-- Page Navigation-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <nav class="custom-pagination-nav">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-                                    @{
-                                        var step = totalCount / 10;
-                                        var remain = totalCount % 10;
-                                        if (remain > 0)
-                                            step = step + 1;
-                                        for (int i = 1; i <= step; i++)
-                                        {
-                                            if (currentPage == i)
-                                            {
-                                                <li class="page-item active"><a 
-                                                                                 class="page-link"
-                                                                                 asp-controller="Home"
-                                                                                 asp-action="Trainers"
-                                                                                 asp-route-page="@i"
-                                                                                 asp-route-search="@search"
-                                                                                 asp-route-sort="@sort">@i</a></li>
-                                            }
-                                            else
-                                            {
-                                                <li class="page-item"><a 
-                                                                          class="page-link" 
-                                                                          asp-controller="Home" 
-                                                                          asp-action="Trainers" 
-                                                                          asp-route-page="@i"
-                                                                          asp-route-search="@search"
-                                                                          asp-route-sort="@sort">@i</a></li>
-                                            }
-
-
-                                        }
                                     }
-                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-left"></span></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    <!-- Page Navigation end-->
+                                    else
+                                    {
+                                        <img src="/img/avatar5.png" alt="@trainer.FullName" style="width: 120px;height: 144px" class="img-fluid m-auto pb-4">
+
+                                    }
+
+                                    <div class="team-content">
+                                        <h5 class="mb-0">@trainer.FullName</h5>
+                                        <span></span>
+                                        <p class="mt-3"></p>
+                                        <div class="action-btns mt-3">
+                                            <a asp-controller="Profile" asp-action="Index" asp-route-username="@trainer.UserName" class="btn btn-brand-02 mr-3">جزئیات</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    }
+
+
+
+
+
                 </div>
             </div>
-        </div>
+        </section>
 
 
     </div>
@@ -219,11 +133,10 @@
                 <div class="col-md-12 col-lg-4 mb-4 mb-md-4 mb-sm-4 mb-lg-0">
                     <a href="#" class="navbar-brand mb-2">
                         <img src="~/img/mogym-logo.png" class="img-fluid mb-3" alt="mogym">
-                    </a>
+                        </a>
                     <br>
                     <p>موجیم پلتفرم تخصصی تناسب اندام آنلاین می باشد. ما در این پلتفرم سعی کرده ایم امکاناتی را برای راحتی ارتباط مربیان با ورزشکاران عزیز فراهم کنیم تا به صورت آنلاین بتوانند به هدف خود برسند.به خود افتخار می کنیم که بهرین ها مرا انتخاب می کنند.</p>
                     <div class="list-inline social-list-default background-color social-hover-2 mt-2">
-                        <li class="list-inline-item"><a class="instagram" href="https://instagram.com/mogym_ir"><i class="fab fa-instagram"></i></a></li>
                         <li class="list-inline-item"><a class="twitter" href="https://t.me/mogym"><i class="fab fa-telegram"></i></a></li>
                     </div>
                 </div>

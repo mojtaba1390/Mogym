@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using MailKit.Search;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
@@ -22,7 +23,7 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
-
+        private static int takeCount = 10;
         public TrainerProfileService(IUnitOfWork unitOfWork, IMapper mapper, ISeriLogService logger,IHttpContextAccessor accessor)
         {
             _unitOfWork = unitOfWork;
@@ -154,15 +155,35 @@ namespace Mogym.Application.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<List<TrainersRecord>> GetAllTrainers()
+        public async Task<Tuple<int, int, List<TrainersRecord>>> GetAllTrainers(int? page, string search, string sort)
         {
-            var trainers = await  _unitOfWork.TrainerProfileRepository
-                .Where(x=>x.User.Status==EnumStatus.Active)
-                .Include(x=>x.User)
-                .OrderByDescending(x => x.Id)
-                .ToListAsync() ;
+            var trainers =  _unitOfWork.TrainerProfileRepository
+                .Where(x => x.User.Status == EnumStatus.Active)
+                .Include(x => x.User)
+                .Include(x => x.TrainerAchievements)
+                .Include(x => x.Plans).AsQueryable();
 
-            return _mapper.Map<List<TrainersRecord>>(trainers);
+
+            if (page is null)
+                page = 1;
+
+            if (!string.IsNullOrWhiteSpace(search))
+                trainers=trainers.Where(x=>x.User.FirstName.Contains(search) || x.User.LastName.Contains(search));
+
+            if (!string.IsNullOrWhiteSpace(sort))
+            {
+                if (sort=="newest")
+                    trainers = trainers.OrderByDescending(x => x.Id);
+                else if (sort == "sentPlan")
+                    trainers = trainers.OrderByDescending(x => x.Plans.Count(z => z.PlanStatus == EnumPlanStatus.Sent));
+            }
+
+            var takeTrainers =await trainers.Skip((page.Value - 1) * takeCount).Take(takeCount).ToListAsync();
+
+
+            var getTrainers= _mapper.Map<List<TrainersRecord>>(takeTrainers);
+
+            return new Tuple<int, int, List<TrainersRecord>>(trainers.ToList().Count, page.Value, getTrainers);
         }
 
         public async Task<ConfirmAnswerQuestionRecord> GetConfirmAnswerQuestion(int trainerId,int trainerPlanId)
@@ -189,6 +210,67 @@ namespace Mogym.Application.Services
         public async Task<int> GetAllTrainersCount()
         {
             return await _unitOfWork.TrainerProfileRepository.GetAll().CountAsync();
+        }
+
+        public async Task<Tuple<int, int, List<TrainersRecord>>> Search(string searchText)
+        {
+            try
+            {
+                var trainers = await _unitOfWork.TrainerProfileRepository
+                    .Where(x => x.User.Status == EnumStatus.Active && 
+                                (x.User.FirstName.Contains(searchText) || x.User.LastName.Contains(searchText)))
+                    .Include(x => x.User)
+                    .Include(x => x.TrainerAchievements)
+                    .Include(x => x.Plans)
+                    .ToListAsync();
+
+                var getFirstTake = trainers.Take(takeCount);
+
+                var getTrainers = _mapper.Map<List<TrainersRecord>>(getFirstTake);
+
+                return new Tuple<int, int, List<TrainersRecord>>(trainers.Count, 1, getTrainers);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
+
+        public async Task<Tuple<int, int, List<TrainersRecord>>> SortByNewest()
+        {
+            var trainers = await _unitOfWork.TrainerProfileRepository
+                .Where(x => x.User.Status == EnumStatus.Active)
+                .Include(x => x.User)
+                .Include(x => x.TrainerAchievements)
+                .Include(x => x.Plans)
+                .OrderByDescending(x => x.Id)
+                .ToListAsync();
+
+            var getFirstTake = trainers.Take(takeCount);
+
+            var getTrainers = _mapper.Map<List<TrainersRecord>>(getFirstTake);
+
+            return new Tuple<int, int, List<TrainersRecord>>(trainers.Count, 1, getTrainers);
+        }
+
+        public async Task<Tuple<int, int, List<TrainersRecord>>> SortBySentPlan()
+        {
+            var trainers = await _unitOfWork.TrainerProfileRepository
+                .Where(x => x.User.Status == EnumStatus.Active)
+                .Include(x => x.User)
+                .Include(x => x.TrainerAchievements)
+                .Include(x => x.Plans)
+                .OrderByDescending(x => x.Plans.Count(z=>z.PlanStatus==EnumPlanStatus.Sent))
+                .ToListAsync();
+
+            var getFirstTake = trainers.Take(takeCount);
+
+            var getTrainers = _mapper.Map<List<TrainersRecord>>(getFirstTake);
+
+            return new Tuple<int, int, List<TrainersRecord>>(trainers.Count, 1, getTrainers);
         }
     }
 }

@@ -20,9 +20,12 @@ namespace Mogym.Application.Interfaces
         Task<TrainerProfileRecord?> GetById(int trainerId);
         Task<CreateQuestionRecord?> GetTrainerForCreateQuestion(int trainerId);
         Task<TrainerProfile?> GetCurrentUserTrainer();
-        Task<List<TrainersRecord>> GetAllTrainers();
+        Task<Tuple<int,int,List<TrainersRecord>>> GetAllTrainers(int? page, string search, string sort);
         Task<ConfirmAnswerQuestionRecord> GetConfirmAnswerQuestion(int trainerId,int trainerPlanId);
         Task<List<LastTrainersForHomePageRecord>> GetLastTrainersForHomepage();
         Task<int> GetAllTrainersCount();
+        Task<Tuple<int, int, List<TrainersRecord>>> Search(string searchText);
+        Task<Tuple<int, int, List<TrainersRecord>>> SortByNewest();
+        Task<Tuple<int, int, List<TrainersRecord>>> SortBySentPlan();
     }
 }

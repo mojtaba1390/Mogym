@@ -13,6 +13,7 @@ using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using Microsoft.Identity.Client;
 
 namespace Mogym.Controllers
 {
@@ -142,6 +143,7 @@ namespace Mogym.Controllers
             var trainerUserName =_accessor.HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? "";
             return RedirectToAction("Index", new {username = trainerUserName});
         }
+
 
 
     }
