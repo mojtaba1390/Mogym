@@ -31,7 +31,7 @@ namespace Mogym.Application.Services
             _accessor = accessor;
         }
 
-        public async Task<TrainerProfileRecord?> GetByUserName(string username)
+        public async Task<TrainerProfileDetailRecord?> GetByUserName(string username)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Mogym.Application.Services
                     .Include(x=>x.TrainerPlanCosts)
                     .FirstOrDefaultAsync();
                 if(trainer is not null)
-                    return _mapper.Map<TrainerProfileRecord?>(trainer);
+                    return _mapper.Map<TrainerProfileDetailRecord?>(trainer);
 
             }
             catch (Exception ex)

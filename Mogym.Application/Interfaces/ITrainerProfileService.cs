@@ -11,7 +11,7 @@ namespace Mogym.Application.Interfaces
 {
     public interface ITrainerProfileService
     {
-        Task<TrainerProfileRecord?> GetByUserName(string username);
+        Task<TrainerProfileDetailRecord?> GetByUserName(string username);
         Task<CreateTrainerProfileRecord> GetByUserId(int userId);
 
 		void Update(CreateTrainerProfileRecord trainerInfo);

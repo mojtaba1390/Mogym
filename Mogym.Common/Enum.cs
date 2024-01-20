@@ -44,13 +44,13 @@ namespace Mogym.Common
     public enum EnumTrainerPlan
     {
         [EnumMember]
-        [Description("برنامه حرکات تمرینی")]
+        [Description("برنامه حرکات تمرینی آنلاین")]
         Workout = 1,
         [EnumMember]
-        [Description("برنامه رژیم غذایی")]
+        [Description("برنامه رژیم غذایی آنلاین")]
         Diet = 2,
         [EnumMember]
-        [Description("برنامه حرکات تمرینی و رژیم غذایی")]
+        [Description("برنامه حرکات تمرینی و رژیم غذایی آنلاین")]
         WorkoutAndDiet = 3,
         [EnumMember]
         [Description("برنامه حرکات تمرینی حضوری")]

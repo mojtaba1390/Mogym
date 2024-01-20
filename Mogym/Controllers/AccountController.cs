@@ -405,6 +405,16 @@ namespace Mogym.Controllers
 
                     await _userService.PreRegisterTrainer(signUpTrainerRecord);
 
+                    var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                        $"بارگزاری مدرک جدید مربی",
+                        $"{signUpTrainerRecord.Mobile}");
+
+
+                    await _emailSender.SendEmailAsync(email);
+
+
+                    await _smsService.SendSms(signUpTrainerRecord.Mobile, "مدارک شما با موفقیت ثبت شد. نتیجه از طریق پیامک اطلاع رسانی خواهد شد");
+
                     return View(nameof(ConfirmSignUpTrainer));
                 }
 
