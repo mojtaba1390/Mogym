@@ -47,6 +47,8 @@ namespace Mogym.Domain.Entities
 
         public string Code { get; set; }
 
+        public EnumPlanTarget Target { get; set; }
+
 
 
         public ICollection<Plan> Plans { get; set; }

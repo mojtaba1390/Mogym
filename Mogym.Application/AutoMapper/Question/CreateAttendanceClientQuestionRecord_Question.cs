@@ -16,6 +16,8 @@ namespace Mogym.Application.AutoMapper.Question
                 .ForMember(x=>x.RowVersion,z=>z.Ignore())
                 .ForMember(x=>x.InsertDate,z=>z.Ignore())
                 .ForMember(x => x.Gender, z => z.MapFrom(a => (EnumGender)a.Gender))
+                .ForMember(x => x.Target, z => z.MapFrom(a => (EnumPlanTarget)a.Target))
+
                 .ForMember(x => x.DailyAvtivity,
                     z => z.MapFrom(a => a.DailyAvtivity != null ? (EnumDailyAvtivity)a.DailyAvtivity : 0))
                 .ForMember(x => x.NightWork, z => z.MapFrom(a => a.NightWork != null ? (EnumYesNo)a.NightWork : 0))

@@ -47,5 +47,7 @@ namespace Mogym.Application.Records.Question
 
         public string? TrainerFullName { get; init; }
         public int TrainerId { get; init; }
+
+        public int Target { get; init; }
     }
 }

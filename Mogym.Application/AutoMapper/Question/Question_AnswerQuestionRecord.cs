@@ -29,7 +29,9 @@ namespace Mogym.Application.AutoMapper.Question
                     z => z.MapFrom(a => a.Smoke != 0 ? a.Smoke.GetEnumDescription() : string.Empty))
                 .ForMember(x => x.SessionsInWeek,
                     z => z.MapFrom(a =>
-                        a.SessionsInWeek != 0 ? a.SessionsInWeek.GetEnumDescription() : string.Empty));
+                        a.SessionsInWeek != 0 ? a.SessionsInWeek.GetEnumDescription() : string.Empty))
+                .ForMember(x => x.Target,
+                    z => z.MapFrom(a => a.Target != 0 ? a.Target.GetEnumDescription() : String.Empty));
         }
     }
 }

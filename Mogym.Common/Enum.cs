@@ -160,6 +160,18 @@ namespace Mogym.Common
         [Description("خوانده نشده")]
         NotRead = 4
     }
+    public enum EnumPlanTarget
+    {
+        [EnumMember]
+        [Description("کاهش وزن")]
+        LoseWeight = 1,
+        [EnumMember]
+        [Description("افزایش وزن")]
+        IncreaseWeight = 2,
+        [EnumMember]
+        [Description("تناسب اندام")]
+        Fitness = 3
+    }
     public enum EnumApiType
     {
         [EnumMember]

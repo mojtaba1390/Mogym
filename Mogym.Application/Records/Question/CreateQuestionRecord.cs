@@ -50,5 +50,7 @@ namespace Mogym.Application.Records.Question
         public int QuestionId { get; init; }
         public int PlanId { get; init; }
         public string Code { get; init; }
+
+        public int Target { get; set; }
     }
 }

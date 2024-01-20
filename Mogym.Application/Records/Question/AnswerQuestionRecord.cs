@@ -40,5 +40,8 @@ namespace Mogym.Application.Records.Question
 
         public string TrainerPlan { get; set; }
         public string Mobile { get; set; }
+
+        public string? Target { get; init; }
+
     }
 }

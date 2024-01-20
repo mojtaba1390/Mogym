@@ -43,6 +43,8 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.RightPic).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
             builder.Property(x => x.TrainerPlan).HasColumnType("int");
             builder.Property(x => x.Code).HasColumnType("char(5)").IsFixedLength().IsRequired(false);
+            builder.Property(x => x.Target).HasColumnType("int");
+
 
         }
     }

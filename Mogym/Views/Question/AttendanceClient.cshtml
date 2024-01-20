@@ -40,6 +40,17 @@
             }
         </select>
     </div>
+    <div class="form-group col-md-4">
+        <label class="pt-1" for="Gender">هدف</label><span style="color: red">*</span>
+        <select class="js-example-disabled-results form-control" asp-for="Target">
+            <option value="@null">هدف را انتخاب کنید</option>
+            @foreach (EnumPlanTarget itm in Enum.GetValues(typeof(EnumPlanTarget)))
+            {
+                <option value="@((int) itm)">@itm.GetEnumDescription()</option>
+            }
+        </select>
+        <span class="text-danger"></span>
+    </div>
 </fieldset>
 
 
@@ -315,6 +326,9 @@
                     maxlength: 11,
                     minlength: 11
 
+                },
+                Target: {
+                    required: true
                 }
             },
             messages: {
@@ -356,6 +370,9 @@
                 Mobile: {
                     required: "پر کردن شماره موبایل الزامی است",
                     maxlength: "شماره موبایل باید ۱۱ کاراکتر باشد."
+                },
+                Target: {
+                    required: "هدف را مشخص کنید"
                 }
 
             }

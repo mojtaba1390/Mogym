@@ -13,7 +13,12 @@
                     <fieldset class="row p-3 mb-5">
                         <legend class="float-none w-auto"> نوع برنامه </legend>
                         <div class="form-group col-md-4">
-                            <input class="form-control" asp-for="TrainerPlan" readonly />
+                            <label class="pt-1" for="TrainerPlan">برنامه</label>
+                            <input class="form-control" asp-for="TrainerPlan" readonly/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="pt-1" for="Target">هدف</label>
+                            <input class="form-control" asp-for="Target" readonly/>
                         </div>
                     </fieldset>
 
@@ -28,11 +33,11 @@
                             <label class="pt-1" for="LastName">نام خانوادگی</label>
                             <input class="form-control" asp-for="LastName" readonly />
                         </div>
-                        <div class="form-group col-md-4">
+@*                         <div class="form-group col-md-4">
                             <label class="pt-1" for="LastName">موبایل</label>
                             <input class="form-control" asp-for="Mobile" readonly />
                             <span class="text-danger"></span>
-                        </div>
+                        </div> *@
 
                         <div class="form-group col-md-4">
                             <label class="pt-1" for="Gender">جنسیت</label>
