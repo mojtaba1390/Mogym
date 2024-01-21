@@ -18,7 +18,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.TrainerId).HasColumnType("int").IsRequired(false);
             builder.Property(x => x.UserId).HasColumnType("int").IsRequired(false);
             builder.Property(x => x.ParentId).HasColumnType("int").IsRequired(false);
-            builder.Property(x => x.CommentText).HasColumnType("nvarchar(500)").IsRequired(false);
+            builder.Property(x => x.Review).HasColumnType("nvarchar(500)").IsRequired(false);
             builder.Property(x => x.Rate).HasColumnType("int").IsRequired(false);
 
 

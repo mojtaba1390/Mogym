@@ -29,6 +29,8 @@ namespace Mogym.Domain.Entities
         public string? ChampCertificatePic3 { get; set; }
         public string? GraduationCertificatePic { get; set; }
         public string? StudingCertificatePic { get; set; }
+        public int? SignupRate { get; set; }
+        public float? AvgUserRate { get; set; }
 
 
         public int UserId { get; set; } 

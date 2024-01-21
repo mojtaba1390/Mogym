@@ -25,6 +25,8 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.ChampCertificatePic3).HasColumnType("nvarchar(200)").IsRequired(false);
             builder.Property(x => x.GraduationCertificatePic).HasColumnType("nvarchar(200)").IsRequired(false);
             builder.Property(x => x.StudingCertificatePic).HasColumnType("nvarchar(200)").IsRequired(false);
+            builder.Property(x => x.SignupRate).HasColumnType("int").IsRequired(false);
+            builder.Property(x => x.AvgUserRate).HasColumnType("float").IsRequired(false);
 
 
 

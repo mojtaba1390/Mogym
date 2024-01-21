@@ -16,7 +16,7 @@ namespace Mogym.Domain.Entities
         public int? TrainerId { get; set; }
         public int? UserId { get; set; }
         public int? ParentId { get; set; }
-        public string? CommentText { get; set; }
+        public string? Review { get; set; }
         public int? Rate { get; set; }
 
 
