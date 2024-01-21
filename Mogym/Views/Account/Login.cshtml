@@ -65,11 +65,12 @@
                                 </div>
                                 <div>
                                     <span asp-validation-for="Mobile" class="text-danger"></span>
+                                    <span  class="text-danger">@ViewBag.ErrorMessage</span>
                                 </div>
                             </div>
                             <div class="my-4">
                                 <div class=" mb-3">
-                                    <label class="small-text">با ورود به موجیم شما <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a> .سایت را پذیرفته اید</label>
+                                    <label class="small-text">با ورود به موجیم شما <a asp-controller="Home" asp-action="Terms">قوانین و مقررات</a> سایت را پذیرفته اید.</label>
                                 </div>
                             </div>
                             <!-- Submit -->

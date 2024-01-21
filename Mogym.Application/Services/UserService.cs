@@ -87,13 +87,19 @@ namespace Mogym.Application.Services
                 var entity = await _unitOfWork.UserRepository.Find(x => x.Mobile.Trim() == otpLoginRecord.Mobile.Trim()).FirstOrDefaultAsync();
                 if (entity != null)
                 {
-                    entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
-                    _unitOfWork.UserRepository.Update(entity);
+                    if (entity.Status == EnumStatus.Active)
+                    {
+                        entity.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+                        _unitOfWork.UserRepository.Update(entity);
 
-                    //await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
+                        //await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
 
-                    await _smsService.SendOTP(otpLoginRecord.Mobile, entity.SmsConfirmCode);
-                    return _mapper.Map<OTPRecord>(entity);
+                        await _smsService.SendOTP(otpLoginRecord.Mobile, entity.SmsConfirmCode);
+                        return _mapper.Map<OTPRecord>(entity);
+                    } 
+                    if (entity.Status == EnumStatus.PreRegister)
+                        throw new Exception("PreRegister");
+
                 }
 
                 var newUser = _mapper.Map<User>(otpLoginRecord);

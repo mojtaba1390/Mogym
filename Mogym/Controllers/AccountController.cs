@@ -91,7 +91,10 @@ namespace Mogym.Controllers
             }
             catch (Exception e)
             {
-                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                if (e.Message == "PreRegister")
+                    ViewBag.ErrorMessage = "وضعیت مدارک شما در حال بررسی می باشد.";
+                else
+                    ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
             }
 
 
