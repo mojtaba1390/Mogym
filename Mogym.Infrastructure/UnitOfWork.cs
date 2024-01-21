@@ -40,6 +40,7 @@ namespace Mogym.Infrastructure
             RolePermissionRepository = new RolePermissionRepository(_context);
             TicketRepository = new TicketRepository(_context);
             TicketDetailRepository = new TicketDetailRepository(_context);
+            CommentRepository = new CommentRepository(_context);
         }
 
 
@@ -66,6 +67,7 @@ namespace Mogym.Infrastructure
         public IRolePermissionRepository RolePermissionRepository { get; }
         public ITicketRepository TicketRepository { get; }
         public ITicketDetailRepository TicketDetailRepository { get; }
+        public ICommentRepository CommentRepository { get; }
 
         public void Dispose()
         {

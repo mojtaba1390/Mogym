@@ -85,6 +85,7 @@ namespace Mogym.Application
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<ITicketDetailService, TicketDetailService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             #endregion
 

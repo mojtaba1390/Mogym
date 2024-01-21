@@ -356,7 +356,7 @@ namespace Mogym.Application.Services
 
         public async Task<int> GetTrainerCountForIndexPage()
         {
-            return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Trainer"))
+            return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Trainer") && x.Status==EnumStatus.Active)
                 .Include(x => x.UserRoles)
                 .ThenInclude(x => x.UserRole_Role)
                 .CountAsync();

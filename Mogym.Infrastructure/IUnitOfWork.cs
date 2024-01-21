@@ -32,6 +32,7 @@ namespace Mogym.Infrastructure
         IRolePermissionRepository RolePermissionRepository { get; }
         ITicketRepository TicketRepository { get; }
         ITicketDetailRepository TicketDetailRepository { get; }
+        ICommentRepository CommentRepository { get; }
         
     }
 }

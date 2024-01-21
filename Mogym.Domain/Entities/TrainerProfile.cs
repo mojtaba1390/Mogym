@@ -13,6 +13,7 @@ namespace Mogym.Domain.Entities
             TrainerPlanCosts = new HashSet<TrainerPlanCost>();
             TrainerAchievements = new HashSet<TrainerAchievement>();
             Plans = new HashSet<Plan>();
+            Comments = new HashSet<Comment>();
         }
 
         public string? Biography { get; set; }
@@ -39,6 +40,8 @@ namespace Mogym.Domain.Entities
         public ICollection<TrainerPlanCost> TrainerPlanCosts { get; set; }
         public ICollection<TrainerAchievement> TrainerAchievements { get; set; }
         public ICollection<Plan> Plans { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+
 
 
     }
