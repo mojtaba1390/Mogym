@@ -8,5 +8,6 @@ namespace Mogym.Application.Interfaces
 {
     public interface ICommentService
     {
+        Task AddCommentAndRate(int planId, string review, int userRating);
     }
 }

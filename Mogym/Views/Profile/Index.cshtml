@@ -224,7 +224,67 @@
                 </div>
             </div>
         </section>
-        
+        <section id="commenting" class="commenting-section ptb-100 ">
+            <div class="container">
+                <div class="row align-items-center justify-content-md-center justify-content-center">
+                    <div class="comments-area mb-5 col-md-12">
+                        @{
+                            if (Model.CommentRecords.Any())
+                            {
+                 <h5 class="comments-title">@Model.CommentRecords.Count() نظر</h5>
+                        <div class="comment-list">
+                            <!-- Comment-->
+                            @{
+                                foreach (var comment in Model.CommentRecords)
+                                {
+                                    <div class="comment">
+                                <div class="comment-author">
+                                    @*<img class="avatar img-fluid rounded-circle" src="assets/img/client/2.jpg" alt="اظهار نظر">*@
+                                </div>
+                                <div class="comment-body">
+                                    <div class="comment-meta">
+                                        <div class="comment-meta-author">@comment.UserFullName</div>
+                                        <div class="comment-meta-date"></div>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p>@comment.Review</p>
+                                    </div>
+                                    <div class="comment-reply"><a href="#">@comment.Rate</a></div>
+                                </div>
+                                <!-- Subcomment-->
+                                @*<div class="children">
+                                    <div class="comment">
+                                        <div class="comment-author"><img class="avatar img-fluid rounded-circle" src="assets/img/client/3.jpg" alt="اظهار نظر"></div>
+                                        <div class="comment-body">
+                                            <div class="comment-meta">
+                                                <div class="comment-meta-author"><a href="#">هری بنسون</a></div>
+                                                <div class="comment-meta-date"><a href="#">5 تیر 1399 4:51 صبح</a></div>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+                                            </div>
+                                            <div class="comment-reply"><a href="#">پاسخ</a></div>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </div>
+                                }
+                            }
+
+                        </div>
+                            }
+                            else
+                            {
+                                <h5 class="comments-title">نظری ثبت نشده است</h5>
+
+                            }
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
 
 
     </div>

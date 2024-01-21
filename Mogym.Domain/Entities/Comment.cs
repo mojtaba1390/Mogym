@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Common;
 
 namespace Mogym.Domain.Entities
 {
@@ -18,6 +20,8 @@ namespace Mogym.Domain.Entities
         public int? ParentId { get; set; }
         public string? Review { get; set; }
         public int? Rate { get; set; }
+
+        public EnumCommentStatus CommentStatus { get; set; }
 
 
 

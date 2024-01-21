@@ -1,0 +1,241 @@
+﻿@model Mogym.Application.Records.Plan.PlanCommentRecord
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0000FF;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        width: 400px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .rating {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .stars {
+        font-size: 30px;
+        margin: 10px 0;
+    }
+
+    .star {
+        cursor: pointer;
+        margin: 0 5px;
+    }
+
+    .one {
+        color: rgb(255, 0, 0);
+    }
+
+    .two {
+        color: rgb(255, 106, 0);
+    }
+
+    .three {
+        color: rgb(251, 255, 120);
+    }
+
+    .four {
+        color: rgb(255, 255, 0);
+    }
+
+    .five {
+        color: rgb(24, 159, 14);
+    }
+
+    textarea {
+        width: 90%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .reviews {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .review {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .review p {
+        margin: 0;
+    }
+
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, 
+				initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>The Product Review and Rating</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>نام مربی : @Model.TrainerFullName</h1>
+    <h3>کد برنامه : @Model.Code</h3>
+    <div class="rating">
+        <span id="rating">0</span>/5
+    </div>
+    <div class="stars" id="stars">
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
+    </div>
+    <h3>نظر شما</h3>
+    
+    <input type="text" id="review" name="review" placeholder="نظر خود را در خصوص مربی یا برنامه بنویسید" class="form-control" style="height: 80px;margin-bottom: 20px">
+    <button id="submit">ارسال</button>
+    <div class="reviews" id="reviews">
+    </div>
+</div>
+</body>
+
+</html>
+
+<script>
+    var  stars = document.querySelectorAll(".star");
+var rating = document.getElementById("rating");
+var reviewText = document.getElementById("review");
+var submitBtn = document.getElementById("submit");
+var reviewsContainer = document.getElementById("reviews");
+
+stars.forEach((star) => {
+	star.addEventListener("click", () => {
+		var value = parseInt(star.getAttribute("data-value"));
+		rating.innerText = value;
+
+		// Remove all existing classes from stars
+		stars.forEach((s) => s.classList.remove("one", 
+												"two", 
+												"three", 
+												"four", 
+												"five"));
+
+		// Add the appropriate class to 
+		// each star based on the selected star's value
+		stars.forEach((s, index) => {
+			if (index < value) {
+				s.classList.add(getStarColorClass(value));
+			}
+		});
+
+		// Remove "selected" class from all stars
+		stars.forEach((s) => s.classList.remove("selected"));
+		// Add "selected" class to the clicked star
+		star.classList.add("selected");
+	});
+});
+
+submitBtn.addEventListener("click", () => {
+	var review = reviewText.value;
+	var userRating = parseInt(rating.innerText);
+
+	if (!userRating || !review) {
+		alert(
+"لطفا نظر و یا امتیاز خود را در خصوص مربی و یا برنامه وارد کنید  "
+			);
+		return;
+	}
+
+	if (userRating > 0) {
+            $.ajax({
+                type: "POST",
+                url: "/Comment/AddCommentAndRate",
+                data: { "planId": @Model.PlanId, "review": review,"userRating":userRating },
+                success: function (response) {
+                    $('#modal-addReview').html("");
+                    $('#modal-addReview').html('<h1>نظر با موفقیت ثبت شد.</h1>');
+                    window.location.reload();
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        
+
+
+// 		var reviewElement = document.createElement("div");
+// 		reviewElement.classList.add("review");
+// 		reviewElement.innerHTML = 
+// `<p><strong>Rating: ${userRating}/5</strong></p><p>${review}</p>`;
+// 		reviewsContainer.appendChild(reviewElement);
+
+// 		// Reset styles after submitting
+// 		reviewText.value = "";
+// 		rating.innerText = "0";
+// 		stars.forEach((s) => s.classList.remove("one", 
+// 												"two", 
+// 												"three", 
+// 												"four", 
+// 												"five", 
+// 												"selected"));
+	}
+});
+
+function getStarColorClass(value) {
+	switch (value) {
+		case 1:
+			return "one";
+		case 2:
+			return "two";
+		case 3:
+			return "three";
+		case 4:
+			return "four";
+		case 5:
+			return "five";
+		default:
+			return "";
+	}
+}
+
+</script>

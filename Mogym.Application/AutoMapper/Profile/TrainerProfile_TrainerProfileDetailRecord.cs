@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Profile;
+using Mogym.Common;
 using Mogym.Domain.Entities;
 
 namespace Mogym.Application.AutoMapper.Profile
@@ -19,8 +20,11 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.LastName, z => z.MapFrom(a => a.User.LastName))
                 .ForMember(x => x.UserName, z => z.MapFrom(a => a.User.UserName))
                 .ForMember(x => x.ProfilePic, z => z.MapFrom(a => a.User.ProfilePic))
-                .ForMember(x => x.TrainerPlanCostRecords, z => z.MapFrom(a => a.TrainerPlanCosts.Where(w=>(int)w.TrainerPlan<4)))
-                .ForMember(x => x.TrainerAchievementRecords, z => z.MapFrom(a => a.TrainerAchievements));
+                .ForMember(x => x.TrainerPlanCostRecords,
+                    z => z.MapFrom(a => a.TrainerPlanCosts.Where(w => (int) w.TrainerPlan < 4)))
+                .ForMember(x => x.TrainerAchievementRecords, z => z.MapFrom(a => a.TrainerAchievements))
+                .ForMember(x => x.CommentRecords,
+                    z => z.MapFrom(a => a.Comments.Where(w=>w.CommentStatus==EnumCommentStatus.Approve)));
         }
     }
 }

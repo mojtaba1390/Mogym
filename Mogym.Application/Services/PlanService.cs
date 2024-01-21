@@ -419,6 +419,28 @@ namespace Mogym.Application.Services
             return await _unitOfWork.PlanRepository.Find(x => x.PlanStatus == EnumPlanStatus.Sent).CountAsync();
         }
 
+        public async Task<PlanCommentRecord> GetPlanDetailsForComment(int planId)
+        {
+            try
+            {
+                var plan = await _unitOfWork.PlanRepository.Find(x => x.Id == planId && x.PlanStatus == EnumPlanStatus.Sent)
+                    .Include(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.User)
+                    .Include(x => x.Comments)
+                    .FirstOrDefaultAsync();
+
+                if (plan.Comments.Count > 0)
+                    throw new Exception("برای این برنامه قبلا نظر ثبت شده است");
+
+
+                return _mapper.Map<PlanCommentRecord>(plan);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpPost]
         public async Task ApprovePlan(int planId)
         {

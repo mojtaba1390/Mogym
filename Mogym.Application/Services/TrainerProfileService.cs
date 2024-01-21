@@ -37,11 +37,14 @@ namespace Mogym.Application.Services
             try
             {
                 var trainer= await _unitOfWork.TrainerProfileRepository
-                    .Find(x => x.User.UserName == username.Trim() && x.User.UserRoles.Any(z => z.RoleId == 3))
+                    .Find(x => x.User.UserName == username.Trim() &&
+                               x.User.UserRoles.Any(z => z.RoleId == 3))
                     .AsNoTracking()
                     .Include(x => x.User)
                     .Include(x=>x.TrainerAchievements)
                     .Include(x=>x.TrainerPlanCosts)
+                    .Include(x=>x.Comments)
+                    .ThenInclude(x=>x.User_Comment)
                     .FirstOrDefaultAsync();
                 if(trainer is not null)
                     return _mapper.Map<TrainerProfileDetailRecord?>(trainer);
@@ -161,7 +164,8 @@ namespace Mogym.Application.Services
                 .Where(x => x.User.Status == EnumStatus.Active)
                 .Include(x => x.User)
                 .Include(x => x.TrainerAchievements)
-                .Include(x => x.Plans).AsQueryable();
+                .Include(x => x.Plans)
+                .Include(x=>x.Comments).AsQueryable();
 
 
             if (page is null)
@@ -176,7 +180,15 @@ namespace Mogym.Application.Services
                     trainers = trainers.OrderByDescending(x => x.Id);
                 else if (sort == "sentPlan")
                     trainers = trainers.OrderByDescending(x => x.Plans.Count(z => z.PlanStatus == EnumPlanStatus.Sent));
+                else if (sort == "rate")
+                    trainers = trainers.OrderByDescending(x => x.AvgUserRate);
+                else if (sort == "comment")
+                    trainers = trainers.OrderByDescending(x => x.Comments.Count(z => z.CommentStatus == EnumCommentStatus.Approve));
+
             }
+            else
+                trainers = trainers.OrderByDescending(x => x.SignupRate);
+
 
             var takeTrainers =await trainers.Skip((page.Value - 1) * takeCount).Take(takeCount).ToListAsync();
 
@@ -198,7 +210,7 @@ namespace Mogym.Application.Services
         public async Task<List<LastTrainersForHomePageRecord>> GetLastTrainersForHomepage()
         {
             var lastTrainers = await _unitOfWork.TrainerProfileRepository
-                .GetAll()
+                .Where(x=>x.User.Status==EnumStatus.Active)
                 .Include(x=>x.User)
                 .OrderByDescending(x=>x.Id)
                 .Take(4)

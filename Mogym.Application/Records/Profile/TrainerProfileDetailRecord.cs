@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Mogym.Application.Records.Comment;
 
 namespace Mogym.Application.Records.Profile
 {
@@ -18,5 +19,6 @@ namespace Mogym.Application.Records.Profile
         public string? ProfilePic { get; set; }
         public List<TrainerAchievementRecord> TrainerAchievementRecords { get; init; }
         public List<TrainerPlanCostRecord> TrainerPlanCostRecords { get; init; }
+        public List<CommentRecord> CommentRecords { get; set; }
     }
 }

@@ -27,9 +27,9 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x => x.TrainerAchievementRecords,
                     z => z.MapFrom(a => a.TrainerAchievements))
                 .ForMember(x => x.CommentCount,
-                    z => z.MapFrom(a => 1))
+                    z => z.MapFrom(a => a.Comments.Any(w=>w.CommentStatus==EnumCommentStatus.Approve)? a.Comments.Count():0))
                 .ForMember(x => x.Score,
-                    z => z.MapFrom(a => 2));
+                    z => z.MapFrom(a => a.AvgUserRate??0));
         }
     }
 }

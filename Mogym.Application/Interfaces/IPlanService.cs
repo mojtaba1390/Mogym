@@ -38,5 +38,6 @@ namespace Mogym.Application.Interfaces
         Task<List<PaidPlanRecorrd>> GetAttendanceClientRequests();
         Task<string> EditPlanAfterSent(int planId);
         Task<int> GetSentPlanCountForIndexPage();
+        Task<PlanCommentRecord> GetPlanDetailsForComment(int planId);
     }
 }

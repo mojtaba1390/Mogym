@@ -128,6 +128,15 @@
                                        asp-route-page="1"
                                        asp-route-search="@search"
                                        asp-route-sort="sentPlan">برنامه ارسالی</a>
+                                    <a asp-action="Trainers"
+                                       asp-route-page="1"
+                                       asp-route-search="@search"
+                                       asp-route-sort="comment">نظر</a>
+
+                                    <a asp-action="Trainers"
+                                       asp-route-page="1"
+                                       asp-route-search="@search"
+                                       asp-route-sort="rate">امتیاز</a>
                                     @*                                     <a href="#">متن ساختگی </a>
                                     <a href="#">خود راه انداز </a>
                                     <a href="#">کسب و کار </a>
@@ -148,6 +157,10 @@
                                     text = text + "جدیدترین";
                                 if (sort == "sentPlan")
                                     text = text + "برنامه ارسالی";
+                                if (sort == "comment")
+                                    text = text + "بیشترین نظر";
+                                if (sort == "rate")
+                                    text = text + "بیشترین امتیاز";
 
                                 <h5> @text</h5>
 
