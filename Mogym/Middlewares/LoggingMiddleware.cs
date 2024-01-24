@@ -17,14 +17,15 @@ namespace Mogym.Middlewares
         {
             var ip = context.Connection.RemoteIpAddress.ToString();
 
-            //var permalink = context.Request.Path.Value;
+            var permalink = context.Request.Path.Value;
             //if (permalink == "/")
             //   await InsertLog(permalink, ip);
 
 
-            //var referer = context.Request.Headers["Referer"];
+            var referer = context.Request.Headers["Referer"];
 
-            //if (!string.IsNullOrWhiteSpace(referer))
+            if (!string.IsNullOrWhiteSpace(referer))
+                permalink = referer;
             //    await InsertLog(referer.ToString(), ip);
 
             string visitorId = context.Request.Cookies["VisitorId"];
@@ -40,7 +41,7 @@ namespace Mogym.Middlewares
                     Expires = DateTimeOffset.Now.AddMinutes(2)
                 });
 
-                 await InsertLog(visitorId, ip);
+                 await InsertLog(permalink, ip,visitorId);
 
             }
 
@@ -49,12 +50,12 @@ namespace Mogym.Middlewares
         }
 
 
-        private async Task InsertLog(string permalink,string ip)
+        private async Task InsertLog(string permalink,string ip,string visitorId)
         {
             using (var scope = _serviceScopeFactory.CreateScope())
             {
                 var _userLoggingService = scope.ServiceProvider.GetRequiredService<IUserLoggingService>();
-                await _userLoggingService.Save(permalink, ip);
+                await _userLoggingService.Save(permalink, ip,visitorId);
 
             }
         }

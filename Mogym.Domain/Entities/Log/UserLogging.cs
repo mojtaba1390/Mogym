@@ -18,5 +18,6 @@ namespace Mogym.Domain.Entities.Log
 
         public string? Permalink { get; set; }
         public string? Ip { get; set;}
+        public string? VisitorId { get; set; }
     }
 }

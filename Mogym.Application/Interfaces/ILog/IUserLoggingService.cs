@@ -8,6 +8,6 @@ namespace Mogym.Application.Interfaces.ILog
 {
     public interface IUserLoggingService
     {
-        Task Save(string permalink, string ip);
+        Task Save(string permalink, string ip,string visitorId);
     }
 }

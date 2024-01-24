@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mogym.Domain.Context;
 
@@ -11,9 +12,11 @@ using Mogym.Domain.Context;
 namespace Mogym.Domain.Migrations.MogymLog
 {
     [DbContext(typeof(MogymLogContext))]
-    partial class MogymLogContextModelSnapshot : ModelSnapshot
+    [Migration("20240124045022_add-visitorId-userlogging2")]
+    partial class addvisitorIduserlogging2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

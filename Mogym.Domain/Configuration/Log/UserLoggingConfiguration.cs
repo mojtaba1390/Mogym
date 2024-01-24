@@ -21,10 +21,12 @@ namespace Mogym.Domain.Configuration.Log
             builder.Property(p => p.InsertDate)
                 .IsRequired().ValueGeneratedOnAdd();
 
-            builder.Property(p => p.Permalink)
+            builder.Property(p => p.Permalink).HasColumnType("nvarchar(300)")
                 .IsRequired(false);
 
-            builder.Property(p => p.Ip)
+            builder.Property(p => p.Ip).HasColumnType("nvarchar(30)")
+                .IsRequired(false);
+            builder.Property(p => p.VisitorId).HasColumnType("nvarchar(60)")
                 .IsRequired(false);
 
         }

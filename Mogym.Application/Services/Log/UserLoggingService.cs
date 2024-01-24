@@ -19,12 +19,13 @@ namespace Mogym.Application.Services.Log
         {
             _userLoggingRepository=userLoggingRepository;
         }
-        public async Task Save(string permalink, string ip)
+        public async Task Save(string permalink, string ip, string visitorId)
         {
             var userLogging = new UserLogging()
             {
                 Ip = ip,
-                Permalink = permalink
+                Permalink = permalink,
+                VisitorId = visitorId
             };
            await _userLoggingRepository.Save(userLogging);
         }
