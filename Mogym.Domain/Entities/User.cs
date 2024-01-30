@@ -20,6 +20,7 @@ namespace Mogym.Domain.Entities
             TicketDetails = new HashSet<TicketDetail>();
 
             Comments = new HashSet<Comment>();
+            UserDiscounts = new HashSet<UserDiscount>();
         }
         public string? UserName { get; set; }
         public string Password { get; set; }
@@ -51,6 +52,8 @@ namespace Mogym.Domain.Entities
 
         public ICollection<TicketDetail> TicketDetails { get; set; }
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<UserDiscount> UserDiscounts { get; set; }
 
         #endregion
     }

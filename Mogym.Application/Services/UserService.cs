@@ -478,15 +478,15 @@ namespace Mogym.Application.Services
                 _unitOfWork.UserRepository.Update(entityInWaitingForConfirmSmsCode,false);
 
 
-                var trainerRole = _roleService.GetRoleByName("Athlete");
+                //var trainerRole = _roleService.GetRoleByName("Athlete");
 
-                var userRole = new UserRole()
-                {
-                    RoleId = trainerRole.Id.Value,
-                    UserId = entityInWaitingForConfirmSmsCode.Id
-                };
+                //var userRole = new UserRole()
+                //{
+                //    RoleId = trainerRole.Id.Value,
+                //    UserId = entityInWaitingForConfirmSmsCode.Id
+                //};
 
-                _userRoleService.Add(userRole,true);
+                //_userRoleService.Add(userRole,true);
 
                 var entity = GetEntityWithRoleAndPermission(entityInWaitingForConfirmSmsCode);
                 return   _mapper.Map<UserRecord>(entity);

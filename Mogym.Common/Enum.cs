@@ -191,4 +191,11 @@ namespace Mogym.Common
         [EnumMember]
         Post=2
     }
+    public enum EnumDiscountType
+    {
+        [EnumMember]
+        Percent=1,
+        [EnumMember]
+        Price=2
+    }
 }

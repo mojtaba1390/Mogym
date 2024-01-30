@@ -33,6 +33,8 @@ namespace Mogym.Infrastructure
         ITicketRepository TicketRepository { get; }
         ITicketDetailRepository TicketDetailRepository { get; }
         ICommentRepository CommentRepository { get; }
+        IDiscountRepository DiscountRepository { get; }
+        IUserDiscountRepository UserDiscountRepository { get; }
         
     }
 }

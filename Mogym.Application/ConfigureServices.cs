@@ -86,6 +86,8 @@ namespace Mogym.Application
             services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<ITicketDetailService, TicketDetailService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IDiscountService, DiscountService>();
+            services.AddTransient<IUserDiscountService, UserDiscountService>();
 
             #endregion
 

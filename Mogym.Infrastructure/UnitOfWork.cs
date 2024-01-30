@@ -41,6 +41,8 @@ namespace Mogym.Infrastructure
             TicketRepository = new TicketRepository(_context);
             TicketDetailRepository = new TicketDetailRepository(_context);
             CommentRepository = new CommentRepository(_context);
+            DiscountRepository = new DiscountRepository(_context);
+            UserDiscountRepository = new UserDiscountRepository(_context);
         }
 
 
@@ -68,6 +70,8 @@ namespace Mogym.Infrastructure
         public ITicketRepository TicketRepository { get; }
         public ITicketDetailRepository TicketDetailRepository { get; }
         public ICommentRepository CommentRepository { get; }
+        public IDiscountRepository DiscountRepository { get; }
+        public IUserDiscountRepository UserDiscountRepository { get; }
 
         public void Dispose()
         {
