@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp;
+using Mogym.Application.Records.Plan;
 
 namespace Mogym.Controllers
 {
@@ -125,12 +126,13 @@ namespace Mogym.Controllers
 
                     }
 
-                    await _questionService.AddQuestion(createQuestionRecord);
+                   var waitForPayRecord= await _questionService.AddQuestion(createQuestionRecord);
 
-                    var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
+                    //var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
 
 
-                    return View("ConfirmAnswerQuestion", confirmAnswerQuestion);
+                    //return View("ConfirmAnswerQuestion", confirmAnswerQuestion);
+                    return View("WaitForPay", waitForPayRecord);
                 }
 
                 ViewData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);
@@ -141,6 +143,11 @@ namespace Mogym.Controllers
                 return View("NotFound");
             }
         }
+
+
+
+
+
 
 
         [AllowAnonymous]
@@ -242,12 +249,14 @@ namespace Mogym.Controllers
 
                     }
 
-                    await _questionService.UpdateQuestion(createAttendanceClientQuestionRecord);
+                    var waitForPayRecord = await _questionService.UpdateQuestion(createAttendanceClientQuestionRecord);
 
-                    var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
+                    // var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
 
 
-                    return View("ConfirmAnswerQuestionAnonymous", confirmAnswerQuestion);
+                    //return View("ConfirmAnswerQuestionAnonymous", confirmAnswerQuestion);
+                    return View("WaitForPay", waitForPayRecord);
+
                 }
 
                 ViewData["errormessage"] = Helper.GetModelSateErroMessage(ModelState);

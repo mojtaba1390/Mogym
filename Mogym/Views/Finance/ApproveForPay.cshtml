@@ -1,0 +1,34 @@
+﻿@model Mogym.Application.Records.Profile.TrainerPaymentRecord
+
+
+@{
+    ViewData["Title"] = "تائید ثبت درخواست";
+    Layout = "_Layout";
+}
+
+<section class="content card-custome" id="guide-card">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="position-absolute">
+                <div class="section1 mb-5 section" id="section1">
+                    <div class="container-fluid  row">
+                        <div class="col-12 text-right text aos-init aos-animate " data-aos="fade-up">
+                            <h3 class="pb-4 text-right">تائید ثبت درخواست</h3>
+                            <p> <i class="fas fa-comment-dots px-2"></i>ورزشکار عزیز، درخواست شما ثبت شد. لطفا مبلغ زیر را به شماره کارت اعلام شده واریز نمائید و تصویر رسید را در پنل پرداخت نشده صفحه کاربری خود بارگزاری نمایید</p>
+                            <ul class="list-base">
+                                <li><i class="fas fa-arrow-left"></i> شماره کارت : <span style="float: left">@Model.CartNumber</span></li>
+                                <li><i class="fas fa-arrow-left"></i> نام صاحب کارت: <span style="float: left"> @Model.CartOwner</span></li>
+                                <li><i class="fas fa-arrow-left"></i> مبلغ: <span style="float: left">@Model.Cost ریال</span></li>
+                            </ul>
+
+                        </div>
+                        <div class="col-md-6 img aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                            @*                            <img src="~/img/2862309.png" alt="trainig-guide" width="80%" />
+*@                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

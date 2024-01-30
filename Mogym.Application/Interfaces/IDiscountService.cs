@@ -8,5 +8,6 @@ namespace Mogym.Application.Interfaces
 {
     public interface IDiscountService
     {
+        Task<Tuple<int,string,string>> GetDiscountPrice(string discountText, int trainingPlanId);
     }
 }

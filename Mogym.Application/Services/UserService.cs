@@ -475,7 +475,7 @@ namespace Mogym.Application.Services
             try
             {
                 entityInWaitingForConfirmSmsCode.Status = EnumStatus.Active;
-                _unitOfWork.UserRepository.Update(entityInWaitingForConfirmSmsCode,false);
+                _unitOfWork.UserRepository.Update(entityInWaitingForConfirmSmsCode);
 
 
                 //var trainerRole = _roleService.GetRoleByName("Athlete");

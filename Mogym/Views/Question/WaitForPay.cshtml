@@ -1,0 +1,105 @@
+﻿@using Mogym
+@using Mogym.Common
+@model Mogym.Application.Records.Plan.WaitForPayRecord
+
+@inject IHttpContextAccessor _accessor;
+@{
+    Layout = "_Layout";
+}
+
+
+<section class="content card-custome">
+    <form asp-action="ApproveForPay" asp-controller="Finance" method="post" class="container-fluid" id="form-answerQuestion">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- Default box -->
+                <div class="card">
+                    <input type="hidden" asp-for="PlanId" />
+                    <input type="hidden" asp-for="TrainingPlanId" />
+                    <input type="hidden" asp-for="DiscountId"/>
+                    <input type="hidden" asp-for="LastPrice" />
+                    <div class="card-body row py-5">
+
+                    <fieldset class="row p-3 mb-5">
+                        <ul class="list-base">
+                            <li><i class="fas mb-5"></i> برنامه : @Model.TrainingPlanName</li>
+                                <li><i class="fas mb-5"></i> نام مربی:  @Model.TrainerFullName</li>
+                                <li><i class="fas mb-5"></i> مبلغ برنامه: @Model.TrainingPlanPrice.ToString("N0") ریال</li>
+                                <li id="lastPriceChange"><i class="fas mb-5"></i> مبلغ قابل پرداخت: @Model.LastPrice.ToString("N0") ریال</li>
+                        </ul>
+
+
+                        </fieldset>
+                        <fieldset class="row p-3 mb-5">
+                            <div class="form-group col-md-2">
+                                <label class="pt-1" for="LastName">کد تخفیف</label>
+                                <input class="form-control" id="discountValue" type="text" />
+                                <div class="text-danger" id="discountMessage"></div>
+                                <button type="button" class="btn btn-success mt-5" id="discountBtn" >اعمال کد تخفیف</button>
+
+                            </div>
+
+                        </fieldset>
+
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="form-group row">
+                            <div class="form-actions-buttons col-md-12">
+                                <input type="submit" value="ثبت" class="btn bg-buttom-yellow" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+
+        </div>
+    </form>
+</section>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function() {
+
+            $("#discountBtn").click(function() {
+                var discountText = $("#discountValue").val();
+                if (discountText == "" || discountText == undefined) {
+                    alert("مقدار تخفیف نامشخص می باشد");
+                } else {
+                    $.ajax({
+                        type: "Get",
+                        url: "/Discount/GetDiscountPrice",
+                        data: { "discountText": discountText, "trainingPlanId": '@Model.TrainingPlanId' },
+                        success: function(response) {
+                            if (response.item1 != 200) {
+                                $("#discountMessage").text(response.item2);
+                            } else {
+                                $("#LastPrice").val(response.item3);
+                                $("#DiscountId").val(parseInt(response.item2));
+                                $("#discountMessage").text("کد تخفیف اعمال شد");
+                                $("#lastPriceChange").text("");
+                                $("#lastPriceChange").text("مبلغ قابل پرداخت: "+response.item3+" ریال");
+                                $("#discountBtn").prop('disabled', true);
+
+                            }
+                        },
+                        failure: function(response) {
+                            alert(response.responseText);
+                        },
+                        error: function(response) {
+                            alert(response.responseText);
+                        }
+                    });
+
+                }
+            });
+        })
+    </script>
+}

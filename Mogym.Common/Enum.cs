@@ -119,7 +119,10 @@ namespace Mogym.Common
         WaitForApprovePaidPic =5,
         [EnumMember]
         [Description("در انتظار تکمیل فرم توسط شاگرد حضوری")]
-        WaitForCompleteAnswerProcessByAttendanceClient =6
+        WaitForCompleteAnswerProcessByAttendanceClient =6,
+        [EnumMember]
+        [Description("در انتظار تائید پرداخت")]
+        WaitForApprovePay =7
     }
     public enum EnumSize
     {
@@ -197,5 +200,14 @@ namespace Mogym.Common
         Percent=1,
         [EnumMember]
         Price=2
+    }
+    public enum EnumFinanceStatus
+    {
+        [EnumMember]
+        WaitForPay=1,
+        [EnumMember]
+        SuccessPay=2,
+        [EnumMember]
+        FailedPay=3,
     }
 }

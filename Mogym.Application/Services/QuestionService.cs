@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
 using Mogym.Common;
 using Mogym.Common.ModelExtended;
@@ -38,7 +39,7 @@ namespace Mogym.Application.Services
             _trainerProfileService = trainerProfileService;
             _smsService = smsService;
         }
-        public async Task AddQuestion(CreateQuestionRecord createQuestionRecord)
+        public async Task<WaitForPayRecord> AddQuestion(CreateQuestionRecord createQuestionRecord)
         {
             try
             {
@@ -57,30 +58,43 @@ namespace Mogym.Application.Services
                     AnserQuestionId = question.Id,
                     UserId = userId,
                     TrainerId = createQuestionRecord.TrainerId,
-                    PlanStatus = EnumPlanStatus.Registered,
+                    PlanStatus = EnumPlanStatus.WaitForApprovePay,
                     TrackingCode = Random.Shared.Next(1000,9999)
                 };
                 await _unitOfWork.PlanRepository.AddAsync(plan);
 
 
-                var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
+                //var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createQuestionRecord.TrainerId, createQuestionRecord.TrainerPlanId);
 
-                var message =
-                    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
-                    $" {confirmAnswerQuestion.PlanName}" +
-                    $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
-                    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
-                    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
-                    $" به نام {confirmAnswerQuestion.CartOwner}" +
-                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
+                //var message =
+                //    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
+                //    $" {confirmAnswerQuestion.PlanName}" +
+                //    $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
+                //    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
+                //    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
+                //    $" به نام {confirmAnswerQuestion.CartOwner}" +
+                //    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
 
                 var email = new Message(new string[] {"ramezannia.mojtaba@gmail.com"},
                     $"پر کردن پرسشنامه-{createQuestionRecord.Mobile}",
-                message);
+                "");
 
                 await _emailSender.SendEmailAsync(email);
 
                 //await _smsService.SendSms(createQuestionRecord.Mobile, message);
+
+
+                var waitForPayPlanDetail =
+                    await _unitOfWork.PlanRepository.Find(x =>
+                            x.Id == plan.Id &&
+                            x.TrainerProfile_Plan.TrainerPlanCosts.Any(z => z.Id == createQuestionRecord.TrainerPlanId))
+                        .Include(x => x.TrainerProfile_Plan)
+                        .ThenInclude(x => x.User)
+                        .Include(x => x.TrainerProfile_Plan)
+                        .ThenInclude(x => x.TrainerPlanCosts)
+                        .FirstOrDefaultAsync();
+
+                return _mapper.Map<WaitForPayRecord>(waitForPayPlanDetail);
 
 
             }
@@ -123,7 +137,7 @@ namespace Mogym.Application.Services
             return null;
         }
 
-        public async Task UpdateQuestion(CreateAttendanceClientQuestionRecord createAttendanceClientQuestionRecord)
+        public async Task<WaitForPayRecord> UpdateQuestion(CreateAttendanceClientQuestionRecord createAttendanceClientQuestionRecord)
         {
             try
             {
@@ -133,29 +147,41 @@ namespace Mogym.Application.Services
                 await _unitOfWork.QuestionRepository.UpdateAsync(updateQuestion);
 
                 var plan =await  _unitOfWork.PlanRepository.GetByIdAsync(createAttendanceClientQuestionRecord.PlanId);
-                plan.PlanStatus = EnumPlanStatus.Registered;
+                plan.PlanStatus = EnumPlanStatus.WaitForApprovePay;
                 await _unitOfWork.PlanRepository.UpdateAsync(plan);
 
 
-                var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
+                //var confirmAnswerQuestion = await _trainerProfileService.GetConfirmAnswerQuestion(createAttendanceClientQuestionRecord.TrainerId, createAttendanceClientQuestionRecord.TrainerPlanId);
 
-                var message =
-                    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
-                    $" {confirmAnswerQuestion.PlanName}" +
-                    $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
-                    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
-                    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
-                    $" به نام {confirmAnswerQuestion.CartOwner}" +
-                    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
+                //var message =
+                //    $"ورزشکار عزیز;درخواست شما با کد پیگیری {plan.TrackingCode}" +
+                //    $" {confirmAnswerQuestion.PlanName}" +
+                //    $" با هزینه {confirmAnswerQuestion.PlanCost.ToString("N0")} ریال " +
+                //    $" برای آقا/خانم {confirmAnswerQuestion.CartOwner}" +
+                //    $" ثبت گردید.لطفا هزینه را به شماره کارت {confirmAnswerQuestion.CartNumber}" +
+                //    $" به نام {confirmAnswerQuestion.CartOwner}" +
+                //    $"واریز کرده و تصویر رسید را در پنل پرداخت نشده خود بارگزاری نمایید - موجیم ";
 
 
                 var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
-                    $"پر کردن پرسشنامه-{createAttendanceClientQuestionRecord.Mobile}",message
+                    $"پر کردن پرسشنامه حضوری-{createAttendanceClientQuestionRecord.Mobile}",""
                 );
 
                 await _emailSender.SendEmailAsync(email);
 
                 //await _smsService.SendSms(createAttendanceClientQuestionRecord.Mobile, message);
+
+                var waitForPayPlanDetail =
+                    await _unitOfWork.PlanRepository.Find(x =>
+                            x.Id == plan.Id &&
+                            x.TrainerProfile_Plan.TrainerPlanCosts.Any(z => z.Id == createAttendanceClientQuestionRecord.TrainerPlanId))
+                        .Include(x => x.TrainerProfile_Plan)
+                        .ThenInclude(x => x.User)
+                        .Include(x => x.TrainerProfile_Plan)
+                        .ThenInclude(x => x.TrainerPlanCosts)
+                        .FirstOrDefaultAsync();
+
+                return _mapper.Map<WaitForPayRecord>(waitForPayPlanDetail);
 
             }
             catch(Exception ex)

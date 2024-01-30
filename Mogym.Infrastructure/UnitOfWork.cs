@@ -43,6 +43,8 @@ namespace Mogym.Infrastructure
             CommentRepository = new CommentRepository(_context);
             DiscountRepository = new DiscountRepository(_context);
             UserDiscountRepository = new UserDiscountRepository(_context);
+            DiscountUseRepository=new DiscountUseRepository(_context);
+            FinanceRepository=new FinanceRepository(_context);
         }
 
 
@@ -72,6 +74,8 @@ namespace Mogym.Infrastructure
         public ICommentRepository CommentRepository { get; }
         public IDiscountRepository DiscountRepository { get; }
         public IUserDiscountRepository UserDiscountRepository { get; }
+        public IDiscountUseRepository DiscountUseRepository { get; }
+        public IFinanceRepository FinanceRepository { get; }
 
         public void Dispose()
         {
