@@ -37,6 +37,8 @@ namespace Mogym.Domain.Entities
         public string? Email { get; set; }
         public string? ProfilePic { get; set; }
 
+        public string? FullName { get; set; }
+
 
         public TrainerProfile TrainerProfile { get; set; }
 

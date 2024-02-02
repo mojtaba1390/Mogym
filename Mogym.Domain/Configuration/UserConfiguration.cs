@@ -29,6 +29,7 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.SmsConfirmCode).HasColumnType("varchar").HasMaxLength(5).IsRequired(false);
             builder.Property(x => x.Email).HasColumnType("varchar").HasMaxLength(100).IsRequired(false);
             builder.Property(x => x.ProfilePic).HasColumnType("nvarchar(100)").IsRequired(false);
+            builder.Property(x => x.FullName).HasColumnType("nvarchar(150)").IsRequired(false);
 
 
 

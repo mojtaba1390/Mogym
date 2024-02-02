@@ -30,7 +30,10 @@ namespace Mogym.Common
         WaitingForSmsConfirm = 3,
         [Description("قبل از ثبت نام")]
         [EnumMember]
-        PreRegister = 4
+        PreRegister = 4,
+        [Description("رد مدرک")]
+        [EnumMember]
+        IgnoreDocuments = 5
     }
     public enum EnumYesNo
     {

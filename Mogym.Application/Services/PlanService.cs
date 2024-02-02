@@ -237,7 +237,7 @@ namespace Mogym.Application.Services
 
             var messageUser = $"تصویر رسید بارگزاری شده برنامه با کد پیگیری {plan.TrackingCode} شما تائید شد- موجیم";
 
-            await _smsService.SendSms(trainer.Mobile, messageUser);
+            await _smsService.SendSms(user.Mobile, messageUser);
 
             //var messageUser = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
             //    $"شاگرد تائید تصویر رسید-{user.Mobile}",

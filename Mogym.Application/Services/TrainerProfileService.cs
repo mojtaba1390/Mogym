@@ -229,8 +229,7 @@ namespace Mogym.Application.Services
             try
             {
                 var trainers = await _unitOfWork.TrainerProfileRepository
-                    .Where(x => x.User.Status == EnumStatus.Active && 
-                                (x.User.FirstName.Contains(searchText) || x.User.LastName.Contains(searchText)))
+                    .Where(x => x.User.Status == EnumStatus.Active && x.User.FullName.Contains(searchText))
                     .Include(x => x.User)
                     .Include(x => x.TrainerAchievements)
                     .Include(x => x.Plans)
