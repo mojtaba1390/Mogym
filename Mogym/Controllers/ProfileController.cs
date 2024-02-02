@@ -37,6 +37,15 @@ namespace Mogym.Controllers
 
             if (!username.Equals("favicon.ico"))
             {
+                if (username.ToLower() == "trainers")
+                    return RedirectToAction("Trainers", "Home");
+                else if(username.ToLower()== "contactus")
+                    return RedirectToAction("ContactUs", "Home");
+                else if(username.ToLower()== "trainerpanel")
+                    return RedirectToAction("TrainerPanel", "Home");
+                else if(username.ToLower()== "terms")
+                    return RedirectToAction("Terms", "Home");
+
 
                 var profile = await _trainerProfileService.GetByUserName(username);
                 if (profile is null)
