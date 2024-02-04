@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Mogym.Application.Records.Lead.LeadRecord
+<!DOCTYPE html>
 <html lang="en">
 
 
@@ -115,6 +116,35 @@
                     <div class="col-12 pb-3 message-box d-none">
                         <div class="alert alert-danger"></div>
                     </div>
+                    <div class="col-md-12 col-lg-5 mb-5 mb-md-5 mb-sm-5 mb-lg-0">
+                        <div class="contact-us-form gray-light-bg rounded p-5">
+                            <h4>با ما از طریق فرم زیر در ارتباط باشید</h4>
+                            <form asp-controller="Lead" asp-action="Submit" asp-antiforgery="true">
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="Name" placeholder="نام را وارد کنید" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="number" class="form-control" asp-for="Mobile" placeholder="موبایل را وارد کنید" maxlength="11" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea asp-for="Message" id="message" class="form-control" rows="7" cols="25" placeholder="پیام"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 mt-3">
+                                        <button type="submit" class="btn btn-brand-02"  style="pointer-events: all; cursor: pointer;">
+                                            ارسال
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     <div class="col-md-12 col-lg-6">
                         <div class="contact-us-content">
                             <h2>راه های ارتباطی با ما</h2>
@@ -138,13 +168,15 @@
                                         <span class="fas fa-phone color-primary rounded-circle p-3"></span>
                                     </div>
                                     <div class="contact-text">
-                                        <h5 class="mb-1">موبایل</h5>
+                                        <h5 class="mb-1">تلفن</h5>
+                                        <p>روزهای شنبه تا چهارشنبه(غیر تعطیل)</p>
+                                        <p>ساعت 8-18</p>
                                         <p>
-                                            09031239853
+                                            02166190292
                                         </p>
                                     </div>
                                 </li>
-                                <li class="d-flex pb-3">
+@*                                 <li class="d-flex pb-3">
                                     <div class="contact-icon mr-3">
                                         <span class="fas fa-telegram color-primary rounded-circle p-3"></span>
                                     </div>
@@ -154,7 +186,7 @@
                                             Mogym
                                         </p>
                                     </div>
-                                </li>
+                                </li> *@
                             </ul>
 
                         </div>

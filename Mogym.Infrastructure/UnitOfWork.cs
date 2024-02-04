@@ -2,6 +2,7 @@
 
 
 using Mogym.Domain.Context;
+using Mogym.Domain.Entities;
 using Mogym.Infrastructure.Interfaces;
 using Mogym.Infrastructure.Interfaces.Log;
 using Mogym.Infrastructure.Repositories;
@@ -45,6 +46,7 @@ namespace Mogym.Infrastructure
             UserDiscountRepository = new UserDiscountRepository(_context);
             DiscountUseRepository=new DiscountUseRepository(_context);
             FinanceRepository=new FinanceRepository(_context);
+            LeadRepository=new LeadRepository(_context);
         }
 
 
@@ -76,6 +78,7 @@ namespace Mogym.Infrastructure
         public IUserDiscountRepository UserDiscountRepository { get; }
         public IDiscountUseRepository DiscountUseRepository { get; }
         public IFinanceRepository FinanceRepository { get; }
+        public ILeadRepository LeadRepository { get; }
 
         public void Dispose()
         {

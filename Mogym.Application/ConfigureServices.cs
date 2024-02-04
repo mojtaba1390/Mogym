@@ -89,6 +89,7 @@ namespace Mogym.Application
             services.AddTransient<IDiscountService, DiscountService>();
             services.AddTransient<IUserDiscountService, UserDiscountService>();
             services.AddTransient<IFinanceService, FinanceService>();
+            services.AddTransient<ILeadService, LeadService>();
 
             #endregion
 

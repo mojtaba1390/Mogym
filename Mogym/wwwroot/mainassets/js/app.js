@@ -298,7 +298,7 @@ jQuery(function ($) {
       $(parentSelector + " .message-box div").removeClass('alert-danger').addClass('alert-success').text('پیام شما با موفقیت ارسال شد.');
     } else {
       $(parentSelector + " .message-box").removeClass('d-none').addClass('d-block ');
-      $(parentSelector + " .message-box div").removeClass('alert-success').addClass('alert-danger').text('خطایی در فرم یافت شد لطفا دوباره بررسی کنید');
+      $(parentSelector + " .message-box div").removeClass('alert-success').addClass('alert-danger').text('مقادیر فرم را درست وارد کنید');
     }
   }
 

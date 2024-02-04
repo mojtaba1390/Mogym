@@ -37,6 +37,7 @@ namespace Mogym.Infrastructure
         IUserDiscountRepository UserDiscountRepository { get; }
         IDiscountUseRepository DiscountUseRepository { get; }
         IFinanceRepository FinanceRepository { get; }
+        ILeadRepository LeadRepository { get; }
         
     }
 }
