@@ -12,6 +12,7 @@ namespace Mogym.Domain.Entities
         public Discount()
         {
             UserDiscounts = new HashSet<UserDiscount>();
+            Finances= new HashSet<Finance>();
         }
         public string DiscountText { get; set; }
         public EnumDiscountType DiscountType { get; set; }
@@ -19,6 +20,9 @@ namespace Mogym.Domain.Entities
         public DateTime ActiveDate { get; set; }
 
         public ICollection<UserDiscount> UserDiscounts { get; set; }
+
+        public ICollection<Finance> Finances { get; set; }
+
 
     }
 }

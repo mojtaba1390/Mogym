@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces;
+using Mogym.Application.Records.Finance;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Profile;
 using Mogym.Common;
@@ -66,6 +67,29 @@ namespace Mogym.Application.Services
 
             return trainerPaymentDetail;
 
+        }
+
+        public async Task<List<FinanceHistoryRecord>?> GetFinanceHistory()
+        {
+            try
+            {
+                var currentUserId = _accessor.GetUser();
+                var finances =await _unitOfWork.FinanceRepository
+                     .Find(x=>x.Plan_Finance.TrainerProfile_Plan.UserId==currentUserId)
+                    .Include(x => x.Plan_Finance)
+                    .ThenInclude(x => x.User_Plan)
+                    .Include(x => x.Discount_Finance)
+                    .Include(x=>x.Plan_Finance)
+                    .ThenInclude(x=>x.TrainerProfile_Plan)
+                    .ThenInclude(x=>x.TrainerPlanCosts)
+                    .ToListAsync();
+
+                return _mapper.Map<List<FinanceHistoryRecord>>(finances);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

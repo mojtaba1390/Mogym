@@ -9,9 +9,11 @@ namespace Mogym.Controllers
     public class FinanceController : Controller
     {
         private readonly IFinanceService _financeService;
-        public FinanceController(IFinanceService financeService)
+        private readonly IHttpContextAccessor _accessor;
+        public FinanceController(IFinanceService financeService,IHttpContextAccessor accessor)
         {
             _financeService=financeService;
+            _accessor=accessor;
         }
 
         public async Task<IActionResult> ApproveForPay(WaitForPayRecord model)
@@ -24,8 +26,24 @@ namespace Mogym.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                return View("NotFound");
+            }
+        }
+
+
+        public async Task<IActionResult> History()
+        {
+            try
+            {
+                var res = await _financeService.GetFinanceHistory();
+
+                return View(res);
+            }
+            catch (Exception e)
+            {
+                ViewBag.ErrorMessage = "خطایی در سیستم رخ داده است,لطفا دوباره سعی کنید";
+                return View("NotFound");
             }
         }
     }

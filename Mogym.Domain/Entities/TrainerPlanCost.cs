@@ -19,5 +19,8 @@ namespace Mogym.Domain.Entities
 
 
         public TrainerProfile TrainerPlanCost_TrainerProfile { get; set; }
+
+
+
     }
 }

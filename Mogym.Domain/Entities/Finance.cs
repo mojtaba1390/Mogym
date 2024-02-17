@@ -12,8 +12,12 @@ namespace Mogym.Domain.Entities
     {
         public int PlanId { set; get; }
         public int TrainingPlanId { set;get;}
-        public int DiscountId { set;get;}
+        public int? DiscountId { set;get;}
         public double FinalPrice { set;get;}
         public EnumFinanceStatus FinanceStatus { set; get; }
+
+
+        public Plan Plan_Finance { get; set; }
+        public Discount Discount_Finance { get; set; }
     }
 }

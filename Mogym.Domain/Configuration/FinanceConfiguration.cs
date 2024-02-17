@@ -15,10 +15,23 @@ namespace Mogym.Domain.Configuration
         {
             builder.ToTable("Finance");
             builder.Property(x => x.PlanId).HasColumnType("int").IsRequired();
-            builder.Property(x => x.DiscountId).HasColumnType("int").IsRequired();
+            builder.Property(x => x.DiscountId).HasColumnType("int").IsRequired(false);
             builder.Property(x => x.FinanceStatus).HasColumnType("int").IsRequired();
             builder.Property(x => x.TrainingPlanId).HasColumnType("int").IsRequired();
             builder.Property(x => x.FinalPrice).HasColumnType("float").IsRequired();
+
+
+
+
+            builder.HasOne<Plan>(x => x.Plan_Finance)
+                .WithMany(z => z.Finances)
+                .HasForeignKey(a => a.PlanId)
+                .IsRequired();
+
+            builder.HasOne<Discount>(x => x.Discount_Finance)
+                .WithMany(z => z.Finances)
+                .HasForeignKey(a => a.DiscountId)
+                .IsRequired();
         }
     }
 }

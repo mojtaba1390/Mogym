@@ -1,1 +1,106 @@
-﻿
+﻿@model List<Mogym.Application.Records.Finance.FinanceHistoryRecord>
+@{
+    ViewBag.Title = "تاریخچه مالی";
+    Layout = "_Layout";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card-body mb-50">
+
+                    <table id="financeHistory" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>نام ورزشکار</th>
+                                <th>نام برنامه</th>
+                                <th>تاریخ ثبت</th>
+                                <th>هزینه اصلی برنامه</th>
+                                <th>هزینه پرداخت شده</th>
+                                <th>کد تخفیف</th>
+                                <th>مقدار و نوع تخفیف</th>
+                                <th>وضعیت پرداخت</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itm in Model)
+                            {
+                                <tr>
+
+                                    <td>@itm.AthleteFullName</td>
+                                    <td>@itm.TrainingPlanName</td>
+                                    <td>@itm.InsertDate</td>
+                                    <td>@itm.TrainingPlanActualPrice</td>
+                                    <td>@itm.TrainingPlanPayPrice</td>
+                                    <td>@itm.DiscountCode</td>
+                                    <td>@itm.DiscountValue</td>
+                                    <td>@itm.PayStatus</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                            <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
+                        </div>
+                        <div class="form-actions-buttons col-md-12">
+                            <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $("#financeHistory").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                ],
+                "pageLength": 25,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+
+    </script>
+}

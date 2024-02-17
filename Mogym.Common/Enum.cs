@@ -200,9 +200,11 @@ namespace Mogym.Common
     public enum EnumDiscountType
     {
         [EnumMember]
-        Percent=1,
+        [Description("درصد")]
+        Percent = 1,
         [EnumMember]
-        Price=2
+        [Description("مبلغ")]
+        Price = 2
     }
     public enum EnumFinanceStatus
     {
