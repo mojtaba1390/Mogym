@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Mogym.Application.Interfaces;
 using Mogym.Application.Records.Plan;
+using System.ComponentModel;
 
 namespace Mogym.Controllers
 {
     [Authorize]
+    [DisplayName("مالی")]
     public class FinanceController : Controller
     {
         private readonly IFinanceService _financeService;
@@ -31,7 +33,7 @@ namespace Mogym.Controllers
             }
         }
 
-
+        [DisplayName("تاریخچه")]
         public async Task<IActionResult> History()
         {
             try

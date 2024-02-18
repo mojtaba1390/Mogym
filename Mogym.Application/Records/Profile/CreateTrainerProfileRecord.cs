@@ -21,6 +21,7 @@ namespace Mogym.Application.Records.Profile
         public IFormFile? ProfilePic { get; set; }
         public string? CartNumber { get; set; }
         public string? CartOwner { get; set; }
+        public string? InsertedProfilePicName { get; init; }
 
 
     }

@@ -29,6 +29,8 @@ namespace Mogym.Application.AutoMapper.Profile
                     z=>z.MapFrom(a=>
                         !string.IsNullOrWhiteSpace(a.CartOwnerName)?a.CartOwnerName:
                         a.User.FirstName + " "+ a.User.LastName))
+                .ForMember(x=>x.InsertedProfilePicName,
+                    z=>z.MapFrom(a=>a.User.ProfilePic))
                 .ForMember(x => x.ProfilePic, z => z.Ignore());
         }
     }

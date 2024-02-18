@@ -21,7 +21,8 @@ namespace Mogym.Application.AutoMapper.Profile
                 .ForMember(x=>x.CartOwnerName,z=>z.MapFrom(a=>!string.IsNullOrWhiteSpace(a.CartOwner)?a.CartOwner:a.FirstName + " "+ a.LastName))
                 .ForPath(x => x.User.UserName, z => z.MapFrom(a => a.UserName))
                 .ForPath(x => x.User.ProfilePic,
-                    z => z.MapFrom(a => a.ProfilePic.FileName));
+                    z => z.MapFrom(a =>
+                        a.ProfilePic==null?a.InsertedProfilePicName: a.ProfilePic.FileName));
             //.ForAllMembers(opts =>
             //{
             //    opts.Condition((src, dest, srcMember) => srcMember != null);
