@@ -14,7 +14,6 @@ namespace Mogym.Application.Services
         private readonly IBaseService _baseService;
         private static string apiKey= "6448696B4A593266524D4D5750577A6964497579744E7171667079437955474E6A464B622F446665305A733D";
         private static string sendrNumber = "1000006006660";
-        private static string template = "MogymConfirmSmsCode";
         public SmsService(IBaseService baseService)
         {
             _baseService = baseService;
@@ -36,12 +35,44 @@ namespace Mogym.Application.Services
             }
         }
 
-        public async Task<ResultDTO> SendOTP(string mobile, string token)
+        public async Task<ResultDTO> SendOTP(string mobile, string token,string template)
         {
             try
             {
                 var request =
                     $"https://api.kavenegar.com/v1/{apiKey}/verify/lookup.json?receptor={mobile}&token={token}&template={template}";
+
+                var res = await _baseService.SendAsync(new RequestDTO() { ApiType = EnumApiType.Get, Url = request });
+                return res;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public async Task<ResultDTO> SendOTP3Token(string mobile, string token,string token2,string token3,string template)
+        {
+            try
+            {
+                var request =
+                    $"https://api.kavenegar.com/v1/{apiKey}/verify/lookup.json?receptor={mobile}&token={token}&token2={token2}&token3={token3}&template={template}";
+
+                var res = await _baseService.SendAsync(new RequestDTO() { ApiType = EnumApiType.Get, Url = request });
+                return res;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+        public async Task<ResultDTO> SendOTP2Token(string mobile, string token,string token2,string template)
+        {
+            try
+            {
+                var request =
+                    $"https://api.kavenegar.com/v1/{apiKey}/verify/lookup.json?receptor={mobile}&token={token}&token2={token2}&template={template}";
 
                 var res = await _baseService.SendAsync(new RequestDTO() { ApiType = EnumApiType.Get, Url = request });
                 return res;

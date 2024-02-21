@@ -119,8 +119,11 @@ namespace Mogym.Application.Services
                 {
 
                     if (ticket.IsSentSmsToAssign == EnumYesNo.No)
-                        await _smsService.SendSms(ticket.User_Assign.Mobile,
-                            $"شما ۱ گفتگو خوانده نشده جدید دارید");
+                        //await _smsService.SendSms(ticket.User_Assign.Mobile,
+                        //    $"شما ۱ گفتگو خوانده نشده جدید دارید");
+
+                        await _smsService.SendOTP(ticket.User_Assign.Mobile,
+                            "1", "Ticket");
 
 
                     ticket.CreatorStatus = EnumTicketStatus.Read;
@@ -132,8 +135,10 @@ namespace Mogym.Application.Services
                 else
                 {
                     if (ticket.IsSentSmsToCreator == EnumYesNo.No)
-                        await _smsService.SendSms(ticket.User_Creator.Mobile,
-                            $"شما ۱ گفتگو خوانده نشده جدید دارید");
+                        await _smsService.SendOTP(ticket.User_Creator.Mobile,
+                        "1", "Ticket");
+                    //await _smsService.SendSms(ticket.User_Creator.Mobile,
+                    //    $"شما ۱ گفتگو خوانده نشده جدید دارید");
 
                     ticket.AssignStatus = EnumTicketStatus.Read;
                     ticket.AssignLastSeen = DateTime.Now;

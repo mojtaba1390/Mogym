@@ -94,7 +94,7 @@ namespace Mogym.Application.Services
 
                         //await _smsLogService.SendConfirmSmsCode(entity.Mobile,entity.SmsConfirmCode);
 
-                        await _smsService.SendOTP(otpLoginRecord.Mobile, entity.SmsConfirmCode);
+                        await _smsService.SendOTP(otpLoginRecord.Mobile, entity.SmsConfirmCode, "MogymConfirmSmsCode");
                         return _mapper.Map<OTPRecord>(entity);
                     } 
                     if (entity.Status == EnumStatus.PreRegister)
@@ -110,7 +110,7 @@ namespace Mogym.Application.Services
                 newUser.UserRoles.Add(userRole);
                 await _unitOfWork.UserRepository.AddAsync(newUser);
 
-                await _smsService.SendOTP(newUser.Mobile,newUser.SmsConfirmCode);
+                await _smsService.SendOTP(newUser.Mobile,newUser.SmsConfirmCode, "MogymConfirmSmsCode");
                 //await _smsLogService.SendConfirmSmsCode(newUser.Mobile,newUser.SmsConfirmCode);
 
                 return _mapper.Map<OTPRecord>(newUser);
@@ -362,10 +362,14 @@ namespace Mogym.Application.Services
 
         public async Task<int> GetTrainerCountForIndexPage()
         {
-            return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Trainer") && x.Status==EnumStatus.Active)
-                .Include(x => x.UserRoles)
-                .ThenInclude(x => x.UserRole_Role)
-                .CountAsync();
+            //return await _unitOfWork.UserRepository.Find(x => x.UserRoles.Any(z => z.UserRole_Role.EnglishName == "Trainer") && x.Status==EnumStatus.Active)
+            //    .Include(x => x.UserRoles)
+            //    .ThenInclude(x => x.UserRole_Role)
+            //    .CountAsync();
+
+            return  await _unitOfWork.TrainerProfileRepository
+                .Where(x => x.User.Status == EnumStatus.Active)
+                .Include(x => x.User).CountAsync();
 
         }
 
@@ -393,7 +397,7 @@ namespace Mogym.Application.Services
                     newUser.UserRoles.Add(userRole);
                     await _unitOfWork.UserRepository.AddAsync(newUser);
 
-                    await _smsService.SendOTP(newUser.Mobile, newUser.SmsConfirmCode);
+                    await _smsService.SendOTP(newUser.Mobile, newUser.SmsConfirmCode, "MogymConfirmSmsCode");
                 }
                 else if (userWithThisMobile.Status == EnumStatus.Active)
                 {
@@ -411,7 +415,7 @@ namespace Mogym.Application.Services
                 {
                     userWithThisMobile.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
                     _unitOfWork.UserRepository.Update(userWithThisMobile);
-                    await _smsService.SendOTP(otpLoginRecord.Mobile, userWithThisMobile.SmsConfirmCode);
+                    await _smsService.SendOTP(otpLoginRecord.Mobile, userWithThisMobile.SmsConfirmCode, "MogymConfirmSmsCode");
                 }
 
 

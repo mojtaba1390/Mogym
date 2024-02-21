@@ -20,7 +20,9 @@
                     <input type="hidden" asp-for="DiscountId"/>
                     <input type="hidden" asp-for="LastPrice" />
                     <div class="card-body row py-5">
-
+                        <div class="card-header">
+                            <h3 class="card-title" style="color:red">*بعد از تائید موارد زیر حتما کلید پرداخت را کلیک کنید.</h3>
+                        </div>
                     <fieldset class="row p-3 mb-5">
                         <ul class="list-base">
                             <li><i class="fas mb-5"></i> برنامه : @Model.TrainingPlanName</li>
@@ -36,7 +38,7 @@
                                 <label class="pt-1" for="LastName">کد تخفیف</label>
                                 <input class="form-control" id="discountValue" type="text" />
                                 <div class="text-danger" id="discountMessage"></div>
-                                <button type="button" class="btn btn-success mt-5" id="discountBtn" >اعمال کد تخفیف</button>
+                                <button type="button" class="btn btn-info mt-5" id="discountBtn" >اعمال کد تخفیف</button>
 
                             </div>
 
@@ -48,7 +50,7 @@
                     <div class="card-footer">
                         <div class="form-group row">
                             <div class="form-actions-buttons col-md-12">
-                                <input type="submit" value="ثبت" class="btn bg-buttom-yellow" />
+                                <input type="submit" value="پرداخت" class="btn btn-success" />
                             </div>
                         </div>
                     </div>
