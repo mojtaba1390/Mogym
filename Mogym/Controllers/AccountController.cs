@@ -52,7 +52,7 @@ namespace Mogym.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> Login()
+        public ActionResult Login()
         {
             var isLogined = HttpContext.User.Identity.IsAuthenticated;
             if (isLogined)
@@ -61,9 +61,9 @@ namespace Mogym.Controllers
 
             string returnUrl = HttpContext.Request.Query["returnUrl"];
             ViewData["returnUrl"] = returnUrl;
-            return PartialView();
+            return View();
         }
-        public async Task<IActionResult> LoginMobile()
+        public ActionResult LoginMobile()
         {
             var isLogined = HttpContext.User.Identity.IsAuthenticated;
             if (isLogined)
@@ -72,7 +72,7 @@ namespace Mogym.Controllers
 
             string returnUrl = HttpContext.Request.Query["returnUrl"];
             ViewData["returnUrl"] = returnUrl;
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
