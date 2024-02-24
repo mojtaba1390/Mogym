@@ -492,8 +492,16 @@ namespace Mogym.Application.Services
 
                 //_userRoleService.Add(userRole,true);
 
+                //TODO:بعد از تخفیف عید پاک بشه
+                var userDiscount = new UserDiscount()
+                {
+                    DiscountId = 3,
+                    UserId = entityInWaitingForConfirmSmsCode.Id
+                };
+                await _unitOfWork.UserDiscountRepository.AddAsync(userDiscount);
+
                 var entity = GetEntityWithRoleAndPermission(entityInWaitingForConfirmSmsCode);
-                return   _mapper.Map<UserRecord>(entity);
+                return  _mapper.Map<UserRecord>(entity);
 
             }
             catch (Exception ex)

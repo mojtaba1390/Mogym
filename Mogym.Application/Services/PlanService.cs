@@ -355,9 +355,7 @@ namespace Mogym.Application.Services
                 await _emailSender.SendEmailAsync(questionPaageMessage);
 
 
-                await _smsService.SendOTP3Token(user.Mobile, 
-                    attendanceClientRecord.FirstName +" "+ attendanceClientRecord.LastName,
-                    currentTrainer.User.FirstName + " "+ currentTrainer.User.FirstName,
+                await _smsService.SendOTP(user.Mobile,
                     $"{question.Code}", "AddAttendancClientRequest") ;
             }
             catch (Exception e)

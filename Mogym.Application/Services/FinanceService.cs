@@ -76,12 +76,17 @@ namespace Mogym.Application.Services
                 var currentUserId = _accessor.GetUser();
                 var finances =await _unitOfWork.FinanceRepository
                      .Find(x=>x.Plan_Finance.TrainerProfile_Plan.UserId==currentUserId)
+                     .Include(x=>x.Plan_Finance)
+                     .ThenInclude(x=>x.TrainerProfile_Plan)
+                     .ThenInclude(x=>x.User)
                     .Include(x => x.Plan_Finance)
                     .ThenInclude(x => x.User_Plan)
-                    .Include(x => x.Discount_Finance)
-                    .Include(x=>x.Plan_Finance)
-                    .ThenInclude(x=>x.TrainerProfile_Plan)
-                    .ThenInclude(x=>x.TrainerPlanCosts)
+                    .Include(x => x.Discount_Finance).DefaultIfEmpty()
+                    .Include(x => x.Plan_Finance)
+                    .ThenInclude(x => x.TrainerProfile_Plan)
+                    .ThenInclude(x => x.TrainerPlanCosts)
+                     .Include(x=>x.Plan_Finance)
+                     .ThenInclude(x=>x.AnsweQuestion_Plan)
                     .ToListAsync();
 
                 return _mapper.Map<List<FinanceHistoryRecord>>(finances);

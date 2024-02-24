@@ -623,7 +623,16 @@ namespace Mogym.Controllers
         }
 
 
+        //[AllowAnonymous]
+        //public async Task<IActionResult> IgnoreDoc()
+        //{
+        //    string token = "مربیگری";
+        //    string token2 = "مربیگری";
 
+        //    await _smsService.SendOTP2Token("09031239853", token, token2, "IgnoreDocument");
+
+        //    return null;
+        //}
 
     }
 }

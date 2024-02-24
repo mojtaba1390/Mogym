@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Mogym.Application.Records.Finance;
+﻿using Mogym.Application.Records.Finance;
 using Mogym.Common;
 
 namespace Mogym.Application.AutoMapper.Finance
@@ -21,7 +16,7 @@ namespace Mogym.Application.AutoMapper.Finance
                             .First(q => q.Id == a.Plan_Finance.AnsweQuestion_Plan.TrainerPlan).TrainerPlan
                             .GetEnumDescription()))
                 .ForMember(x => x.InsertDate,
-                    z => z.MapFrom(a => a.InsertDate.ToShortDateString()))
+                    z => z.MapFrom(a =>a.InsertDate.GetShamsiDate()))
                 .ForMember(x => x.TrainingPlanActualPrice,
                     z => z.MapFrom(a =>
                         a.Plan_Finance.TrainerProfile_Plan.TrainerPlanCosts

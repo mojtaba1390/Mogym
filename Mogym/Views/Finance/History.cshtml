@@ -22,8 +22,8 @@
                                 <th>هزینه پرداخت شده</th>
                                 <th>کد تخفیف</th>
                                 <th>مقدار و نوع تخفیف</th>
-                                <th>وضعیت پرداخت</th>
-                            </tr>
+@*                                 <th>وضعیت پرداخت</th>
+ *@                            </tr>
                         </thead>
                         <tbody>
                             @foreach (var itm in Model)
@@ -37,8 +37,8 @@
                                     <td>@itm.TrainingPlanPayPrice</td>
                                     <td>@itm.DiscountCode</td>
                                     <td>@itm.DiscountValue</td>
-                                    <td>@itm.PayStatus</td>
-                                </tr>
+@*                                     <td>@itm.PayStatus</td>
+ *@                                </tr>
                             }
                         </tbody>
                     </table>
