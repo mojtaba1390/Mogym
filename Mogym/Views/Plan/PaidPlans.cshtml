@@ -5,74 +5,75 @@
     ViewData["title"] = "برنامه های پرداخت شده";
 }
 
-<style>
+@* <style>
     a.btn {
-        border-radius: .25rem; 
+        border-radius: .25rem;
         border: 1px solid transparent;
         padding: .5rem 1rem;
         color: #fff;
-        
     }
-    a.btn:hover {
-         border-radius: .25rem;
-    }
-</style>
+
+        a.btn:hover {
+            border-radius: .25rem;
+        }
+</style> *@
 
 <section class="content">
     <div class="container-fluid">
         <div class="row">
 
             <div class="col-12">
-                    <div class="card-body mb-50">
+                <div class="card-body mb-50">
 
-                        <table id="paidPlan" class="table table-bordered" style="width:100%">
-                            <thead>
+                    <table id="paidPlan" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>نام ورزشکار</th>
+                                <th>تاریخ ثبت </th>
+                                <th>کد رهگیری </th>
+                                <th>وضعیت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itm in Model)
+                            {
                                 <tr>
-                                    <th>نام ورزشکار</th>
-                                    <th>تاریخ ثبت </th>
-                                    <th>کد رهگیری </th>
-                                    <th>وضعیت</th>
-                                    <th>تصویر رسید</th>
-                                    <th>عملیات</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var itm in Model)
-                                {
-                                    <tr>
 
-                                        <td>@itm.AthletName</td>
+                                    <td>@itm.AthletName</td>
                                     <td style="display: table-caption;">@itm.InsertDate.GetPersianDateDetail()</td>
-                                        <td>@itm.TrackingCode</td>
-                                        <td>@itm.PlanStatus.GetEnumDescription()</td>
-                                        <td>
-                                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#ShowPaidPicture" onclick="paidPicture('@itm.PaidPicture')">نمایش</button>
+                                    <td>@itm.TrackingCode</td>
+                                    <td>@itm.PlanStatus.GetEnumDescription()</td>
+                                    <td>
 
-                                        </td>
+                                        <div class="btn-group btn-group-lg" role="group">
+                                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                عملیات
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li> <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#ShowPaidPicture" onclick="paidPicture('@itm.PaidPicture')"> نمایش تصویر رسید</button></li>
+                                                <li><button class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')" style="margin-bottom: 5px">مشاهده پرسشنامه</button></li>
+                                                <li><a class="dropdown-item" asp-route-planId="@itm.Id" asp-action="ApprovePlan">تائید برنامه</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-                                        <td>
-                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')" style="margin-bottom: 5px ">مشاهده پرسشنامه</button>
-                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="ApprovePlan">تائید برنامه</a>
-
-
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <div class="form-group row">
-                            <div class="col-md-9">
-                                <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
-                            </div>
-                            <div class="form-actions-buttons col-md-12">
-                                <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
-                            </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                            <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
+                        </div>
+                        <div class="form-actions-buttons col-md-12">
+                            <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
                         </div>
                     </div>
+                </div>
                 <!-- /.card -->
             </div>
 
@@ -89,7 +90,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-paidPicture">
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
@@ -118,7 +118,7 @@
 
 
 
-@section Scripts{
+@section Scripts {
     <script>
 
         function viewAQ(planId) {
@@ -135,7 +135,7 @@
         function paidPicture(pic) {
             var html = '<div ><img src="/PaidPic/' + pic + '" style="width:350px;height:500px"></div>';
             $('#modal-paidPicture').html(html);
-            
+
         }
 
 

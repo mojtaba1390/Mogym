@@ -338,7 +338,7 @@ namespace Mogym.Application.Services
             {
                 var hashPassword = Common.Helper.HashString(loginRecord.Password);
                 var user = await _unitOfWork.UserRepository
-                    .Find(x => x.Mobile.Trim() == loginRecord.Mobile && x.Password == hashPassword)
+                    .Find(x => x.Mobile.Trim() == loginRecord.Mobile && x.Password==hashPassword)
                     .Include(x => x.UserRoles)
                     .ThenInclude(x => x.UserRole_Role)
                     .ThenInclude(x => x.RolePermissions)

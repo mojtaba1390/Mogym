@@ -5,7 +5,7 @@
     ViewData["title"] = "برنامه های تائید شده";
 }
 
-<style>
+@* <style>
     a.btn {
         border-radius: .25rem;
         border: 1px solid transparent;
@@ -19,7 +19,7 @@
         a.btn:hover {
             border-radius: .25rem;
         }
-</style>
+</style> *@
 
 <section class="content">
     <div class="container-fluid">
@@ -47,9 +47,22 @@
                                         <td style="display: table-caption;">@itm.InsertDate.GetPersianDateDetail()</td>
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')" style="margin-bottom: 5px">مشاهده پرسشنامه</button>
-                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-action="PlanDetails">جزئیات برنامه</a>
-                                            <a class="btn btn-default" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket" style="margin: 0px 10px">گفتگو</a>
+                                            <div class="btn-group btn-group-lg" role="group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    عملیات
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-action="PlanDetails">جزئیات برنامه</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
 
                                         </td>
                                     </tr>

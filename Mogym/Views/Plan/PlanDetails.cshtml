@@ -5,7 +5,7 @@
     ViewData["title"] = "جزئیات برنامه";
 }
 
-<style>
+@* <style>
     a.btn {
         border-radius: .25rem;
         border: 1px solid transparent;
@@ -19,7 +19,7 @@
         a.btn:hover {
             border-radius: .25rem;
         }
-</style>
+</style> *@
 
 <input hidden id="planId" value="@Model.PlanId" />
 
@@ -57,33 +57,37 @@
                                                     <input class="form-control" asp-for="@Model.WorkoutRecords[index].Title" />
                                                     <span asp-validation-for="@Model.WorkoutRecords[index].Title" class="text-danger"></span>
                                                 </td>
-                                                <td class="d-flex border-0">
+                                                <td>
                                                     @{
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-primary" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
-                                                                ویرایش عنوان تمرین
+
+                                                        <div class="btn-group btn-group-lg" role="group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                عملیات
                                                             </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <button class="dropdown-item btn btn-info" type="button" onclick="editWorkout('@index','@Model.WorkoutRecords[index].Id')">
+                                                                        ویرایش عنوان تمرین
+                                                                    </button>                                              
+                                                                    </li>
+                                                                <li>
+                                                                    <a class="btn btn-primary dropdown-item" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>
+                                                                </li>
+                                                                <li>
+                                                                    <button type="button" class="btn btn-danger dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteWorkout('@Model.WorkoutRecords[index].Id','@Model.WorkoutRecords[index].PlanId')">حذف</button>
+                                                                </li>
+                                                                @if (index == Model.WorkoutRecords.Count - 1)
+                                                                {
+                                                                    <li>
+                                                                        <button class="dropdown-item" type="button" onclick="addWorkoutRow()">
+                                                                            اضافه کردن سطر جدید
+                                                                        </button>  
+                                                                    </li>
+                                                                }
+
+
+                                                            </ul>
                                                         </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <a class="btn btn-info" asp-route-id="@Model.WorkoutRecords[index].Id" asp-action="WorkoutDetail" asp-controller="Workout">جزئیات برنامه</a>
-
-                                                        </div>
-
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteWorkout('@Model.WorkoutRecords[index].Id','@Model.WorkoutRecords[index].PlanId')">حذف</button>
-                                                        </div>
-                                                        if (index == Model.WorkoutRecords.Count - 1)
-                                                        {
-                                                            <div class="form-group" style="margin: 0px 10px">
-
-                                                                <button class="btn btn-large add text-success tooltip" type="button" onclick="addWorkoutRow()">
-                                                                    <i class="fas fa-plus"></i>
-
-                                                                    <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                                </button>
-                                                            </div>
-                                                        }
                                                     }
 
                                                 </td>
@@ -123,32 +127,37 @@
                                                     <input class="form-control" asp-for="@Model.MealRecords[index].Title" />
                                                     <span asp-validation-for="@Model.MealRecords[index].Title" class="text-danger"></span>
                                                 </td>
-                                                <td class="d-flex border-0">
+                                                <td>
                                                     @{
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-primary" type="button" onclick="editMeal('@index','@Model.MealRecords[index].Id')">
-                                                                ویرایش عنوان وعده
+                                                        <div class="btn-group btn-group-lg" role="group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                عملیات
                                                             </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <button class="dropdown-item btn btn-primary" type="button" onclick="editMeal('@index','@Model.MealRecords[index].Id')">
+                                                                        ویرایش عنوان وعده
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button type="button" class="dropdown-item btn btn-info" data-bs-toggle="modal" data-bs-target="#ingridientDetailsModal" onclick="ingridientDetails('@Model.MealRecords[index].Id')">جزئیات رژیم غذایی</button>
+                                                                </li>
+                                                                <li>
+                                                                    <button type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteMeal('@Model.MealRecords[index].Id','@Model.MealRecords[index].PlanId')">حذف</button>
+                                                                </li>
+                                                                @if (index == Model.MealRecords.Count - 1)
+                                                                {
+                                                                    <li>
+                                                                        <button class="dropdown-item" type="button" onclick="addMealRow()">
+                                                                            اضافه کردن سطر جدید
+                                                                        </button>
+                                                                    </li>
+                                                                }
+
+
+                                                            </ul>
                                                         </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ingridientDetailsModal" onclick="ingridientDetails('@Model.MealRecords[index].Id')">جزئیات رژیم غذایی</button>
-                                                        </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteMeal('@Model.MealRecords[index].Id','@Model.MealRecords[index].PlanId')">حذف</button>
 
-                                                        </div>
-                                                        if (index == Model.MealRecords.Count - 1)
-                                                        {
-                                                            <div class="form-group" style="margin: 0px 10px">
-
-                                                                <button class="btn btn-large add text-success tooltip" type="button" onclick="addMealRow()">
-                                                                    <i class="fas fa-plus"></i>
-
-                                                                    <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                                </button>
-                                                            </div>
-                                                        }
                                                     }
 
                                                 </td>
@@ -186,32 +195,37 @@
                                                     <input class="form-control" asp-for="@Model.SupplimentPlanRecords[index].Title" />
                                                     <span asp-validation-for="@Model.SupplimentPlanRecords[index].Title" class="text-danger"></span>
                                                 </td>
-                                                <td class="d-flex border-0">
+                                                <td>
                                                     @{
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button class="btn btn-primary" type="button" onclick="editSupliment('@index','@Model.SupplimentPlanRecords[index].Id')">
-                                                                ویرایش عنوان مکمل
+                                                        <div class="btn-group btn-group-lg" role="group">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                عملیات
                                                             </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <button class="dropdown-item btn btn-primary" type="button" onclick="editSupliment('@index','@Model.SupplimentPlanRecords[index].Id')">
+                                                                        ویرایش عنوان مکمل
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button type="button" class="dropdown-item btn btn-info" data-bs-toggle="modal" data-bs-target="#supplimentDetailsModal" onclick="supplimentDetails('@Model.SupplimentPlanRecords[index].Id')">جزئیات مکمل</button>
+                                                                </li>
+                                                                <li>
+                                                                    <button type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteSupliment('@Model.SupplimentPlanRecords[index].Id','@Model.SupplimentPlanRecords[index].PlanId')">حذف</button>
+                                                                </li>
+                                                                @if (index == Model.SupplimentPlanRecords.Count - 1)
+                                                                {
+                                                                    <li>
+                                                                        <button class="dropdown-item" type="button" onclick="addSupplimentPlanRow()">
+                                                                            اضافه کردن سطر جدید
+                                                                        </button>
+                                                                    </li>
+                                                                }
+
+
+                                                            </ul>
                                                         </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#supplimentDetailsModal" onclick="supplimentDetails('@Model.SupplimentPlanRecords[index].Id')">جزئیات مکمل</button>
-                                                        </div>
-                                                        <div class="form-group" style="margin: 0px 10px">
-                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="deleteSupliment('@Model.SupplimentPlanRecords[index].Id','@Model.SupplimentPlanRecords[index].PlanId')">حذف</button>
 
-                                                        </div>
-                                                        if (index == Model.SupplimentPlanRecords.Count - 1)
-                                                        {
-                                                            <div class="form-group" style="margin: 0px 10px">
-
-                                                                <button class="btn btn-large add text-success tooltip" type="button" onclick="addSupplimentPlanRow()">
-                                                                    <i class="fas fa-plus"></i>
-
-                                                                    <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                                </button>
-                                                            </div>
-                                                        }
                                                     }
 
                                                 </td>
@@ -267,7 +281,7 @@
                             @TempData["errormessage"]
                         </div>
                         <div class="form-actions-buttons col-md-3">
-                                <a class="btn btn-success" asp-route-planId="@Model.PlanId" asp-action="SendPlan">ارسال برنامه</a>
+                                <a class="btn btn-success py-2" asp-route-planId="@Model.PlanId" asp-action="SendPlan">ارسال برنامه</a>
                             <a asp-controller="Plan" asp-action="ApprovePlans" class="btn btn-secondary py-2">بازگشت </a>
                         </div>
                     </div>

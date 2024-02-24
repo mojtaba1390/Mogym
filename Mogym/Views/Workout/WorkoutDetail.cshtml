@@ -3,7 +3,7 @@
 @{
     Layout = "_Layout";
     ViewData["title"] = "جزئیات تمرین";
-    var superSetIds = (List<int?>) ViewBag.SuperSetsIds;
+    var superSetIds = (List<int?>)ViewBag.SuperSetsIds;
 }
 
 
@@ -20,7 +20,7 @@
                 </div>
                 <div class="card-body py-5">
                     <div class="mb-1">
-                        <div id="attributes-recruit-training" class="add-row-table pt-3">
+                        <div id="attributes-recruit-training" class=" pt-3">
 
                             <form asp-controller="Exercise" asp-action="AddExercise" id="workoutForm">
 
@@ -61,47 +61,51 @@
                                                                 else
                                                                 {
                                                                     <select class="js-select-example form-select form-control" asp-for="@Model[index].SuperSetId"
-                                                            aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList) ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
+                                                                            aria-label="Default select exampleFormControlSelect1" asp-items="((SelectList) ViewBag.SuperSets).Where(x => x.Value != Model[index].Id.ToString())">
                                                                         <option value="@null"> انتخاب کنید</option>
                                                                     </select>
                                                                     <span class="text-danger d-flex" asp-validation-for="@Model[index].SuperSetId"></span>
                                                                 }
                                                             }
-                                                            
+
 
 
                                                         </div>
                                                     </td>
-                                                    <td class="d-flex border-0">
+                                                    <td>
                                                         @{
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
-                                                            </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button class="btn btn-primary" type="submit">
-                                                                    ویرایش تمرین این سطر
+                                                            <div class="btn-group btn-group-lg" role="group">
+                                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="True">
+                                                                    عملیات
                                                                 </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-default" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@Model[index].ExerciseVideoId')">مشاهده جزئیات حرکت</button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button class="dropdown-item btn btn-default" type="submit">
+                                                                            ویرایش تمرین این سطر
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button class="dropdown-item btn btn-default" type="button" onclick="deleteExercise('@Model[index].Id','@Model[index].WorkoutId')">
+                                                                            حذف
+                                                                        </button>
+                                                                    </li>
+                                                                    @if (index == Model.Count - 1)
+                                                                    {
+                                                                        <li>
+                                                                            <button class="dropdown-item btn btn-default" type="button" onclick="addExerciseRow()">
+                                                                                اضافه کردن سطر جدید
+                                                                            </button>  
+                                                                        </li>
+                                                                    }
+                                                                </ul>
                                                             </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddUpdateExerciseSetsModal" onclick="addUpdateExerciseSets('@Model[index].Id')">طراحی ست های تمرین</button>
-                                                            </div>
-                                                            <div class="form-group" style="margin: 0px 10px">
-                                                                <button class="btn btn-danger" type="button" onclick="deleteExercise('@Model[index].Id','@Model[index].WorkoutId')">
-                                                                    حذف
-                                                                </button>
-                                                            </div>
-                                                            if (index == Model.Count - 1)
-                                                            {
-                                                                <div class="form-group" style="margin: 0px 10px">
 
-                                                                    <button class="btn btn-large add text-success tooltip" type="button" onclick="addExerciseRow()">
-                                                                        <i class="fas fa-plus"></i>
-
-                                                                        <span class="tooltiptext tooltip-top">اضافه کردن سطر جدید</span>
-
-                                                                    </button>
-                                                                </div>
-                                                            }
                                                         }
 
                                                     </td>
@@ -127,7 +131,7 @@
                             @TempData["errormessage"]
                         </div>
                         <div class="form-actions-buttons col-md-3">
-@*                            <input type="submit" value="ثبت" class="btn btn-success-card" />
+                            @*                            <input type="submit" value="ثبت" class="btn btn-success-card" />
                             *@                            <a asp-controller="Plan" asp-action="PlanDetails" asp-route-planId="@ViewBag.PlanId" class="btn btn-secondary py-2">بازگشت </a>
                         </div>
                     </div>
@@ -172,8 +176,8 @@
 
 
 
-@section Scripts{
+@section Scripts {
     <script src="~/js/workout.js"></script>
-    
+
 
 }

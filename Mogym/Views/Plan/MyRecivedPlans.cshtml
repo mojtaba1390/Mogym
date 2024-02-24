@@ -34,22 +34,30 @@
                                     <td>@itm.InsertDate.GetPersianDateDetail()</td>
                                     <td>@itm.TrackingCode</td>
                                     <td>@itm.Description</td>
-                                    <td class="d-flex border-0">
-                                        <div class="form-group" style="margin: 0px 10px">
-                                            <a class="btn btn-primary" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
-                                        </div>
-                                        <div class="form-group" style="margin: 0px 10px">
-                                            <a class="btn btn-success" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
-                                        </div>
-                                        <div class="form-group" style="margin: 0px 10px">
-                                            <a class="btn btn-info" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan" asp-action="SentSupplimentDetail">مکمل</a>
-                                        </div>
-                                        <div class="form-group" style="margin: 0px 10px">
-                                            <a class="btn btn-default" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
-                                        </div>
-                                        <div class="form-group" style="margin: 0px 10px">
-                                            <button type="button" class="btn btn-default" data-bs-toggle="modal" data-bs-target="#AddReviewModal" onclick="addReview('@itm.Id')">ثبت نظر</button>
-                                        </div>
+                                    <td>
+                                            <div class="btn-group btn-group-lg" role="group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    عملیات
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan" asp-action="SentSupplimentDetail">مکمل</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#AddReviewModal" onclick="addReview('@itm.Id')">ثبت نظر</button>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
                                     </td>
                                 </tr>
                             }

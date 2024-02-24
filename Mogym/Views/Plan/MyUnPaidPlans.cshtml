@@ -22,7 +22,7 @@
                                     <th>تاریخ ثبت </th>
                                     <th>کد رهگیری </th>
                                     <th>وضعیت</th>
-                                    <th colspan="2">عملیات</th>
+                                    <th>عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,10 +36,21 @@
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
 
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
+                                            <div class="btn-group btn-group-lg" role="group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    عملیات
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#AddPaidPictureModal" onclick="setplanId('@itm.Id')">ثبت تصویر پرداختی</button>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#ViewAQModal" onclick="viewAQ('@itm.Id')">مشاهده پرسشنامه</button>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            
 
                                         </td>
                                     </tr>
