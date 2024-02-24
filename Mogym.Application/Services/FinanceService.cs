@@ -52,7 +52,7 @@ namespace Mogym.Application.Services
             {
                 PlanId = model.PlanId,
                 TrainingPlanId = model.TrainingPlanId,
-                DiscountId = model.DiscountId ?? 0,
+                DiscountId = model.DiscountId,
                 FinalPrice = model.LastPrice,
                 FinanceStatus = EnumFinanceStatus.WaitForPay
             };

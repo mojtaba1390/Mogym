@@ -30,8 +30,7 @@ namespace Mogym.Domain.Configuration
 
             builder.HasOne<Discount>(x => x.Discount_Finance)
                 .WithMany(z => z.Finances)
-                .HasForeignKey(a => a.DiscountId)
-                .IsRequired();
+                .HasForeignKey(a => a.DiscountId);
         }
     }
 }
