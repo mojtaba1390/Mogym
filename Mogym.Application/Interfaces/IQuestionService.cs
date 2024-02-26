@@ -13,5 +13,6 @@ namespace Mogym.Application.Interfaces
         Task<WaitForPayRecord> AddQuestion(CreateQuestionRecord createQuestionRecord);
         Task<CreateAttendanceClientQuestionRecord> GetQuestionWithCode(string code);
         Task<WaitForPayRecord> UpdateQuestion(CreateAttendanceClientQuestionRecord createAttendanceClientQuestionRecord);
+        Task<string> SendOtpLoginForAttendanceClient(string code);
     }
 }

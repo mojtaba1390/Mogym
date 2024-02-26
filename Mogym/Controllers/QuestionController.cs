@@ -162,11 +162,22 @@ namespace Mogym.Controllers
                 }
 
 
+
+
                 var question = await _questionService.GetQuestionWithCode(code);
                 if (question is null)
                 {
                     ViewBag.ErrorMessage = "فرم مورد نظر یافت نشد";
                     return View("NotFound");
+                }
+
+                var isLogined = HttpContext.User.Identity.IsAuthenticated;
+                if (!isLogined)
+                {
+                    var mobileNumberForAttendenceClientLogin =
+                        await _questionService.SendOtpLoginForAttendanceClient(code);
+                    return RedirectToAction("ConfirmSmsCode", "Account",
+                        new {mobile = mobileNumberForAttendenceClientLogin, returnUrl = $"/AttendanceClient/{code}"});
                 }
 
 

@@ -10,6 +10,7 @@ using Mogym.Application.Interfaces;
 using Mogym.Application.Interfaces.ILog;
 using Mogym.Application.Records.Plan;
 using Mogym.Application.Records.Question;
+using Mogym.Application.Records.User;
 using Mogym.Common;
 using Mogym.Common.ModelExtended;
 using Mogym.Domain.Entities;
@@ -188,6 +189,26 @@ namespace Mogym.Application.Services
             {
                 throw ex;
             }
+        }
+
+        public async Task<string> SendOtpLoginForAttendanceClient(string code)
+        {
+            var plan = await _unitOfWork.PlanRepository.Where(x => x.AnsweQuestion_Plan.Code == code)
+                .Include(x => x.AnsweQuestion_Plan)
+                .Include(x => x.User_Plan)
+                .FirstOrDefaultAsync();
+
+            var user = plan.User_Plan;
+
+            user.SmsConfirmCode = new Random().Next(10000, 99999).ToString();
+            _unitOfWork.UserRepository.Update(user);
+
+
+            await _smsService.SendOTP(user.Mobile, user.SmsConfirmCode, "MogymConfirmSmsCode");
+
+            return user.Mobile;
+
+
         }
     }
 }

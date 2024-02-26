@@ -623,16 +623,24 @@ namespace Mogym.Controllers
         }
 
 
-        //[AllowAnonymous]
-        //public async Task<IActionResult> IgnoreDoc()
-        //{
-        //    string token = "مربیگری";
-        //    string token2 = "مربیگری";
+        [AllowAnonymous]
+        public async Task<IActionResult> IgnoreDoc()
+        {
+            string token = "مربیگیری(فدراسیون)";
+            string token2 = "مربیگیری(فدراسیون)";
 
-        //    await _smsService.SendOTP2Token("09031239853", token, token2, "IgnoreDocument");
+            await _smsService.SendOTP2Token("09120807470", token, token2, "IgnoreDocument");
 
-        //    return null;
-        //}
+            return null;
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> ApproveDocument()
+        {
+
+            await _smsService.SendOTP("09124146158", "account/login", "ApproveDocument");
+
+            return null;
+        }
 
     }
 }
