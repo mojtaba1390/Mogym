@@ -23,13 +23,15 @@ namespace Mogym.Controllers
         private readonly ITrainerProfileService _trainerProfileService;
         private readonly IHttpContextAccessor _accessor;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IPlanService _planService;
 
-        public QuestionController(ITrainerProfileService trainerProfileService, IQuestionService questionService, IHttpContextAccessor accessor, IWebHostEnvironment webHostEnvironment)
+        public QuestionController(ITrainerProfileService trainerProfileService, IQuestionService questionService, IHttpContextAccessor accessor, IWebHostEnvironment webHostEnvironment,IPlanService planService)
         {
             _trainerProfileService = trainerProfileService;
             _questionService = questionService;
             _accessor = accessor;
             _webHostEnvironment = webHostEnvironment;
+            _planService = planService;
         }
         public IActionResult Index()
         {
@@ -53,6 +55,15 @@ namespace Mogym.Controllers
                     TempData["errormessage"] = "مربی یافت نشد";
                     return View("NotFound");
                 }
+
+                var isThereAnyPlanWithThisUserAndTrainerInPastMonth =
+                    await _planService.IsThereAnyPlanWithThisUserAndTrainerInPastMonth(trainerId);
+                if (isThereAnyPlanWithThisUserAndTrainerInPastMonth)
+                {
+                    TempData["errormessage"] = "شما در یک ماه گذشته درخواست برنامه ای از این مربی داشته اید و امکان ثبت مجدد وجود ندارد.";
+                    return View("IlegalRequest");
+                }
+
 
                 return View(createQuestionRecord);
             }

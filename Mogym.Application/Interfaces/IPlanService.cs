@@ -39,5 +39,6 @@ namespace Mogym.Application.Interfaces
         Task<string> EditPlanAfterSent(int planId);
         Task<int> GetSentPlanCountForIndexPage();
         Task<PlanCommentRecord> GetPlanDetailsForComment(int planId);
+        Task<bool> IsThereAnyPlanWithThisUserAndTrainerInPastMonth(int trainerId);
     }
 }

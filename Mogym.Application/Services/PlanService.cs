@@ -444,6 +444,16 @@ namespace Mogym.Application.Services
             }
         }
 
+        public async Task<bool> IsThereAnyPlanWithThisUserAndTrainerInPastMonth(int trainerId)
+        {
+            var currentUser = _accessor.GetUser();
+            var difDate = DateTime.Now.AddDays(-30);
+            return await _unitOfWork.PlanRepository.Find(x => 
+                x.UserId == currentUser && 
+                    x.TrainerId == trainerId && x.InsertDate>difDate )
+                .AnyAsync();
+        }
+
         [HttpPost]
         public async Task ApprovePlan(int planId)
         {

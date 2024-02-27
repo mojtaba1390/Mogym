@@ -233,6 +233,7 @@ namespace Mogym.Application.Services
                     .Include(x => x.User)
                     .Include(x => x.TrainerAchievements)
                     .Include(x => x.Plans)
+                    .Include(x => x.Comments)
                     .ToListAsync();
 
                 var getFirstTake = trainers.Take(takeCount);
