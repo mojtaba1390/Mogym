@@ -338,7 +338,7 @@ namespace Mogym.Application.Services
             {
                 var hashPassword = Common.Helper.HashString(loginRecord.Password);
                 var user = await _unitOfWork.UserRepository
-                    .Find(x => x.Mobile.Trim() == loginRecord.Mobile && x.Password==hashPassword)
+                    .Find(x => x.Mobile.Trim() == loginRecord.Mobile && x.Password==hashPassword )
                     .Include(x => x.UserRoles)
                     .ThenInclude(x => x.UserRole_Role)
                     .ThenInclude(x => x.RolePermissions)
@@ -492,13 +492,13 @@ namespace Mogym.Application.Services
 
                 //_userRoleService.Add(userRole,true);
 
-                //TODO:بعد از تخفیف عید پاک بشه
-                var userDiscount = new UserDiscount()
-                {
-                    DiscountId = 3,
-                    UserId = entityInWaitingForConfirmSmsCode.Id
-                };
-                await _unitOfWork.UserDiscountRepository.AddAsync(userDiscount);
+                ////TODO:بعد از تخفیف عید پاک بشه
+                //var userDiscount = new UserDiscount()
+                //{
+                //    DiscountId = 3,
+                //    UserId = entityInWaitingForConfirmSmsCode.Id
+                //};
+                //await _unitOfWork.UserDiscountRepository.AddAsync(userDiscount);
 
                 var entity = GetEntityWithRoleAndPermission(entityInWaitingForConfirmSmsCode);
                 return  _mapper.Map<UserRecord>(entity);

@@ -623,32 +623,32 @@ namespace Mogym.Controllers
         }
 
 
-        [AllowAnonymous]
-        public async Task<IActionResult> IgnoreDoc()
-        {
-            string token = "مربیگیری(فدراسیون)";
-            string token2 = "مربیگیری(فدراسیون)";
+        //[AllowAnonymous]
+        //public async Task<IActionResult> IgnoreDoc()
+        //{
+        //    string token = "مربیگیری(فدراسیون)";
+        //    string token2 = "مربیگیری(فدراسیون)";
 
-            await _smsService.SendOTP2Token("09192330588", token, token2, "IgnoreDocument");
+        //    await _smsService.SendOTP2Token("09192330588", token, token2, "IgnoreDocument");
 
-            return null;
-        }
-        [AllowAnonymous]
-        public async Task<IActionResult> ApproveDocument()
-        {
+        //    return null;
+        //}
+        //[AllowAnonymous]
+        //public async Task<IActionResult> ApproveDocument()
+        //{
 
-            await _smsService.SendOTP("09197777742", "account/login", "ApproveDocument");
+        //    await _smsService.SendOTP("09912013314", "account/login", "ApproveDocument");
 
-            return null;
-        }
-        [AllowAnonymous]
-        public async Task<IActionResult> WaitingPaid()
-        {
+        //    return null;
+        //}
+        //[AllowAnonymous]
+        //public async Task<IActionResult> WaitingPaid()
+        //{
 
-            await _smsService.SendOTP("09334402360", "1", "WaitingPaid");
+        //    await _smsService.SendOTP("09131930844", "1", "WaitingPaid");
 
-            return null;
-        }
+        //    return null;
+        //}
 
     }
 }

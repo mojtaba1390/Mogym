@@ -137,7 +137,23 @@ namespace Mogym.Common
         Medium = 2,
         [EnumMember]
         [Description("بزرگ")]
-        Big = 3
+        Big = 3,
+        [EnumMember]
+        [Description("برش")]
+        Slice = 4,
+        [EnumMember]
+        [Description("کف دست")]
+        Palm = 5,
+        [EnumMember]
+        [Description("لیوان")]
+        Glass = 6,
+        [EnumMember]
+        [Description("10*10")]
+        TenCrossTen = 7,
+        [EnumMember]
+        [Description("پیمانه")]
+        Cup = 8
+
     }
     public enum EnumScale
     {

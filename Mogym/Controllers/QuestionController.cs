@@ -65,6 +65,14 @@ namespace Mogym.Controllers
                 }
 
 
+                //if (trainerId == 1071)
+                //{
+                //    TempData["errormessage"] = "در حال حاضر امکان ثبت درخواست وجود ندارد.";
+                //    return View("IlegalRequest");
+                //}
+
+
+
                 return View(createQuestionRecord);
             }
             catch (Exception e)
