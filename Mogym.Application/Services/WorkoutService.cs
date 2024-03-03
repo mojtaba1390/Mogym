@@ -15,6 +15,7 @@ using Mogym.Application.Records.ExerciseVideo;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 using Newtonsoft.Json;
+using System.Numerics;
 
 namespace Mogym.Application.Services
 {
@@ -145,6 +146,31 @@ namespace Mogym.Application.Services
         public async Task<Workout?> GetByIdAsync(int id)
         {
             return await _unitOfWork.WorkoutRepository.Find(x=>x.Id==id).FirstOrDefaultAsync();
+        }
+
+        public async Task<SentWorkoutRecord> GetPrintWorkoutDetail(int workoutId)
+        {
+            try
+            {
+                var useId = _accessor.GetUser();
+                var trainerId = _trainerProfileService.GetCurrentUserTrainer().Result?.Id;
+
+                var workout = await _unitOfWork.WorkoutRepository.Find(x => x.Id == workoutId && (x.Plan_Workout.UserId == useId || x.Plan_Workout.TrainerId == trainerId))
+                    .Include(x => x.Plan_Workout)
+                    .Include(x => x.Exercises)
+                    .ThenInclude(x => x.ExerciseVideo_Exercise)
+                    .Include(x => x.Exercises)
+                    .ThenInclude(x => x.ExerciseSets).FirstOrDefaultAsync();
+
+                return _mapper.Map<SentWorkoutRecord>(workout);
+
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetPrintWorkoutDetail in WorkoutService,id=" + workoutId;
+                _logger.LogError(message, ex.InnerException);
+                throw ex;
+            }
         }
     }
 }

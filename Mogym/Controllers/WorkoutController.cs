@@ -7,6 +7,7 @@ using Mogym.Application.Records.Workout;
 using Mogym.Application.Services;
 using Mogym.Domain.Entities;
 
+
 namespace Mogym.Controllers
 {
     [Authorize]
@@ -16,6 +17,7 @@ namespace Mogym.Controllers
         private readonly IExerciseVideoService _exerciseVideoService;
         private readonly IExerciseservice _exerciseservice;
         private readonly IPlanService _planService;
+
         public WorkoutController(IWorkoutService workoutService, IExerciseVideoService exerciseVideoService,IExerciseservice exerciseservice, IPlanService planService)
         {
             _workoutService = workoutService;
@@ -163,5 +165,24 @@ namespace Mogym.Controllers
             }
             return View("NotFound");
         }
+
+
+        public async Task<IActionResult> PrintWorkout(int workoutId)
+        {
+            try
+            {
+                var workoutDetail = await _workoutService.GetPrintWorkoutDetail(workoutId);
+
+                return View(workoutDetail);
+            }
+            catch (Exception e)
+            {
+                TempData["errormessage"] = "خطایی در سیستم رخ داده است";
+
+            }
+            return View("NotFound");
+        }
+
+
     }
 }

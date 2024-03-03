@@ -19,5 +19,6 @@ namespace Mogym.Application.Interfaces
         Task Delete(int deleteId);
         Task<List<SentWorkoutRecord>> GetSentWorkoutDetail(int planId);
         Task<Workout?> GetByIdAsync(int id);
+        Task<SentWorkoutRecord> GetPrintWorkoutDetail(int workoutId);
     }
 }

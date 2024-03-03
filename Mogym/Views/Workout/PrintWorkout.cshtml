@@ -1,0 +1,174 @@
+﻿@model Mogym.Application.Records.Workout.SentWorkoutRecord
+
+@{
+    ViewBag.Title = "پرینت حرکت تمرینی";
+    Layout = "_AnanymousLayout";
+}
+
+<style>
+    * { 
+        font-size: 25px !important;
+        font-weight: 700;
+    }
+</style>
+
+<section class="content card-custome">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class=" py-5">
+                    <p style="color: red;font-size: 20px !important;">*در سوپرست، چنان چه تعداد ست های حرکت ها با هم برابر نباشد،تمام جزئیات ست کمتر 0 درج شده است.</p>
+                    <div class="mb-1">
+                        <div id="attributes-recruit-training" class="add-row-table pt-3">
+                            <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                @{
+
+                                    <table class="table attr-training-request col-12  trainingCourse_employment  p-0 ">
+
+                                        <thead>
+                                        <tr style="background-color:#e8eb57;text-align: center">
+                                            <th style="font-size: 20px !important;">
+                                                @Model.Title
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        @{
+                                            var superSetIds = Model.SentExerciseRecords
+                                                .Where(x => x.SuperSetId is not null)
+                                                .Select(x => x.SuperSetId).ToList();
+                                        }
+
+                                        @foreach (var exercise in Model.SentExerciseRecords)
+                                        {
+                                            if (exercise.SuperSetId is null & !superSetIds.Contains(exercise.Id))
+                                            {
+                                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                    <thead>
+                                                    <tr style="background-color:bisque; text-align: center;">
+                                                        <th colspan="4" style="font-size: 20px !important;">@exercise.ExerciseTitle</th>
+                                                    </tr>
+                                                    <tr style="text-align: center">
+                                                        <th style="font-size: 20px !important;">شماره ست</th>
+                                                        <th style="font-size: 20px !important;">وزن</th>
+                                                        <th style="font-size: 20px !important;">تعداد</th>
+                                                        <th style="font-size: 20px !important;">زمان (ثانیه:دقیقه)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="approverRowsContainer" id="exerciseBody">
+                                                    @{
+                                                        int setNumber = 0;
+
+                                                        foreach (var set in exercise.SentExerciseSetRecords)
+                                                        {
+                                                            <tr class="attr form-group" style="text-align: center">
+                                                                <td width="20%" style="font-size: 20px !important;">
+                                                                    @(setNumber += 1)
+                                                                </td>
+                                                                <td width="20%" style="font-size: 20px !important;">
+                                                                    @set.Weight
+                                                                </td>
+                                                                <td width="20%" style="font-size: 20px !important;">
+                                                                    @set.Count
+                                                                </td>
+                                                                <td width="20%" style="font-size: 20px !important;">
+                                                                    @(set.Second + ":" + @set.Minute)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                    </tbody>
+                                                </table>
+                                            }
+                                            else if (exercise.SuperSetId is not null)
+                                            {
+                                                var superSet = Model.SentExerciseRecords.Where(x => x.Id == exercise.SuperSetId).First();
+                                                <table class="table attr-training-request col-12  trainingCourse_employment  p-0">
+                                                    <thead>
+                                                    <tr style="background-color:ivory;text-align: center">
+                                                        <th colspan="4" style="font-size: 20px !important;"> سوپر ست </th>
+                                                    </tr>
+                                                    <tr style="text-align: center;background-color: white">
+                                                        <th style="font-size: 20px !important;">@exercise.ExerciseTitle</th>
+                                                    </tr>
+                                                    <tr style="text-align: center;background-color: bisque">
+                                                        <th style="font-size: 20px !important;">@superSet.ExerciseTitle</th>
+                                                    </tr>
+                                                    <tr style="text-align: center">
+                                                        <th style="font-size: 20px !important;">شماره ست</th>
+                                                        <th style="font-size: 20px !important;">وزن</th>
+                                                        <th style="font-size: 20px !important;">تعداد</th>
+                                                        <th style="font-size: 20px !important;">زمان (ثانیه:دقیقه)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="approverRowsContainer" id="exerciseBody">
+                                                    @{
+                                                        var maxCount = Math.Max(exercise.SentExerciseSetRecords.Count, superSet.SentExerciseSetRecords.Count);
+                                                        int setNumber = 0;
+                                                        for (int i = 0; i < maxCount; i++)
+                                                        {
+                                                            <tr class="attr form-group" style="text-align: center">
+                                                                <td width="20%" rowspan="2">
+                                                                    @(setNumber += 1)
+                                                                </td>
+                                                                <td width="20%" style="font-size: 20px !important;">
+                                                                    @(exercise.SentExerciseSetRecords.Count > i ?
+                                                                        exercise.SentExerciseSetRecords[i].Weight : 0)
+                                                                </td>
+                                                                <td width="20%" style="text-align: center;font-size: 20px !important;">
+                                                                    @(exercise.SentExerciseSetRecords.Count > i ?
+                                                                        exercise.SentExerciseSetRecords[i].Count : 0)
+                                                                </td>
+                                                                <td width="20%" style="text-align: center;font-size: 20px !important;">
+                                                                    @(exercise.SentExerciseSetRecords.Count > i ?
+                                                                        exercise.SentExerciseSetRecords[i].Minute + ":" + exercise.SentExerciseSetRecords[i].Second : 0)
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="attr form-group" style="background-color: bisque">
+                                                                <td width="20%" style="text-align: center;font-size: 20px !important;">
+                                                                    @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                        superSet.SentExerciseSetRecords[i].Weight : 0)
+                                                                </td>
+                                                                <td width="20%" style="text-align: center;font-size: 20px !important;">
+                                                                    @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                        superSet.SentExerciseSetRecords[i].Count : 0)
+                                                                </td>
+                                                                <td width="20%" style="text-align: center; direction: rtl;font-size: 20px !important;">
+                                                                    @(superSet.SentExerciseSetRecords.Count > i ?
+                                                                        superSet.SentExerciseSetRecords[i].Minute + ":" + superSet.SentExerciseSetRecords[i].Second : 0)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+
+
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        }
+                                    </table>
+                                  
+                                }
+
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+
+    $(document).ready(function () {
+        window.print();
+
+    })
+</script>

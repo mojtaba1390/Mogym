@@ -15,7 +15,6 @@ builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 var connectionString = builder.Configuration.GetConnectionString("MogymConnection");

@@ -67,6 +67,8 @@ function addUpdateExerciseSets(exerciseId) {
 }
 
 
+
+
 function addExerciseSetRow(row) {
     $.ajax({
         type: "POST",
@@ -105,6 +107,9 @@ function removeRow(id, idInput) {
     //}
 
 }
+
+
+
 
 
 

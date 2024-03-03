@@ -49,33 +49,31 @@
                                         <td>@itm.PlanStatus.GetEnumDescription()</td>
                                         <td>@itm.Description</td>
                                         <td>
-                                            <td>
-                                                <div class="btn-group btn-group-lg" role="group">
-                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        عملیات
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li>
+                                            <div class="btn-group btn-group-lg" role="group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    عملیات
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
                                                         <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Workout" asp-action="SentWorkoutDetail">حرکات تمرینی</a>
-                                                        </li>
-                                                        <li>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Meal" asp-action="SentDietDetail">رژیم غذایی</a>
-                                                        </li>
-                                                        <li>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="SupplimentPlan" asp-action="SentSupplimentDetail">مکمل</a>
-                                                        </li>
-                                                        <li>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Ticket" asp-action="PlanTicket">گفتگو</a>
-                                                        </li>
-                                                        <li>
+                                                    </li>
+                                                    <li>
                                                         <a class="dropdown-item" asp-route-planId="@itm.Id" asp-controller="Plan" asp-action="EditPlanAfterSent">برگشت برای اصلاح</a>
-                                                        </li>
+                                                    </li>
 
-                                                    </ul>
-                                                </div>
-                                            
+                                                </ul>
+                                            </div>
 
-                                            </td>
+
 
                                         </td>
                                     </tr>
@@ -109,7 +107,7 @@
 
 
 
-@section Scripts{
+@section Scripts {
     <script>
 
 
