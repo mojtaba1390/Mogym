@@ -13,5 +13,6 @@ namespace Mogym.Application.Records.ExerciseVideo
         public string? Title { get; init; }
         public string? Description { get; init; }
         public string? FileName { get; init; }
+        public string? Status { get; init; }
     }
 }

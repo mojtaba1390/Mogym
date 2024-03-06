@@ -1,0 +1,130 @@
+﻿@model List<Mogym.Application.Records.ExerciseVideo.ExerciseVideoRecord>
+@{
+    ViewBag.Title = " ویدئوهای تمرینات من";
+    Layout = "_Layout";
+}
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card-body mb-50">
+                 <a asp-action="Create" class="btn btn-success-card px-5 mb-4"> ایجاد ویدئو جدید</a>
+                   
+                    <table id="exercisevideo" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>نام حرکت</th>
+                                <th>وضعیت</th>
+                                <th>جزئیات حرکت</th>
+                                <th>عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itm in Model)
+                            {
+                                <tr>
+
+                                    <td>@itm.Title</td>
+                                    <td>@itm.Status</td>
+                                    <td>
+                                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ViewVideoDetailsModal" onclick="viewVideoDetails('@itm.Id')">مشاهده</button>
+                                    </td>
+                                    <td>
+                                        <a type="button" class="btn btn-danger" asp-route-id="@itm.Id" asp-action="Delete">حذف</a>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="form-group row">
+                        <div class="col-md-9">
+                            <p class="text-red text-right mt-2 font-weight-bold">@TempData["message"]</p>
+                        </div>
+                        <div class="form-actions-buttons col-md-12">
+                            <a asp-action="Index" asp-controller="Account" class="btn btn-secondary py-2">بازگشت</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="ViewVideoDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-viewDetails">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function viewVideoDetails(videoId) {
+            $.ajax({
+                url: "/ExerciseVideo/GetVideoDetails?videoId=" + videoId,
+                dataType: 'html',
+                success: function (data) {
+                    $('#modal-viewDetails').html(data);
+                }
+            });
+        }
+
+
+        $(function () {
+
+
+            $("#exercisevideo").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                ],
+                "pageLength": 25,
+                "ordering": false,
+                language: {
+                    processing: "لطفا صبر کنید ...",
+                    search: "جستجو ",
+                    lengthMenu: "نمایش _MENU_ آیتم",
+                    info: "نمایش آیتم _START_ تا _END_ از مجموع _TOTAL_ آیتم",
+                    infoEmpty: "نمایش آیتم 0 تا 0 از مجموع 0 آیتم",
+                    infoFiltered: "(فیلتر شده از مجموع _MAX_ آیتم)",
+                    infoPostFix: "",
+                    loadingRecords: "لطفا صبر کنید ...",
+                    zeroRecords: "هیچ آیتمی برای نمایش وجود ندارد",
+                    emptyTable: "هیچ آیتمی برای نمایش وجود ندارد",
+                    paginate: {
+                        first: "اولین",
+                        previous: "قبلی",
+                        next: "بعدی",
+                        last: "آخرین"
+                    },
+                    aria: {
+                        sortAscending: ": مرتب کردن ستون به ترتیب صعودی",
+                        sortDescending: ": مرتب کردن ستون به ترتیب نزولی"
+                    }
+                }
+            });
+        });
+
+    </script>
+}

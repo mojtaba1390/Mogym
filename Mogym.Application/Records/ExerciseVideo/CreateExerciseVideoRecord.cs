@@ -10,6 +10,7 @@ namespace Mogym.Application.Records.ExerciseVideo
     public record CreateExerciseVideoRecord: ExerciseVideoRecord
     {
         public IFormFile? ExerciseVideo { get; set; }
+        public int? UserId { get; init; }
 
     }
 }

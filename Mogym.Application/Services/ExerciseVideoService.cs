@@ -10,6 +10,8 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Mogym.Application.Interfaces.ILog;
+using Mogym.Common;
+using Mogym.Common.ModelExtended;
 using Mogym.Domain.Entities;
 using Mogym.Infrastructure;
 
@@ -21,16 +23,20 @@ namespace Mogym.Application.Services
         private readonly IMapper _mapper;
         private readonly ISeriLogService _logger;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IEmailSender _emailSender;
+
 
         public ExerciseVideoService(IUnitOfWork unitOfWork,
             IMapper mapper,
             ISeriLogService logger,
-            IHttpContextAccessor accessor)
+            IHttpContextAccessor accessor,
+            IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _accessor = accessor;
+            _emailSender = emailSender;
         }
 
 
@@ -38,7 +44,8 @@ namespace Mogym.Application.Services
         {
             try
             {
-                var exercises = _unitOfWork.ExerciseVideoRepository.GetAll().OrderByDescending(x=>x.Id);
+                var currentUser = _accessor.GetUser();
+                var exercises = _unitOfWork.ExerciseVideoRepository.Find(x=>x.Status==EnumExrciseVideoStatus.Approve && (x.UserId==null || x.UserId== currentUser)).OrderByDescending(x=>x.Id);
                 return _mapper.Map<List<ExerciseVideoRecord>>(exercises);
             }
             catch (Exception ex)
@@ -55,6 +62,12 @@ namespace Mogym.Application.Services
             {
                 var exerciseVideo = _mapper.Map<ExerciseVideo>(createExerciseVideoRecord);
                  await _unitOfWork.ExerciseVideoRepository.AddAsync(exerciseVideo);
+
+                 var email = new Message(new string[] { "ramezannia.mojtaba@gmail.com" },
+                     $"بارگزاری ویدئو",
+                     "");
+
+                 await _emailSender.SendEmailAsync(email);
             }
             catch (Exception ex)
             {
@@ -77,6 +90,28 @@ namespace Mogym.Application.Services
                 _logger.LogError(message, ex);
                 throw ex;
             }
+        }
+
+        public async Task<List<ExerciseVideoRecord>> GetMyExerciseVideo()
+        {
+            var uId = _accessor.GetUser();
+            try
+            {
+                var exercises = _unitOfWork.ExerciseVideoRepository.Find(x => x.UserId == uId).OrderByDescending(x => x.Id);
+                return _mapper.Map<List<ExerciseVideoRecord>>(exercises);
+            }
+            catch (Exception ex)
+            {
+                var message = $"GetMyExerciseVideo in ExerciseVideoService";
+                _logger.LogError(message, ex);
+                throw ex;
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var entity =  _unitOfWork.ExerciseVideoRepository.GetById(id);
+             _unitOfWork.ExerciseVideoRepository.Delete(entity);
         }
     }
 }

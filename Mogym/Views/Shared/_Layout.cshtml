@@ -102,6 +102,29 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/owl-carousel/owl.carousel.min.js"></script>
     <script src="~/lib/jQuery-Validation-1.19.2/jquery-validation.min.js"></script>
+    <style>
+        @@media screen and (max-width: 600px) {
+  .navbar a:not(:first-child) {display: none;}
+  .navbar a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@@media screen and (max-width: 600px) {
+  .navbar.responsive .icon {
+    position: absolute;
+    right: 0;
+    bottom:0;
+  }
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+}
+    </style>
 </head>
 <body class="sidebar-mini layout-fixed">
     <!-- Loding .... -->

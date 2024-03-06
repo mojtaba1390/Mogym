@@ -21,6 +21,7 @@ namespace Mogym.Domain.Entities
 
             Comments = new HashSet<Comment>();
             UserDiscounts = new HashSet<UserDiscount>();
+            ExerciseVideos = new HashSet<ExerciseVideo>();
         }
         public string? UserName { get; set; }
         public string Password { get; set; }
@@ -56,6 +57,7 @@ namespace Mogym.Domain.Entities
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<UserDiscount> UserDiscounts { get; set; }
+        public ICollection<ExerciseVideo> ExerciseVideos { get; set; }
 
         #endregion
     }

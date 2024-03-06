@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mogym.Application.Records.Exercise;
 using Mogym.Application.Records.ExerciseVideo;
+using Mogym.Common;
 
 namespace Mogym.Application.AutoMapper.ExerciseVideo
 {
@@ -12,7 +13,9 @@ namespace Mogym.Application.AutoMapper.ExerciseVideo
     {
         public ExerciseVideo_ExerciseVideoRecord()
         {
-            CreateMap<Domain.Entities.ExerciseVideo, ExerciseVideoRecord>().ReverseMap();
+            CreateMap<Domain.Entities.ExerciseVideo, ExerciseVideoRecord>()
+                .ForMember(x => x.Status,
+                    z => z.MapFrom(a => a.Status.GetEnumDescription()));
         }
     }
 }

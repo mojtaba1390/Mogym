@@ -256,11 +256,19 @@ namespace Mogym.Domain.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ExerciseVideo", (string)null);
                 });
@@ -1476,6 +1484,15 @@ namespace Mogym.Domain.Migrations
                     b.Navigation("Exercise_ExerciseSet");
                 });
 
+            modelBuilder.Entity("Mogym.Domain.Entities.ExerciseVideo", b =>
+                {
+                    b.HasOne("Mogym.Domain.Entities.User", "ExerciseVideo_User")
+                        .WithMany("ExerciseVideos")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ExerciseVideo_User");
+                });
+
             modelBuilder.Entity("Mogym.Domain.Entities.Finance", b =>
                 {
                     b.HasOne("Mogym.Domain.Entities.Discount", "Discount_Finance")
@@ -1841,6 +1858,8 @@ namespace Mogym.Domain.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Creators");
+
+                    b.Navigation("ExerciseVideos");
 
                     b.Navigation("Plans");
 

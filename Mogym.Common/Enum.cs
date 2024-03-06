@@ -206,6 +206,18 @@ namespace Mogym.Common
         [Description("رد شده")]
         Ignore = 3
     }
+    public enum EnumExrciseVideoStatus
+    {
+        [EnumMember]
+        [Description("در حال بررسی")]
+        UnderConsideration = 1,
+        [EnumMember]
+        [Description("تائید شده")]
+        Approve = 2,
+        [EnumMember]
+        [Description("رد شده")]
+        Ignore = 3
+    }
     public enum EnumApiType
     {
         [EnumMember]

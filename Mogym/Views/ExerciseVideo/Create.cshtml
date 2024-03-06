@@ -1,4 +1,6 @@
-﻿@using Mogym.Common
+﻿@using Mogym
+@using Mogym.Common
+@inject IHttpContextAccessor _accessor;
 @model Mogym.Application.Records.ExerciseVideo.CreateExerciseVideoRecord
 
 @{
@@ -7,13 +9,32 @@
 }
 
 <section class="content">
-    <form asp-action="Create" method="post" class="container-fluid" id="form-create-exerciseVideo" enctype="multipart/form-data">
+    <form asp-action="Create" method="post" class="container-fluid" id="form-create-exerciseVideo" enctype="multipart/form-data" onsubmit="loading()">
+        <input hidden asp-for="UserId" value="@_accessor.GetUser()" />
         <div class="row">
             <div class="col-md-6">
 
                 <div class="card">
                     <div class="card-header bg-success-card">
                         <h3 class="card-title">ایجاد ویدئو جدید</h3>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color: red;text-align: justify;">همه ی ویدئو های آپلود شده مورد نظارت قرار می گیرند.</h5>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color:red;text-align: justify;">فقط ویدئوهای تائید شده امکان استفاده در حرکات تمرینی را دارند.</h5>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color:red;text-align: justify;">ویدئوهای اختصاصی شما، فقط در لیست حرکات شما قابل استفاده می باشند.</h5>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color:red;text-align: justify;">حجم ویدئوها نباید از 5 مگابایت بیشتر باشد.</h5>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color:red;text-align: justify;">پوشش بانوان عزیز نباید با تاپ و یا نیم تنه و یا شلوارک باشد و پوشش سر هم باید رعایت شود.</h5>
+                    </div>
+                    <div class="p-2 mb-2">
+                        <h5 class="card-title" style="color:red;text-align: justify;">پوشش آقایان عزیز نباید بالاتنه بصورت کاملا عریان باشد.</h5>
                     </div>
                     <div class="card-body py-5">
                         <div class="form-group row">
@@ -39,7 +60,7 @@
                         <div class="form-group row">
                             <div class="form-actions-buttons col-md-6">
                                 <input type="submit" value="ثبت" class="btn btn-success-card" />
-                                <a asp-action="Index" class="btn btn-secondary py-2">بازگشت </a>
+                                <a asp-action="MyExerciseVideo" class="btn btn-secondary py-2">بازگشت </a>
                             </div>
                         </div>
                     </div>
@@ -50,3 +71,51 @@
         </div>
     </form>
 </section>
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            function loading() {
+                event.preventDefault();
+                document.getElementsByClassName()('preloader').style.display = "block";
+            }
+
+            $("#form-create-exerciseVideo").validate({
+                rules: {
+                    Title: {
+                        required: true,
+                        maxlength: 100
+                    },
+                    ExerciseVideo: {
+                        required: true
+                    },
+                    Description: {
+                        required: true,
+                        maxlength: 500,
+                        minlength: 50
+                    }
+                },
+                messages: {
+                    Title: {
+                        required: "پر کردن عنوان الزامی است",
+                        maxlength: "عنوان بیشتر از 100 کارکتر میباشد."
+                    },
+                    ExerciseVideo: {
+                        required: "پر کردن ویدئو الزامی است"
+                    },
+                    Description: {
+                        required: "پر کردن توضیحات الزامی است",
+                        maxlength: "توضیحات بیشتر از 500 کارکتر میباشد.",
+                        minlength: "توضیحات کمتر از 50 کارکتر میباشد."
+                    }
+
+                }
+            });
+
+
+        })
+    </script>
+}

@@ -45,15 +45,39 @@ namespace Mogym.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (createExerciseVideoRecord.ExerciseVideo != null && Path.GetExtension(createExerciseVideoRecord.ExerciseVideo.FileName).ToLower() != ".mp4")
+                    {
+                        TempData["errormessage"] = "فرمت ویدئو باید mp4 باشد";
+                        return RedirectToAction(nameof(Create));
+                    }
 
 
-                        var path = Path.Combine(_webHostEnvironment.WebRootPath, "ExerciseVideo", createExerciseVideoRecord.ExerciseVideo.FileName);
-                        using (FileStream stream = new FileStream(path, FileMode.Create))
-                        {
-                            await createExerciseVideoRecord.ExerciseVideo.CopyToAsync(stream);
-                            stream.Close();
-                        }
-                    
+
+
+                    //var ffProbe = new NReco.VideoInfo.FFProbe();
+                    //var videoInfo = ffProbe.GetMediaInfo(path);
+                    //if (videoInfo.Duration.TotalSeconds > 20)
+                    //{
+                    //    ViewData["errormessage"] = "ویدئو از 20 ثانیه بیشتر نباشد";
+                    //    return RedirectToAction(nameof(MyExerciseVideo));
+                    //}
+
+
+                    if (createExerciseVideoRecord.ExerciseVideo.Length > 5 * 1024 * 1024)
+                    {
+                        TempData["errormessage"] = "ویدئو از 5 مگا بایت بیشتر نباشد";
+                        return RedirectToAction(nameof(Create));
+                    }
+
+
+                    var path = Path.Combine(_webHostEnvironment.WebRootPath, "ExerciseVideo", createExerciseVideoRecord.ExerciseVideo.FileName);
+
+                    using (FileStream stream = new FileStream(path, FileMode.Create))
+                    {
+                        await createExerciseVideoRecord.ExerciseVideo.CopyToAsync(stream);
+                        stream.Close();
+                    }
+
 
 
                     await _exerciseVideoService.AddAsync(createExerciseVideoRecord);
@@ -67,7 +91,7 @@ namespace Mogym.Controllers
             }
 
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyExerciseVideo));
         }
 
 
@@ -75,10 +99,28 @@ namespace Mogym.Controllers
         {
 
             var record = await _exerciseVideoService.GetEntityByIdAsync(videoId);
-                return PartialView("_ExerciseDetails", record);
+            return PartialView("_ExerciseDetails", record);
 
 
         }
 
+        [DisplayName("ویدئو های من")]
+        public async Task<IActionResult> MyExerciseVideo()
+        {
+            var exerciseVideoRecords = await _exerciseVideoService.GetMyExerciseVideo();
+
+            return View(exerciseVideoRecords);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+              _exerciseVideoService.Delete(id);
+
+             return RedirectToAction(nameof(MyExerciseVideo));
+        }
+
+
+
     }
+
+
 }
