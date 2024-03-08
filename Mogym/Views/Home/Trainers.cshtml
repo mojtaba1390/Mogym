@@ -119,11 +119,11 @@
                                     <h6>مرتب سازی بر اساس</h6>
                                 </div>
                                 <div class="tag-cloud">
-                                    <a  asp-controller="Home"
-                                        asp-action="Trainers"
-                                        asp-route-page="1"
-                                        asp-route-search="@search"
-                                        asp-route-sort="newest">جدیدترین</a>
+                                    <a asp-controller="Home"
+                                       asp-action="Trainers"
+                                       asp-route-page="1"
+                                       asp-route-search="@search"
+                                       asp-route-sort="newest">جدیدترین</a>
                                     <a asp-action="Trainers"
                                        asp-route-page="1"
                                        asp-route-search="@search"
@@ -181,39 +181,90 @@
                         <div class="col-md-12">
                             <nav class="custom-pagination-nav">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
                                     @{
                                         var step = totalCount / 10;
                                         var remain = totalCount % 10;
                                         if (remain > 0)
-                                            step = step + 1;
-                                        for (int i = 1; i <= step; i++)
+                                            step += 1;
+
+                                        if (currentPage > 1)
                                         {
-                                            if (currentPage == i)
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   asp-controller="Home"
+                                                   asp-action="Trainers"
+                                                   asp-route-page="@(currentPage-1)"
+                                                   asp-route-search="@search"
+                                                   asp-route-sort="@sort">
+                                                    <span class="ti-angle-right">
+
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   asp-controller="Home"
+                                                   asp-action="Trainers"
+                                                   asp-route-page="@(currentPage-1)"
+                                                   asp-route-search="@search"
+                                                   asp-route-sort="@sort">@(currentPage - 1)</a>
+                                            </li>
+                                        }
+
+
+                                        <li class="page-item active">
+                                            <a class="page-link"
+                                               asp-controller="Home"
+                                               asp-action="Trainers"
+                                               asp-route-page="@currentPage"
+                                               asp-route-search="@search"
+                                               asp-route-sort="@sort">@currentPage</a>
+                                        </li>
+
+                                        if (step > currentPage)
+                                        {
+                                            if (currentPage + 1!=step)
                                             {
-                                                <li class="page-item active"><a 
-                                                                                 class="page-link"
-                                                                                 asp-controller="Home"
-                                                                                 asp-action="Trainers"
-                                                                                 asp-route-page="@i"
-                                                                                 asp-route-search="@search"
-                                                                                 asp-route-sort="@sort">@i</a></li>
-                                            }
-                                            else
-                                            {
-                                                <li class="page-item"><a 
-                                                                          class="page-link" 
-                                                                          asp-controller="Home" 
-                                                                          asp-action="Trainers" 
-                                                                          asp-route-page="@i"
-                                                                          asp-route-search="@search"
-                                                                          asp-route-sort="@sort">@i</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link"
+                                                       asp-controller="Home"
+                                                       asp-action="Trainers"
+                                                       asp-route-page="@(currentPage+1)"
+                                                       asp-route-search="@search"
+                                                       asp-route-sort="@sort">@(currentPage + 1)</a>
+                                                </li>   
+                                                <li class="page-item">
+                                                    ...
+                                                </li>
                                             }
 
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   asp-controller="Home"
+                                                   asp-action="Trainers"
+                                                   asp-route-page="@step"
+                                                   asp-route-search="@search"
+                                                   asp-route-sort="@sort">@step</a>
+                                            </li>
+
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   asp-controller="Home"
+                                                   asp-action="Trainers"
+                                                   asp-route-page="@(currentPage+1)"
+                                                   asp-route-search="@search"
+                                                   asp-route-sort="@sort">
+                                                    <span class="ti-angle-left">
+
+                                                    </span>
+                                                </a>
+                                            </li>
 
                                         }
                                     }
-                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-left"></span></a></li>
+
+
+
                                 </ul>
                             </nav>
                         </div>
