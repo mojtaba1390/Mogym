@@ -629,7 +629,7 @@ namespace Mogym.Controllers
             string token = "مربیگیری(فدراسیون)";
             string token2 = "مربیگیری(فدراسیون)";
 
-            await _smsService.SendOTP2Token("09357620791", token, token2, "IgnoreDocument");
+            await _smsService.SendOTP2Token("09129480856", token, token2, "IgnoreDocument");
 
             return null;
         }
@@ -637,7 +637,7 @@ namespace Mogym.Controllers
         public async Task<IActionResult> ApproveDocument()
         {
 
-            await _smsService.SendOTP("09129611380", "account/login", "ApproveDocument");
+            await _smsService.SendOTP("09126196184", "account/login", "ApproveDocument");
 
             return null;
         }

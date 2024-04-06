@@ -1,13 +1,6 @@
 ﻿@model Mogym.Application.Records.User.OTPLoginRecord
 
-@using Mogym.Application.Interfaces
-@inject IUserService _userService;
-@inject IPlanService _planService;
-@{
-    var trainerCount = await _userService.GetTrainerCountForIndexPage();
-    var userCount = await _userService.GetUserCountForIndexPage();
-    var sentPlanCount = await _planService.GetSentPlanCountForIndexPage();
-}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,17 +50,23 @@
         <!--start navbar-->
         <nav class="navbar navbar-expand-lg fixed-top custom-nav">
             <div class="container">
-                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
-                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
-                </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
                     <span class="ti-menu"></span>
                 </button>
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                    <div class="download-text text-left">
+                        <h5 class="mb-0">ورود/ثبت نام</h5>
+                    </div>
+                </a>
 
                 <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto menu">
                         <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
-                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
+                        @*                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li> *@
                         <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
                         <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
@@ -210,33 +209,7 @@
             </div>
         </div>
 
-    <section class="counter-section gradient-bg ptb-40">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="text-white p-2 count-data text-center my-3">
-                        <span class="fas fa-user-circle icon-size-lg mb-2"></span>
-                        <h3 class="count-number mb-1 text-white font-weight-bolder">@trainerCount</h3>
-                        <span>مربیان</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="text-white p-2 count-data text-center my-3">
-                        <span class="fas fa-users icon-size-lg mb-2"></span>
-                        <h3 class="count-number mb-1 text-white font-weight-bolder">@userCount</h3>
-                        <span>ورزشکاران</span>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="text-white p-2 count-data text-center my-3">
-                        <span class="fas fa-edit icon-size-lg mb-2"></span>
-                        <h3 class="count-number mb-1 text-white font-weight-bolder">@sentPlanCount</h3>
-                        <span>برنامه ارسال شده</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
 
         <!--faq or accordion section start-->
         <section id="faq" class="ptb-100 gray-light-bg">

@@ -3,10 +3,16 @@
 
 @inject IUserService _userService;
 @inject IPlanService _planService;
+@inject ITrainerProfileService _trainerProfileService;
 @{
     var trainerCount = await _userService.GetTrainerCountForIndexPage();
     var userCount = await _userService.GetUserCountForIndexPage();
     var sentPlanCount =await _planService.GetSentPlanCountForIndexPage();
+    var coachesBaseSentPlan = await _trainerProfileService.GetAllTrainers(null, null, "sentPlan");
+    var bestCoaches = coachesBaseSentPlan.Item3
+        .Where(x => x.SentPlanCount > 0)
+        .OrderBy(x=>x.SentPlanCount)
+        .ToList();
 }
 
 
@@ -55,38 +61,46 @@
         </div>
     </div>
     <!--preloader end-->
-    <!--header section start-->
-    <header class="header">
-        <!--start navbar-->
-        <nav class="navbar navbar-expand-lg fixed-top custom-nav">
-            <div class="container">
-                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
-                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
-                    <span class="ti-menu"></span>
-                </button>
+<!--header section start-->
 
-                <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto menu">
-                        <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
-                        <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
-                        <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
-                        <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
-                        <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
-                        <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+<header class="header">
 
-                    </ul>
+    <!--start navbar-->
+    <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
+                <span class="ti-menu"></span>
+            </button>
+            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+            </a>
+            <a asp-controller="Account" asp-action="Login" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                <div class="download-text text-left">
+                    <h5 class="mb-0">ورود/ثبت نام</h5>
                 </div>
+            </a>
+
+            <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto menu">
+                    <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
+                    @*                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li> *@
+                    <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
+                    <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
+                    <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
+                    <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
     <!--header section end-->
 
     <div class="main">
 
-        <!--hero section start-->
-        <section class="position-relative overflow-hidden hero-section-3 ptb-100">
+    <!--hero section start-->
+        <section class="position-relative overflow-hidden ptb-100">
             <!--animated circle shape start-->
             <div class="animated-shape-wrap">
                 <div class="animated-shape-item"></div>
@@ -104,33 +118,36 @@
                     <div class="col-md-6 col-lg-6">
                         <div class="hero-content-left pt-5">
                             <h1 class="color-accent">موجیم باشگاهی به وسعت ایران</h1>
-@*                            <p class="lead">به وب سایت ما خوش آمدید. از اینکه مارو در بهتر شدن کمک می کنین از شما ممنونیم</p>
+                            @*                            <p class="lead">به وب سایت ما خوش آمدید. از اینکه مارو در بهتر شدن کمک می کنین از شما ممنونیم</p>
 *@                            <div class="action-btns mt-4">
-                                <ul class="list-inline">
+                                <ul class="list-inline" style="margin-top:100px">
+
                                     <li class="list-inline-item">
-                                        <a asp-controller="Account" asp-action="Login" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
-                                            <div class="download-text text-left">
-                                                <h5 class="mb-0">ورود/ثبت نام</h5>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a asp-controller="Home" asp-action="TrainerPanel" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                                        <a asp-controller="Home" asp-action="TrainerPanel" class="d-flex align-items-center app-download-btn btn btn-brand-02 btn-rounded">
                                             <div class="download-text text-left">
                                                 <h5 class="mb-0">عضویت مربیان</h5>
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="list-inline-item">
+                                        <a asp-controller="Home" asp-action="Trainers" class="d-flex align-items-center app-download-btn btn btn-brand-02 btn-rounded">
+                                            <div class="download-text text-left">
+                                                <h5 class="mb-0">لیست مربیان</h5>
+                                            </div>
+                                        </a>
+                                    </li> 
                                 </ul>
                             </div>
                         </div>
                     </div>
-                   <div class="col-md-6 col-lg-6">
+                    <div class="col-md-6 col-lg-6">
                         <div class="img-wrap">
                             <img src="~/mainassets/img/athletes2.png" alt="ورزشکاران" class="img-fluid">
                         </div>
                     </div>
                 </div>
+                
+                
             </div>
 
             <!--shape image start-->
@@ -138,63 +155,68 @@
 *@            <!--shape image end-->
         </section>
         <!--hero section end-->
-        <!--testimonial section start-->
-        <section class="position-relative gradient-bg ptb-100">
+
+        
+    
+    
+    
+
+    <section class="review-section gradient-bg ptb-100">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-md-6 col-lg-5 mb-4 mb-sm-4 mb-md-0 mb-lg-0">
-                        <div class="testimonial-heading text-white">
-                            <h2 class="text-white">آخرین مربیان موجیم</h2>
-                            <p>جای تجربه ی شما بین با تجربه های ما خالیه</p>
-                        </div>
-                        <div class="action-btns mt-3">
-                            <a  asp-action="Trainers"
-                                asp-route-page=""
-                                asp-route-search=""
-                                asp-route-sort="" class="btn btn-brand-02 mr-3">لیست تمام مربیان</a>
+                <div class="row justify-content-center">
+                    <div class="col-md-9 col-lg-8">
+                        <div class="section-heading text-center mb-4">
+                            <h2 class="text-white">مربیان برتر موجیم</h2>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="testimonial-content-wrap">
-                            <div class="owl-carousel owl-theme client-testimonial-1 dot-indicator testimonial-shape">
-                                @{
-                                    foreach (var trainer in Model)
-                                    {
-                                        <div class="item">
-                                            <div class="testimonial-quote-wrap">
-                                                <div class="media author-info mb-3">
-                                                    @*<div class="author-img mr-3">
-                                                        @if (!string.IsNullOrWhiteSpace(trainer.ProfilePic))
-                                                        {
-                                                            <img src="/ProfilePic/@trainer.ProfilePic" alt="@trainer.FullName" class="img-fluid">
-                                                        }
-                                                        else
-                                                        {
-                                                            <img src="/img/avatar5.png" alt="@trainer.FullName" class="img-fluid">
-                                                        }
-                                                    </div>*@
-                                                    <div class="media-body text-white">
-                                                        <h5 class="mb-0 text-white">@trainer.FullName</h5> 
-                                                        <span>@trainer.UserName</span>
-                                                    </div>
-                                                    <i class="fas fa-quote-right text-white"></i>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="owl-carousel owl-theme client-testimonial-2 dot-indicator">
+                            
+                            @foreach (var coach in bestCoaches)
+                            {
+                                <div class="item">
+                                    <div class="single-team-wrap">
+                                        <div class="row no-gutters shadow-sm position-relative rounded-custom team-content-wrap bg-white ">
+                                            <div class="col-sm-5 col-md-5 col-lg-6 col-12 order-0 d-none d-sm-block d-md-block d-lg-block">
+                                                <div class="team-img position-absolute">
+                                                    <img src="/ProfilePic/@coach.ProfilePic" alt="@coach.FullName" class="img-fluid rounded-custom" style="height: 183px">
                                                 </div>
-                                                <div class="client-say text-white">
-                                                    <p>@trainer.Biography</p>
+                                            </div>
+                                            <div class="col-sm-7 col-md-7 col-lg-6 col-12 order-1">
+                                                <div class="single-team-info py-4 px-5 px-md-4">
+                                                    <div class="name-designation mb-3">
+                                                        <h5 class="mb-0">@coach.FullName</h5>
+                                                        <div class="color-secondary">برنامه ارسالی:@coach.SentPlanCount</div>
+                                                            <div class="color-secondary">نظرات:@coach.CommentCount</div>
+                                                            <div class="color-secondary">امتیاز کاربران:@coach.Score</div>
+                                                       
+                                                    </div>
+                                                    <div class="post-more pt-4 align-items-center d-flex">
+                                                        <a asp-controller="Profile" asp-action="Index" asp-route-username="@coach.UserName" class="btn btn-brand-02 mr-3">
+                                                            جزئیات
+                                                            <span class="ti-arrow-left"></span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    }
-                                }
+                                    </div>
+                                </div>
+                            }
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!--testimonial section end-->
-        <!--promo section start-->
+    
+    
+    
+    
+    
+    <!--promo section start-->
         <section class="promo-section ptb-100">
             <div class="container">
                 <div class="row justify-content-center">

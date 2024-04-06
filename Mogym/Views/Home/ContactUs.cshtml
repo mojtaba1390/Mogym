@@ -45,28 +45,34 @@
 <!--header section start-->
 <header class="header">
     <!--start navbar-->
-    <nav class="navbar navbar-expand-lg fixed-top custom-nav">
-        <div class="container">
-            <a class="navbar-brand" asp-action="Index" asp-controller="Home">
-                <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
-                <span class="ti-menu"></span>
-            </button>
+        <nav class="navbar navbar-expand-lg fixed-top custom-nav">
+            <div class="container">
 
-            <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto menu">
-                    <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
-                    <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li>
-                    <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
-                    <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
-                    <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
-                    <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="ناوبری را تغییر دهید">
+                    <span class="ti-menu"></span>
+                </button>
+                <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+                    <img src="~/img/mogym-transparent.png" alt="لوگو" class="img-fluid">
+                </a>
+                <a asp-controller="Account" asp-action="Login" class="d-flex align-items-center app-download-btn btn btn-outline-brand-02 btn-rounded">
+                    <div class="download-text text-left">
+                        <h5 class="mb-0">ورود/ثبت نام</h5>
+                    </div>
+                </a>
 
-                </ul>
+                <div class="collapse navbar-collapse h-auto" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto menu">
+                        <li><a asp-controller="Account" asp-action="Index" class="page-scroll">خانه</a></li>
+                        @*                         <li><a asp-controller="Account" asp-action="Login" class="page-scroll">ورود/ثبت نام</a></li> *@
+                        <li><a asp-controller="Home" asp-action="TrainerPanel" class="page-scroll">عضویت مربیان</a></li>
+                        <li><a asp-controller="Home" asp-action="Trainers" class="page-scroll">مربیان</a></li>
+                        <li><a asp-controller="Home" asp-action="ContactUs" class="page-scroll">ارتباط با ما</a></li>
+                        <li><a asp-controller="Home" asp-action="Terms" class="page-scroll">قوانین و مقررات</a></li>
+
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 </header>
 
 

@@ -46,6 +46,11 @@ namespace Mogym.Application.Services
                     UseDate = DateTime.Now
                 };
                 await _unitOfWork.DiscountUseRepository.AddAsync(discountUse, false);
+
+
+                var discount = _unitOfWork.DiscountRepository.Where(x => x.Id == model.DiscountId).First();
+                discount.UseCount += 1;
+                await _unitOfWork.DiscountRepository.UpdateAsync(discount, false);
             }
 
             var finance = new Finance()

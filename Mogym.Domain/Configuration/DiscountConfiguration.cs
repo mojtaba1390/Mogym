@@ -19,6 +19,11 @@ namespace Mogym.Domain.Configuration
             builder.Property(x => x.Value).HasColumnType("int").IsRequired();
             builder.Property(x => x.ActiveDate).HasColumnType("datetime2").IsRequired();
 
+            builder.HasOne<TrainerProfile>(x => x.TrainerProfile)
+                .WithMany(x => x.Discounts)
+                .HasForeignKey(u => u.TrainerId)
+                .IsRequired(false);
+
         }
     }
 }
