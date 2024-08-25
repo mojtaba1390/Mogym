@@ -12,6 +12,6 @@ namespace Mogym.Common.ModelExtended
         public string SmtpServer { get; set; } = "smtp.gmail.com";
         public int Port { get; set; } = 465;
         public string UserName { get; set; } = "ramezannia.mojtaba@gmail.com";
-        public string Password { get; set; } = "nhki tkgi yxzw xmfi";
+        public string Password { get; set; } = "ucxm tnno fldg cito";
     }
 }

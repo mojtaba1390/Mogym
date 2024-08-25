@@ -637,7 +637,7 @@ namespace Mogym.Controllers
         public async Task<IActionResult> ApproveDocument()
         {
 
-            await _smsService.SendOTP("09126196184", "account/login", "ApproveDocument");
+            await _smsService.SendOTP("09301920268", "account/login", "ApproveDocument");
 
             return null;
         }
